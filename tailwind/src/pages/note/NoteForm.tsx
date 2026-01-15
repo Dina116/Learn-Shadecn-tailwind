@@ -16,7 +16,7 @@ export default function FormScreen() {
       </div>
       <div className="flex flex-col justify-center items-center mt-5">
         <MyForm onSubmit={handleSetNote} />
-        <NoteTable notes={notes} />
+        <NoteTable notes={notes} setNotes={setNotes}/>
       </div>
     </>
   );
