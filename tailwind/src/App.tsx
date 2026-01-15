@@ -1,4 +1,4 @@
-import FormScreen from "./components/screens/Form/FormScreen";
+import FormScreen from "./pages/note/NoteForm";
 
 function App() {
   return (
