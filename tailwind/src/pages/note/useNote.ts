@@ -3,5 +3,8 @@ import type { NoteWithID } from "./Types";
 
 export const useNote = () => {
   const [notes, setNotes] = useState<NoteWithID[]>([]);
-  return { notes, setNotes };
+    const handleSetNote = (data: NoteWithID) => {
+    setNotes((prev) => [...prev, data]);
+  };
+  return { notes, setNotes, handleSetNote };
 };

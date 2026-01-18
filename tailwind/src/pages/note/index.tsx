@@ -1,12 +1,10 @@
 import MyForm from "./MyForm";
 import { NoteTable } from "./NoteTable";
-import type { NoteWithID } from "./Types";
+// import type { NoteWithID } from "./Types";
 import { useNote } from "./useNote";
 export default function FormScreen() {
-  const { notes, setNotes } = useNote();
-  const handleSetNote = (data: NoteWithID) => {
-    setNotes((prev) => [...prev, data]);
-  };
+  const { notes, setNotes, handleSetNote } = useNote();
+
   return (
     <>
       <div className="bg-slate-900 p-5">
@@ -16,7 +14,7 @@ export default function FormScreen() {
       </div>
       <div className="flex flex-col justify-center items-center mt-5">
         <MyForm onSubmit={handleSetNote} />
-        <NoteTable notes={notes} setNotes={setNotes}/>
+        <NoteTable notes={notes} setNotes={setNotes} />
       </div>
     </>
   );
