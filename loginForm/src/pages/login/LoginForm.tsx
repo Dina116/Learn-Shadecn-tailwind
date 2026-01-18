@@ -11,11 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
   onSubmit: (data: InputFormData) => void;
 }
 export default function LoginForm({ onSubmit }: LoginFormProps) {
+  const navigation = useNavigate();
   const {
     control,
     handleSubmit,
@@ -26,7 +28,9 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
   });
   const handleSubmition = (data: InputFormData) => {
     onSubmit(data);
+    navigation("/home");
   };
+
   return (
     <Card className="w-full max-w-md rounded-xl shadow-lg ">
       <CardHeader>
