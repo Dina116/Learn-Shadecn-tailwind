@@ -1,20 +1,30 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import Navbar from "./header/Navbar";
+import HomeCard from "./HomeCard";
+import UsersSvg from "./UsersSvg";
+import JobsSvg from "./JobsSvg";
+import Navigation from "./navigation";
 
 export default function HomeScreen() {
-  const navigation = useNavigate();
+  const { handleJobsNavigation, handleUserNavigation } = Navigation();
+
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 flex-col gap-4  ">
-        <Button
-          variant="default"
-          className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigation("/")}
+      <div className="flex flex-row justify-center p-20 min-h-screen bg-gray-100 flex-col gap-4  ">
+        <HomeCard
+          title="الوظائف"
+          subTitle="حذف وإضافةوتعديل الوظائف"
+          onClick={handleJobsNavigation}
         >
-          Home
-        </Button>
+          <JobsSvg />
+        </HomeCard>
+        <HomeCard
+          title="المستخدمين"
+          subTitle="حذف وإضافةوتعديل المستخدمين"
+          onClick={handleUserNavigation}
+        >
+          <UsersSvg />
+        </HomeCard>
       </div>
     </>
   );

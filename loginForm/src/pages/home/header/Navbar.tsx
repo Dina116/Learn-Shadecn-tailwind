@@ -1,4 +1,4 @@
-import LogOutCard from "../LogOutCard";
+import LogOutCard from "./LogOutCard";
 import Menu from "./Menu";
 import { useNavbar } from "./useNavbar";
 
