@@ -1,21 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
-import type { InputFormData } from "./types";
+import type { InputFormData, LoginFormProps } from "./types";
 import { LoginSchema } from "./validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import AuthIconSvg from "./AuthIconSvg";
 
-interface LoginFormProps {
-  onSubmit: (data: InputFormData) => void;
-}
 export default function LoginForm({ onSubmit }: LoginFormProps) {
   const navigation = useNavigate();
   const {
@@ -32,26 +23,26 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md rounded-xl shadow-lg ">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold">
-          Login to your account
-        </CardTitle>
-        <CardDescription>
-          Enter your credentials to access your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="w-full lg:w-2/5 flex items-center justify-center p-8">
+      <div className="w-full max-w-md">
+        <AuthIconSvg />
         <form
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(handleSubmition)}
         >
+          <label
+            htmlFor="username"
+            className="flex justify-end text-sm font-small"
+          >
+            <span className="text-red-500">*</span> الاسم
+          </label>
           <Controller
             control={control}
-            rules={{ required: "This field is required" }}
+            rules={{ required: "هذا الحقل مطلوب" }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                placeholder="username"
+                className="flex justify-end text-right"
+                placeholder="اسم الدخول"
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
@@ -60,16 +51,23 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
             name="username"
           />
           {errors.username && (
-            <span className="text-red-500 text-sm mt-1">
+            <span className="flex justify-end text-red-500 text-sm mt-1">
               {errors.username.message}
             </span>
           )}
+          <label
+            htmlFor="password"
+            className="flex justify-end text-sm font-small"
+          >
+            <span className="text-red-500">*</span> كلمة المرور
+          </label>
           <Controller
             control={control}
-            rules={{ required: "This field is required" }}
+            rules={{ required: "هذا الحقل مطلوب" }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
-                placeholder="password"
+                className="flex justify-end text-right"
+                placeholder="******"
                 onBlur={onBlur}
                 onChange={onChange}
                 value={value}
@@ -78,20 +76,26 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
             name="password"
           />
           {errors.password && (
-            <span className="text-red-500 text-sm mt-1">
+            <span className="flex justify-end text-red-500 text-sm mt-1">
               {errors.password.message}
             </span>
           )}
-          <Button
-            type="submit"
-            variant="default"
-            className="bg-blue-900 hover:bg-blue-800 transition-all duration-200
- text-white font-bold py-2 px-4 rounded"
-          >
-            Login
-          </Button>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              variant="default"
+              className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-12 rounded transition-all duration-200 "
+            >
+              تسجيل الدخول
+            </Button>
+          </div>
         </form>
-      </CardContent>
-    </Card>
+        <div className="mt-8 text-center text-xs text-gray-500 flex justify-between items-center">
+          <span>Powerd By MAS</span>
+          <span>v3.9.5</span>
+          <span>المنظومة الموحدة لادارة صلاحيات المستخدمين</span>
+        </div>
+      </div>
+    </div>
   );
 }
