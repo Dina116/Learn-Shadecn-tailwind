@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Navbar from "../home/header/Navbar";
 import { UsersTable } from "./UsersTable";
+// import { SharedDialog } from "@/components/sharedComponenet/SharedDialog";
+import AddUserDialog from "./AddUserDialog";
+// import { SharedDialog } from "@/components/sharedComponenet/SharedDialog";
 
 export default function UserScreen() {
   return (
@@ -39,21 +42,7 @@ export default function UserScreen() {
             </svg>
             ربط مجموعة مستخدمين علي وظائف
           </Button>
-          <Button variant="default" className="bg-blue-900 hover:bg-blue-800">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6 text-white "
-            >
-              <path
-                fill-rule="evenodd"
-                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            إضافة مستخدم
-          </Button>
+          <AddUserDialog />
         </div>
         <div>
           <UsersTable />
