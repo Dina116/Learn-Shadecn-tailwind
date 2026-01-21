@@ -6,7 +6,7 @@ export const columns: Columns[] = [
     label: "الاجراءات",
   },
   {
-    key: "jobs",
+    key: "assignjob",
     label: "الوظائف",
   },
   {

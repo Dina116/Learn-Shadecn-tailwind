@@ -10,7 +10,7 @@ export const columns: Columns[] = [
     label: "نشط",
   },
   {
-    key: "usersNumbers",
+    key: "usersnumbers",
     label: "عدد المستخدمين",
   },
   {
@@ -18,12 +18,13 @@ export const columns: Columns[] = [
     label: "الوصف",
   },
   {
-    key: "jobName",
+    key: "jobname",
     label: "اسم الوظيفة",
   },
 
   {
-    key: "jobCode",
+    key: "jobcode",
     label: "كود الوظيفة",
+    render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
 ];

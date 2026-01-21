@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { TableProbs } from "@/pages/sharedTypes";
-// import type { TableProbs } from "@/pages/users/types";
 
 export function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (

@@ -2,7 +2,7 @@ export interface Columns<T> {
   key: keyof T;
   label: string;
   className?: string;
- render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
+  render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
 }
 export type TableProbs<T> = {
   columns: Columns<T>[];
@@ -22,7 +22,7 @@ export type LineProp = {
 };
 export type DialogProps = {
   btnName: string;
-  title: string;
-  children: React.ReactNode;
+  title?: string;
+  children?: React.ReactNode;
   className?: string;
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { userFormType } from "./UserForm";
+import type { userFormType } from "./types";
+
 
 export const useForm = () => {
   const [data, setData] = useState<userFormType[]>([]);
