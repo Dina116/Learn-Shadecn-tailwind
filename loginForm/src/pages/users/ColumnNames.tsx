@@ -1,7 +1,7 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import type { Columns } from "../sharedTypes";
 import EditUserDialog from "./EditUserDialog";
-import DeleteUserDialog from "./DeleteUserData";
+import DeleteUserDialog from "./DeleteUserDialog";
 
 export const columns: Columns[] = [
   {

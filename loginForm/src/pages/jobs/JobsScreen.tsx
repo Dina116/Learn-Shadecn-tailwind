@@ -4,7 +4,7 @@ import JobsTable from "./JobsTable";
 import { useJobForm } from "./usejobForm";
 
 export default function JobsScreen() {
-  const { data, handleSubmittion } = useJobForm();
+  const { data, handleSubmittion, handleDelete, handleEdit } = useJobForm();
   return (
     <>
       {/* <Navbar /> */}
@@ -26,7 +26,7 @@ export default function JobsScreen() {
           <AddJobDialog onSubmit={handleSubmittion} />
         </div>
         <div>
-          <JobsTable data={data} />
+          <JobsTable data={data} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>
     </>

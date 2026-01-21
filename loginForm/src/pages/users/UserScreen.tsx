@@ -7,7 +7,6 @@ export default function UserScreen() {
   const { data, handleSubmittion, handleDelete, handleEdit } = useForm();
   return (
     <>
-      {/* <Navbar /> */}
       <div className="p-4 md:p-8 lg:p-12 bg-gray-100 min-h-screen">
         <div className=" flex flex-col md:flex-row justify-end items-center mb-8 text-right ">
           <h6

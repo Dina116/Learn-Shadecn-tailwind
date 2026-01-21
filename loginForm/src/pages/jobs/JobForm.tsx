@@ -26,15 +26,17 @@ import {
 import { formSchema } from "./formSchema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
+import type { jobFormType } from "./types";
 
 export type jobFormProps = {
   onSubmit: (formData: z.infer<typeof formSchema>) => void;
+  defaultValues?: jobFormType;
 };
-export function JobForm({onSubmit}:jobFormProps) {
+export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
   const [step, setStep] = useState(1);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       jobname: "",
       description: "",
       status: false,
