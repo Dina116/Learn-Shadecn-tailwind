@@ -2,7 +2,7 @@ import HomeCard from "./HomeCard";
 import UsersSvg from "./UsersSvg";
 import JobsSvg from "./JobsSvg";
 // import Navigation from "./navigation";
-import Navbar from "./header/Navbar";
+// import Navbar from "./header/Navbar";
 import Navigation from "./Navigation";
 
 export default function HomeScreen() {
@@ -10,7 +10,7 @@ export default function HomeScreen() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="p-8 md:p-12  bg-gray-100 min-h-screen">
         <div className=" text-right ">
           <h6

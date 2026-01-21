@@ -19,7 +19,6 @@ export default function HomeCard({
       onClick={onClick}
     >
       <CardHeader className="p-0 gap-0 px-2 items-center">
-        {" "}
         {children}
       </CardHeader>
       <CardContent className="font-bold text-lg p-0 ">{title}</CardContent>

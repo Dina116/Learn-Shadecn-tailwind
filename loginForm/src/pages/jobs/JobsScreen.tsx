@@ -1,4 +1,4 @@
-import Navbar from "../home/header/Navbar";
+// import Navbar from "../home/header/Navbar";
 import AddJobDialog from "./AddJobDialog";
 import JobsTable from "./JobsTable";
 import { useJobForm } from "./usejobForm";
@@ -7,7 +7,7 @@ export default function JobsScreen() {
   const { data, handleSubmittion } = useJobForm();
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="p-4 md:p-8 lg:p-12 bg-gray-100 min-h-screen">
         <div className=" flex flex-col md:flex-row justify-end items-center mb-8 text-right ">
           <h6

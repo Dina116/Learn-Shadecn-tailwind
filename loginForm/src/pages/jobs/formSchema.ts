@@ -7,7 +7,7 @@ export const formSchema = z.object({
     .max(32, "يجب ادخال اقل من 32 حرف"),
   description: z
     .string()
-    .min(20, "يجب ادخال اكتر من 20 حرف")
+    .min(1, "يجب ادخال اكتر من 20 حرف")
     .max(200, "اقصي عدد مسموح من الحروف 200"),
   status: z.boolean().optional(),
   canEdit: z.boolean().optional(),

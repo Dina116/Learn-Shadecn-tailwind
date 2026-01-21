@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
-import Navbar from "../home/header/Navbar";
 import { UsersTable } from "./UsersTable";
 import AddUserDialog from "./AddUserDialog";
 import { useForm } from "./useForm";
 
 export default function UserScreen() {
-  const { data,handleSubmittion} = useForm();
+  const { data, handleSubmittion, handleDelete, handleEdit } = useForm();
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="p-4 md:p-8 lg:p-12 bg-gray-100 min-h-screen">
         <div className=" flex flex-col md:flex-row justify-end items-center mb-8 text-right ">
           <h6
@@ -45,7 +44,7 @@ export default function UserScreen() {
           <AddUserDialog onSubmit={handleSubmittion} />
         </div>
         <div>
-          <UsersTable data={data} />
+          <UsersTable data={data} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>
     </>

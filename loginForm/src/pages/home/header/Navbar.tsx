@@ -1,9 +1,12 @@
+import { useLocation } from "react-router-dom";
 import LogOutCard from "./LogOutCard";
 import Menu from "./Menu";
 import { useNavbar } from "./useNavbar";
 
 export default function Navbar() {
+  const location = useLocation();
   const { isDropdownOpen, setDropdownOpen, dropdownRef } = useNavbar();
+  if (location.pathname === "/") return null;
   return (
     <header className="fixed w-full z-20 top-0 start-0 bg-blue-900 shadow-md">
       <nav className="bg-neutral-primary">

@@ -23,6 +23,7 @@ export type LineProp = {
 export type DialogProps = {
   btnName: string;
   title?: string;
-  children?: React.ReactNode;
+  children?: React.ReactNode | ((closeDialog: () => void) => React.ReactNode);
   className?: string;
+  showPlusIcon?: boolean;
 };

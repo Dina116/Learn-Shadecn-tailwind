@@ -19,8 +19,9 @@ import { userSchema } from "./userSchema";
 
 export type UserFormProps = {
   onSubmit: (formData: userFormType) => void;
+   defaultValues?: userFormType;
 };
-export const UserForm = ({ onSubmit }: UserFormProps) => {
+export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
   const {
     control,
     handleSubmit,
@@ -28,7 +29,7 @@ export const UserForm = ({ onSubmit }: UserFormProps) => {
     reset,
   } = useForm<userFormType>({
     resolver: zodResolver(userSchema),
-    defaultValues: {
+    defaultValues:defaultValues ||  {
       jobCode: "",
       username: "",
       password: "",

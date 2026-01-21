@@ -26,14 +26,14 @@ export function SharedTable<T>({ data, columns }: TableProbs<T>) {
       </TableHeader>
       <TableBody>
         {data?.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow key={rowIndex} className=" text-black text-right border-l border-blue-900" >
             {columns.map((col, colIndex) => {
               const value = row[col.key];
               console.log("row:", row);
               console.log("col.key:", col.key);
               console.log("value:", value);
               return (
-                <TableCell key={colIndex} className={col.className}>
+                <TableCell key={colIndex} className=" text-black text-right border-l border-blue-900">
                   {col.render
                     ? col.render(value, row, rowIndex)
                     : String(value)}
