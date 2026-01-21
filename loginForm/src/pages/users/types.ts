@@ -1,3 +1,6 @@
+import type z from "zod";
+import type { userSchema } from "./userSchema";
+
 export type UserCredentails = {
   id: string;
   userCode: string;
@@ -7,3 +10,41 @@ export type UserCredentails = {
   jobs: string;
   actions: string;
 };
+export type userFormType = z.infer<typeof userSchema>;
+
+export const selectItemsCompanyData = [
+  {
+    label: "هيئة المجتمعات العمرانية",
+    value: "هيئة المجتمعات العمرانية",
+  },
+];
+export const selectItemsJobsAndUserData = [
+  {
+    label: "admin profile",
+    value: "admin profile",
+  },
+  {
+    label: "خدمة عملاء",
+    value: "خدمة عملاء",
+  },
+];
+export const selectedItemsPrintData = [
+  {
+    label: "عادي",
+    value: "عادي",
+  },
+  {
+    label: "حراري",
+    value: "حراري",
+  },
+];
+export const selectedItemsDepartement = [
+  {
+    label: "first",
+    value: "first",
+  },
+  {
+    label: "second",
+    value: "second",
+  },
+];

@@ -1,9 +1,7 @@
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -14,17 +12,18 @@ export function SelectField(props: SelectProps) {
   return (
     <div className="flex flex-col items-end gap-2 w-full">
       <Label>{props.label}</Label>
-      <Select>
+      <Select value={props.value} onValueChange={(val) => {
+          props.onChange?.(val);  
+        }}>
         <SelectTrigger className="w-full">
           <SelectValue placeholder={props.label} className="w-full" />
         </SelectTrigger>
         <SelectContent className="w-full">
-          <SelectGroup>
-            <SelectLabel>{props.label}</SelectLabel> 
-            {props.selectItems?.map((item) => (
-              <SelectItem value={item}>{item}</SelectItem>
-            ))}
-          </SelectGroup>
+          {props.selectItems?.map((item) => (
+            <SelectItem key={item.value} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

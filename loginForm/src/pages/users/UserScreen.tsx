@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Navbar from "../home/header/Navbar";
 import { UsersTable } from "./UsersTable";
-// import { SharedDialog } from "@/components/sharedComponenet/SharedDialog";
 import AddUserDialog from "./AddUserDialog";
-// import { SharedDialog } from "@/components/sharedComponenet/SharedDialog";
+import { useForm } from "./useForm";
 
 export default function UserScreen() {
+  const { data,handleSubmittion} = useForm();
   return (
     <>
       <Navbar />
@@ -42,10 +42,10 @@ export default function UserScreen() {
             </svg>
             ربط مجموعة مستخدمين علي وظائف
           </Button>
-          <AddUserDialog />
+          <AddUserDialog onSubmit={handleSubmittion} />
         </div>
         <div>
-          <UsersTable />
+          <UsersTable data={data} />
         </div>
       </div>
     </>

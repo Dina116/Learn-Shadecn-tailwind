@@ -1,10 +1,10 @@
-export interface Columns<T extends Record<string, any>> {
-  key: string;
+export interface Columns<T> {
+  key: keyof T;
   label: string;
   className?: string;
-  render?: (value: T[keyof T], row: T) => React.ReactNode;
+ render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
 }
-export type TableProbs<T extends Record<string, any>> = {
+export type TableProbs<T> = {
   columns: Columns<T>[];
   data?: T[];
 };
@@ -13,7 +13,9 @@ export interface selectItemData {
 }
 export type SelectProps = {
   label: string;
-  selectItems?: string[];
+  selectItems?: { label: string; value: string }[];
+  value?: string;
+  onChange?: (value: string) => void;
 };
 export type LineProp = {
   lineName: string;
@@ -22,5 +24,5 @@ export type DialogProps = {
   btnName: string;
   title: string;
   children: React.ReactNode;
-  className?:string
+  className?: string;
 };

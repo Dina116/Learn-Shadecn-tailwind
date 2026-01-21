@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -15,7 +13,7 @@ export function SharedDialog(props: DialogProps) {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="default" className="bg-blue-900 hover:bg-blue-800">
+          <Button variant="default" className={props.className}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -39,17 +37,6 @@ export function SharedDialog(props: DialogProps) {
           </DialogHeader>
           <hr className="mt-1 border-gray-200" />
           {props.children}
-
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline" className="border-1 border-blue-900">
-                Cancel
-              </Button>
-            </DialogClose>
-            <Button type="submit" className="bg-blue-900 hover:bg-blue-800">
-              Save changes
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </form>
     </Dialog>

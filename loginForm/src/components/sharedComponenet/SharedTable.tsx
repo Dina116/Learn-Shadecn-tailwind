@@ -10,16 +10,16 @@ import {
 import type { TableProbs } from "@/pages/sharedTypes";
 // import type { TableProbs } from "@/pages/users/types";
 
-export function SharedTable<T extends Record<string, any>>({
-  data,
-  columns,
-}: TableProbs<T>) {
+export function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
     <Table>
       <TableHeader className="bg-blue-900 ">
         <TableRow className="border-b border-white hover:bg-blue-900">
           {columns.map((item) => (
-            <TableHead className=" text-white text-right border-l border-white">
+            <TableHead
+              key={String(item.key)}
+              className=" text-white text-right border-l border-white"
+            >
               {item.label}
             </TableHead>
           ))}
@@ -30,9 +30,14 @@ export function SharedTable<T extends Record<string, any>>({
           <TableRow key={rowIndex}>
             {columns.map((col, colIndex) => {
               const value = row[col.key];
+              console.log("row:", row);
+              console.log("col.key:", col.key);
+              console.log("value:", value);
               return (
                 <TableCell key={colIndex} className={col.className}>
-                  {col.render ? col.render(value, row) : String(value)}
+                  {col.render
+                    ? col.render(value, row, rowIndex)
+                    : String(value)}
                 </TableCell>
               );
             })}

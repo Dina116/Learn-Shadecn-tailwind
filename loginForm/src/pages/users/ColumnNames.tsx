@@ -14,15 +14,15 @@ export const columns: Columns[] = [
     label: "نشط",
   },
   {
-    key: "defaultBranch",
+    key: "defaultbranch",
     label: "الفرع الافتراضي",
   },
   {
-    key: "enterName",
+    key: "entername",
     label: "اسم الدخول",
   },
   {
-    key: "userName",
+    key: "username",
     label: "اسم المستخدم",
   },
 
@@ -33,5 +33,6 @@ export const columns: Columns[] = [
   {
     key: "number",
     label: "م",
+    render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
 ];
