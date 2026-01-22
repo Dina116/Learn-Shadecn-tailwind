@@ -10,7 +10,5 @@ export const formSchema = z.object({
     .min(1, "يجب ادخال اكتر من 20 حرف")
     .max(200, "اقصي عدد مسموح من الحروف 200"),
   status: z.boolean().optional(),
-  canEdit: z.boolean().optional(),
-  canDelete: z.boolean().optional(),
-  canViewReports: z.boolean().optional(),
+  permissions: z.record(z.string(), z.boolean()).optional(),
 });

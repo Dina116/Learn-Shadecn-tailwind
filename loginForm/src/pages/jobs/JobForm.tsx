@@ -21,18 +21,24 @@ import { formSchema } from "./formSchema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import type { jobFormProps } from "./types";
+import { PermissionsScreens } from "./PermissionsScreens";
+import { AccordionGroup } from "./AccordionGroup";
 
 export function JobForm({ onSubmit, defaultValues, onClose }: jobFormProps) {
   const [step, setStep] = useState(1);
+  const defaultPermissions: Record<string, boolean> = {};
+  PermissionsScreens.forEach((group) => {
+    group.permissions.forEach((perm) => {
+      defaultPermissions[perm.key] = false;
+    });
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
       jobname: "",
       description: "",
       status: false,
-      canEdit: false,
-      canDelete: false,
-      canViewReports: false,
+      permissions: defaultPermissions,
     },
   });
 
@@ -41,6 +47,7 @@ export function JobForm({ onSubmit, defaultValues, onClose }: jobFormProps) {
 
   const handleSubmition = (data: z.infer<typeof formSchema>) => {
     onSubmit(data);
+    console.log(data);
     onClose();
   };
 
@@ -127,56 +134,11 @@ export function JobForm({ onSubmit, defaultValues, onClose }: jobFormProps) {
             </FieldGroup>
           )}
           {step === 2 && (
-            <FieldGroup>
-              <Controller
-                name="canEdit"
-                control={form.control}
-                render={({ field }) => (
-                  <Field className="flex flex-row justify-end">
-                    <FieldLabel className="flex-flex-row justify-end text-right">
-                      تعديل
-                    </FieldLabel>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="flex-flex-row justify-end text-right max-w-4"
-                    />
-                  </Field>
-                )}
-              />
-              <Controller
-                name="canDelete"
-                control={form.control}
-                render={({ field }) => (
-                  <Field className="flex flex-row justify-end">
-                    <FieldLabel className="flex-flex-row justify-end text-right">
-                      حذف
-                    </FieldLabel>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="flex-flex-row justify-end text-right max-w-4"
-                    />
-                  </Field>
-                )}
-              />
-              <Controller
-                name="canViewReports"
-                control={form.control}
-                render={({ field }) => (
-                  <Field className="flex flex-row justify-end">
-                    <FieldLabel className="flex-flex-row justify-end text-right">
-                      عرض التقارير
-                    </FieldLabel>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="flex-flex-row justify-end text-right max-w-4"
-                    />
-                  </Field>
-                )}
-              />
-            </FieldGroup>
+            <div className="space-y-3 max-h-[50vh] overflow-y-auto">
+              {PermissionsScreens.map((group) => (
+                <AccordionGroup key={group.name} group={group} form={form} />
+              ))}
+            </div>
           )}
         </form>
       </CardContent>

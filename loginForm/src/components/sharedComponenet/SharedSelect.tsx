@@ -10,11 +10,14 @@ import { Label } from "../ui/label";
 
 export function SelectField(props: SelectProps) {
   return (
-    <div className="flex flex-col items-end gap-2 w-full">
+    <div className="flex flex-col items-end gap-2 w-full" dir="rtl">
       <Label>{props.label}</Label>
-      <Select value={props.value} onValueChange={(val) => {
-          props.onChange?.(val);  
-        }}>
+      <Select
+        value={props.value}
+        onValueChange={(val) => {
+          props.onChange?.(val);
+        }}
+      >
         <SelectTrigger className="w-full">
           <SelectValue placeholder={props.label} className="w-full" />
         </SelectTrigger>
