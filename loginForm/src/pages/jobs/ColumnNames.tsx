@@ -18,8 +18,9 @@ export const columns: Columns[] = [
         <DeleteJobDialog
           onDelete={() => {
             handlers.onDelete(row, rowIndex);
-            console.log("dina");
           }}
+          btnname="🗑️"
+          message="هل أنت متأكد من حذف الوظيفة؟"
         />
       </div>
     ),
