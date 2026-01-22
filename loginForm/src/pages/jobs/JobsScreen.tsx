@@ -1,4 +1,3 @@
-// import Navbar from "../home/header/Navbar";
 import AddJobDialog from "./AddJobDialog";
 import JobsTable from "./JobsTable";
 import { useJobForm } from "./usejobForm";
@@ -6,8 +5,6 @@ import { useJobForm } from "./usejobForm";
 export default function JobsScreen() {
   const { data, handleSubmittion, handleDelete, handleEdit } = useJobForm();
   return (
-    <>
-      {/* <Navbar /> */}
       <div className="p-4 md:p-8 lg:p-12 bg-gray-100 min-h-screen">
         <div className=" flex flex-col md:flex-row justify-end items-center mb-8 text-right ">
           <h6
@@ -23,12 +20,11 @@ export default function JobsScreen() {
           </h6>
         </div>
         <div className="flex flex-row gap-4 justify-end mb-4">
-          <AddJobDialog onSubmit={handleSubmittion} />
+          <AddJobDialog onSubmit={handleSubmittion}  />
         </div>
         <div>
           <JobsTable data={data} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>
-    </>
   );
 }

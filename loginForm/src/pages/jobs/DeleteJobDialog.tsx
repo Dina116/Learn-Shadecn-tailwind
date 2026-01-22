@@ -1,10 +1,5 @@
 import ShortDialog from "@/components/sharedComponenet/ShortDialog";
-
-type DeleteJobDialogProps = {
-  onDelete: () => void;
-  btnname: string;
-  message: string;
-};
+import type { DeleteJobDialogProps } from "./types";
 
 export default function DeleteJobDialog({
   onDelete,

@@ -8,7 +8,7 @@ export const useForm = () => {
     console.log("Login data submitted:", formData);
   };
   const handleEdit = (
-    row: any,
+    row: userFormType,
     rowIndex: number,
     updatedData?: userFormType,
   ) => {
@@ -19,7 +19,7 @@ export const useForm = () => {
     console.log("Updated row:", updatedData);
   };
 
-  const handleDelete = (row: any, rowIndex: number) => {
+  const handleDelete = (row: userFormType, rowIndex: number) => {
     setData((prev) => prev.filter((_, i) => i !== rowIndex));
   };
   return { data, handleSubmittion, handleEdit, handleDelete };

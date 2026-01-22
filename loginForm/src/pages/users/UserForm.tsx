@@ -9,19 +9,14 @@ import {
   selectedItemsPrintData,
   selectItemsCompanyData,
   selectItemsJobsAndUserData,
+  type UserFormProps,
   type userFormType,
 } from "./types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "./userSchema";
 
-
-
-export type UserFormProps = {
-  onSubmit: (formData: userFormType) => void;
-   defaultValues?: userFormType;
-};
-export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
+export const UserForm = ({ onSubmit, defaultValues }: UserFormProps) => {
   const {
     control,
     handleSubmit,
@@ -29,7 +24,7 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
     reset,
   } = useForm<userFormType>({
     resolver: zodResolver(userSchema),
-    defaultValues:defaultValues ||  {
+    defaultValues: defaultValues || {
       jobCode: "",
       username: "",
       password: "",
@@ -48,7 +43,7 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
   };
   return (
     <div className="flex flex-col">
-      <form onSubmit={handleSubmit(handleSubmition)}>
+      <form onSubmit={handleSubmit(handleSubmition)} dir="ltr">
         <div className="flex flex-row justify-between">
           <div className="grid  gap-3">
             <Label className="flex justify-end text-right font-semibold text-sm">
@@ -56,7 +51,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
             </Label>
             <Controller
               control={control}
-              // rules={{ required: "هذا الحقل مطلوب" }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   id="jobCode"
@@ -81,7 +75,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
             </Label>
             <Controller
               control={control}
-              // rules={{ required: "هذا الحقل مطلوب" }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   id="username"
@@ -108,7 +101,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
             </Label>
             <Controller
               control={control}
-              // rules={{ required: "هذا الحقل مطلوب" }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   id="password"
@@ -133,7 +125,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
             </Label>
             <Controller
               control={control}
-              // rules={{ required: "هذا الحقل مطلوب" }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   id="entername"
@@ -156,7 +147,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
         <Line lineName="بيانات الشركة" />
         <Controller
           control={control}
-          // rules={{ required: "هذا الحقل مطلوب" }}
           render={({ field }) => (
             <SelectField
               label="الشركة"
@@ -174,7 +164,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
         )}
         <Controller
           control={control}
-          // rules={{ required: "هذا الحقل مطلوب" }}
           render={({ field }) => (
             <SelectField
               label="الفرع"
@@ -209,7 +198,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
         <Line lineName="الوظيفة والبيانات المرتبطه بالمستخدم" />
         <Controller
           control={control}
-          // rules={{ required: "هذا الحقل مطلوب" }}
           render={({ field }) => (
             <SelectField
               label="تعيين الوظيفة"
@@ -227,7 +215,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
         )}
         <Controller
           control={control}
-          // rules={{ required: "هذا الحقل مطلوب" }}
           render={({ field }) => (
             <SelectField
               label="نوع الطباعه"
@@ -245,7 +232,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
         )}
         <Controller
           control={control}
-          // rules={{ required: "هذا الحقل مطلوب" }}
           render={({ field }) => (
             <SelectField
               label="الاقسام"
@@ -265,7 +251,6 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
           <Label>نشط</Label>
           <Controller
             control={control}
-            // rules={{ required: "هذا الحقل مطلوب" }}
             render={({ field }) => (
               <Checkbox
                 checked={field.value}
@@ -302,17 +287,3 @@ export const UserForm = ({ onSubmit , defaultValues  }: UserFormProps) => {
     </div>
   );
 };
-
-// {
-//   jobCode: string;
-//   username: string;
-//   password: string;
-//   entername: string;
-//   company: string;
-//   branch: string;
-//   defaultbranch: string;
-//   assignjob: string;
-//   printtype: string;
-//   department: string;
-//   status: boolean;
-// };

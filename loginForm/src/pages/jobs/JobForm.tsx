@@ -26,12 +26,8 @@ import {
 import { formSchema } from "./formSchema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import type { jobFormType } from "./types";
+import type { jobFormProps } from "./types";
 
-export type jobFormProps = {
-  onSubmit: (formData: z.infer<typeof formSchema>) => void;
-  defaultValues?: jobFormType;
-};
 export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
   const [step, setStep] = useState(1);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,14 +50,13 @@ export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
   };
 
   return (
-    <Card className="w-full sm:max-w-md">
-      <CardHeader className="flex flex-row justify-end">
+    <Card className="w-full sm:max-w-md border-0 shadow-none" dir="ltr">
+      <CardHeader className="flex flex-row justify-end ">
         <CardTitle className="text-gray-400">
           {step === 1 ? "بيانات الوظيفة" : "صلاحيات الشاشة"}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* // */}
         <form id="form-rhf-demo" onSubmit={form.handleSubmit(handleSubmition)}>
           {step === 1 && (
             <FieldGroup>

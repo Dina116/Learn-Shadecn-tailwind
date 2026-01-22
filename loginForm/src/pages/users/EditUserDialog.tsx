@@ -1,11 +1,8 @@
 import { SharedDialog } from "@/components/sharedComponenet/SharedDialog";
 import { UserForm } from "./UserForm";
-import type { userFormType } from "./types";
+import type { EditUserDialogProps } from "./types";
 
-export type EditUserDialogProps = {
-  rowdata: userFormType;
-  onSubmit: (data: userFormType) => void;
-};
+
 export default function EditUserDialog({
   rowdata,
   onSubmit,

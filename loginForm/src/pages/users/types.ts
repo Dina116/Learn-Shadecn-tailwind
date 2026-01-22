@@ -11,6 +11,24 @@ export type UserCredentails = {
   actions: string;
 };
 export type userFormType = z.infer<typeof userSchema>;
+export type DeleteUserDialogProps = {
+  onDelete: () => void;
+  btnname: string;
+  message: string;
+};
+export type EditUserDialogProps = {
+  rowdata: userFormType;
+  onSubmit: (data: userFormType) => void;
+};
+export type UserFormProps = {
+  onSubmit: (formData: userFormType) => void;
+  defaultValues?: userFormType;
+};
+export type userTableProps = {
+  data: userFormType[];
+  onEdit: (row: userFormType, rowIndex: number) => void;
+  onDelete: (row: userFormType, rowIndex: number) => void;
+};
 
 export const selectItemsCompanyData = [
   {

@@ -11,6 +11,7 @@ export default function AddJobDialog({ onSubmit }: jobFormProps) {
           <JobForm onSubmit={onSubmit} />
         </div>
       }
+      showPlusIcon={true}
     />
   );
 }

@@ -1,17 +1,16 @@
 import { useState } from "react";
-import type { formSchema } from "./formSchema";
-import type z from "zod";
+import type { jobFormType } from "./types";
 
 export const useJobForm = () => {
-  const [data, setData] = useState<z.infer<typeof formSchema>[]>([]);
-  const handleSubmittion = (formData: z.infer<typeof formSchema>) => {
+  const [data, setData] = useState<jobFormType[]>([]);
+  const handleSubmittion = (formData: jobFormType) => {
     setData((prev) => [...prev, formData]);
     console.log("Login data submitted:", formData);
   };
   const handleEdit = (
-    row: any,
+    row: jobFormType,
     rowIndex: number,
-    updatedData?: userFormType,
+    updatedData?: jobFormType,
   ) => {
     if (!updatedData) return;
     setData((prev) =>
@@ -20,7 +19,7 @@ export const useJobForm = () => {
     console.log("Updated row:", updatedData);
   };
 
-  const handleDelete = (row: any, rowIndex: number) => {
+  const handleDelete = (row: jobFormType, rowIndex: number) => {
     setData((prev) => prev.filter((_, i) => i !== rowIndex));
   };
   return { data, handleSubmittion, handleEdit, handleDelete };

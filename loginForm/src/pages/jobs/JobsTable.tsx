@@ -1,12 +1,8 @@
 import { SharedTable } from "@/components/sharedComponenet/SharedTable";
 import { columns } from "./ColumnNames";
-import type { jobFormType } from "./types";
+import type { jobTableProps } from "./types";
 
-export type jobTableProps = {
-  data: jobFormType[];
-  onEdit: (row: jobFormType, rowIndex: number) => void;
-  onDelete: (row: jobFormType, rowIndex: number) => void;
-};
+
 export default function JobsTable({ data, onDelete, onEdit }: jobTableProps) {
   return (
     <SharedTable

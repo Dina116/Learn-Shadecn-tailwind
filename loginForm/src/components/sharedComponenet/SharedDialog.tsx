@@ -35,8 +35,8 @@ export function SharedDialog(props: DialogProps) {
             {props.btnName}
           </Button>
         </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
+        <DialogContent dir="rtl">
+          <DialogHeader dir="rtl">
             <DialogTitle className="text-right mt-5 text-gray-500">
               {props.title}
             </DialogTitle>
