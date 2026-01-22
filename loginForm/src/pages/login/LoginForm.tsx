@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import AuthIconSvg from "./AuthIconSvg";
 
 export default function LoginForm({ onSubmit }: LoginFormProps) {
-  
   const navigation = useNavigate();
   const {
     control,
@@ -85,7 +84,7 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
             <Button
               type="submit"
               variant="default"
-              className="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-12 rounded transition-all duration-200 "
+              className="bg-sky-800 hover:bg-sky-900 text-white font-bold py-2 px-12 rounded transition-all duration-200 "
             >
               تسجيل الدخول
             </Button>

@@ -11,39 +11,45 @@ import type { TableProbs } from "@/pages/sharedTypes";
 
 export function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
-    <Table>
-      <TableHeader className="bg-blue-900 ">
-        <TableRow className="border-b border-white hover:bg-blue-900">
-          {columns.map((item) => (
-            <TableHead
-              key={String(item.key)}
-              className=" text-white text-right border-l border-white"
-            >
-              {item.label}
-            </TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data?.map((row, rowIndex) => (
-          <TableRow key={rowIndex} className=" text-black text-right border-l border-blue-900" >
-            {columns.map((col, colIndex) => {
-              const value = row[col.key];
-              console.log("row:", row);
-              console.log("col.key:", col.key);
-              console.log("value:", value);
-              return (
-                <TableCell key={colIndex} className=" text-black text-right border-l border-blue-900">
-                  {col.render
-                    ? col.render(value, row, rowIndex)
-                    : String(value)}
-                </TableCell>
-              );
-            })}
+      <Table className="bg-white w-full">
+        <TableHeader className="bg-sky-900 ">
+          <TableRow className="border-b border-white hover:bg-sky-900 text-center">
+            {columns.map((item) => (
+              <TableHead
+                key={String(item.key)}
+                className=" text-white text-center border-l border-white"
+              >
+                {item.label}
+              </TableHead>
+            ))}
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter></TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {data?.map((row, rowIndex) => (
+            <TableRow
+              key={rowIndex}
+              className=" text-black text-center border-l border-sky-900 text-center"
+            >
+              {columns.map((col, colIndex) => {
+                const value = row[col.key];
+                console.log("row:", row);
+                console.log("col.key:", col.key);
+                console.log("value:", value);
+                return (
+                  <TableCell
+                    key={colIndex}
+                    className=" text-black text-center border-l border-sky-900"
+                  >
+                    {col.render
+                      ? col.render(value, row, rowIndex)
+                      : String(value)}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter></TableFooter>
+      </Table>
   );
 }

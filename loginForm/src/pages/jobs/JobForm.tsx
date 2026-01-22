@@ -17,18 +17,12 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
 import { formSchema } from "./formSchema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import type { jobFormProps } from "./types";
 
-export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
+export function JobForm({ onSubmit, defaultValues, onClose }: jobFormProps) {
   const [step, setStep] = useState(1);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,6 +41,7 @@ export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
 
   const handleSubmition = (data: z.infer<typeof formSchema>) => {
     onSubmit(data);
+    onClose();
   };
 
   return (
@@ -96,20 +91,11 @@ export function JobForm({ onSubmit, defaultValues }: jobFormProps) {
                     >
                       الوصف
                     </FieldLabel>
-                    <InputGroup>
-                      <InputGroupTextarea
-                        {...field}
-                        id="description"
-                        rows={6}
-                        className="min-h-24 resize-none"
-                        aria-invalid={fieldState.invalid}
-                      />
-                      <InputGroupAddon align="block-end">
-                        <InputGroupText className="tabular-nums">
-                          {field.value.length}/100 characters
-                        </InputGroupText>
-                      </InputGroupAddon>
-                    </InputGroup>
+                    <Input
+                      {...field}
+                      id="description"
+                      aria-invalid={fieldState.invalid}
+                    />
                     {fieldState.invalid && (
                       <FieldError
                         errors={[fieldState.error]}

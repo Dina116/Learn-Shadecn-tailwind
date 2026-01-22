@@ -22,13 +22,6 @@ export const columns: Columns[] = [
           btnname="🗑️"
           message="هل أنت متأكد من حذف الوظيفة؟"
         />
-
-        {/* <button
-          onClick={() => handlers.onDelete(row, rowIndex)}
-          className="hover:bg-red-100 p-1 rounded"
-        >
-          🗑️
-        </button> */}
       </div>
     ),
   },
@@ -41,9 +34,13 @@ export const columns: Columns[] = [
     label: "نشط",
     render: (value: boolean) =>
       value ? (
-        <CheckCircle className="text-green-500 w-5 h-5" />
+        <div className="flex flex-row justify-center items-center">
+          <CheckCircle className="text-green-500 w-5 h-5 text-center" />
+        </div>
       ) : (
-        <XCircle className="text-red-500 w-5 h-5" />
+        <div className="flex flex-row justify-center items-center">
+          <XCircle className="text-red-500 w-5 h-5 text-center" />
+        </div>
       ),
   },
   {
@@ -60,7 +57,7 @@ export const columns: Columns[] = [
   },
 
   {
-    key: "userCode",
+    key: "jobCode",
     label: "كود المستخدم",
   },
   {

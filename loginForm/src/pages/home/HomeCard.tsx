@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
-type HomeCardProps = {
+export type HomeCardProps = {
   children: React.ReactNode;
   title: string;
   subTitle: string;
@@ -14,16 +14,18 @@ export default function HomeCard({
 }: HomeCardProps) {
   return (
     <Card
-      className="shadow-lg w-60 h-60 flex flex-col items-center justify-center
-     p-4 bg-white text-center text-blue-900 hover:text-white hover:bg-blue-900  transition-all rounded-full cursor-pointer"
+      className="shadow-lg w-50 h-50 flex flex-col items-center justify-center
+     p-4 bg-white text-center text-sky-900 hover:text-white hover:bg-sky-900  transition-all rounded-full cursor-pointer"
       onClick={onClick}
     >
-      <CardHeader className="p-0 gap-0 px-2 items-center">
-        {children}
-      </CardHeader>
-      <CardContent className="font-bold text-lg p-0 ">{title}</CardContent>
-      <CardContent className="p-0 gap-0 px-2 items-center text-center text-xs font-normal text-gray-500">
-        {subTitle}
+      <CardContent>
+        <div className="flex flex-col justify-center items-center">
+          <p>{children}</p>
+          <p className="font-bold text-lg p-0 ">{title}</p>
+          <p className="p-0 gap-0 px-2 items-center text-center text-xs font-normal text-gray-500">
+            {subTitle}
+          </p>
+        </div>
       </CardContent>
     </Card>
   );

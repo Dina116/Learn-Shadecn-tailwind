@@ -10,13 +10,18 @@ export default function EditUserDialog({
     <SharedDialog
       btnName=" ✏️"
       title="تعديل مستخدم (SYSTEM)"
-      children={
-        <div className="max-h-[70vh] overflow-y-auto">
-          <JobForm onSubmit={onSubmit} defaultValues={rowdata} />
-        </div>
-      }
       className="bg-gray-100 hover:bg-gray-100 p-1 rounded"
       showPlusIcon={false}
-    />
+    >
+      {(closeDialog: () => void) => (
+        <div className="max-h-[70vh] overflow-y-auto">
+          <JobForm
+            onSubmit={onSubmit}
+            onClose={closeDialog}
+            defaultValues={rowdata}
+          />
+        </div>
+      )}
+    </SharedDialog>
   );
 }

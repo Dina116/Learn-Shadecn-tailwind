@@ -22,6 +22,7 @@ export type EditUserDialogProps = {
 export type jobFormProps = {
   onSubmit: (formData: z.infer<typeof formSchema>) => void;
   defaultValues?: jobFormType;
+  onClose: () => void;
 };
 export type jobTableProps = {
   data: jobFormType[];

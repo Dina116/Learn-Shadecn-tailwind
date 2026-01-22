@@ -23,6 +23,7 @@ export type EditUserDialogProps = {
 export type UserFormProps = {
   onSubmit: (formData: userFormType) => void;
   defaultValues?: userFormType;
+  onClose: () => void;
 };
 export type userTableProps = {
   data: userFormType[];
@@ -64,5 +65,16 @@ export const selectedItemsDepartement = [
   {
     label: "second",
     value: "second",
+  },
+];
+
+export const selectedItemsDefaultBranche = [
+  {
+    label: "التجمع الاول",
+    value: "التجمع الاول",
+  },
+  {
+    label: "القاهرة الجديدة",
+    value: "القاهرة الجديدة",
   },
 ];

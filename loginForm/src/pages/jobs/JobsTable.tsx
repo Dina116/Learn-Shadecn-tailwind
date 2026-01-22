@@ -2,7 +2,6 @@ import { SharedTable } from "@/components/sharedComponenet/SharedTable";
 import { columns } from "./ColumnNames";
 import type { jobTableProps } from "./types";
 
-
 export default function JobsTable({ data, onDelete, onEdit }: jobTableProps) {
   return (
     <SharedTable
@@ -14,7 +13,7 @@ export default function JobsTable({ data, onDelete, onEdit }: jobTableProps) {
                 onEdit: onEdit,
                 onDelete: onDelete,
               })
-          : undefined,
+          : "",
       }))}
       data={data}
     />

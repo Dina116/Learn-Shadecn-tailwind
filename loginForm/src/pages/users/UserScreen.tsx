@@ -24,7 +24,7 @@ export default function UserScreen() {
         <div className="flex flex-row gap-4 justify-end mb-4">
           <Button
             variant="outline"
-            className="text-blue-900 bg-gray-100 border-blue-900 hover:bg-blue-100"
+            className="text-sky-900 bg-gray-100 border-sky-900 hover:bg-sky-100"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,8 @@ export default function UserScreen() {
           </Button>
           <AddUserDialog onSubmit={handleSubmittion} />
         </div>
-        <div>
+        <div className="flex flex-col justify-end  items-end bg-white p-4 rounded-lg shadow-md">
+          <Button className="text-right text-sm bg-sky-800 hover:bg-sky-900 w-19 mb-2 ">طباعة</Button>
           <UsersTable data={data} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>

@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  selectedItemsDefaultBranche,
   selectedItemsDepartement,
   selectedItemsPrintData,
   selectItemsCompanyData,
@@ -16,7 +17,11 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "./userSchema";
 
-export const UserForm = ({ onSubmit, defaultValues }: UserFormProps) => {
+export const UserForm = ({
+  onSubmit,
+  defaultValues,
+  onClose,
+}: UserFormProps) => {
   const {
     control,
     handleSubmit,
@@ -40,6 +45,7 @@ export const UserForm = ({ onSubmit, defaultValues }: UserFormProps) => {
   });
   const handleSubmition = (data: userFormType) => {
     onSubmit(data);
+    onClose();
   };
   return (
     <div className="flex flex-col">
@@ -184,6 +190,7 @@ export const UserForm = ({ onSubmit, defaultValues }: UserFormProps) => {
           render={({ field }) => (
             <SelectField
               label="الفرع الافتراضي"
+              selectItems={selectedItemsDefaultBranche}
               value={field.value}
               onChange={field.onChange}
             />
@@ -271,7 +278,10 @@ export const UserForm = ({ onSubmit, defaultValues }: UserFormProps) => {
             type="reset"
             variant="outline"
             className="border-1 border-blue-900"
-            onClick={() => reset()}
+            onClick={() => {
+              reset();
+              onClose();
+            }}
           >
             إلغاء
           </Button>

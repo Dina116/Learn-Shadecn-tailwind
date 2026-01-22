@@ -30,9 +30,13 @@ export const columns: Columns[] = [
     label: "نشط",
     render: (value: boolean) =>
       value ? (
-        <CheckCircle className="text-green-500 w-5 h-5" />
+        <div className="flex flex-row justify-center items-center">
+          <CheckCircle className="text-green-500 w-5 h-5 text-center" />
+        </div>
       ) : (
-        <XCircle className="text-red-500 w-5 h-5" />
+        <div className="flex flex-row justify-center items-center">
+          <XCircle className="text-red-500 w-5 h-5 text-center" />
+        </div>
       ),
   },
   {
