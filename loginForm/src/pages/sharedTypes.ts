@@ -26,4 +26,5 @@ export type DialogProps = {
   children?: React.ReactNode | ((closeDialog: () => void) => React.ReactNode);
   className?: string;
   showPlusIcon?: boolean;
+  iconChildren: React.ReactNode;
 };

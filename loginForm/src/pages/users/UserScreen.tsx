@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { UsersTable } from "./UsersTable";
 import AddUserDialog from "./AddUserDialog";
 import { useForm } from "./useForm";
+import ConnentUserstoJobs from "./connentuserstojobs/ConnentUserstoJobs";
 
 export default function UserScreen() {
   const { data, handleSubmittion, handleDelete, handleEdit } = useForm();
@@ -22,7 +23,8 @@ export default function UserScreen() {
           </h6>
         </div>
         <div className="flex flex-row gap-4 justify-end mb-4">
-          <Button
+          <ConnentUserstoJobs />
+          {/* <Button
             variant="outline"
             className="text-sky-900 bg-gray-100 border-sky-900 hover:bg-sky-100"
           >
@@ -39,11 +41,13 @@ export default function UserScreen() {
               />
             </svg>
             ربط مجموعة مستخدمين علي وظائف
-          </Button>
+          </Button> */}
           <AddUserDialog onSubmit={handleSubmittion} />
         </div>
         <div className="flex flex-col justify-end  items-end bg-white p-4 rounded-lg shadow-md">
-          <Button className="text-right text-sm bg-sky-800 hover:bg-sky-900 w-19 mb-2 ">طباعة</Button>
+          <Button className="text-right text-sm bg-sky-800 hover:bg-sky-900 w-19 mb-2 ">
+            طباعة
+          </Button>
           <UsersTable data={data} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
       </div>

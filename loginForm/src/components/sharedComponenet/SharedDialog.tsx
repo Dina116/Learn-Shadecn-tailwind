@@ -32,6 +32,7 @@ export function SharedDialog(props: DialogProps) {
                 />
               </svg>
             )}
+            {props.iconChildren}
             {props.btnName}
           </Button>
         </DialogTrigger>

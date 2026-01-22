@@ -23,7 +23,7 @@ export type EditUserDialogProps = {
 export type UserFormProps = {
   onSubmit: (formData: userFormType) => void;
   defaultValues?: userFormType;
-  onClose: () => void;
+  onClose?: () => void;
 };
 export type userTableProps = {
   data: userFormType[];
