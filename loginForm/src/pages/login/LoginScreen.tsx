@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import LoginForm from "./LoginForm";
-import { useLogin } from "./useLogin";
+import {useLoginStore } from "./useLoginStore";
 import LoginImage from "./LoginImage";
 
 export default function LoginScreen() {
-  const { handleLogin } = useLogin();
+ const handleLogin = useLoginStore((state) => state.handleLogin);
   return (
     <div className="flex flex-row min-h-screen bg-white">
       <LoginImage />
