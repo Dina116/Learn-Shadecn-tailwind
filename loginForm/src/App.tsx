@@ -6,22 +6,21 @@ import AssignReportsScreen from "./pages/assignreports/AssignReportsScreen";
 import ManageDepartmentScreen from "./pages/managedepartment/ManageDepartmentScreen";
 import CompanyInfoScreen from "./pages/CompanyInfo/CompanyInfoScreen";
 import Layout from "./pages/sidebar/Layout";
+import JobsScreen from "./pages/jobs/JobsScreen";
 
 function App() {
   return (
-      <Routes>
-        <Route path="/" element={<LoginScreen />} />
-        <Route element={<Layout />}>
-          <Route path="/home" element={<HomeScreen />} />
-          <Route path="/users" element={<UserScreen />} />
-          <Route path="/assignreports" element={<AssignReportsScreen />} />
-          <Route
-            path="/managedepartment"
-            element={<ManageDepartmentScreen />}
-          />
-          <Route path="/companyinfo" element={<CompanyInfoScreen />} />
-        </Route>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<LoginScreen />} />
+      <Route element={<Layout />}>
+        <Route path="/home" element={<HomeScreen />} />
+        <Route path="/users" element={<UserScreen />} />
+        <Route path="/jobs" element={<JobsScreen />} />
+        <Route path="/assignreports" element={<AssignReportsScreen />} />
+        <Route path="/managedepartment" element={<ManageDepartmentScreen />} />
+        <Route path="/companyinfo" element={<CompanyInfoScreen />} />
+      </Route>
+    </Routes>
   );
 }
 

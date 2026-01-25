@@ -13,6 +13,7 @@ export default function AddJobDialog({ onSubmit }: jobFormProps) {
       //   </div>
       // }
       showPlusIcon={true}
+      iconChildren={undefined}
     >
       {(closeDialog: () => void) => (
         <div className="max-h-[70vh] overflow-y-auto">
