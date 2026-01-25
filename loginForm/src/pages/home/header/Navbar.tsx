@@ -1,41 +1,47 @@
 import { useLocation } from "react-router-dom";
-import Menu from "./Menu";
+// import Menu from "./Menu";
 import { useNavbar } from "./useNavbar";
 import LogOutPopover from "./LogOutPopover";
+import type React from "react";
 
-export default function Navbar() {
+type NavbarProps = {
+  // onToggleSidebar: () => void;
+  children: React.ReactNode;
+};
+export default function Navbar({ children }: NavbarProps) {
   const location = useLocation();
-
   const { isDropdownOpen, setDropdownOpen, dropdownRef } = useNavbar();
 
   if (location.pathname === "/") return null;
   return (
-    <header className="fixed w-full z-20 top-0 start-0 bg-sky-700 shadow-md">
-      <nav className="bg-neutral-primary">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w- p-2">
-          <div className="flex items-center gap-1">
-            <span className="text-xs text-white ">SYSTEM</span>
-            <div
-              className="relative flex items-center justify-center text-white rounded-full w-3 h-2 mb-3"
-              ref={dropdownRef}
-            >
+    <>
+      <header className="fixed w-full z-20 top-0 start-0 bg-sky-700 shadow-md">
+        <nav className="bg-neutral-primary">
+          <div className="flex flex-wrap justify-between items-center mx-auto max-w- p-2">
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-white ">SYSTEM</span>
               <div
-                className="w-5 h-5  "
-                onClick={() => setDropdownOpen(!isDropdownOpen)}
+                className="relative flex items-center justify-center text-white rounded-full w-3 h-2 mb-3"
+                ref={dropdownRef}
               >
-                <LogOutPopover />
+                <div
+                  className="w-5 h-5  "
+                  onClick={() => setDropdownOpen(!isDropdownOpen)}
+                >
+                  <LogOutPopover />
+                </div>
               </div>
             </div>
+            <div className="flex flex-row">
+              <span className="flex justify-end items-center self-center text-sm text-white font-semibold whitespace-nowrap">
+                <span className="text-xs text-yellow-300 ml-2">(v3.9.5)</span>{" "}
+                المنظومة الموحدة لإدارة صلاحيات المستخدمين
+              </span>
+              {children}
+            </div>
           </div>
-          <div className="flex flex-row">
-            <span className="flex justify-end items-center self-center text-sm text-white font-semibold whitespace-nowrap">
-              <span className="text-xs text-yellow-300 ml-2">(v3.9.5)</span>{" "}
-              المنظومة الموحدة لإدارة صلاحيات المستخدمين
-            </span>
-            <Menu />
-          </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   );
 }

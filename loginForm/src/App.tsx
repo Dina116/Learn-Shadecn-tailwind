@@ -2,20 +2,26 @@ import { Route, Routes } from "react-router-dom";
 import LoginScreen from "./pages/login/LoginScreen";
 import HomeScreen from "./pages/home/HomeScreen";
 import UserScreen from "./pages/users/UserScreen";
-import JobsScreen from "./pages/jobs/JobsScreen";
-import Navbar from "./pages/home/header/Navbar";
+import AssignReportsScreen from "./pages/assignreports/AssignReportsScreen";
+import ManageDepartmentScreen from "./pages/managedepartment/ManageDepartmentScreen";
+import CompanyInfoScreen from "./pages/CompanyInfo/CompanyInfoScreen";
+import Layout from "./pages/sidebar/Layout";
 
 function App() {
   return (
-    <>
-      <Navbar />
       <Routes>
         <Route path="/" element={<LoginScreen />} />
-        <Route path="/home" element={<HomeScreen />} />
-        <Route path="/jobs" element={<JobsScreen />} />
-        <Route path="/users" element={<UserScreen />} />
+        <Route element={<Layout />}>
+          <Route path="/home" element={<HomeScreen />} />
+          <Route path="/users" element={<UserScreen />} />
+          <Route path="/assignreports" element={<AssignReportsScreen />} />
+          <Route
+            path="/managedepartment"
+            element={<ManageDepartmentScreen />}
+          />
+          <Route path="/companyinfo" element={<CompanyInfoScreen />} />
+        </Route>
       </Routes>
-    </>
   );
 }
 
