@@ -159,47 +159,54 @@ export default function Sidebar() {
         {menuItems.map((item) => {
           const isActive = location.pathname === item.url;
           return (
-            <ListItem key={item.title} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                component={Link}
-                to={item.url}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                  py: 1.5,
-                  flexDirection: "row-reverse", // لعكس ترتيب الأيقونة والنص
-                  bgcolor: isActive ? "primary.light" : "transparent",
-                  color: isActive ? "primary.contrastText" : "inherit",
-                  borderLeft: isActive
-                    ? `4px solid ${theme.palette.primary.main}`
-                    : "none",
-                  "&:hover": {
-                    bgcolor: isActive ? "primary.light" : "action.hover",
-                  },
-                }}
+            <>
+              <ListItem
+                key={item.title}
+                disablePadding
+                sx={{ display: "block" }}
               >
-                <ListItemIcon
+                <ListItemButton
+                  component={Link}
+                  to={item.url}
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 2 : "auto", // عكس الهامش ليكون على اليمين
-                    justifyContent: "center",
-                    color: isActive ? theme.palette.primary.main : "#456dda",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                    py: 1.5,
+                    flexDirection: "row-reverse",
+                    bgcolor: isActive ? "primary.light" : "transparent",
+                    color: isActive ? "primary.contrastText" : "inherit",
+                    borderLeft: isActive
+                      ? `4px solid ${theme.palette.primary.main}`
+                      : "none",
+                    "&:hover": {
+                      bgcolor: isActive ? "primary.light" : "action.hover",
+                    },
                   }}
                 >
-                  <item.icon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.title}
-                  sx={{
-                    opacity: open ? 1 : 0,
-                    textAlign: "right", // لمحاذاة النص إلى اليمين
-                    color: isActive ? theme.palette.primary.main : "inherit",
-                    fontWeight: isActive ? "bold" : "regular",
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 2 : "auto", // عكس الهامش ليكون على اليمين
+                      justifyContent: "center",
+                      color: isActive ? theme.palette.primary.main : "#456dda",
+                    }}
+                  >
+                    <item.icon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.title}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      textAlign: "right", // لمحاذاة النص إلى اليمين
+                      color: isActive ? theme.palette.primary.main : "inherit",
+                      fontWeight: isActive ? "bold" : "regular",
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </>
           );
         })}
       </List>

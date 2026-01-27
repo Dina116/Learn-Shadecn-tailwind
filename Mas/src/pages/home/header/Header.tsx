@@ -3,11 +3,11 @@ import LogOutPopover from "./LogOutPopover";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerStore } from "./useDrawerStore";
-export  const drawerWidth = 200;
+export const drawerWidth = 200;
 export default function Header() {
   const location = useLocation();
 
-  const {open,setOpen}=useDrawerStore()
+  const { open, setOpen } = useDrawerStore();
 
   if (location.pathname === "/") return null;
   return (
@@ -33,7 +33,7 @@ export default function Header() {
               <IconButton
                 size="small"
                 onClick={() => setOpen(true)}
-                sx={{ color: "white" }}
+                sx={{ color: "white"}}
               >
                 <MenuIcon fontSize="small" />
               </IconButton>
