@@ -1,68 +1,64 @@
-import OutlinedCard from "../../componenet/shared/OutlinedCard";
-import GroupsIcon from "@mui/icons-material/Groups";
+import OutlinedCard from "../../../componenet/shared/OutlinedCard";
 import {
   accountTree,
+  constructionIcon,
   directionIcon,
   gasIcon,
+  groupIcon,
   homeIcon,
+  moneyIcon,
   phoneIcon,
   userIcon,
-} from "./CardsIcons";
+} from "../CardsIcons";
 
-
-const groupIcon = (
-  <GroupsIcon
-    sx={{
-      position: "absolute",
-      left: 16,
-      top: -15,
-      color: "rgb(12 74 110)",
-      fontSize: "2rem",
-      backgroundColor: "rgb(185, 210, 225)",
-      borderRadius: "50%",
-      padding: "4px",
-    }}
-  />
-);
 const cardItems = [
   {
-    content: "لوحة التحكم الرئيسية",
+    content: "الكشافين",
     children: groupIcon,
+    path: "/scouts",
+  },
+  {
+    content: "المستخدمين",
+    children: userIcon,
     path: "",
   },
   {
-    content: "ادارة النظام",
-    children: userIcon,
-    path: "/systemManagement",
-  },
-  {
-    content: "صيانه النظام",
+    content: "الوحدات المحمولة",
     children: phoneIcon,
     path: "",
   },
   {
-    content: "معالجة البيانات",
+    content: "الانشطة الاستهلاكية",
     children: homeIcon,
     path: "",
   },
   {
-    content: "سجل صيانة الاجهزة",
+    content: "المجموعات الحسابية",
     children: accountTree,
     path: "",
   },
   {
-    content: "المسح الميداني",
+    content: "مسارات التحصيل",
     children: directionIcon,
     path: "",
   },
   {
-    content: "ادارة تنشيط التحصيل",
+    content: "مسارات القراءات",
     children: gasIcon,
     path: "",
   },
-  
+  {
+    content: "اجراءات الاجهزة",
+    children: constructionIcon,
+    path: "",
+  },
+  {
+    content: "الخزينة",
+    children: moneyIcon,
+    path: "",
+  },
 ];
-export default function ReadingScreen() {
+export default function SystemManagementScreen() {
   return (
     <div className="w-screen h-screen flex justify-end bg-gray-100">
       <div className="flex flex-col gap-5">
@@ -75,7 +71,7 @@ export default function ReadingScreen() {
       bg-[length:100%_3px]  
       bg-bottom"
           >
-            القراءات والتحصيل
+            إدارة النظام
           </h6>
         </div>
         <div className="flex flex-row-reverse flex-wrap justify-start gap-8 px-10">

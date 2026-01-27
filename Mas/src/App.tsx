@@ -6,6 +6,8 @@ import LoginScreen from "./pages/login/LoginScreen";
 import { Route, Routes } from "react-router-dom";
 import ReadingScreen from "./pages/Readings and Achievement/ReadingScreen";
 import TreasuryScreen from "./pages/treasury/TreasuryScreen";
+import SystemManagementScreen from "./pages/Readings and Achievement/systemmanagement/SystemManagementScreen";
+import ScoutsScreen from "./pages/Readings and Achievement/systemmanagement/scouts/ScoutsScreen";
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/search" element={<InquiriesScreen />} />
         <Route path="/support" element={<CustomerServiceScreen />} />
-        <Route path="/readings" element={<ReadingScreen />} />
+        <Route path="/readings" element={<ReadingScreen />}></Route>
         <Route path="/treasury" element={<TreasuryScreen />} />
+        <Route path="/systemManagement" element={<SystemManagementScreen />} />
+        <Route path="/scouts" element={<ScoutsScreen />} />
       </Route>
     </Routes>
   );

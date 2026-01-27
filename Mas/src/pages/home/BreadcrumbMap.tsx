@@ -7,6 +7,8 @@ const BreadcrumbMap: Record<string, string> = {
   "/support": "خدمة العملاء",
   "/readings": "القراءات و التحصيل",
   "/treasury": "الخزينة",
+  "/systemManagement": "ادارة النظام",
+  "/scouts": "سجل الكشافيين",
 };
 
 export default function Breadcrumb() {
@@ -21,7 +23,7 @@ export default function Breadcrumb() {
         <>
           <span className="mx-1">/</span>
           <span className="text-gray-500">{currentPage}</span>
-          <Divider/>
+          <Divider />
         </>
       )}
     </div>

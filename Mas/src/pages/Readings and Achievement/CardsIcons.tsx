@@ -5,7 +5,37 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import GasMeterIcon from "@mui/icons-material/GasMeter";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
+export const moneyIcon = (
+  <MonetizationOnIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const constructionIcon = (
+  <ConstructionIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
 export const gasIcon = (
   <GasMeterIcon
     sx={{
