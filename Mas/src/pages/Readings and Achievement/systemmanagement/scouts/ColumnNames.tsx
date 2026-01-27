@@ -1,26 +1,29 @@
 import type { Columns } from "../../../SharedTypes";
+import DeleteScoutsDialog from "./DeleteScoutsDialog";
+import { XCircle, CheckCircle } from "lucide-react";
 
 export const columns: Columns[] = [
   {
     key: "actions",
     label: "الاجراءات",
-    // render: (_value: any, row: any, rowIndex: number, handlers: any) => (
-    //   <div className="flex gap-2 justify-end text-lg">
-    //     <EditUserDialog
-    //       rowdata={row}
-    //       onSubmit={(updatedData) =>
-    //         handlers.onEdit(row, rowIndex, updatedData)
-    //       }
-    //     />
-    //     <DeleteUserDialog
-    //       onDelete={() => {
-    //         handlers.onDelete(row, rowIndex);
-    //       }}
-    //       btnname="🗑️"
-    //       message="هل أنت متأكد من حذف الوظيفة؟"
-    //     />
-    //   </div>
-    // ),
+    render: (_value: any, row: any, rowIndex: number, handlers: any) => (
+      <div className="flex gap-2 justify-end text-lg">
+        {/* <EditUserDialog
+          rowdata={row}
+          onSubmit={(updatedData) =>
+            handlers.onEdit(row, rowIndex, updatedData)
+          }
+        /> */}
+        <DeleteScoutsDialog
+          // onDelete={() => {
+          //   handlers.onDelete(row, rowIndex);
+          // }}
+          btnname="🗑️"
+          title="رسالة حذف"
+          content="هل أنت متأكد من حذف الوظيفة؟"
+        />
+      </div>
+    ),
   },
   {
     key: "status",
