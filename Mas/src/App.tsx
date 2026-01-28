@@ -10,6 +10,9 @@ import SystemManagementScreen from "./pages/Readings and Achievement/systemmanag
 import ScoutsScreen from "./pages/Readings and Achievement/systemmanagement/scouts/ScoutsScreen";
 import UsersScreen from "./pages/Readings and Achievement/systemmanagement/users/UsersScreen";
 import PortalPhonesScreen from "./pages/Readings and Achievement/systemmanagement/portalphones/PortalPhonesScreen";
+import ConsumerActivitiesScreen from "./pages/Readings and Achievement/systemmanagement/consumeractivities/ConsumerActivitiesScreen";
+import AccountingGroupsScreen from "./pages/Readings and Achievement/systemmanagement/accountinggroups/AccountingGroupsScreen";
+import BellingSystemScreen from "./pages/Readings and Achievement/systemmanagement/bellingsystem/BellingSystemScreen";
 
 function App() {
   return (
@@ -25,6 +28,12 @@ function App() {
         <Route path="/scouts" element={<ScoutsScreen />} />
         <Route path="/users" element={<UsersScreen />} />
         <Route path="/portalphones" element={<PortalPhonesScreen />} />
+        <Route
+          path="/consumeractivities"
+          element={<ConsumerActivitiesScreen />}
+        />
+        <Route path="/accountinggroups" element={<AccountingGroupsScreen />} />
+        <Route path="/bellingsystem" element={<BellingSystemScreen />} />
       </Route>
     </Routes>
   );

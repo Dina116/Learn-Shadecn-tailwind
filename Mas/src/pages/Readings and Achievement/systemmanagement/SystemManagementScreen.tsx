@@ -30,17 +30,17 @@ const cardItems = [
   {
     content: "الانشطة الاستهلاكية",
     children: homeIcon,
-    path: "",
+    path: "/consumeractivities",
   },
   {
     content: "المجموعات الحسابية",
     children: accountTree,
-    path: "",
+    path: "/accountinggroups",
   },
   {
     content: "مسارات التحصيل",
     children: directionIcon,
-    path: "",
+    path: "/bellingsystem",
   },
   {
     content: "مسارات القراءات",
