@@ -9,6 +9,7 @@ import TreasuryScreen from "./pages/treasury/TreasuryScreen";
 import SystemManagementScreen from "./pages/Readings and Achievement/systemmanagement/SystemManagementScreen";
 import ScoutsScreen from "./pages/Readings and Achievement/systemmanagement/scouts/ScoutsScreen";
 import UsersScreen from "./pages/Readings and Achievement/systemmanagement/users/UsersScreen";
+import PortalPhonesScreen from "./pages/Readings and Achievement/systemmanagement/portalphones/PortalPhonesScreen";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/systemManagement" element={<SystemManagementScreen />} />
         <Route path="/scouts" element={<ScoutsScreen />} />
         <Route path="/users" element={<UsersScreen />} />
+        <Route path="/portalphones" element={<PortalPhonesScreen />} />
       </Route>
     </Routes>
   );

@@ -1,9 +1,8 @@
-// import { Button } from "@mui/material";
-import ScoutsTable from "./ScoutsTable";
+import AddPortalDialog from "./AddPortalDialog";
+import PortalTable from "./PortalTable";
 import { useForm } from "./useForm";
-import AddScoutsDialog from "./AddScoutsDialog";
 
-export default function ScoutsScreen() {
+export default function PortalPhonesScreen() {
   const { data, handleDelete, handleEdit, handleSubmittion } = useForm();
   return (
     <div className="w-screen h-screen bg-gray-100 pe-8">
@@ -17,15 +16,12 @@ export default function ScoutsScreen() {
         bg-[length:100%_3px]  
         bg-bottom"
           >
-            سجل الكشافيين
+            الوحدات المحمولة
           </h6>
         </div>
-        <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-2 ">
-          {/* <div className="flex flex-row gap-4 justify-end">
-           
-          </div> */}
-          <AddScoutsDialog onSubmit={handleSubmittion} />
-          <ScoutsTable
+        <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-2 ps-2 ">
+          <AddPortalDialog onSubmit={handleSubmittion} />
+          <PortalTable
             data={data}
             onDelete={handleDelete}
             onEdit={handleEdit}

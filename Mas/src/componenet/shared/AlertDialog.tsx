@@ -32,7 +32,18 @@ export default function AlertDialog({
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button
+        variant="outlined" 
+        onClick={handleClickOpen}
+        size="small"
+        sx={{
+          height: 30,
+          border: "none", 
+          "&:hover": {
+            border: "none",
+          },
+        }}
+      >
         {btnname}
       </Button>
       <Dialog

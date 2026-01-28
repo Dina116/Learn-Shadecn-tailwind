@@ -10,6 +10,7 @@ const BreadcrumbMap: Record<string, string> = {
   "/systemManagement": "ادارة النظام",
   "/scouts": "سجل الكشافيين",
   "/users": "سجل المستخدمين",
+  "/portalphones": "الوحدات المحمولة",
 };
 
 export default function Breadcrumb() {

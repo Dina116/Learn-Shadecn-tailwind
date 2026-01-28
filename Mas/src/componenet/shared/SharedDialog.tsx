@@ -10,6 +10,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 export interface SharedDialogProps {
+  btnname?: string;
   open: boolean;
   onClose: () => void;
   title: string;

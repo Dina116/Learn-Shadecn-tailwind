@@ -25,7 +25,7 @@ const cardItems = [
   {
     content: "الوحدات المحمولة",
     children: phoneIcon,
-    path: "",
+    path: "/portalphones",
   },
   {
     content: "الانشطة الاستهلاكية",
