@@ -1,6 +1,5 @@
 import type { Columns } from "../../../SharedTypes";
 import DeleteScoutsDialog from "./DeleteScoutsDialog";
-import { XCircle, CheckCircle } from "lucide-react";
 
 export const columns: Columns[] = [
   {

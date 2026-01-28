@@ -20,7 +20,7 @@ const cardItems = [
   {
     content: "المستخدمين",
     children: userIcon,
-    path: "",
+    path: "/users",
   },
   {
     content: "الوحدات المحمولة",

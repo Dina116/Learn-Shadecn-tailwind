@@ -9,6 +9,7 @@ const BreadcrumbMap: Record<string, string> = {
   "/treasury": "الخزينة",
   "/systemManagement": "ادارة النظام",
   "/scouts": "سجل الكشافيين",
+  "/users": "سجل المستخدمين",
 };
 
 export default function Breadcrumb() {
