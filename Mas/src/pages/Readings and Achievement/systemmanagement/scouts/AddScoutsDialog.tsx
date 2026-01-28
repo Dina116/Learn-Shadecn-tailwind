@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
-import ScoutForm, { type ScoutFormProps } from "./ScoutsForm";
+import ScoutForm, { type ScoutsFormRef } from "./ScoutsForm";
+import type { scoutsFormType } from "./scoutstypes";
 
-export default function AddScoutsDialog({ onSubmit }: ScoutFormProps) {
+interface AddScoutsDialogProps {
+  onSubmit: (data: scoutsFormType) => void;
+}
+export default function AddScoutsDialog({ onSubmit }: AddScoutsDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const formRef = useRef<ScoutsFormRef>(null);
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -14,13 +19,20 @@ export default function AddScoutsDialog({ onSubmit }: ScoutFormProps) {
     setIsDialogOpen(false);
   };
 
+  const handleFormSubmit = (data: scoutsFormType) => {
+    console.log("Data received in Dialog from Form:", data);
+    onSubmit(data);
+    handleCloseDialog();
+  };
   const handleSave = () => {
     console.log("يتم الحفظ...");
-    handleCloseDialog();
+    if (formRef.current) {
+      formRef.current.submit();
+    }
   };
 
   return (
-    <Box sx={{ padding: 4  }}>
+    <Box sx={{ paddingTop: 1, mb: 1 }}>
       <Button variant="contained" onClick={handleOpenDialog}>
         إضافة كشاف جديد
       </Button>
@@ -28,7 +40,7 @@ export default function AddScoutsDialog({ onSubmit }: ScoutFormProps) {
         open={isDialogOpen}
         onClose={handleCloseDialog}
         title="إضافة كشاف جديد"
-        maxWidth="md"
+        maxWidth="sm"
         primaryAction={{
           text: "حفظ",
           onClick: handleSave,
@@ -38,7 +50,7 @@ export default function AddScoutsDialog({ onSubmit }: ScoutFormProps) {
           onClick: handleCloseDialog,
         }}
       >
-        <ScoutForm onSubmit={onSubmit} />
+        <ScoutForm onSubmit={handleFormSubmit} ref={formRef} />
       </SharedDialog>
     </Box>
   );

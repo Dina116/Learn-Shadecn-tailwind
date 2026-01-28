@@ -40,7 +40,7 @@ export default function SharedDialog({
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
-      fullWidth
+      // fullWidth
       dir="rtl"
     >
       <DialogTitle

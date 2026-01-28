@@ -6,5 +6,5 @@ export interface Columns<T> {
 }
 export type TableProbs<T> = {
   columns: Columns<T>[];
-  data?: T[];
+  data: T[];
 };
