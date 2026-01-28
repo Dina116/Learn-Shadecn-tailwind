@@ -10,4 +10,7 @@ export const ScoutesSchema = z.object({
   type: z.string(),
   phone1: z.number().optional(),
   phone2: z.number().optional(),
+  portalPhones: z.string(),
+  username: z.string(),
+  password: z.string(),
 });
