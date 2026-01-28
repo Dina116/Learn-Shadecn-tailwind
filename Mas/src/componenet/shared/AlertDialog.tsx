@@ -11,11 +11,13 @@ export type AlertDialogProps = {
   btnname: string;
   title: string;
   content: string;
+  onDelete: () => void;
 };
 export default function AlertDialog({
   btnname,
   content,
   title,
+  onDelete,
 }: AlertDialogProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -25,6 +27,7 @@ export default function AlertDialog({
 
   const handleClose = () => {
     setOpen(false);
+    onDelete();
   };
 
   return (

@@ -15,9 +15,9 @@ export const columns: Columns[] = [
           }
         /> */}
         <DeleteScoutsDialog
-          // onDelete={() => {
-          //   handlers.onDelete(row, rowIndex);
-          // }}
+          onDelete={() => {
+            handlers.onDelete(row, rowIndex);
+          }}
           btnname="🗑️"
           title="رسالة حذف"
           content="هل أنت متأكد من حذف الوظيفة؟"
