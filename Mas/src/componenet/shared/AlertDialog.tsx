@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Divider } from "@mui/material";
 
 export type AlertDialogProps = {
   btnname: string;
@@ -37,13 +38,33 @@ export default function AlertDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        <DialogTitle
+          id="alert-dialog-title"
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "end",
+            color: "gray",
+          }}
+        >
+          {title}
+        </DialogTitle>
+        <Divider sx={{ color: "gray" }} />
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText
+            id="alert-dialog-description"
+            sx={{ color: "black", fontWeight: "bold" }}
+          >
             {content}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "start",
+          }}
+        >
           <Button
             onClick={handleClose}
             sx={{ border: 1, borderColor: "red" }}
@@ -51,7 +72,7 @@ export default function AlertDialog({
           >
             الغاء
           </Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleClose} autoFocus variant="contained">
             حفظ
           </Button>
         </DialogActions>
