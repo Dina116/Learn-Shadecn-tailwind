@@ -13,6 +13,7 @@ import PortalPhonesScreen from "./pages/Readings and Achievement/systemmanagemen
 import ConsumerActivitiesScreen from "./pages/Readings and Achievement/systemmanagement/consumeractivities/ConsumerActivitiesScreen";
 import AccountingGroupsScreen from "./pages/Readings and Achievement/systemmanagement/accountinggroups/AccountingGroupsScreen";
 import BellingSystemScreen from "./pages/Readings and Achievement/systemmanagement/bellingsystem/BellingSystemScreen";
+import ReadingPathsScreen from "./pages/Readings and Achievement/systemmanagement/readingpaths/ReadingPathsScreen";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         />
         <Route path="/accountinggroups" element={<AccountingGroupsScreen />} />
         <Route path="/bellingsystem" element={<BellingSystemScreen />} />
+        <Route path="/readingpaths" element={<ReadingPathsScreen />} />
       </Route>
     </Routes>
   );

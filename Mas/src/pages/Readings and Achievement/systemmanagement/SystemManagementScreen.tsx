@@ -45,7 +45,7 @@ const cardItems = [
   {
     content: "مسارات القراءات",
     children: gasIcon,
-    path: "",
+    path: "/readingpaths",
   },
   {
     content: "اجراءات الاجهزة",
