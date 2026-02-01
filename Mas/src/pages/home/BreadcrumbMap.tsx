@@ -21,7 +21,19 @@ export default function Breadcrumb() {
   const location = useLocation();
 
   const pathnames = location.pathname.split("/").filter((x) => x);
-
+  const commonStyles = {
+    fontWeight: "bold",
+    fontSize: "0.875rem",
+  };
+  if (pathnames.length === 0) {
+    return (
+      <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 1, direction: "rtl" }}>
+        <Typography sx={{ ...commonStyles, color: "text.secondary" }}>
+          الرئيسية
+        </Typography>
+      </Breadcrumbs>
+    );
+  }
   return (
     <Breadcrumbs
       aria-label="breadcrumb"
@@ -33,22 +45,45 @@ export default function Breadcrumb() {
         direction: "rtl",
       }}
     >
-      <Link component={RouterLink} to="/" underline="hover">
+      <Link
+        component={RouterLink}
+        to="/home"
+        underline="hover"
+        sx={{ ...commonStyles, color: "black" }}
+      >
         الرئيسية
       </Link>
 
       {pathnames.map((value, index) => {
         const to = `/${pathnames.slice(0, index + 1).join("/")}`;
         const isLast = index === pathnames.length - 1;
-
         const label = BreadcrumbMap[value] || value;
 
-        return isLast ? (
-          <Typography key={to} color="text.primary">
-            {label}
-          </Typography>
-        ) : (
-          <Link key={to} component={RouterLink} to={to} underline="hover">
+        if (isLast) {
+          return (
+            <Typography
+              key={to}
+              sx={{
+                ...commonStyles,
+                color: "text.secondary",
+              }}
+            >
+              {label}
+            </Typography>
+          );
+        }
+
+        return (
+          <Link
+            key={to}
+            component={RouterLink}
+            to={to}
+            underline="hover"
+            sx={{
+              ...commonStyles,
+              color: "black",
+            }}
+          >
             {label}
           </Link>
         );
