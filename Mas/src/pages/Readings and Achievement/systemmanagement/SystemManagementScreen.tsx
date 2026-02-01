@@ -1,3 +1,4 @@
+import { Outlet, useLocation } from "react-router-dom";
 import OutlinedCard from "../../../componenet/shared/OutlinedCard";
 import {
   accountTree,
@@ -15,79 +16,86 @@ const cardItems = [
   {
     content: "الكشافين",
     children: groupIcon,
-    path: "/scouts",
+    path: "scouts",
   },
   {
     content: "المستخدمين",
     children: userIcon,
-    path: "/users",
+    path: "users",
   },
   {
     content: "الوحدات المحمولة",
     children: phoneIcon,
-    path: "/portalphones",
+    path: "portalphones",
   },
   {
     content: "الانشطة الاستهلاكية",
     children: homeIcon,
-    path: "/consumeractivities",
+    path: "consumeractivities",
   },
   {
     content: "المجموعات الحسابية",
     children: accountTree,
-    path: "/accountinggroups",
+    path: "accountinggroups",
   },
   {
     content: "مسارات التحصيل",
     children: directionIcon,
-    path: "/bellingsystem",
+    path: "bellingsystem",
   },
   {
     content: "مسارات القراءات",
     children: gasIcon,
-    path: "/readingpaths",
+    path: "readingpaths",
   },
   {
     content: "اجراءات الاجهزة",
     children: constructionIcon,
-    path: "/deviceprocedures",
+    path: "deviceprocedures",
   },
   {
     content: "الخزينة",
     children: moneyIcon,
-    path: "/treasuryinside",
+    path: "treasuryinside",
   },
 ];
+
 export default function SystemManagementScreen() {
+  const location = useLocation();
+  const isParentRoute = location.pathname === "/systemManagement";
   return (
     <div className="w-screen h-screen flex justify-end bg-gray-100">
-      <div className="flex flex-col gap-5">
-        <div className=" text-right pe-12 ">
-          <h6
-            className="text-2xl text-black font-extrabold mt-1
+      {isParentRoute ? (
+        <div className="flex flex-col gap-5">
+          <div className=" text-right pe-12 ">
+            <h6
+              className="text-2xl text-black font-extrabold mt-1
       inline-block                          
       bg-gradient-to-r from-orange-600 to-orange-400  
       bg-no-repeat          
       bg-[length:100%_3px]  
       bg-bottom"
-          >
-            إدارة النظام
-          </h6>
+            >
+              إدارة النظام
+            </h6>
+          </div>
+          <div className="flex flex-row-reverse flex-wrap justify-start gap-8 px-10">
+            {cardItems.map((item) => {
+              return (
+                <div key={item.path} className="w-full sm:w-[45%] lg:w-[22%]">
+                  <OutlinedCard
+                    children={item.children}
+                    content={item.content}
+                    path={item.path}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex flex-row-reverse flex-wrap justify-start gap-8 px-10">
-          {cardItems.map((item, index) => {
-            return (
-              <div key={index} className="w-full sm:w-[45%] lg:w-[22%]">
-                <OutlinedCard
-                  children={item.children}
-                  content={item.content}
-                  path={item.path}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      ) : (
+        <Outlet key={location.pathname} />
+      )}
     </div>
   );
 }

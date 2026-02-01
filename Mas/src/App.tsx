@@ -27,19 +27,21 @@ function App() {
         <Route path="/support" element={<CustomerServiceScreen />} />
         <Route path="/readings" element={<ReadingScreen />}></Route>
         <Route path="/treasury" element={<TreasuryScreen />} />
-        <Route path="/systemManagement" element={<SystemManagementScreen />} />
-        <Route path="/scouts" element={<ScoutsScreen />} />
-        <Route path="/users" element={<UsersScreen />} />
-        <Route path="/portalphones" element={<PortalPhonesScreen />} />
-        <Route
-          path="/consumeractivities"
-          element={<ConsumerActivitiesScreen />}
-        />
-        <Route path="/accountinggroups" element={<AccountingGroupsScreen />} />
-        <Route path="/bellingsystem" element={<BellingSystemScreen />} />
-        <Route path="/readingpaths" element={<ReadingPathsScreen />} />
-        <Route path="/deviceprocedures" element={<DeviceProceduresScreen />} />
-        <Route path="/treasuryinside" element={<TreasuryInsideScreen />} />
+
+        <Route path="/systemManagement" element={<SystemManagementScreen />}>
+          <Route path="scouts" element={<ScoutsScreen />} />
+          <Route path="users" element={<UsersScreen />} />
+          <Route path="portalphones" element={<PortalPhonesScreen />} />
+          <Route
+            path="consumeractivities"
+            element={<ConsumerActivitiesScreen />}
+          />
+          <Route path="accountinggroups" element={<AccountingGroupsScreen />} />
+          <Route path="bellingsystem" element={<BellingSystemScreen />} />
+          <Route path="readingpaths" element={<ReadingPathsScreen />} />
+          <Route path="deviceprocedures" element={<DeviceProceduresScreen />} />
+          <Route path="treasuryinside" element={<TreasuryInsideScreen />} />
+        </Route>
       </Route>
     </Routes>
   );

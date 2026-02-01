@@ -35,7 +35,7 @@ export default function AddScoutsDialog({ onSubmit }: AddPortalDialogProps) {
   return (
     <Box sx={{ paddingTop: 1, mb: 1 }}>
       <Button variant="contained" onClick={handleOpenDialog}>
-        إضافة كشاف جديد
+        إضافة وحدة محمولة جديدة
       </Button>
       <SharedDialog
         open={isDialogOpen}

@@ -53,6 +53,7 @@ export default function OutlinedCard({
   const handleNavigation = () => {
     navigation(path);
   };
+
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card
