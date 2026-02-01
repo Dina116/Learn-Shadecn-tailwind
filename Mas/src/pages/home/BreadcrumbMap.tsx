@@ -25,7 +25,10 @@ export default function Breadcrumb() {
     fontWeight: "bold",
     fontSize: "0.875rem",
   };
-  if (pathnames.length === 0) {
+  if (
+    pathnames.length === 0 ||
+    (pathnames.length === 1 && pathnames[0] === "home")
+  ) {
     return (
       <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 1, direction: "rtl" }}>
         <Typography sx={{ ...commonStyles, color: "text.secondary" }}>

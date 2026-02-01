@@ -3,7 +3,7 @@ import React from "react";
 
 export default function BellingSystemScreen() {
   return (
-    <div className="w-screen h-screen bg-gray-100 pe-8">
+    <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
         <div className=" text-right ">
           <h6

@@ -8,6 +8,9 @@ export default function Header() {
   const location = useLocation();
 
   const { open, setOpen } = useDrawerStore();
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
   if (location.pathname === "/") return null;
   return (
@@ -32,8 +35,8 @@ export default function Header() {
               </span>
               <IconButton
                 size="small"
-                onClick={() => setOpen(true)}
-                sx={{ color: "white"}}
+                onClick={handleDrawerOpen}
+                sx={{ color: "white" }}
               >
                 <MenuIcon fontSize="small" />
               </IconButton>

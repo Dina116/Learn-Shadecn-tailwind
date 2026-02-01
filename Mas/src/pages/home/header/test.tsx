@@ -1,14 +1,16 @@
 import {
+  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Drawer as MuiDrawer,
-  IconButton,
   Divider,
-  styled,
   useTheme,
+  Box,
+  CssBaseline,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -16,150 +18,47 @@ import SearchIcon from "@mui/icons-material/Search";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import KeyboardIcon from "@mui/icons-material/Keyboard";
 import MoneyIcon from "@mui/icons-material/Money";
-import { useLocation, Link } from "react-router-dom";
-import { useDrawerStore } from "./useDrawerStore"; // افترض أن هذا هو hook الخاص بك لإدارة حالة الـ drawer
+import { Link, useLocation } from "react-router-dom";
+import { AppBar, Drawer, DrawerHeader } from "./DrawerStyles";
+import { MenuIcon } from "lucide-react";
+import { useState } from "react";
+import Header from "./Header";
 
-const drawerWidth = 240;
-
-// قائمة عناصر القائمة الجانبية مع المسارات والأيقونات الخاصة بها
 const menuItems = [
-  {
-    title: "الاستعلامات",
-    url: "/search",
-    icon: SearchIcon,
-  },
-  {
-    title: "خدمة العملاء",
-    url: "/support",
-    icon: SupportAgentIcon,
-  },
-  {
-    title: "القراءات و التحصيل",
-    url: "/readings",
-    icon: KeyboardIcon,
-  },
-  {
-    title: "الخزينة",
-    url: "/treasury",
-    icon: MoneyIcon,
-  },
+  { title: "الاستعلامات", url: "/search", icon: SearchIcon },
+  { title: "خدمة العملاء", url: "/support", icon: SupportAgentIcon },
+  { title: "القراءات و التحصيل", url: "/readings", icon: KeyboardIcon },
+  { title: "الخزينة", url: "/treasury", icon: MoneyIcon },
 ];
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-}));
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
-}));
-
-export default function Sidebar() {
-  const { open, setOpen } = useDrawerStore();
-  const location = useLocation();
+export default function TestDrawer() {
   const theme = useTheme();
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const handleDrawerOpen = () => setOpen(true);
+  const handleDrawerClose = () => setOpen(false);
   return (
-    <Drawer variant="permanent" anchor="right" open={open}>
-      <DrawerHeader
-        sx={{
-          flexDirection: "column",
-          bgcolor: "grey.300",
-          alignItems: "stretch",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0 16px",
-          }}
-        >
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Header />
+      </AppBar>
+
+      <Drawer variant="persistent" anchor="right" open={open}>
+        <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
             )}
           </IconButton>
-          {open && (
-            <span
-              style={{
-                fontWeight: "bold",
-                color: "#0c4a6e",
-                fontSize: "0.875rem",
-              }}
-            >
-              (MAS)ماس
-            </span>
-          )}
-        </div>
-        {open && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "4px",
-              padding: "0 16px",
-            }}
-          >
-            <span style={{ color: "#ef4444", fontSize: "0.75rem" }}>
-              (v2.76.4)
-            </span>
-            <span style={{ fontSize: "0.75rem" }}>
-              منظومة إدارة القراء والمحصلين
-            </span>
-          </div>
-        )}
-      </DrawerHeader>
-      <Divider />
-      <List>
-        {menuItems.map((item) => {
-          const isActive = location.pathname === item.url;
-          return (
-            <>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {menuItems.map((item) => {
+            const isActive = location.pathname.startsWith(item.url);
+            return (
               <ListItem
                 key={item.title}
                 disablePadding
@@ -172,7 +71,6 @@ export default function Sidebar() {
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
-                    py: 1.5,
                     flexDirection: "row-reverse",
                     bgcolor: isActive ? "primary.light" : "transparent",
                     color: isActive ? "primary.contrastText" : "inherit",
@@ -187,7 +85,7 @@ export default function Sidebar() {
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 2 : "auto", // عكس الهامش ليكون على اليمين
+                      mr: open ? 3 : "auto",
                       justifyContent: "center",
                       color: isActive ? theme.palette.primary.main : "#456dda",
                     }}
@@ -196,20 +94,14 @@ export default function Sidebar() {
                   </ListItemIcon>
                   <ListItemText
                     primary={item.title}
-                    sx={{
-                      opacity: open ? 1 : 0,
-                      textAlign: "right", // لمحاذاة النص إلى اليمين
-                      color: isActive ? theme.palette.primary.main : "inherit",
-                      fontWeight: isActive ? "bold" : "regular",
-                    }}
+                    sx={{ textAlign: "right", opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
               </ListItem>
-              <Divider />
-            </>
-          );
-        })}
-      </List>
-    </Drawer>
+            );
+          })}
+        </List>
+      </Drawer>
+    </Box>
   );
 }

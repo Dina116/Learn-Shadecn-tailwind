@@ -64,7 +64,7 @@ const cardItems = [
 ];
 export default function ReadingScreen() {
   return (
-    <div className="w-screen h-screen flex justify-end bg-gray-100">
+    <div className="w-full h-screen  flex justify-end bg-gray-100">
       <div className="flex flex-col gap-5">
         <div className=" text-right pe-12 ">
           <h6

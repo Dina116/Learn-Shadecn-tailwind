@@ -64,7 +64,7 @@ export default function SystemManagementScreen() {
   const location = useLocation();
   const isParentRoute = location.pathname === "/systemManagement";
   return (
-    <div className="w-screen h-screen flex justify-end bg-gray-100">
+    <div className="w-full h-screen  flex justify-end bg-gray-100">
       {isParentRoute ? (
         <div className="flex flex-col gap-5">
           <div className=" text-right pe-12 ">

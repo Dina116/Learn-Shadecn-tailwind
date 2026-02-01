@@ -7,7 +7,7 @@ import SubActivitiesTable from "./SubActivitiesTable";
 export default function ConsumerActivitiesScreen() {
   const { data } = useForm();
   return (
-    <div className="w-screen h-screen bg-gray-100 pe-8">
+    <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
         <div className=" text-right ">
           <h6

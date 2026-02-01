@@ -1,6 +1,6 @@
 export default function HomeScreen() {
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-gray-100">
+    <div className="w-full h-screen flex justify-center items-center bg-gray-100">
       <div className="w-[95%] max-w-[1400px] h-[98%] flex flex-col pe-5 justify-center items-center bg-[radial-gradient(circle,_#0086cf_0%,_#005a8e_100%)] ">
         <div className="text-center text-white">
           <h1

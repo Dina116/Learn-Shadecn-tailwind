@@ -43,17 +43,16 @@ const menuItems = [
     icon: MoneyIcon,
   },
 ];
-export default function DrawerIcon() {
+export default function DrawerIconn() {
   const { open, setOpen } = useDrawerStore();
   const location = useLocation();
   const theme = useTheme();
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
-    alignItems: "stretch",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
     justifyContent: "flex-start",
@@ -64,15 +63,27 @@ export default function DrawerIcon() {
       anchor="right"
       open={open}
       sx={{
-        width: open ? drawerWidth : 64,
+        width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
         flexShrink: 0,
         whiteSpace: "nowrap",
+        boxSizing: "border-box",
         "& .MuiDrawer-paper": {
-          width: open ? drawerWidth : 64,
-          overflowX: "hidden",
+          width: drawerWidth,
+          boxSizing: "border-box",
+          right: 0,
+          left: "auto",
           transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.standard,
+            duration: open
+              ? theme.transitions.duration.enteringScreen
+              : theme.transitions.duration.leavingScreen,
+          }),
+          overflowX: "hidden",
+          ...(!open && {
+            width: `calc(${theme.spacing(7)} + 1px)`,
+            [theme.breakpoints.up("sm")]: {
+              width: `calc(${theme.spacing(8)} + 1px)`,
+            },
           }),
         },
       }}
@@ -80,9 +91,9 @@ export default function DrawerIcon() {
       <DrawerHeader
         className="flex flex-col bg-gray-300 w-full "
         sx={{
-          display: "flex",
+          justifyContent: "space-between",
           alignItems: "center",
-          justifyContent: "flex-start",
+          padding: "0 8px 0 16px",
         }}
       >
         <div className="flex w-full items-center justify-between px-5">
@@ -119,6 +130,8 @@ export default function DrawerIcon() {
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "flex-start" : "center",
+
+                    px: 2.5,
                     gap: 2,
                     flexDirection: "row-reverse",
                     bgcolor: isActive ? "primary.light" : "transparent",
@@ -134,6 +147,7 @@ export default function DrawerIcon() {
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
+                      ml: open ? 3 : 0,
                       justifyContent: "center",
                       color: isActive ? theme.palette.primary.main : "#456dda",
                     }}
@@ -144,6 +158,7 @@ export default function DrawerIcon() {
                     primary={item.title}
                     sx={{
                       opacity: open ? 1 : 0,
+                      display: open ? "block" : "none",
                       whiteSpace: "nowrap",
                       transition: "opacity 0.2s",
                     }}
