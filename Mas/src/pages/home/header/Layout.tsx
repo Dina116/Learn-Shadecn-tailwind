@@ -1,19 +1,21 @@
-import Header, { drawerWidth } from "./Header";
+import { drawerWidth } from "./Header";
 // import DrawerIcon from "./DrawerIcon";
 import { Outlet } from "react-router-dom";
 import { useDrawerStore } from "./useDrawerStore";
 import Breadcrumb from "../BreadcrumbMap";
 import { Divider } from "@mui/material";
-import DrawerIconn from "./DrawerIcon";
+// import DrawerIconn from "./DrawerIcon";
+import TestDrawer from "./test";
 
 export default function Layout() {
   const { open } = useDrawerStore();
   return (
     <>
-      <Header />
-      <DrawerIconn />
+      {/* <Header /> */}
+      {/* <DrawerIconn /> */}
+      <TestDrawer />
       <main
-        className="pt-15 pe-7 transition-all duration-300 bg-gray-100"
+        className="pt-15 pe-18 transition-all duration-300 bg-gray-100"
         style={{
           marginRight: open ? `${drawerWidth}px` : 0,
         }}

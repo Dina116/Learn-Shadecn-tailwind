@@ -1,16 +1,14 @@
 import { useLocation } from "react-router-dom";
 import LogOutPopover from "./LogOutPopover";
-import { IconButton } from "@mui/material";
+import { IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerStore } from "./useDrawerStore";
+
 export const drawerWidth = 200;
 export default function Header() {
   const location = useLocation();
 
   const { open, setOpen } = useDrawerStore();
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
   if (location.pathname === "/") return null;
   return (
@@ -28,22 +26,75 @@ export default function Header() {
               <span className="text-xs text-white ">SYSTEM</span>
               <LogOutPopover />
             </div>
-            <div className="flex flex-row">
-              <span className="flex justify-end items-center self-center text-sm text-white font-semibold whitespace-nowrap">
-                {/* <span className="text-xs text-yellow-300 ml-2">(v3.9.5)</span>{" "} */}
-                شركة مياه الشرب و الصرف الصحي بالبحر الأحمر
-              </span>
+
+            <Toolbar
+              sx={{
+                direction: "rtl",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "start",
+                gap: 2,
+                minHeight: { xs: "40px", sm: "40px" },
+              }}
+            >
               <IconButton
-                size="small"
-                onClick={handleDrawerOpen}
-                sx={{ color: "white" }}
+                color="inherit"
+                aria-label="open drawer"
+                onClick={() => setOpen(true)}
+                edge="start"
+                sx={[open && { display: "none" }]}
               >
-                <MenuIcon fontSize="small" />
+                <MenuIcon
+                  fontSize="small"
+                  onClick={() => {
+                    if (open) {
+                      setOpen(false);
+                    } else {
+                      setOpen(true);
+                    }
+                  }}
+                />
               </IconButton>
-            </div>
+              <Typography
+                noWrap
+                component="div"
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  color: "whites",
+                }}
+              >
+                شركة مياه الشرب و الصرف الصحي بالبحر الأحمر
+              </Typography>
+            </Toolbar>
           </div>
         </nav>
       </header>
     </>
   );
 }
+
+/**
+ *  {/* <div className="flex flex-row">
+              <span className="flex justify-end items-center self-center text-sm text-white font-semibold whitespace-nowrap">
+          
+                شركة مياه الشرب و الصرف الصحي بالبحر الأحمر
+              {/* </span> 
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={[
+                  {
+                    marginRight: 5,
+                  },
+                  open && { display: "none" },
+                ]}
+              >
+                <MenuIcon fontSize="small" />
+              </IconButton>
+            {/* </div> *
+ */

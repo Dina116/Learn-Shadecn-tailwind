@@ -9,7 +9,6 @@ import {
   userIcon,
 } from "./CardsIcons";
 
-
 const groupIcon = (
   <GroupsIcon
     sx={{
@@ -60,7 +59,6 @@ const cardItems = [
     children: gasIcon,
     path: "",
   },
-  
 ];
 export default function ReadingScreen() {
   return (
