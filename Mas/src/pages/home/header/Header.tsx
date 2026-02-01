@@ -76,25 +76,3 @@ export default function Header() {
   );
 }
 
-/**
- *  {/* <div className="flex flex-row">
-              <span className="flex justify-end items-center self-center text-sm text-white font-semibold whitespace-nowrap">
-          
-                شركة مياه الشرب و الصرف الصحي بالبحر الأحمر
-              {/* </span> 
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={[
-                  {
-                    marginRight: 5,
-                  },
-                  open && { display: "none" },
-                ]}
-              >
-                <MenuIcon fontSize="small" />
-              </IconButton>
-            {/* </div> *
- */

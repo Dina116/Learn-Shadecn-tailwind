@@ -43,7 +43,7 @@ const menuItems = [
     icon: MoneyIcon,
   },
 ];
-export default function DrawerIconn() {
+export default function DrawerIcon() {
   const { open, setOpen } = useDrawerStore();
   const location = useLocation();
   const theme = useTheme();
