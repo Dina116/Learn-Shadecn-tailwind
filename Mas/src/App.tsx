@@ -14,6 +14,8 @@ import ConsumerActivitiesScreen from "./pages/Readings and Achievement/systemman
 import AccountingGroupsScreen from "./pages/Readings and Achievement/systemmanagement/accountinggroups/AccountingGroupsScreen";
 import BellingSystemScreen from "./pages/Readings and Achievement/systemmanagement/bellingsystem/BellingSystemScreen";
 import ReadingPathsScreen from "./pages/Readings and Achievement/systemmanagement/readingpaths/ReadingPathsScreen";
+import DeviceProceduresScreen from "./pages/Readings and Achievement/systemmanagement/deviceprocedures/DeviceProceduresScreen";
+import TreasuryInsideScreen from "./pages/Readings and Achievement/systemmanagement/treasuryinside/TreasuryInsideScreen";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         <Route path="/accountinggroups" element={<AccountingGroupsScreen />} />
         <Route path="/bellingsystem" element={<BellingSystemScreen />} />
         <Route path="/readingpaths" element={<ReadingPathsScreen />} />
+        <Route path="/deviceprocedures" element={<DeviceProceduresScreen />} />
+        <Route path="/treasuryinside" element={<TreasuryInsideScreen />} />
       </Route>
     </Routes>
   );

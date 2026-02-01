@@ -31,7 +31,7 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ width: "100%" }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader aria-label="sticky table" size="small">
           <TableHead>
             <TableRow className="border-b border-white hover:bg-sky-900 text-center">
               {columns.map((item) => (

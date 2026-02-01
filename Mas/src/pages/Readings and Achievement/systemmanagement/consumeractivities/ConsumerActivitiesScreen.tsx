@@ -1,8 +1,11 @@
+import { Typography } from "@mui/material";
+import ConsumerTable from "./ConsumerActivitiesTable";
 import UpdateFromBillingDatabase from "./updatefrombillingdatabase";
-
+import { useForm } from "./useForm";
+import SubActivitiesTable from "./SubActivitiesTable";
 
 export default function ConsumerActivitiesScreen() {
-//   const { data, handleDelete, handleEdit, handleSubmittion } = useForm();
+  const { data } = useForm();
   return (
     <div className="w-screen h-screen bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
@@ -18,13 +21,22 @@ export default function ConsumerActivitiesScreen() {
             الأنشطة الإستهلاكية
           </h6>
         </div>
-        <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-2 ps-2 ">
-          <UpdateFromBillingDatabase/>
-          {/* <PortalTable
-            data={data}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-          /> */}
+        <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-4 ps-4 ">
+          <UpdateFromBillingDatabase />
+          <ConsumerTable data={data} />
+          <Typography
+            sx={{
+              color: "orangered",
+              textAlign: "center",
+              width: "100%",
+              mt: 4,
+              fontSize: "1.25rem",
+              fontWeight: "bold",
+            }}
+          >
+            الانشطة الفرعية
+          </Typography>
+          <SubActivitiesTable data={data} />
         </div>
       </div>
     </div>

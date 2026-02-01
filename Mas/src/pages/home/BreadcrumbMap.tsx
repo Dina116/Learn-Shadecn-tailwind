@@ -13,6 +13,8 @@ const BreadcrumbMap: Record<string, string> = {
   "/portalphones": "الوحدات المحمولة",
   "/consumeractivities": "الانشطة الاستهلاكية",
   "/bellingsystem": "مسارات التحصيل",
+  "/deviceprocedures": "اجراءات الاجهزة ",
+  "/treasuryinside": "الخزينة",
 };
 
 export default function Breadcrumb() {

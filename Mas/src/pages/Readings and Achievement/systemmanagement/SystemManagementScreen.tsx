@@ -50,12 +50,12 @@ const cardItems = [
   {
     content: "اجراءات الاجهزة",
     children: constructionIcon,
-    path: "",
+    path: "/deviceprocedures",
   },
   {
     content: "الخزينة",
     children: moneyIcon,
-    path: "",
+    path: "/treasuryinside",
   },
 ];
 export default function SystemManagementScreen() {
