@@ -42,7 +42,7 @@ export default function TestDrawer() {
         <Header />
       </AppBar>
       <Drawer variant="permanent" open={open} anchor="right">
-        <DrawerHeader sx={{ backgroundColor: "#d0d2d6", marginBottom: 5 }}>
+        <DrawerHeader sx={{ backgroundColor: "#d0d2d6" }}>
           <Box
             sx={{
               display: "flex",
@@ -74,7 +74,10 @@ export default function TestDrawer() {
                 <ListItem
                   key={item.title}
                   disablePadding
-                  sx={{ display: "block" }}
+                  sx={{
+                    display: "block",
+                    maxHeight: 35,
+                  }}
                 >
                   <ListItemButton
                     component={Link}
@@ -82,7 +85,7 @@ export default function TestDrawer() {
                     className="hover:bg-[radial-gradient(circle,_#0086cf_0%,_#005a8e_100%)]"
                     sx={[
                       {
-                        minHeight: 48,
+                        maxHeight: 30,
                         px: 2.5,
                         bgcolor: isActive ? "action.selected" : "transparent",
                       },
@@ -133,6 +136,7 @@ export default function TestDrawer() {
                   </ListItemButton>
                 </ListItem>
                 <Divider />
+                {/* className="pt-2" */}
               </>
             );
           })}

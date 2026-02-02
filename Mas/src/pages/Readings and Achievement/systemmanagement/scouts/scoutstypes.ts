@@ -7,3 +7,15 @@ export type scoutsTableProps = {
   onEdit: (row: scoutsFormType, rowIndex: number) => void;
   onDelete: (row: scoutsFormType, rowIndex: number) => void;
 };
+export type EditScoutsDialogProps = {
+  rowdata: scoutsFormType;
+  onSubmit: (data: scoutsFormType) => void;
+};
+export type ScoutFormProps = {
+  onSubmit: (formData: scoutsFormType) => void;
+  defaultValues?: scoutsFormType;
+  onClose?: () => void;
+};
+export interface ScoutsFormRef {
+  submit: () => void;
+}

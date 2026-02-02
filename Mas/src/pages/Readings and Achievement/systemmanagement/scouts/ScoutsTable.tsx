@@ -1,12 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
 import SharedTable from "../../../../componenet/shared/SharedTable";
 import { columns } from "./ColumnNames";
 import type { scoutsFormType, scoutsTableProps } from "./scoutstypes";
+import { getScouts } from "./api/scoutsApi";
 
-export default function ScoutsTable({
-  data,
-  onDelete,
-  onEdit,
-}: scoutsTableProps) {
+export default function ScoutsTable({ onDelete, onEdit }: scoutsTableProps) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["scouts"],
+    queryFn: getScouts,
+  });
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (error instanceof Error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Something went wrong</p>;
   return (
     <SharedTable<scoutsFormType>
       columns={columns.map((col) => ({
@@ -19,7 +26,7 @@ export default function ScoutsTable({
               })
           : undefined,
       }))}
-      data={data}
+      data={data || []}
     />
   );
 }

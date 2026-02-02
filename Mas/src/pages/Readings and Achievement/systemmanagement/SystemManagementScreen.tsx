@@ -64,38 +64,43 @@ export default function SystemManagementScreen() {
   const location = useLocation();
   const isParentRoute = location.pathname === "/systemManagement";
   return (
-    <div className="w-full h-screen  flex justify-end bg-gray-100">
-      {isParentRoute ? (
-        <div className="flex flex-col gap-5">
-          <div className=" text-right pe-12 ">
-            <h6
-              className="text-2xl text-black font-extrabold mt-1
+    <div className="w-full h-screen flex bg-gray-100">
+      <div className="flex-1">
+        {isParentRoute ? (
+          <div className="flex flex-col gap-5">
+            <div className=" text-right pe-12 ">
+              <h6
+                className="text-2xl text-black font-extrabold mt-1
       inline-block                          
       bg-gradient-to-r from-orange-600 to-orange-400  
       bg-no-repeat          
       bg-[length:100%_3px]  
       bg-bottom"
+              >
+                إدارة النظام
+              </h6>
+            </div>
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+              style={{ direction: "rtl" }}
             >
-              إدارة النظام
-            </h6>
+              {cardItems.map((item) => {
+                return (
+                  <div key={item.path} className="w-full mx-auto">
+                    <OutlinedCard
+                      children={item.children}
+                      content={item.content}
+                      path={item.path}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex flex-row-reverse flex-wrap justify-start gap-8 px-10">
-            {cardItems.map((item) => {
-              return (
-                <div key={item.path} className="w-full sm:w-[45%] lg:w-[22%]">
-                  <OutlinedCard
-                    children={item.children}
-                    content={item.content}
-                    path={item.path}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      ) : (
-        <Outlet key={location.pathname} />
-      )}
+        ) : (
+          <Outlet key={location.pathname} />
+        )}
+      </div>
     </div>
   );
 }

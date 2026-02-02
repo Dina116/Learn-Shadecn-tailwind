@@ -1,5 +1,9 @@
 import { Controller, useForm } from "react-hook-form";
-import type { scoutsFormType } from "./scoutstypes";
+import type {
+  ScoutFormProps,
+  ScoutsFormRef,
+  scoutsFormType,
+} from "./scoutstypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ScoutesSchema } from "./ScoutsSchema";
 import {
@@ -17,14 +21,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import TabPanel from "../../../../componenet/shared/TabPanel";
 
-export type ScoutFormProps = {
-  onSubmit: (formData: scoutsFormType) => void;
-  defaultValues?: scoutsFormType;
-  onClose?: () => void;
-};
-export interface ScoutsFormRef {
-  submit: () => void;
-}
 function a11yProps(index: number) {
   return {
     id: `scout-tab-${index}`,
@@ -39,12 +35,12 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
       formState: { errors },
     } = useForm<scoutsFormType>({
       defaultValues: {
-        Code: 0,
-        name: "",
-        branch: "",
-        portalPhone: "",
+        ID: 0,
+        FULL_NAME: "",
+        BRANCH_ID: "",
+        DEVICE_ID: "",
         usercode: "",
-        status: true,
+        READING: true,
         phone1: 0,
         phone2: 0,
         type: "",
@@ -54,9 +50,7 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
       },
       resolver: zodResolver(ScoutesSchema),
     });
-
     const [currentTab, setCurrentTab] = useState(0);
-
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
       setCurrentTab(newValue);
     };
@@ -109,17 +103,13 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
           </Tabs>
         </Box>
         <TabPanel value={currentTab} index={0}>
-          <div className="flex flex-row w-full justify-around gap-2 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 الكود
               </Typography>
               <Controller
-                name="Code"
+                name="ID"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -129,22 +119,19 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                     variant="outlined"
                     defaultValue="Disabled"
                     fullWidth
-                    error={!!errors.Code}
-                    helperText={errors.Code?.message}
+                    error={!!errors.ID}
+                    helperText={errors.ID?.message}
                   />
                 )}
               />
             </div>
+
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 اسم الكشاف
               </Typography>
               <Controller
-                name="name"
+                name="FULL_NAME"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -152,20 +139,14 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                     size="small"
                     fullWidth
                     variant="outlined"
-                    error={!!errors.name}
-                    helperText={errors.name?.message}
+                    error={!!errors.FULL_NAME}
+                    helperText={errors.FULL_NAME?.message}
                   />
                 )}
               />
             </div>
-          </div>
-          <div className="flex flex-row w-full justify-between">
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 كود الموظف
               </Typography>
               <Controller
@@ -183,103 +164,69 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 )}
               />
             </div>
+
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 الفرع
               </Typography>
               <Controller
-                name="branch"
+                name="BRANCH_ID"
                 control={control}
                 render={({ field }) => (
-                  <FormControl
-                    fullWidth
-                    error={!!errors.branch}
-                    size="small"
-                    sx={{ minWidth: 200 }}
-                  >
-                    <Select
-                      {...field}
-                      IconComponent={(props) => (
-                        <KeyboardArrowDownIcon
-                          {...props}
-                          sx={{
-                            ".MuiSelect-icon": {
-                              left: "7px",
-                              right: "auto",
-                            },
-                          }}
-                        />
-                      )}
-                    >
+                  <FormControl fullWidth error={!!errors.BRANCH_ID} size="small">
+                    <Select {...field} IconComponent={KeyboardArrowDownIcon}>
                       <MenuItem value="branch1">فرع 1</MenuItem>
                       <MenuItem value="branch2">فرع 2</MenuItem>
                       <MenuItem value="branch3">فرع 3</MenuItem>
                     </Select>
-                    {errors.branch && (
+                    {errors.BRANCH_ID && (
                       <Typography color="error" variant="caption">
-                        {errors.branch.message}
+                        {errors.BRANCH_ID.message}
                       </Typography>
                     )}
                   </FormControl>
                 )}
               />
             </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <Typography
-              variant="caption"
-              display="block"
-              sx={{ fontWeight: "bold" }}
-            >
-              نوع الكشاف
-            </Typography>
-            <Controller
-              name="type"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  size="small"
-                  error={!!errors.type}
-                  helperText={errors.type?.message}
-                />
-              )}
-            />
-          </div>
-          <div className="flex flex-row w-full justify-between">
+            <div className="flex flex-col gap-1 col-span-full">
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
+                نوع الكشاف
+              </Typography>
+              <Controller
+                name="type"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    size="small"
+                    error={!!errors.type}
+                    helperText={errors.type?.message}
+                  />
+                )}
+              />
+            </div>
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 الوحدة المحمولة
               </Typography>
               <Controller
-                name="portalPhone"
+                name="DEVICE_ID"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     variant="outlined"
-                    error={!!errors.portalPhone}
-                    helperText={errors.portalPhone?.message}
+                    error={!!errors.DEVICE_ID}
+                    helperText={errors.DEVICE_ID?.message}
                   />
                 )}
               />
             </div>
+
             <div className="flex flex-col gap-1">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 رقم هاتف 1
               </Typography>
               <Controller
@@ -296,14 +243,8 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 )}
               />
             </div>
-          </div>
-          <div className="flex flex-row w-full items-end gap-4">
-            <div className="flex flex-col flex-grow">
-              <Typography
-                variant="caption"
-                display="block"
-                sx={{ fontWeight: "bold" }}
-              >
+            <div className="flex flex-col gap-1">
+              <Typography variant="caption" sx={{ fontWeight: "bold" }}>
                 رقم هاتف 2
               </Typography>
               <Controller
@@ -320,16 +261,19 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 )}
               />
             </div>
-            <Typography sx={{ mb: "2px" }}>نشط</Typography>
-            <Button
-              type="button"
-              variant="contained"
-              size="small"
-              color="error"
-              sx={{ height: "fit-content", mb: "6px" }}
-            >
-              تعطيل الكشاف
-            </Button>
+
+            <div className="flex items-end gap-2">
+              <Typography sx={{ mb: "2px" }}>نشط</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                size="small"
+                color="error"
+                sx={{ height: "fit-content", mb: "6px" }}
+              >
+                تعطيل الكشاف
+              </Button>
+            </div>
           </div>
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
@@ -347,7 +291,7 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
               render={({ field }) => (
                 <FormControl
                   fullWidth
-                  error={!!errors.branch}
+                  error={!!errors.portalPhones}
                   size="small"
                   sx={{ minWidth: 200 }}
                 >

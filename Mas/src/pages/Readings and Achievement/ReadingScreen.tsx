@@ -76,7 +76,7 @@ export default function ReadingScreen() {
             القراءات والتحصيل
           </h6>
         </div>
-        <div className="flex flex-row-reverse flex-wrap justify-start gap-8 px-10">
+        <div className="flex flex-row-reverse flex-wrap justify-start gap-8 margin-right: 26px;">
           {cardItems.map((item, index) => {
             return (
               <div key={index} className="w-full sm:w-[45%] lg:w-[22%]">

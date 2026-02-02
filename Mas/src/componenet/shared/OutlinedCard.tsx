@@ -55,7 +55,7 @@ export default function OutlinedCard({
   };
 
   return (
-    <Box sx={{ minWidth: 275 }}>
+    <Box>
       <Card
         variant="outlined"
         sx={{ position: "relative", overflow: "visible" }}

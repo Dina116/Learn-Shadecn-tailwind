@@ -3,8 +3,8 @@ import LogOutPopover from "./LogOutPopover";
 import { IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerStore } from "./useDrawerStore";
+import { drawerWidth } from "./DrawerStyles";
 
-export const drawerWidth = 200;
 export default function Header() {
   const location = useLocation();
 
@@ -21,7 +21,7 @@ export default function Header() {
         }}
       >
         <nav className="bg-neutral-primary">
-          <div className="flex flex-wrap justify-between items-center mx-auto max-w- p-2">
+          <div className="flex flex-wrap justify-between items-center mx-auto max-w- pt-2 pb-4 ps-2 ">
             <div className="flex items-center gap-1">
               <span className="text-xs text-white ">SYSTEM</span>
               <LogOutPopover />
@@ -29,6 +29,7 @@ export default function Header() {
 
             <Toolbar
               sx={{
+                padding:0,
                 direction: "rtl",
                 display: "flex",
                 flexDirection: "row",
@@ -75,4 +76,3 @@ export default function Header() {
     </>
   );
 }
-
