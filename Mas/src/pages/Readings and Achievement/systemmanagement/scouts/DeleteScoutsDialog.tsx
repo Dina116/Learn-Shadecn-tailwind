@@ -1,16 +1,29 @@
 import AlertDialog from "../../../../componenet/shared/AlertDialog";
+import { useDeleteScout } from "./api/useDeleteScout";
 
 export type DeleteScoutsDialogProps = {
   btnname: string;
   content: string;
   title: string;
-  onDelete: () => void;
+  scoutId: number;
 };
 export default function DeleteScoutsDialog({
   btnname,
   content,
   title,
-  onDelete
+  scoutId,
 }: DeleteScoutsDialogProps) {
-  return <AlertDialog btnname={btnname} content={content} title={title} onDelete={onDelete} />;
+  const { mutate } = useDeleteScout();
+
+  const handleDelete = () => {
+    mutate(scoutId);
+  };
+  return (
+    <AlertDialog
+      btnname={btnname}
+      content={content}
+      title={title}
+      onDelete={handleDelete}
+    />
+  );
 }

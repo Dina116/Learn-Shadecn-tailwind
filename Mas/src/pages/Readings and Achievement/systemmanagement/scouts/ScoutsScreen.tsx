@@ -4,7 +4,7 @@ import { useForm } from "./useForm";
 import AddScoutsDialog from "./AddScoutsDialog";
 
 export default function ScoutsScreen() {
-  const { data, handleDelete, handleEdit, handleSubmittion } = useForm();
+  const { data, handleDelete, handleEdit } = useForm();
 
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
@@ -25,7 +25,7 @@ export default function ScoutsScreen() {
           {/* <div className="flex flex-row gap-4 justify-end">
            
           </div> */}
-          <AddScoutsDialog onSubmit={handleSubmittion} />
+          <AddScoutsDialog />
           <ScoutsTable
             data={data}
             onDelete={handleDelete}

@@ -17,16 +17,9 @@ export const columns: Columns[] = [
           gap: 1,
         }}
       >
-        <EditScoutsDialog
-          rowdata={row}
-          onSubmit={(updatedData) =>
-            handlers.onEdit(row, rowIndex, updatedData)
-          }
-        />
+        <EditScoutsDialog rowdata={row} />
         <DeleteScoutsDialog
-          onDelete={() => {
-            handlers.onDelete(row, rowIndex);
-          }}
+          scoutId={row.ID}
           btnname="🗑️"
           title="رسالة حذف"
           content="هل أنت متأكد من حذف الوظيفة؟"

@@ -1,15 +1,17 @@
 import { useRef, useState } from "react";
 import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
-import ScoutForm, { type ScoutsFormRef } from "./ScoutsForm";
-import type { scoutsFormType } from "./scoutstypes";
+import ScoutForm from "./ScoutsForm";
+import type { ScoutsFormRef, scoutsFormType } from "./scoutstypes";
+import { useAddScout } from "./api/useAddScout";
 
-interface AddScoutsDialogProps {
-  onSubmit: (data: scoutsFormType) => void;
-}
-export default function AddScoutsDialog({ onSubmit }: AddScoutsDialogProps) {
+// interface AddScoutsDialogProps {
+//   onSubmit: (data: scoutsFormType) => void;
+// }
+export default function AddScoutsDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<ScoutsFormRef>(null);
+  const { mutate, isError, isPending } = useAddScout();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -21,8 +23,11 @@ export default function AddScoutsDialog({ onSubmit }: AddScoutsDialogProps) {
 
   const handleFormSubmit = (data: scoutsFormType) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    mutate(data, {
+      onSuccess: () => {
+        handleCloseDialog();
+      },
+    });
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -42,8 +47,9 @@ export default function AddScoutsDialog({ onSubmit }: AddScoutsDialogProps) {
         title="إضافة كشاف جديد"
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
+          disabled: isPending,
         }}
         secondaryAction={{
           text: "إلغاء",
@@ -51,6 +57,18 @@ export default function AddScoutsDialog({ onSubmit }: AddScoutsDialogProps) {
         }}
       >
         <ScoutForm onSubmit={handleFormSubmit} ref={formRef} />
+        {isError && (
+          <Box
+            sx={{
+              color: "error.main",
+              mt: 2,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            حدث خطأ أثناء إضافة الكشاف
+          </Box>
+        )}
       </SharedDialog>
     </Box>
   );

@@ -7,13 +7,12 @@ import type {
   ScoutsFormRef,
   scoutsFormType,
 } from "./scoutstypes";
+import { useEditScout } from "./api/useEditScout";
 
-export default function EditScoutsDialog({
-  onSubmit,
-  rowdata,
-}: EditScoutsDialogProps) {
+export default function EditScoutsDialog({ rowdata }: EditScoutsDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<ScoutsFormRef>(null);
+  const { mutate: editScout, isPending, isError } = useEditScout();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -25,8 +24,14 @@ export default function EditScoutsDialog({
 
   const handleFormSubmit = (data: scoutsFormType) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    editScout(
+      { id: rowdata.ID, data },
+      {
+        onSuccess: () => {
+          handleCloseDialog();
+        },
+      },
+    );
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -56,7 +61,7 @@ export default function EditScoutsDialog({
         title="تعديل كشاف"
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
         }}
         secondaryAction={{
@@ -69,6 +74,18 @@ export default function EditScoutsDialog({
           ref={formRef}
           defaultValues={rowdata}
         />
+        {isError && (
+          <Box
+            sx={{
+              color: "error.main",
+              mt: 2,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            حدث خطأ أثناء إضافة الكشاف
+          </Box>
+        )}
       </SharedDialog>
     </Box>
   );

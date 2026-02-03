@@ -9,7 +9,6 @@ export type scoutsTableProps = {
 };
 export type EditScoutsDialogProps = {
   rowdata: scoutsFormType;
-  onSubmit: (data: scoutsFormType) => void;
 };
 export type ScoutFormProps = {
   onSubmit: (formData: scoutsFormType) => void;

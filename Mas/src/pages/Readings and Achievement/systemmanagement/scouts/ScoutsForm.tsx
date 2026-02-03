@@ -28,21 +28,21 @@ function a11yProps(index: number) {
   };
 }
 const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
-  ({ onSubmit }, ref) => {
+  ({ onSubmit, defaultValues }, ref) => {
     const {
       control,
       handleSubmit,
       formState: { errors },
     } = useForm<scoutsFormType>({
-      defaultValues: {
+      defaultValues: defaultValues || {
         ID: 0,
         FULL_NAME: "",
         BRANCH_ID: "",
         DEVICE_ID: "",
         usercode: "",
         READING: true,
-        phone1: 0,
-        phone2: 0,
+        phone1: "",
+        phone2: "",
         type: "",
         portalPhones: "",
         username: "",
@@ -173,7 +173,11 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 name="BRANCH_ID"
                 control={control}
                 render={({ field }) => (
-                  <FormControl fullWidth error={!!errors.BRANCH_ID} size="small">
+                  <FormControl
+                    fullWidth
+                    error={!!errors.BRANCH_ID}
+                    size="small"
+                  >
                     <Select {...field} IconComponent={KeyboardArrowDownIcon}>
                       <MenuItem value="branch1">فرع 1</MenuItem>
                       <MenuItem value="branch2">فرع 2</MenuItem>
