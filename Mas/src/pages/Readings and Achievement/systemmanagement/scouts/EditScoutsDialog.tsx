@@ -12,7 +12,7 @@ import { useEditScout } from "./api/useEditScout";
 export default function EditScoutsDialog({ rowdata }: EditScoutsDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<ScoutsFormRef>(null);
-  const { mutate: editScout, isPending, isError } = useEditScout();
+  const { mutate: editScout, isPending, isError ,error} = useEditScout();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -75,16 +75,19 @@ export default function EditScoutsDialog({ rowdata }: EditScoutsDialogProps) {
           defaultValues={rowdata}
         />
         {isError && (
-          <Box
-            sx={{
-              color: "error.main",
-              mt: 2,
-              fontSize: "0.9rem",
-              fontWeight: 500,
-            }}
-          >
-            حدث خطأ أثناء إضافة الكشاف
-          </Box>
+          <>
+            {console.log("Error detected:", error)}
+            <Box
+              sx={{
+                color: "error.main",
+                mt: 2,
+                fontSize: "0.9rem",
+                fontWeight: 500,
+              }}
+            >
+              حدث خطأ أثناء إضافة الكشاف
+            </Box>
+          </>
         )}
       </SharedDialog>
     </Box>

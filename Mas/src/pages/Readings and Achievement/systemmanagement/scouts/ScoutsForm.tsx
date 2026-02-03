@@ -41,8 +41,8 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
         DEVICE_ID: "",
         usercode: "",
         READING: true,
-        phone1: "",
-        phone2: "",
+        mobile1: "",
+        mobile2: "",
         type: "",
         portalPhones: "",
         username: "",
@@ -234,15 +234,15 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 رقم هاتف 1
               </Typography>
               <Controller
-                name="phone1"
+                name="mobile1"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     variant="outlined"
-                    error={!!errors.phone1}
-                    helperText={errors.phone1?.message}
+                    error={!!errors.mobile1}
+                    helperText={errors.mobile1?.message}
                   />
                 )}
               />
@@ -252,15 +252,15 @@ const ScoutForm = forwardRef<ScoutsFormRef, ScoutFormProps>(
                 رقم هاتف 2
               </Typography>
               <Controller
-                name="phone2"
+                name="mobile2"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     variant="outlined"
-                    error={!!errors.phone2}
-                    helperText={errors.phone2?.message}
+                    error={!!errors.mobile2}
+                    helperText={errors.mobile2?.message}
                   />
                 )}
               />
