@@ -28,8 +28,9 @@ export default function Header() {
             </div>
 
             <Toolbar
+              disableGutters
               sx={{
-                padding:0,
+                padding: 0,
                 direction: "rtl",
                 display: "flex",
                 flexDirection: "row",

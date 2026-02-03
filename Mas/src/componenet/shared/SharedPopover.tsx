@@ -29,7 +29,7 @@ export default function SharedPopover({
     <div>
       <div
         onClick={handleClick}
-        className="bg-sky-800 hover:bg-sky-700 cursor-pointer w-8 h-8 flex items-center justify-center text-white"
+        className="bg-transparent hover:bg-transparent cursor-pointer w-8 h-8 flex items-center justify-center text-white"
       >
         {children}
       </div>
