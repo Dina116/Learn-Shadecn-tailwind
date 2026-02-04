@@ -15,16 +15,21 @@ export default function BellingTable({ loadType, groupId }: BellingTableProps) {
     "groupId:",
     groupId,
   );
+
   const {
     walks: groupWalks,
     collectors,
     isLoading: isGroupLoading,
   } = useCustomerWalks(groupId, loadType === "byGroup");
+
   const { data: unassignedWalksData, isLoading: isUnassignedLoading } =
     useUnassignedWalks(loadType === "unassigned");
   const col = createColumns(collectors);
+
   const walks = loadType === "byGroup" ? groupWalks : unassignedWalksData;
-  const isLoading = isGroupLoading || isUnassignedLoading;
+  const isLoading =
+    (loadType === "byGroup" && isGroupLoading) ||
+    (loadType === "unassigned" && isUnassignedLoading);
 
   if (isLoading) {
     return (

@@ -5,6 +5,7 @@ export const getCustomerWalks = async (groups: string) => {
     const res = await axiosClient.get("/Books/CustomerWalks", {
       params: { groups },
     });
+    console.log("Raw API response for getCustomerWalks:", res.data);
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -37,6 +38,7 @@ export const unassignedWalks = async (unassigned: boolean) => {
     const res = await axiosClient.get("/Books/CustomerWalks", {
       params: { unassigned },
     });
+    console.log("Raw API response for unassignedWalks:", res.data);
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
