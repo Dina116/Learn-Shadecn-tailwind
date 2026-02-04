@@ -1,27 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCollectors, getCustomerWalks } from "../../api/BellingApi";
-export const useCustomerWalks = (groupId: string | null, load: boolean) => {
+import { getMeterWalks, getReaders } from "../../api/ReadingPathApi";
+export const useReadingWalks = (groupId: string | null, load: boolean) => {
   console.log(
-    "5. useCustomerWalks received -> load:",
+    "5. useReadingWalks received -> load:",
     load,
     "groupId:",
     groupId,
   );
   const isQueryEnabled = load && !!groupId;
   console.log("6. Is query enabled?", isQueryEnabled);
+
   const walksQuery = useQuery({
-    queryKey: ["walks"],
+    queryKey: ["meterwalks"],
     queryFn: () => {
       console.log("7. EXECUTING queryFn for walks with groupId:", groupId);
-      return getCustomerWalks(groupId!);
+      return getMeterWalks(groupId!);
     },
     enabled: isQueryEnabled,
   });
   const collectorsQuery = useQuery({
-    queryKey: ["collectors"],
+    queryKey: ["readers"],
     queryFn: () => {
-      console.log("8. EXECUTING queryFn for collectors with groupId:", groupId);
-      return getCollectors();
+      console.log("8. EXECUTING queryFn for readers with groupId:", groupId);
+      return getReaders();
     },
     enabled: isQueryEnabled,
   });

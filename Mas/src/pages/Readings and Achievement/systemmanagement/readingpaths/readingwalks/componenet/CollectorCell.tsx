@@ -1,4 +1,4 @@
-import { Select, MenuItem, Typography, Box } from "@mui/material";
+import { Box, MenuItem, Select, Typography } from "@mui/material";
 import type { CollectorCellProps } from "../../types";
 
 export default function CollectorCell({

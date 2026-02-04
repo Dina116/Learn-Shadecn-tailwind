@@ -8,3 +8,10 @@ export type TableProbs<T> = {
   columns: Columns<T>[];
   data?: T[];
 };
+
+export type CellRenderResult =
+  | React.ReactNode
+  | {
+      content: React.ReactNode;
+      cellStyle?: React.CSSProperties;
+    };

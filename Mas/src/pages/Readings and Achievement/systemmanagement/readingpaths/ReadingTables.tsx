@@ -1,10 +1,10 @@
 import SharedTable from "../../../../componenet/shared/SharedTable";
 import { createColumns } from "./ColumnNames";
-import { useCustomerWalks } from "./customerwalks/hooks/useCustomerWalks";
-import { useUnassignedWalks } from "./customerwalks/hooks/useUnassignedWalks";
-import type { BellingTableProps, BellingTypes } from "./types";
+import { useReadingWalks } from "./readingwalks/hooks/useReadingWalks";
+import { useUnassignedMeterWalks } from "./readingwalks/hooks/useunassignedMeterWalks";
+import type { ReadingTableProps, ReadingTypes } from "./types";
 
-export default function BellingTable({ loadType, groupId }: BellingTableProps) {
+export default function ReadingTable({ loadType, groupId }: ReadingTableProps) {
   console.log(
     "4. BellingTable received -> loadType:",
     loadType,
@@ -16,10 +16,10 @@ export default function BellingTable({ loadType, groupId }: BellingTableProps) {
     walks: groupWalks,
     collectors,
     isLoading: isGroupLoading,
-  } = useCustomerWalks(groupId, loadType === "byGroup");
+  } = useReadingWalks(groupId, loadType === "byGroup");
 
   const { data: unassignedWalksData, isLoading: isUnassignedLoading } =
-    useUnassignedWalks(loadType === "unassigned");
+    useUnassignedMeterWalks(loadType === "unassigned");
   const col = createColumns(collectors);
 
   const walks = loadType === "byGroup" ? groupWalks : unassignedWalksData;
@@ -34,5 +34,5 @@ export default function BellingTable({ loadType, groupId }: BellingTableProps) {
       </div>
     );
   }
-  return <SharedTable<BellingTypes> columns={col} data={walks || []} />;
+  return <SharedTable<ReadingTypes> columns={col} data={walks || []} />;
 }

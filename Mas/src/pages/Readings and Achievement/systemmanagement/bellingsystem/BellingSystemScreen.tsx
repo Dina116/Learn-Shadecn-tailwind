@@ -1,13 +1,11 @@
 import { Button, MenuItem, Select, Typography } from "@mui/material";
 import { useState } from "react";
-// import { Outlet } from "react-router-dom";
 import BellingTable from "./BellingTable";
+import type { LoadType } from "./types";
 
-type LoadType = "byGroup" | "unassigned" | null;
 export default function BellingSystemScreen() {
   const [groupId, setGroupId] = useState<string>("");
   const [activeLoad, setActiveLoad] = useState<LoadType>(null);
-  // const [load, setLoad] = useState(false);
 
   const handleLoadByGroup = () => {
     console.log("1. handleLoad called. Current groupId:", groupId);

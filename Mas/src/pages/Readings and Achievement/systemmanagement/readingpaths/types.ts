@@ -1,11 +1,10 @@
-export type BellingTypes = {
+export type ReadingTypes = {
   STATION_NO: number;
-  BILLGROUP: string;
   BOOK_NO: string;
   WALK_NO: string;
   DESCRIBE: string;
+  BILLGROUP: string;
   ASSIGNED_TO_HH: number;
-  MARKETING: number;
 };
 
 export type Collectors = {
@@ -25,7 +24,7 @@ export type CollectorCellProps = {
   onCollectorChange: (newCollectorId: number) => void;
 };
 export type LoadType = "byGroup" | "unassigned" | null;
-export type BellingTableProps = {
+export type ReadingTableProps = {
   loadType: "byGroup" | "unassigned";
   groupId: string | null;
 };

@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import type { CellRenderResult, Columns } from "../../../SharedTypes";
-import CollectorCell from "./customerwalks/component/CollectorCell";
-import type { BellingTypes, Collectors } from "./types";
+import CollectorCell from "./readingwalks/componenet/CollectorCell";
+import type { Collectors, ReadingTypes } from "./types";
 
 export const createColumns = (
   collectors: Collectors[],
-): Columns<BellingTypes>[] => [
+): Columns<ReadingTypes>[] => [
   {
     key: "ASSIGNED_TO_HH",
     label: "مخصص ل",
@@ -44,7 +44,7 @@ export const createColumns = (
     label: "م",
     render: (
       _value: any,
-      row: BellingTypes,
+      row: ReadingTypes,
       rowIndex: number,
     ): CellRenderResult => {
       if (row.ASSIGNED_TO_HH == null) {

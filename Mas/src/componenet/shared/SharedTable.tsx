@@ -1,4 +1,3 @@
-// import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import type { TableProbs } from "../../pages/SharedTypes";
+import type { CellRenderResult, TableProbs } from "../../pages/SharedTypes";
 
 export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
@@ -33,6 +32,38 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
           </TableHead>
           <TableBody>
             {data.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                {columns.map((col) => {
+                  const cellValue = col.key ? row[col.key] : null;
+                  let content: React.ReactNode = cellValue;
+                  let cellStyle: React.CSSProperties = {};
+                  if (col.render) {
+                    const renderResult: CellRenderResult = col.render(
+                      cellValue,
+                      row,
+                      rowIndex,
+                    );
+                    if (
+                      typeof renderResult === "object" &&
+                      renderResult !== null &&
+                      "content" in renderResult
+                    ) {
+                      content = renderResult.content;
+                      cellStyle = renderResult.cellStyle || {};
+                    } else {
+                      content = renderResult;
+                    }
+                  }
+
+                  return (
+                    <TableCell key={col.label} style={cellStyle}>
+                      {content}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
+            {/* {data.map((row, rowIndex) => (
               <TableRow
                 key={rowIndex}
                 className=" border-l border-sky-900"
@@ -56,7 +87,7 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
                   );
                 })}
               </TableRow>
-            ))}
+            ))} */}
           </TableBody>
         </Table>
       </TableContainer>
