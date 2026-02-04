@@ -1,5 +1,5 @@
 export interface Columns<T> {
-  key: keyof T;
+  key: keyof T | (string & {});
   label: string;
   className?: string;
   render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
