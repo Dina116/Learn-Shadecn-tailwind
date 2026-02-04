@@ -2,12 +2,12 @@ import type { Columns } from "../../../SharedTypes";
 
 export const columns: Columns[] = [
   {
-    key: "description",
+    key: "DESCRIPTION",
     label: "الوصف",
   },
 
   {
-    key: "Code",
+    key: "CTYPEGRP_ID",
     label: "الكود",
   },
   {

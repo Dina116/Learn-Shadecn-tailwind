@@ -3,15 +3,12 @@ import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import type { DeviceProcedureFormRef, DeviceProcedureTypes } from "./types";
 import DeviceProcedureForm from "./DeviceProcedureForm";
+import { useAddDevice } from "./api/useAddDevice";
 
-interface AddNewProcedureDialogProps {
-  onSubmit: (data: DeviceProcedureTypes) => void;
-}
-export default function AddNewProcedureDialog({
-  onSubmit,
-}: AddNewProcedureDialogProps) {
+export default function AddNewProcedureDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<DeviceProcedureFormRef>(null);
+  const { mutate, isError, isPending } = useAddDevice();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -23,8 +20,11 @@ export default function AddNewProcedureDialog({
 
   const handleFormSubmit = (data: DeviceProcedureTypes) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    mutate(data, {
+      onSuccess: () => {
+        handleCloseDialog();
+      },
+    });
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -44,7 +44,7 @@ export default function AddNewProcedureDialog({
         title="إضافة نوع صيانة جديد "
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
         }}
         secondaryAction={{
@@ -53,6 +53,18 @@ export default function AddNewProcedureDialog({
         }}
       >
         <DeviceProcedureForm onSubmit={handleFormSubmit} ref={formRef} />
+        {isError && (
+          <Box
+            sx={{
+              color: "error.main",
+              mt: 2,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            حدث خطأ أثناء إضافة الكشاف
+          </Box>
+        )}
       </SharedDialog>
     </Box>
   );

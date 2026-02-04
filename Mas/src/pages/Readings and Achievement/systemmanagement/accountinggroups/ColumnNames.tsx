@@ -24,21 +24,21 @@ export const columns: Columns[] = [
   //     // ),
   //   },
   {
-    key: "status",
+    key: "UNUSED",
     label: "الحالة",
   },
   {
-    key: "branch",
+    key: "STATION_NO",
     label: "الفرع",
   },
 
   {
-    key: "description",
+    key: "DESCRIPTION",
     label: "الوصف",
   },
 
   {
-    key: "Code",
+    key: "GROUP_ID",
     label: "الكود",
   },
   {

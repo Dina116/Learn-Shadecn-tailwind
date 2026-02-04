@@ -12,15 +12,15 @@ import { DeviceSchema } from "./DeviceSchema";
 const DeviceProcedureForm = forwardRef<
   DeviceProcedureFormRef,
   DeviceProcedureFormProps
->(({ onSubmit }, ref) => {
+>(({ onSubmit, defaultValues }, ref) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<DeviceProcedureTypes>({
-    defaultValues: {
-      code: "",
-      type: "",
+  } = useForm({
+    defaultValues: defaultValues || {
+      ACTION_ID: 0,
+      DESCRIPTION: "",
     },
     resolver: zodResolver(DeviceSchema),
   });
@@ -81,8 +81,8 @@ const DeviceProcedureForm = forwardRef<
       }}
       noValidate
     >
-      {renderField("code", "الكود", "string", false)}
-      {renderField("type", "النوع", "string", false)}
+      {renderField("ACTION_ID", "الكود", "number", false)}
+      {renderField("DESCRIPTION", "النوع", "string", false)}
     </Box>
   );
 });

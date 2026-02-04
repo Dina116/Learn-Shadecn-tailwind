@@ -3,7 +3,7 @@ import DeviceProceduresTable from "./DeviceProceduresTable";
 import { useForm } from "./useForm";
 
 export default function DeviceProceduresScreen() {
-  const { data, handleSubmittion, handleDelete, handleEdit } = useForm();
+  const { data, handleDelete, handleEdit } = useForm();
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
@@ -20,7 +20,7 @@ export default function DeviceProceduresScreen() {
           </h6>
         </div>
         <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-4 ps-4 ">
-          <AddNewProcedureDialog onSubmit={handleSubmittion} />
+          <AddNewProcedureDialog />
           <DeviceProceduresTable
             data={data}
             onDelete={handleDelete}

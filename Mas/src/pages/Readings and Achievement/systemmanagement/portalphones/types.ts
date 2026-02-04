@@ -9,5 +9,4 @@ export type PortalTableProps = {
 };
 export type EditPortalDialogProps = {
   rowdata: PortalPhonesTypes;
-  onSubmit: (data: PortalPhonesTypes) => void;
 };

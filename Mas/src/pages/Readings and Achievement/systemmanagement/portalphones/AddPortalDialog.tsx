@@ -4,13 +4,12 @@ import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import type { PortalPhonesTypes } from "./types";
 import { type PortalFormRef } from "./PortalForms";
 import PortalForm from "./PortalForms";
+import { useAddPortal } from "./api/useAddPortal";
 
-interface AddPortalDialogProps {
-  onSubmit: (data: PortalPhonesTypes) => void;
-}
-export default function AddScoutsDialog({ onSubmit }: AddPortalDialogProps) {
+export default function AddScoutsDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<PortalFormRef>(null);
+  const { mutate, isError, isPending } = useAddPortal();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -22,8 +21,11 @@ export default function AddScoutsDialog({ onSubmit }: AddPortalDialogProps) {
 
   const handleFormSubmit = (data: PortalPhonesTypes) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    mutate(data, {
+      onSuccess: () => {
+        handleCloseDialog();
+      },
+    });
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -43,7 +45,7 @@ export default function AddScoutsDialog({ onSubmit }: AddPortalDialogProps) {
         title="إضافة كشاف جديد"
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
         }}
         secondaryAction={{
@@ -52,8 +54,18 @@ export default function AddScoutsDialog({ onSubmit }: AddPortalDialogProps) {
         }}
       >
         <PortalForm onSubmit={handleFormSubmit} ref={formRef} />
-
-        {/* onSubmit={handleFormSubmit} ref={formRef} */}
+        {isError && (
+          <Box
+            sx={{
+              color: "error.main",
+              mt: 2,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            حدث خطأ أثناء إضافة الكشاف
+          </Box>
+        )}
       </SharedDialog>
     </Box>
   );

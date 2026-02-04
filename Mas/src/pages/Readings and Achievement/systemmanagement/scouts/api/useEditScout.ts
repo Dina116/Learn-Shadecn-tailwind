@@ -1,4 +1,3 @@
-// api/useEditScout.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editScout } from "./scoutsApi";
 import type { scoutsFormType } from "../scoutstypes";

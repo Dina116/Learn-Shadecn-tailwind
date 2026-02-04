@@ -12,24 +12,19 @@ export const columns: Columns[] = [
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row-reverse", 
-          alignItems: "center", 
-          justifyContent: "center", 
+          flexDirection: "row-reverse",
+          alignItems: "center",
+          justifyContent: "center",
           gap: 1,
         }}
       >
         <DeletePortalDialog
-          onDelete={() => handlers.onDelete(row, rowIndex)}
+          portalId={row.DEVICE_ID}
           btnname="🗑️"
           title="رسالة حذف"
           content="هل انت متأكد من حذف الجهاز"
         />
-        <EditPortalDialog
-          rowdata={row}
-          onSubmit={(updatedData) =>
-            handlers.onEdit(row, rowIndex, updatedData)
-          }
-        />
+        <EditPortalDialog rowdata={row} />
       </Box>
     ),
   },
@@ -40,8 +35,11 @@ export const columns: Columns[] = [
   {
     key: "status",
     label: "الحالة",
-    render: (value: boolean) =>
-      value ? (
+    render: (value: boolean) => {
+      if (value === undefined || value === null) {
+        return null;
+      }
+      return value ? (
         <div className="flex flex-row justify-center items-center">
           <span className="text-blue-500 w-5 h-5 text-center">نشط</span>
         </div>
@@ -49,7 +47,8 @@ export const columns: Columns[] = [
         <div className="flex flex-row justify-center items-center">
           <span className="text-red-500 w-5 h-5 text-center">غير نشط</span>
         </div>
-      ),
+      );
+    },
   },
   {
     key: "dedicatedto",
@@ -61,12 +60,12 @@ export const columns: Columns[] = [
   },
 
   {
-    key: "devicecode",
+    key: "DEVICE_ID",
     label: "كود الوحده",
   },
 
   {
-    key: "devicenumber",
+    key: "ID",
     label: "رقم الجهاز",
   },
   {

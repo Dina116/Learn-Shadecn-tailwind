@@ -1,5 +1,5 @@
-import type z from "zod";
-import type { DeviceSchema } from "./DeviceSchema";
+import { z } from "zod";
+import { DeviceSchema } from "./DeviceSchema";
 
 export type DeviceProcedureTypes = z.infer<typeof DeviceSchema>;
 
@@ -21,5 +21,4 @@ export interface DeviceProcedureFormRef {
 
 export type EditDeviceProcedureDialogProps = {
   rowdata: DeviceProcedureTypes;
-  onSubmit: (data: DeviceProcedureTypes) => void;
 };

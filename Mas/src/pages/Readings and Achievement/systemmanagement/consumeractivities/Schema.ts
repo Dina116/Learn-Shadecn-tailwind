@@ -1,6 +1,6 @@
 import z from "zod";
 
 export const Schema = z.object({
-  descreption: z.string(),
-  code: z.string(),
+  DESCRIPTION: z.string(),
+  CTYPEGRP_ID: z.string(),
 });

@@ -1,12 +1,12 @@
 import { Alert, Box, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useUpdateFromBilling } from "./api/useUpdateFromBilling";
-export default function UpdateFromBillingDatabase() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+import { useUpdateGroup } from "./api/useUpdateGroup";
+
+export default function UpdateFromAccountingDatabase() {
   const [openAlert, setOpenAlert] = useState(false);
 
-  const { mutate, isPending, isError } = useUpdateFromBilling();
+  const { mutate, isPending, isError } = useUpdateGroup();
 
   const handleUpdateClick = () => {
     mutate(undefined, {
@@ -15,11 +15,7 @@ export default function UpdateFromBillingDatabase() {
       },
     });
   };
-
-  const handleCloseAlert = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
+  const handleCloseAlert = (reason?: string) => {
     if (reason === "clickaway") return;
     setOpenAlert(false);
   };

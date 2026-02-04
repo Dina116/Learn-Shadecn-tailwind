@@ -7,7 +7,7 @@ export const columns: Columns[] = [
   {
     key: "actions",
     label: "الاجراءات",
-    render: (_value: any, row: any, rowIndex: number, handlers: any) => (
+    render: (_value: any, row: any) => (
       <Box
         sx={{
           display: "flex",
@@ -17,16 +17,9 @@ export const columns: Columns[] = [
           alignItems: "center",
         }}
       >
-        <EditDeviceProcedureDialog
-          rowdata={row}
-          onSubmit={(updatedData) =>
-            handlers.onEdit(row, rowIndex, updatedData)
-          }
-        />
+        <EditDeviceProcedureDialog rowdata={row} />
         <DeleteDeviceDialog
-          onDelete={() => {
-            handlers.onDelete(row, rowIndex);
-          }}
+          deviceId={row.ACTION_ID}
           btnname="🗑️"
           title="رسالة حذف"
           content="هل انت متأكد من حذف النوع"
@@ -38,12 +31,12 @@ export const columns: Columns[] = [
   },
 
   {
-    key: "type",
+    key: "DESCRIPTION",
     label: "النوع",
   },
 
   {
-    key: "code",
+    key: "ACTION_ID",
     label: "الكود",
     width: "15%",
     align: "center",

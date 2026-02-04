@@ -8,13 +8,14 @@ import type {
   DeviceProcedureTypes,
 } from "./types";
 import DeviceProcedureForm from "./DeviceProcedureForm";
+import { useEditDevice } from "./api/useEditDevice";
 
 export default function EditDeviceProcedureDialog({
-  onSubmit,
   rowdata,
 }: EditDeviceProcedureDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<DeviceProcedureFormRef>(null);
+  const { mutate: editDevice, isPending, isError, error } = useEditDevice();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -26,8 +27,14 @@ export default function EditDeviceProcedureDialog({
 
   const handleFormSubmit = (data: DeviceProcedureTypes) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    editDevice(
+      { id: rowdata.ACTION_ID, data },
+      {
+        onSuccess: () => {
+          handleCloseDialog();
+        },
+      },
+    );
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -57,7 +64,7 @@ export default function EditDeviceProcedureDialog({
         title="تعديل نوع الصيانة"
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
         }}
         secondaryAction={{
@@ -71,6 +78,21 @@ export default function EditDeviceProcedureDialog({
           defaultValues={rowdata}
         />
       </SharedDialog>
+      {isError && (
+        <>
+          {console.log("Error detected:", error)}
+          <Box
+            sx={{
+              color: "error.main",
+              mt: 2,
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            حدث خطأ أثناء إضافة الكشاف
+          </Box>
+        </>
+      )}
     </Box>
   );
 }

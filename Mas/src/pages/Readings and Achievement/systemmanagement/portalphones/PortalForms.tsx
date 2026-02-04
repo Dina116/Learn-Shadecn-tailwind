@@ -16,15 +16,15 @@ export interface PortalFormRef {
 }
 
 const PortalForm = forwardRef<PortalFormRef, PortalFormProps>(
-  ({ onSubmit }, ref) => {
+  ({ onSubmit, defaultValues }, ref) => {
     const {
       control,
       handleSubmit,
       formState: { errors },
     } = useForm<PortalPhonesTypes>({
-      defaultValues: {
-        devicenumber: "",
-        devicecode: "",
+      defaultValues: defaultValues || {
+        ID: "",
+        DEVICE_ID: "",
         branch: "",
         dedicatedto: "",
         status: "",
@@ -100,8 +100,8 @@ const PortalForm = forwardRef<PortalFormRef, PortalFormProps>(
         }}
         noValidate
       >
-        {renderField("devicenumber", "رقم الجهاز", "string", true)}
-        {renderField("devicecode", "كود الوحدة", "string", true)}
+        {renderField("ID", "رقم الجهاز", "string", true)}
+        {renderField("DEVICE_ID", "كود الوحدة", "string", true)}
 
         {renderField("company", "الشركة المصنعة")}
         {renderField("model", "الموديل")}

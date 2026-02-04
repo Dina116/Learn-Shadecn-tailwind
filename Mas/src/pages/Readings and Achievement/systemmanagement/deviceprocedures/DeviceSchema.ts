@@ -1,6 +1,6 @@
 import z from "zod";
 
 export const DeviceSchema = z.object({
-  type: z.string(),
-  code: z.string(),
+  DESCRIPTION: z.string(),
+  ACTION_ID: z.coerce.number()
 });

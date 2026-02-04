@@ -3,13 +3,12 @@ import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import PortalForm, { type PortalFormRef } from "./PortalForms";
 import type { EditPortalDialogProps, PortalPhonesTypes } from "./types";
 import { Box, Button } from "@mui/material";
+import { useEditPortal } from "./api/useEditPortal";
 
-export default function EditPortalDialog({
-  onSubmit,
-  rowdata,
-}: EditPortalDialogProps) {
+export default function EditPortalDialog({ rowdata }: EditPortalDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<PortalFormRef>(null);
+  const { mutate: editPortal, isPending, isError, error } = useEditPortal();
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -21,8 +20,14 @@ export default function EditPortalDialog({
 
   const handleFormSubmit = (data: PortalPhonesTypes) => {
     console.log("Data received in Dialog from Form:", data);
-    onSubmit(data);
-    handleCloseDialog();
+    editPortal(
+      { id: rowdata.DEVICE_ID, data },
+      {
+        onSuccess: () => {
+          handleCloseDialog();
+        },
+      },
+    );
   };
   const handleSave = () => {
     console.log("يتم الحفظ...");
@@ -52,7 +57,7 @@ export default function EditPortalDialog({
         title="تعديل الوحدة المحمولة"
         maxWidth="sm"
         primaryAction={{
-          text: "حفظ",
+          text: isPending ? "جاري الحفظ..." : "حفظ",
           onClick: handleSave,
         }}
         secondaryAction={{
@@ -65,6 +70,21 @@ export default function EditPortalDialog({
           ref={formRef}
           defaultValues={rowdata}
         />
+        {isError && (
+          <>
+            {console.log("Error detected:", error)}
+            <Box
+              sx={{
+                color: "error.main",
+                mt: 2,
+                fontSize: "0.9rem",
+                fontWeight: 500,
+              }}
+            >
+              حدث خطأ أثناء إضافة الكشاف
+            </Box>
+          </>
+        )}
       </SharedDialog>
     </Box>
   );

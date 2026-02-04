@@ -10,8 +10,8 @@ import type { TableProbs } from "../../pages/SharedTypes";
 
 export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ width: "100%" }}>
+    <Paper sx={{ width: "90%", overflow: "hidden" }}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table" size="small">
           <TableHead>
             <TableRow className="border-b border-white hover:bg-sky-900 text-center">
@@ -40,6 +40,9 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
               >
                 {columns.map((col, colIndex) => {
                   const value = row[col.key];
+                  console.log("row:", row);
+                  console.log("col.key:", col.key);
+                  console.log("value:", value);
                   return (
                     <TableCell
                       key={colIndex}
@@ -48,7 +51,7 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
                     >
                       {col.render
                         ? col.render(value, row, rowIndex)
-                        : String(value)}
+                        : String(value ?? "")}
                     </TableCell>
                   );
                 })}

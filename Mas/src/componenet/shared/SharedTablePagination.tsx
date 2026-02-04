@@ -24,7 +24,8 @@ export default function SharedTablePagination<T>({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const hasData = data && data.length > 0;
+  const safeData = data ?? [];
+  const hasData = safeData.length > 0;
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -50,7 +51,7 @@ export default function SharedTablePagination<T>({
           </TableHead>
           <TableBody>
             {hasData ? (
-              data
+              safeData
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, rowIndex) => (
                   <TableRow
@@ -66,6 +67,7 @@ export default function SharedTablePagination<T>({
                         <TableCell
                           key={colIndex}
                           className=" text-black text-center border-l border-sky-900"
+                          sx={{ textAlign: "center" }}
                         >
                           {col.render
                             ? col.render(value, row, rowIndex)
@@ -97,7 +99,7 @@ export default function SharedTablePagination<T>({
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={data.length}
+          count={safeData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
