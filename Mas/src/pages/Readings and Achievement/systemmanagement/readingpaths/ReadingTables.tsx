@@ -11,7 +11,6 @@ export default function ReadingTable({ loadType, groupId }: ReadingTableProps) {
     "groupId:",
     groupId,
   );
-
   const {
     walks: groupWalks,
     collectors,

@@ -15,6 +15,7 @@ const BreadcrumbMap: Record<string, string> = {
   bellingsystem: "مسارات التحصيل",
   deviceprocedures: "اجراءات الاجهزة ",
   treasuryinside: "الخزينة",
+  systemMaintanance: "صيانة النظام ",
 };
 
 export default function Breadcrumb() {

@@ -9,6 +9,7 @@ export const useCustomerWalks = (groupId: string | null, load: boolean) => {
   );
   const isQueryEnabled = load && !!groupId;
   console.log("6. Is query enabled?", isQueryEnabled);
+
   const walksQuery = useQuery({
     queryKey: ["walks"],
     queryFn: () => {
@@ -17,6 +18,7 @@ export const useCustomerWalks = (groupId: string | null, load: boolean) => {
     },
     enabled: isQueryEnabled,
   });
+
   const collectorsQuery = useQuery({
     queryKey: ["collectors"],
     queryFn: () => {
@@ -25,6 +27,7 @@ export const useCustomerWalks = (groupId: string | null, load: boolean) => {
     },
     enabled: isQueryEnabled,
   });
+  
   return {
     walks: walksQuery.data ?? [],
     collectors: collectorsQuery.data ?? [],

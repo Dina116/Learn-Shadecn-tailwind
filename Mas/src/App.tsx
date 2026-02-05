@@ -17,43 +17,55 @@ import ReadingPathsScreen from "./pages/Readings and Achievement/systemmanagemen
 import DeviceProceduresScreen from "./pages/Readings and Achievement/systemmanagement/deviceprocedures/DeviceProceduresScreen";
 import TreasuryInsideScreen from "./pages/Readings and Achievement/systemmanagement/treasuryinside/TreasuryInsideScreen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SystemMaintananceScreen from "./pages/Readings and Achievement/systemmaintanance/SystemMaintananceScreen";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<LoginScreen />} />
-        <Route element={<Layout />}>
-          <Route path="/home" element={<HomeScreen />} />
-          <Route path="/search" element={<InquiriesScreen />} />
-          <Route path="/support" element={<CustomerServiceScreen />} />
-          <Route path="/readings" element={<ReadingScreen />}></Route>
-          <Route path="/treasury" element={<TreasuryScreen />} />
+    <>
+      <Toaster position="top-center" />
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<LoginScreen />} />
+          <Route element={<Layout />}>
+            <Route path="/home" element={<HomeScreen />} />
+            <Route path="/search" element={<InquiriesScreen />} />
+            <Route path="/support" element={<CustomerServiceScreen />} />
+            <Route path="/readings" element={<ReadingScreen />}></Route>
+            <Route path="/treasury" element={<TreasuryScreen />} />
 
-          <Route path="/systemManagement" element={<SystemManagementScreen />}>
-            <Route path="scouts" element={<ScoutsScreen />} />
-            <Route path="users" element={<UsersScreen />} />
-            <Route path="portalphones" element={<PortalPhonesScreen />} />
             <Route
-              path="consumeractivities"
-              element={<ConsumerActivitiesScreen />}
-            />
+              path="/systemManagement"
+              element={<SystemManagementScreen />}
+            >
+              <Route path="scouts" element={<ScoutsScreen />} />
+              <Route path="users" element={<UsersScreen />} />
+              <Route path="portalphones" element={<PortalPhonesScreen />} />
+              <Route
+                path="consumeractivities"
+                element={<ConsumerActivitiesScreen />}
+              />
+              <Route
+                path="accountinggroups"
+                element={<AccountingGroupsScreen />}
+              />
+              <Route path="bellingsystem" element={<BellingSystemScreen />} />
+              <Route path="readingpaths" element={<ReadingPathsScreen />} />
+              <Route
+                path="deviceprocedures"
+                element={<DeviceProceduresScreen />}
+              />
+              <Route path="treasuryinside" element={<TreasuryInsideScreen />} />
+            </Route>
             <Route
-              path="accountinggroups"
-              element={<AccountingGroupsScreen />}
-            />
-            <Route path="bellingsystem" element={<BellingSystemScreen />} />
-            <Route path="readingpaths" element={<ReadingPathsScreen />} />
-            <Route
-              path="deviceprocedures"
-              element={<DeviceProceduresScreen />}
-            />
-            <Route path="treasuryinside" element={<TreasuryInsideScreen />} />
+              path="/systemMaintanance"
+              element={<SystemMaintananceScreen />}
+            ></Route>
           </Route>
-        </Route>
-      </Routes>
-    </QueryClientProvider>
+        </Routes>
+      </QueryClientProvider>
+    </>
   );
 }
 

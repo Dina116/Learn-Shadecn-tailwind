@@ -34,14 +34,14 @@ export default function SharedDialog({
   children,
   primaryAction,
   secondaryAction,
-  maxWidth = "xs",
+  maxWidth = "md",
 }: SharedDialogProps) {
   return (
     <Dialog
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
-      // fullWidth
+      fullWidth
       dir="rtl"
     >
       <DialogTitle
@@ -51,6 +51,7 @@ export default function SharedDialog({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          color:"GrayText"
         }}
       >
         {title}

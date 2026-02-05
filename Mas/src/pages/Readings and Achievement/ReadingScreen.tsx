@@ -37,7 +37,7 @@ const cardItems = [
   {
     content: "صيانه النظام",
     children: phoneIcon,
-    path: "",
+    path: "/systemMaintanance",
   },
   {
     content: "معالجة البيانات",

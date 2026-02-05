@@ -1,26 +1,15 @@
 import { Button, MenuItem, Select, Typography } from "@mui/material";
-import { useState } from "react";
 import BellingTable from "./BellingTable";
-import type { LoadType } from "./types";
+import { useBellingSystem } from "./useBellingSystem";
 
 export default function BellingSystemScreen() {
-  const [groupId, setGroupId] = useState<string>("");
-  const [activeLoad, setActiveLoad] = useState<LoadType>(null);
-
-  const handleLoadByGroup = () => {
-    console.log("1. handleLoad called. Current groupId:", groupId);
-    if (!groupId) {
-      setGroupId("*");
-      console.log("2. groupId was empty, setting to '*'");
-    }
-    setActiveLoad("byGroup");
-    console.log("3. setLoad(true) executed.");
-  };
-
-  const handleLoadUnassigned = () => {
-    setActiveLoad("unassigned");
-  };
-
+  const {
+    activeLoad,
+    groupId,
+    handleLoadByGroup,
+    handleLoadUnassigned,
+    handleChange,
+  } = useBellingSystem();
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
@@ -70,7 +59,7 @@ export default function BellingSystemScreen() {
               </Typography>
               <Select
                 value={groupId ?? ""}
-                onChange={(e) => setGroupId(e.target.value)}
+                onChange={handleChange}
                 sx={{ width: 200, height: 30, direction: "rtl" }}
                 size="small"
               >
@@ -90,7 +79,6 @@ export default function BellingSystemScreen() {
             >
               حفظ التعديلات
             </Button>
-
             <BellingTable groupId={groupId} loadType={activeLoad} />
           </div>
         )}
