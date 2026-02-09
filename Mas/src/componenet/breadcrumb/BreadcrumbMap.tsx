@@ -17,6 +17,7 @@ const BreadcrumbMap: Record<string, string> = {
   treasuryinside: "الخزينة",
   systemMaintanance: "صيانة النظام ",
   switchcollectorspath: "تبديل عهدة فواتير بين محصلين",
+  addremovepaths:"اضافة وحذف مناطق للمحصلين"
 };
 
 export default function Breadcrumb() {
