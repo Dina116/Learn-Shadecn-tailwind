@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMeterWalks, getReaders } from "../../api/ReadingPathApi";
+import { getMeterWalks, getReaders } from "../../../../pages/Readings and Achievement/systemmanagement/readingpaths/api/ReadingPathApi";
 export const useReadingWalks = (groupId: string | null, load: boolean) => {
   console.log(
     "5. useReadingWalks received -> load:",

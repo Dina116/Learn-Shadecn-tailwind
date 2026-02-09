@@ -1,6 +1,5 @@
 import { useState } from "react";
-import type { scoutsFormType } from "./scoutstypes";
-
+import type { scoutsFormType } from "../../../pages/Readings and Achievement/systemmanagement/scouts/scoutstypes";
 
 export const useForm = () => {
   const [data, setData] = useState<scoutsFormType[]>([]);

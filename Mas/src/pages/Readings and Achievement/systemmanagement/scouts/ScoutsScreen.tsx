@@ -1,7 +1,8 @@
 // import { Button } from "@mui/material";
 import ScoutsTable from "./ScoutsTable";
-import { useForm } from "./useForm";
+
 import AddScoutsDialog from "./AddScoutsDialog";
+import { useForm } from "../../../../hooks/systemmanagement/scouts/useForm";
 
 export default function ScoutsScreen() {
   const { data, handleDelete, handleEdit } = useForm();

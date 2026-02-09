@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editScout } from "./scoutsApi";
-import type { scoutsFormType } from "../scoutstypes";
+import type { scoutsFormType } from "../../../pages/Readings and Achievement/systemmanagement/scouts/scoutstypes";
+import { editScout } from "../../../pages/Readings and Achievement/systemmanagement/scouts/api/scoutsApi";
+
 
 interface EditScoutVariables {
   id: number;

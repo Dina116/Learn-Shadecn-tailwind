@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { PortalPhonesTypes } from "../types";
-import { editPortal } from "./portalApi";
+import type { PortalPhonesTypes } from "../../../pages/Readings and Achievement/systemmanagement/portalphones/types";
+import { editPortal } from "../../../pages/Readings and Achievement/systemmanagement/portalphones/api/portalApi";
+
 
 interface EditPortalVariables {
   id: string;

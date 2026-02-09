@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { unassignedMeterWalks } from "../../api/ReadingPathApi";
+import { unassignedMeterWalks } from "../../../../pages/Readings and Achievement/systemmanagement/readingpaths/api/ReadingPathApi";
+
 
 export const useUnassignedMeterWalks = (enabled: boolean) => {
   return useQuery({

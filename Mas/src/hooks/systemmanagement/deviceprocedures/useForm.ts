@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { DeviceProcedureTypes } from "./types";
+import type { DeviceProcedureTypes } from "../../../pages/Readings and Achievement/systemmanagement/deviceprocedures/types";
+
 
 export const useForm = () => {
   const [data, setData] = useState<DeviceProcedureTypes[]>([]);

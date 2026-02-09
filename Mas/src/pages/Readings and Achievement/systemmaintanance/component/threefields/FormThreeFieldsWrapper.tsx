@@ -7,8 +7,8 @@ import type {
   FormThreeFieldsRef,
   WalkType,
 } from "../../types";
-import { useFormThreeFieldsLogic } from "./useFormThreeField";
 import { useRef } from "react";
+import { useFormThreeFieldsLogic } from "../../../../../hooks/systemmaintanance/useFormThreeField";
 
 const FormThreeFieldsWrapper = forwardRef<
   FormThreeFieldsRef,

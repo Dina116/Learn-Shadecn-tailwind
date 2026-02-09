@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteDevice } from "./deviceApi";
+import { deleteDevice } from "../../../pages/Readings and Achievement/systemmanagement/deviceprocedures/api/deviceApi";
+
 
 export const useDeleteDevice = () => {
   const queryClient = useQueryClient();

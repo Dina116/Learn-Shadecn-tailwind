@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getCollectors, getCustomerWalks } from "../../api/BellingApi";
+import { getCollectors, getCustomerWalks } from "../../../../pages/Readings and Achievement/systemmanagement/bellingsystem/api/BellingApi";
 export const useCustomerWalks = (groupId: string | null, load: boolean) => {
   console.log(
     "5. useCustomerWalks received -> load:",

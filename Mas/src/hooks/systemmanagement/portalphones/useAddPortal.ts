@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addPortal } from "./portalApi";
-import type { PortalPhonesTypes } from "../types";
+import { addPortal } from "../../../pages/Readings and Achievement/systemmanagement/portalphones/api/portalApi";
+import type { PortalPhonesTypes } from "../../../pages/Readings and Achievement/systemmanagement/portalphones/types";
+
 
 export const useAddPortal = () => {
   const queryClient = useQueryClient();

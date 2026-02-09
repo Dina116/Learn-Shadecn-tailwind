@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { PortalPhonesTypes } from "./types";
+import type { PortalPhonesTypes } from "../../../pages/Readings and Achievement/systemmanagement/portalphones/types";
+
 
 export const useForm = () => {
   const [data, setData] = useState<PortalPhonesTypes[]>([]);

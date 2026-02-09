@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { DeviceProcedureTypes } from "../types";
-import { addDeviceProcedure } from "./deviceApi";
+import { addDeviceProcedure } from "../../../pages/Readings and Achievement/systemmanagement/deviceprocedures/api/deviceApi";
+import type { DeviceProcedureTypes } from "../../../pages/Readings and Achievement/systemmanagement/deviceprocedures/types";
+
 
 export const useAddDevice = () => {
   const queryClient = useQueryClient();

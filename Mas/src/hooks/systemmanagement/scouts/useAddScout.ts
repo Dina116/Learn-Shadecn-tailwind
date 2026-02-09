@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { scoutsFormType } from "../scoutstypes";
-import { addScouts } from "./scoutsApi";
+import { addScouts } from "../../../pages/Readings and Achievement/systemmanagement/scouts/api/scoutsApi";
+import type { scoutsFormType } from "../../../pages/Readings and Achievement/systemmanagement/scouts/scoutstypes";
+
 
 export const useAddScout = () => {
   const queryClient = useQueryClient();

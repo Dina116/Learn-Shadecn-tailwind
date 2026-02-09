@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
-import type { LoadType } from "./types";
+import type { LoadType } from "../../../pages/Readings and Achievement/systemmanagement/bellingsystem/types";
+
 
 export const useBellingSystem = () => {
   const [groupId, setGroupId] = useState<string>("");

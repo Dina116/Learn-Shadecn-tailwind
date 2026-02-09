@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { ConsumerTypes } from "./ConsumerTypes";
+import type { ConsumerTypes } from "../../../pages/Readings and Achievement/systemmanagement/consumeractivities/ConsumerTypes";
+
 
 export const useForm = () => {
   const [data, setData] = useState<ConsumerTypes[]>([]);

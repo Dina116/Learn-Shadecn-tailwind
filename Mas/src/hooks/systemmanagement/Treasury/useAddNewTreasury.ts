@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { TreasuryTypes } from "../types";
-import { addNewTreasury } from "./treasuryApi";
+import { addNewTreasury } from "../../../pages/Readings and Achievement/systemmanagement/treasuryinside/api/treasuryApi";
+import type { TreasuryTypes } from "../../../pages/Readings and Achievement/systemmanagement/treasuryinside/types";
+
 
 export const useAddNewTreasury = () => {
   const queryClient = useQueryClient();

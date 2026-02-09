@@ -1,10 +1,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { getBooks, getWalks, getEmp } from "../../api/SystemApi";
-import type { FormThreeFieldsProps, FormThreeFieldInput } from "../../types";
-import { FormSchema } from "./FormSchema";
+
 import type { SubmitHandler } from "react-hook-form";
+import type {
+  FormThreeFieldInput,
+  FormThreeFieldsProps,
+} from "../../pages/Readings and Achievement/systemmaintanance/types";
+import { FormSchema } from "../../pages/Readings and Achievement/systemmaintanance/component/threefields/FormSchema";
+import {
+  getBooks,
+  getEmp,
+  getWalks,
+} from "../../pages/Readings and Achievement/systemmaintanance/api/SystemApi";
 
 export const useFormThreeFieldsLogic = ({
   onSubmit,

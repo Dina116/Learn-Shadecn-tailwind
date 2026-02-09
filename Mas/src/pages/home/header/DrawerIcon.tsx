@@ -10,7 +10,7 @@ import {
 import Drawer from "@mui/material/Drawer";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useDrawerStore } from "../../../hooks/header/useDrawerStore";
-import { drawerWidth } from "./Header";
+
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import SearchIcon from "@mui/icons-material/Search";
@@ -20,6 +20,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import MoneyIcon from "@mui/icons-material/Money";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { drawerWidth } from "./DrawerStyles";
 
 const menuItems = [
   {

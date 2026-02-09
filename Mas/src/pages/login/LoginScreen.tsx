@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import LoginForm from "./LoginForm";
-import { useLoginStore } from "./useLoginStore";
+import { useLoginStore } from "../../hooks/login/useLoginStore";
+
 
 export default function LoginScreen() {
   const handleLogin = useLoginStore((state) => state.handleLogin);

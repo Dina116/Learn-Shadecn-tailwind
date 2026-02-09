@@ -8,7 +8,8 @@ import type {
   DeviceProcedureTypes,
 } from "./types";
 import DeviceProcedureForm from "./DeviceProcedureForm";
-import { useEditDevice } from "./api/useEditDevice";
+import { useEditDevice } from "../../../../hooks/systemmanagement/deviceprocedures/useEditDevice";
+
 
 export default function EditDeviceProcedureDialog({
   rowdata,
