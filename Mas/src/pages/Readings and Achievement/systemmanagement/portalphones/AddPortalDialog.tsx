@@ -6,8 +6,10 @@ import { type PortalFormRef } from "./PortalForms";
 import PortalForm from "./PortalForms";
 import { useAddPortal } from "../../../../hooks/systemmanagement/portalphones/useAddPortal";
 
-
-export default function AddScoutsDialog() {
+// type AddPortalDialogProps = {
+//   onSubmit: (data: PortalPhonesTypes) => void;
+// };
+export default function AddPortalDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<PortalFormRef>(null);
   const { mutate, isError, isPending } = useAddPortal();

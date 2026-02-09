@@ -2,9 +2,8 @@ import { useForm } from "../../../../hooks/systemmanagement/portalphones/useForm
 import AddPortalDialog from "./AddPortalDialog";
 import PortalTable from "./PortalTable";
 
-
 export default function PortalPhonesScreen() {
-  const { data, handleDelete, handleEdit, handleSubmittion } = useForm();
+  const { data, handleDelete, handleEdit } = useForm();
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
@@ -21,7 +20,7 @@ export default function PortalPhonesScreen() {
           </h6>
         </div>
         <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-2 ps-2 ">
-          <AddPortalDialog onSubmit={handleSubmittion} />
+          <AddPortalDialog />
           <PortalTable
             data={data}
             onDelete={handleDelete}

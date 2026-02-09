@@ -24,7 +24,7 @@ export default function ConsumerActivitiesScreen() {
         </div>
         <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-4 ps-4 ">
           <UpdateFromBillingDatabase />
-          <ConsumerTable data={data} />
+          <ConsumerTable/>
           <Typography
             sx={{
               color: "orangered",

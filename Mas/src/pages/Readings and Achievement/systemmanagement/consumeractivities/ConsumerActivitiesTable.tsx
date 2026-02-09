@@ -19,7 +19,7 @@ export default function ConsumerTable() {
       columns={columns.map((col) => ({
         ...col,
         render: col.render
-          ? (value: any, row: ConsumerTypes, rowIndex: number) =>
+          ? (value: ConsumerTypes, row: ConsumerTypes, rowIndex: number) =>
               col.render(value, row, rowIndex, {})
           : undefined,
       }))}
