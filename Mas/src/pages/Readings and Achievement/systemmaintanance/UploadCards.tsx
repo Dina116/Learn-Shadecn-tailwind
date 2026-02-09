@@ -9,7 +9,7 @@ import {
   replayIcon,
   reverseIcon,
   switchIcon,
-} from "../CardsIcons";
+} from "../../../componenet/CardsIcons";
 import type { UploadCardsProps } from "./types";
 
 const cardItems = [

@@ -1,5 +1,6 @@
 import AlertDialog from "../../../../componenet/shared/AlertDialog";
-import { useDeleteScout } from "./api/useDeleteScout";
+import { useDeleteScout } from "../../../../hooks/systemmanagement/scouts/useDeleteScout";
+
 
 export type DeleteScoutsDialogProps = {
   btnname: string;

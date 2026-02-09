@@ -2,16 +2,19 @@ import { forwardRef, useImperativeHandle, useEffect } from "react";
 import FormThreeFieldsUI from "./FormThreeFieldsUI";
 import type {
   BookType,
+  Emp,
   FormThreeFieldsProps,
   FormThreeFieldsRef,
   WalkType,
 } from "../../types";
 import { useFormThreeFieldsLogic } from "./useFormThreeField";
+import { useRef } from "react";
 
 const FormThreeFieldsWrapper = forwardRef<
   FormThreeFieldsRef,
   FormThreeFieldsProps
 >(({ onSubmit, data, id }, ref) => {
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     control,
     errors,
@@ -23,18 +26,31 @@ const FormThreeFieldsWrapper = forwardRef<
     handleSubmit,
     handleGroupChange,
     handleBookChange,
+    emp,
   } = useFormThreeFieldsLogic({ onSubmit, data, id });
 
-  // forward the submit function to parent
   useImperativeHandle(ref, () => ({
-    submit: handleSubmit(onValidSubmit),
+    submit: () => {
+      console.log("Attempting to submit from wrapper...");
+      handleSubmit(
+        (data) => {
+          console.log("Validation successful, calling onValidSubmit.");
+          onValidSubmit(data);
+        },
+        (errors) => {
+          console.error("Validation failed!", errors);
+        },
+      )();
+    },
   }));
 
   useEffect(() => handleGroupChange(), [selectedGroup]);
   useEffect(() => handleBookChange(), [selectedBook]);
-
+  console.log("emp from wrapper", emp);
+  
   return (
     <FormThreeFieldsUI
+      formRef={formRef}
       control={control}
       errors={errors}
       dataOptions={
@@ -51,6 +67,12 @@ const FormThreeFieldsWrapper = forwardRef<
         walks?.map((w: WalkType) => ({
           value: w.WALK_NO,
           label: w.WALK_DESCRIPTION,
+        })) || []
+      }
+      emp={
+        emp?.map((item: Emp) => ({
+          value: item.ID,
+          label: `${item.ID} - ${item.FULL_NAME}`,
         })) || []
       }
       id={id}

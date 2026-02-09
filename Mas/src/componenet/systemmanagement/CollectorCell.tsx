@@ -1,5 +1,5 @@
-import { Select, MenuItem, Typography, Box } from "@mui/material";
-import type { CollectorCellProps } from "../../types";
+import { Box, MenuItem, Select, Typography } from "@mui/material";
+import type { CollectorCellProps } from "../../pages/Readings and Achievement/systemmanagement/readingpaths/types";
 
 export default function CollectorCell({
   assignedCollectorId,

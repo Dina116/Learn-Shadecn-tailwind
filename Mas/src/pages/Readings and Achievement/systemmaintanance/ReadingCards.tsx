@@ -7,7 +7,7 @@ import {
   replayIcon,
   reverseIcon,
   switchIcon,
-} from "../CardsIcons";
+} from "../../../componenet/CardsIcons";
 const cardItems = [
   {
     content: "عكس سحب القراءات من الفواتير",

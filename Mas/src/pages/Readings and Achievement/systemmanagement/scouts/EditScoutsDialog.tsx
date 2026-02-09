@@ -7,7 +7,8 @@ import type {
   ScoutsFormRef,
   scoutsFormType,
 } from "./scoutstypes";
-import { useEditScout } from "./api/useEditScout";
+import { useEditScout } from "../../../../hooks/systemmanagement/scouts/useEditScout";
+
 
 export default function EditScoutsDialog({ rowdata }: EditScoutsDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

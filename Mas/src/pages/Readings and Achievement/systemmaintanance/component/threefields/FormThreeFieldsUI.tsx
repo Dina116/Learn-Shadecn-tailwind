@@ -1,29 +1,37 @@
 import { Controller, type Control, type FieldErrors } from "react-hook-form";
 import { Box, MenuItem, Select, TextField, Typography } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import type { FormThreeFieldTypes, SelectOption } from "../../types";
+import type {
+  FormThreeFieldTypes,
+  SelectOption,
+  FormThreeFieldInput,
+} from "../../types";
 
 type Props = {
-  control: Control<FormThreeFieldTypes>;
-  errors: FieldErrors<FormThreeFieldTypes>;
+  formRef: React.RefObject<HTMLFormElement | null>;
+  control: Control<FormThreeFieldInput>;
+  errors: FieldErrors<FormThreeFieldInput>;
   dataOptions: SelectOption[];
   books: SelectOption[];
   walks: SelectOption[];
   id: string;
+  emp: SelectOption[];
 };
 const FormThreeFieldsUI = ({
+  formRef,
   control,
   errors,
   dataOptions,
   books,
   walks,
   id,
+  emp,
 }: Props) => {
   const renderSelectField = (
     name: keyof FormThreeFieldTypes,
     label: string,
     required = true,
-    options: SelectOption[],
+    options?: SelectOption[],
   ) => (
     <Box
       sx={{ display: "flex", flexDirection: "column", gap: 0.5, width: "100%" }}
@@ -35,33 +43,42 @@ const FormThreeFieldsUI = ({
         name={name}
         control={control}
         render={({ field }) => (
-          <Select
-            {...field}
-            displayEmpty
-            IconComponent={(props) => (
-              <KeyboardArrowDownIcon
-                {...props}
-                sx={{ ".MuiSelect-icon": { left: "7px", right: "auto" } }}
-              />
-            )}
-            sx={{ "& .MuiOutlinedInput-root": { backgroundColor: "#fcfcfc" } }}
-            size="small"
-            fullWidth
-            variant="outlined"
-            error={!!errors[name]}
-          >
-            {options.length === 0 ? (
-              <MenuItem disabled value="no-data">
-                لا يوجد بيانات
-              </MenuItem>
-            ) : (
-              options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+          <>
+            <Select
+              {...field}
+              displayEmpty
+              IconComponent={(props) => (
+                <KeyboardArrowDownIcon
+                  {...props}
+                  sx={{ ".MuiSelect-icon": { left: "7px", right: "auto" } }}
+                />
+              )}
+              sx={{
+                "& .MuiOutlinedInput-root": { backgroundColor: "#fcfcfc" },
+              }}
+              size="small"
+              fullWidth
+              variant="outlined"
+              error={!!errors[name]}
+            >
+              {options?.length === 0 ? (
+                <MenuItem disabled value="no-data">
+                  لا يوجد بيانات
                 </MenuItem>
-              ))
+              ) : (
+                options?.map((option) => (
+                  <MenuItem key={option.label} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))
+              )}
+            </Select>
+            {errors[name] && (
+              <Typography color="error" variant="caption" sx={{ mt: 0.5 }}>
+                {errors[name]?.message as string}
+              </Typography>
             )}
-          </Select>
+          </>
         )}
       />
     </Box>
@@ -104,6 +121,9 @@ const FormThreeFieldsUI = ({
   const renderForm = () => {
     switch (id) {
       case "reverse_collection":
+      case "cancel_preparation":
+      case "reprepare_closed_path":
+      case "reopen_mobile_unit_path":
         return (
           <>
             {renderSelectField("BILLGROUP", "رقم المجموعة", true, dataOptions)}
@@ -111,6 +131,7 @@ const FormThreeFieldsUI = ({
             {renderSelectField("WALK_DESCRIPTION", "المسار", true, walks)}
           </>
         );
+
       case "lock_collection_unit":
         return (
           <>
@@ -120,12 +141,34 @@ const FormThreeFieldsUI = ({
             {renderField("Collection_Count", "عدد التحصيل", "number", true)}
           </>
         );
+      case "reopen_group_collection":
+        return (
+          <>
+            {renderSelectField("BILLGROUP", "رقم المجموعة", true, dataOptions)}
+            {renderSelectField("ID", "المحصل", true, emp)}
+          </>
+        );
+      case "allow_merge_two_orders":
+        return <>{renderSelectField("ID", "المحصل", true, emp)}</>;
+
+      case "reopen_closed_paths":
+        console.log("emp", emp);
+        return (
+          <>
+            {renderSelectField("ID", "المحصل", true, emp)}
+            {renderSelectField("BILLGROUP", "رقم المجموعة", true, dataOptions)}
+            {renderSelectField("BOOK_NO", "السجل", true, books)}
+            {renderSelectField("WALK_DESCRIPTION", "المسار", true, walks)}
+          </>
+        );
+      default:
+        return null;
     }
   };
   return (
-    <Box dir="rtl" sx={{ p: 3 }} component="form" noValidate>
+    <form ref={formRef} noValidate dir="rtl" style={{ padding: "16px" }}>
       {renderForm()}
-    </Box>
+    </form>
   );
 };
 

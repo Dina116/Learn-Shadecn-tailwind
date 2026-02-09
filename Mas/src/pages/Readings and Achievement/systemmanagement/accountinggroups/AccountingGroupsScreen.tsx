@@ -20,9 +20,6 @@ export default function AccountingGroupsScreen() {
         <div className="flex flex-col w-full justify-end items-end bg-white  rounded-lg pe-2 ps-2 ">
           <UpdateFromBillingDatabase />
           <AccountingGroupsTable />
-          {/* data={data}
-             onDelete={handleDelete}
-             onEdit={handleEdit} */}
         </div>
       </div>
     </div>

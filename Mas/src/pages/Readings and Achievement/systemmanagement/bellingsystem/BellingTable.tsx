@@ -1,7 +1,8 @@
 import SharedTable from "../../../../componenet/shared/SharedTable";
+import { useCustomerWalks } from "../../../../hooks/systemmanagement/bellingsystem/customerwalks/useCustomerWalks";
+import { useUnassignedWalks } from "../../../../hooks/systemmanagement/bellingsystem/customerwalks/useUnassignedWalks";
 import { createColumns } from "./ColumnNames";
-import { useCustomerWalks } from "./customerwalks/hooks/useCustomerWalks";
-import { useUnassignedWalks } from "./customerwalks/hooks/useUnassignedWalks";
+
 import type { BellingTableProps, BellingTypes } from "./types";
 
 export default function BellingTable({ loadType, groupId }: BellingTableProps) {

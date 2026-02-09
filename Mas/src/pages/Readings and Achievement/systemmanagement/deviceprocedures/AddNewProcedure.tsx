@@ -3,7 +3,8 @@ import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import type { DeviceProcedureFormRef, DeviceProcedureTypes } from "./types";
 import DeviceProcedureForm from "./DeviceProcedureForm";
-import { useAddDevice } from "./api/useAddDevice";
+import { useAddDevice } from "../../../../hooks/systemmanagement/deviceprocedures/useAddDevice";
+
 
 export default function AddNewProcedureDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

@@ -4,10 +4,14 @@ import type { FormSchema } from "./component/threefields/FormSchema";
 export interface FormThreeFieldsRef {
   submit: () => void;
 }
-export type FormThreeFieldTypes = z.infer<typeof FormSchema>;
+// export type FormThreeFieldTypes = z.infer<typeof FormSchema>;
+export type FormThreeFieldInput = z.input<typeof FormSchema>;
+export type FormThreeFieldTypes = z.output<typeof FormSchema>;
+
 export type FormThreeFieldsProps = {
   onSubmit: (formData: FormThreeFieldTypes) => void;
   data?: billGroupsTypes[];
+  emp?: Emp[];
   defaultValues?: FormThreeFieldTypes;
   onClose?: () => void;
   id: string;
@@ -28,9 +32,27 @@ export type UploadCardsProps = {
 };
 
 export type ShowDialogProps = {
-  data: billGroupsTypes[];
-  title: string;
+  data?: billGroupsTypes[];
+  title?: string;
   id: string;
+};
+export type Emp = {
+  ID: number;
+  USER_NAME: string;
+  PASSWORD: string;
+  FULL_NAME: string;
+  DEVICE_ID: string;
+  BRANCH_ID: number;
+  DISABLED: boolean;
+  READING: boolean;
+  COLLECTION: boolean;
+  REPORTING_VIEWER: boolean;
+  CASHER: boolean;
+  EMP_TYPE: number;
+  MARKETING: boolean;
+  CLOSE_READING_CYCLE: boolean;
+  CLOSE_COLLECTION_CYCLE: boolean;
+  ENABLE_HH_PRINTING: boolean;
 };
 export type BookType = {
   OWNERS: [];

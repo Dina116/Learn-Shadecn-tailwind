@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
 import ConsumerTable from "./ConsumerActivitiesTable";
 import UpdateFromBillingDatabase from "./updatefrombillingdatabase";
-import { useForm } from "./useForm";
+
 import SubActivitiesTable from "./SubActivitiesTable";
+import { useForm } from "../../../../hooks/systemmanagement/consumeractivities/useForm";
 
 export default function ConsumerActivitiesScreen() {
   const { data } = useForm();

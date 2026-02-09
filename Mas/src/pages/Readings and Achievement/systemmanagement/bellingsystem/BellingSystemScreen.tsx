@@ -1,6 +1,7 @@
 import { Button, MenuItem, Select, Typography } from "@mui/material";
 import BellingTable from "./BellingTable";
-import { useBellingSystem } from "./useBellingSystem";
+import { useBellingSystem } from "../../../../hooks/systemmanagement/bellingsystem/useBellingSystem";
+
 
 export default function BellingSystemScreen() {
   const {

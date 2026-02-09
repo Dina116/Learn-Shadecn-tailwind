@@ -3,7 +3,8 @@ import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import type { TreasuryFormRef, TreasuryTypes } from "./types";
 import TreasuryForm from "./TreasuryForm";
-import { useAddNewTreasury } from "./api/useAddNewTreasury";
+import { useAddNewTreasury } from "../../../../hooks/systemmanagement/Treasury/useAddNewTreasury";
+
 
 export default function AddNewTreasuryDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

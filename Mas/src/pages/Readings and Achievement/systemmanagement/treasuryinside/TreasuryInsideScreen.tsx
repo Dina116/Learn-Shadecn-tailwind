@@ -1,6 +1,6 @@
 import AddNewTreasuryDialog from "./AddNewTreasuryDialog";
 import TreasutyTable from "./TreasuryTable";
-import { useForm } from "./useForm";
+import { useForm } from "../../../../hooks/systemmanagement/Treasury/useForm";
 
 export default function TreasuryInsideScreen() {
   const { data, handleDelete, handleEdit, handleSubmittion } = useForm();

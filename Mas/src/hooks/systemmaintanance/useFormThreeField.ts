@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { getBooks, getWalks } from "../../api/SystemApi";
-import type { FormThreeFieldsProps, FormThreeFieldTypes } from "../../types";
+import { getBooks, getWalks, getEmp } from "../../api/SystemApi";
+import type { FormThreeFieldsProps, FormThreeFieldInput } from "../../types";
 import { FormSchema } from "./FormSchema";
+import type { SubmitHandler } from "react-hook-form";
 
 export const useFormThreeFieldsLogic = ({
   onSubmit,
@@ -15,11 +16,13 @@ export const useFormThreeFieldsLogic = ({
     resetField,
     watch,
     formState: { errors },
-  } = useForm<FormThreeFieldTypes>({
+  } = useForm<FormThreeFieldInput>({
     defaultValues: {
       BILLGROUP: "",
       BOOK_NO: "",
       WALK_DESCRIPTION: "",
+      ID: "",
+      Collection_Count: 0,
     },
     resolver: zodResolver(FormSchema),
   });
@@ -40,8 +43,15 @@ export const useFormThreeFieldsLogic = ({
     enabled: !!selectedGroup && !!selectedBook && !!selectedGroupObject,
   });
 
-  const onValidSubmit = (formData: FormThreeFieldTypes) => {
-    onSubmit(formData);
+  const { data: emp = [] } = useQuery({
+    queryKey: ["emp"],
+    queryFn: () => getEmp(),
+  });
+  console.log("emp from hook", emp);
+
+  const onValidSubmit: SubmitHandler<FormThreeFieldInput> = (data) => {
+    const parsed = FormSchema.parse(data);
+    onSubmit(parsed);
   };
 
   const handleGroupChange = () => {
@@ -66,5 +76,6 @@ export const useFormThreeFieldsLogic = ({
     onValidSubmit,
     handleGroupChange,
     handleBookChange,
+    emp,
   };
 };

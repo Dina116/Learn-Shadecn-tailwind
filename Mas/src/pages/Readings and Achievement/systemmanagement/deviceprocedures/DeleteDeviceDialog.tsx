@@ -1,5 +1,6 @@
 import AlertDialog from "../../../../componenet/shared/AlertDialog";
-import { useDeleteDevice } from "./api/useDeleteDevice";
+import { useDeleteDevice } from "../../../../hooks/systemmanagement/deviceprocedures/useDeleteDevice";
+
 
 export type DeleteDeviceDialogProps = {
   btnname: string;

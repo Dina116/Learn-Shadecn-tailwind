@@ -1,7 +1,8 @@
 import { Typography } from "@mui/material";
 import type { CellRenderResult, Columns } from "../../../SharedTypes";
-import CollectorCell from "./customerwalks/component/CollectorCell";
+
 import type { BellingTypes, Collectors } from "./types";
+import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
 
 export const createColumns = (
   collectors: Collectors[],

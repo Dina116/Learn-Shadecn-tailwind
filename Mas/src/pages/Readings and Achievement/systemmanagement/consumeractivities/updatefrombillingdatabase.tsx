@@ -1,7 +1,8 @@
 import { Alert, Box, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useUpdateFromBilling } from "./api/useUpdateFromBilling";
+import { useUpdateFromBilling } from "../../../../hooks/systemmanagement/consumeractivities/useUpdateFromBilling";
+
 export default function UpdateFromBillingDatabase() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [openAlert, setOpenAlert] = useState(false);

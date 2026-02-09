@@ -3,7 +3,8 @@ import { Button, Box } from "@mui/material";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import ScoutForm from "./ScoutsForm";
 import type { ScoutsFormRef, scoutsFormType } from "./scoutstypes";
-import { useAddScout } from "./api/useAddScout";
+import { useAddScout } from "../../../../hooks/systemmanagement/scouts/useAddScout";
+
 
 // interface AddScoutsDialogProps {
 //   onSubmit: (data: scoutsFormType) => void;

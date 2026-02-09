@@ -1,5 +1,6 @@
 import AlertDialog from "../../../../componenet/shared/AlertDialog";
-import { useDeletePortal } from "./api/useDeletePortal";
+import { useDeletePortal } from "../../../../hooks/systemmanagement/portalphones/useDeletePortal";
+
 
 export type DeletePortalDialogProps = {
   btnname: string;

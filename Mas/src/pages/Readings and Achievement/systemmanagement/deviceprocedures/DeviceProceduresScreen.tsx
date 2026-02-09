@@ -1,6 +1,7 @@
+import { useForm } from "../../../../hooks/systemmanagement/deviceprocedures/useForm";
 import AddNewProcedureDialog from "./AddNewProcedure";
 import DeviceProceduresTable from "./DeviceProceduresTable";
-import { useForm } from "./useForm";
+
 
 export default function DeviceProceduresScreen() {
   const { data, handleDelete, handleEdit } = useForm();

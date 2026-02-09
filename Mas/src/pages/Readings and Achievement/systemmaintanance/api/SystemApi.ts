@@ -22,12 +22,20 @@ export const getBooks = async (groupId: string, stationNo: number) => {
   );
   return res.data;
 };
+
 export const getWalks = async (groupId: string, stationNo: number) => {
   const res = await axiosClient.get(
     `/Books/CustomerWalkCycle?groups=${groupId}&STATION_NO=${stationNo}`,
   );
   return res.data;
 };
+
+export const getEmp = async () => {
+  const res = await axiosClient.get("/Emp/Get");
+  // console.log("emp data from api", res.data);
+  return res.data;
+};
+
 export const cancelStms = async (data: {
   BILLGROUP: string;
   BOOK_NO: string;
@@ -35,6 +43,50 @@ export const cancelStms = async (data: {
 }) => {
   const res = await axiosClient.get(
     `/Collection/CancelStms?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const cancelPrepearToDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `Collection/CancelPrepearToDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const closeInDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `Collection/CloseInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const reOpenClosedInDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `Collection/ReOpenClosedInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const reOpenClosededBillgroupBook = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `Collection/ReOpenClosededBillgroupBook?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
   );
   return res.data;
 };

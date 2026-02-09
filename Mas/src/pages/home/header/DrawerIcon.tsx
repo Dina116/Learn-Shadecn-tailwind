@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useDrawerStore } from "./useDrawerStore";
+import { useDrawerStore } from "../../../hooks/header/useDrawerStore";
 import { drawerWidth } from "./Header";
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -173,4 +173,3 @@ export default function DrawerIcon() {
     </Drawer>
   );
 }
-

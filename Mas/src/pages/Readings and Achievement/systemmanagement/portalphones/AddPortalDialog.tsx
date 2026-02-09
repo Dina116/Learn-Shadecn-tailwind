@@ -4,7 +4,8 @@ import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import type { PortalPhonesTypes } from "./types";
 import { type PortalFormRef } from "./PortalForms";
 import PortalForm from "./PortalForms";
-import { useAddPortal } from "./api/useAddPortal";
+import { useAddPortal } from "../../../../hooks/systemmanagement/portalphones/useAddPortal";
+
 
 export default function AddScoutsDialog() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -63,7 +64,7 @@ export default function AddScoutsDialog() {
               fontWeight: 500,
             }}
           >
-            حدث خطأ أثناء إضافة الكشاف
+            حدث خطأ
           </Box>
         )}
       </SharedDialog>

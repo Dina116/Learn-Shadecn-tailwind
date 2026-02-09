@@ -3,7 +3,8 @@ import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import PortalForm, { type PortalFormRef } from "./PortalForms";
 import type { EditPortalDialogProps, PortalPhonesTypes } from "./types";
 import { Box, Button } from "@mui/material";
-import { useEditPortal } from "./api/useEditPortal";
+import { useEditPortal } from "../../../../hooks/systemmanagement/portalphones/useEditPortal";
+
 
 export default function EditPortalDialog({ rowdata }: EditPortalDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

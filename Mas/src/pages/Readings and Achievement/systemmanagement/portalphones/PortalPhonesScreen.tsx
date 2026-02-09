@@ -1,6 +1,7 @@
+import { useForm } from "../../../../hooks/systemmanagement/portalphones/useForm";
 import AddPortalDialog from "./AddPortalDialog";
 import PortalTable from "./PortalTable";
-import { useForm } from "./useForm";
+
 
 export default function PortalPhonesScreen() {
   const { data, handleDelete, handleEdit, handleSubmittion } = useForm();

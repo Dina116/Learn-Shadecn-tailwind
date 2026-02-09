@@ -10,7 +10,7 @@ import {
   moneyIcon,
   phoneIcon,
   userIcon,
-} from "../CardsIcons";
+} from "../../../componenet/CardsIcons";
 
 const cardItems = [
   {

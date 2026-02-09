@@ -1,7 +1,8 @@
 import SharedTable from "../../../../componenet/shared/SharedTable";
+import { useReadingWalks } from "../../../../hooks/systemmanagement/readingpaths/readingwalks/useReadingWalks";
+import { useUnassignedMeterWalks } from "../../../../hooks/systemmanagement/readingpaths/readingwalks/useunassignedMeterWalks";
 import { createColumns } from "./ColumnNames";
-import { useReadingWalks } from "./readingwalks/hooks/useReadingWalks";
-import { useUnassignedMeterWalks } from "./readingwalks/hooks/useunassignedMeterWalks";
+
 import type { ReadingTableProps, ReadingTypes } from "./types";
 
 export default function ReadingTable({ loadType, groupId }: ReadingTableProps) {

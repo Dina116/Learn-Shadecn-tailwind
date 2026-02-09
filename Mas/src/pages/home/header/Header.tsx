@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import LogOutPopover from "./LogOutPopover";
 import { IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useDrawerStore } from "./useDrawerStore";
+import { useDrawerStore } from "../../../hooks/header/useDrawerStore";
 import { drawerWidth } from "./DrawerStyles";
 
 export default function Header() {

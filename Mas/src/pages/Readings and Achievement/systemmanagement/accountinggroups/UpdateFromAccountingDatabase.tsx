@@ -1,7 +1,8 @@
 import { Alert, Box, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useUpdateGroup } from "./api/useUpdateGroup";
+import { useUpdateGroup } from "../../../../hooks/systemmanagement/accountinggroups/useUpdateGroup";
+
 
 export default function UpdateFromAccountingDatabase() {
   const [openAlert, setOpenAlert] = useState(false);

@@ -7,7 +7,7 @@ import {
   homeIcon,
   phoneIcon,
   userIcon,
-} from "./CardsIcons";
+} from "../../componenet/CardsIcons";
 
 const groupIcon = (
   <GroupsIcon
