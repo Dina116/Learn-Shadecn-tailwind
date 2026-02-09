@@ -14,10 +14,12 @@ import {
 } from "../../pages/Readings and Achievement/systemmaintanance/api/SystemApi";
 import toast from "react-hot-toast";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function useDialog(id: string) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<FormThreeFieldsRef>(null);
+  const navigation = useNavigate();
 
   const { mutate: cancelStmsMutate } = useMutation({
     mutationFn: cancelStms,
@@ -37,6 +39,14 @@ export default function useDialog(id: string) {
   const { mutate: reopenclosedpaths } = useMutation({
     mutationFn: reOpenClosededBillgroupBook,
   });
+  const handelNavigateToSwitchCollectorPath = () => {
+    console.log("navigate to switch collectors path");
+    navigation("/systemMaintanance/switchcollectorspath");
+  };
+  const handelNavigateToAddRemovePath = () => {
+    console.log("navigate to Add Remove Path");
+    navigation("/systemMaintanance/addremovepaths");
+  };
   const handleSave = () => {
     console.log("يتم الحفظ...");
     if (formRef.current) {
@@ -57,8 +67,17 @@ export default function useDialog(id: string) {
         toast.success("تم التنفيذ بنجاح");
         handleCloseDialog();
       },
-      onError: (err: any) => {
-        toast.error(err.message || "حدث خطأ أثناء التنفيذ");
+      onError: (error: unknown) => {
+        let errorMessage = "حدث خطأ أثناء التنفيذ";
+        if (
+          typeof error === "object" &&
+          error !== null &&
+          "message" in error &&
+          typeof (error as { message?: unknown }).message === "string"
+        ) {
+          errorMessage = (error as { message: string }).message;
+        }
+        toast.error(errorMessage);
       },
     };
     switch (id) {
@@ -89,5 +108,7 @@ export default function useDialog(id: string) {
     handleFormSubmit,
     formRef,
     handleCloseDialog,
+    handelNavigateToSwitchCollectorPath,
+    handelNavigateToAddRemovePath,
   };
 }

@@ -26,7 +26,7 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
         }}
       >
         <Tab
-          label="التحميل"
+          label="التحصيل"
           value={0}
           sx={{
             zIndex: 1,

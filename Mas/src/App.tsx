@@ -19,6 +19,8 @@ import TreasuryInsideScreen from "./pages/Readings and Achievement/systemmanagem
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SystemMaintananceScreen from "./pages/Readings and Achievement/systemmaintanance/SystemMaintananceScreen";
 import { Toaster } from "react-hot-toast";
+import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/switchcollectorspath/SwitchCollectorsPathScreen";
+import AddRemovePathsScreen from "./pages/Readings and Achievement/systemmaintanance/addremovepaths/AddRemovePathsScreen";
 
 const queryClient = new QueryClient();
 function App() {
@@ -61,7 +63,15 @@ function App() {
             <Route
               path="/systemMaintanance"
               element={<SystemMaintananceScreen />}
-            ></Route>
+            />
+            <Route
+              path="/systemMaintanance/switchcollectorspath"
+              element={<SwitchCollectorsPathScreen />}
+            />
+            <Route
+              path="/systemMaintanance/addremovepaths"
+              element={<AddRemovePathsScreen />}
+            />
           </Route>
         </Routes>
       </QueryClientProvider>

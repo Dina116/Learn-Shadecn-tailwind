@@ -12,12 +12,26 @@ export default function ShowDialog({ data, title, id }: ShowDialogProps) {
     isDialogOpen,
     formRef,
     handleCloseDialog,
+    handelNavigateToAddRemovePath,
+    handelNavigateToSwitchCollectorPath,
   } = useDialog(id);
 
   console.log("data from ShowDialog ", data);
+  const handleNavigation = () => {
+    switch (id) {
+      case "switch_collectors_path":
+        handelNavigateToSwitchCollectorPath();
+        break;
+      case "add_remove_paths":
+        handelNavigateToAddRemovePath();
+        break;
+      default:
+        handleOpenDialog();
+    }
+  };
   return (
     <Box sx={{ paddingTop: 1, mb: 1 }}>
-      <Button variant="contained" onClick={handleOpenDialog}>
+      <Button variant="contained" onClick={handleNavigation}>
         عرض
       </Button>
       <SharedDialog
