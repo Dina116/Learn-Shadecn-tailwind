@@ -1,11 +1,10 @@
-import Grid from "@mui/material/Grid";
-// import CollectorDataView from "./CollectorDataView";
 import { SwitchForm } from "./SwitchForm";
 import CollectorDataTable from "./CollectorDataTable";
 import { fromHeaders, toHeaders } from "./ColumnNames";
 
 const fromData: any[] = [];
 const toData: any[] = [];
+
 export default function SwitchCollectorsPathScreen() {
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
@@ -25,28 +24,24 @@ export default function SwitchCollectorsPathScreen() {
         <div className="w-full bg-white max-h-[280px] overflow-auto">
           <SwitchForm />
         </div>
-        <Grid
-          container
-          dir="rtl"
-          sx={{ height: 300, width: "100%", justifyContent: "space-around" }}
-        >
-          <Grid item xs={6}>
-            <CollectorDataTable
-              title="إلى"
-              titleColor="#90ee90"
-              data={toData}
-              headers={toHeaders}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <CollectorDataTable
-              title="من"
-              titleColor="#f08080"
-              data={fromData}
-              headers={fromHeaders}
-            />
-          </Grid>
-        </Grid>
+      </div>
+      <div className="grid grid-cols-2 gap-2 p-1" dir="rtl">
+        <div className="w-full">
+          <CollectorDataTable
+            title="إلى"
+            titleColor="#90ee90"
+            data={toData}
+            headers={toHeaders}
+          />
+        </div>
+        <div className="w-full">
+          <CollectorDataTable
+            title="من"
+            titleColor="#f08080"
+            data={fromData}
+            headers={fromHeaders}
+          />
+        </div>
       </div>
     </div>
   );

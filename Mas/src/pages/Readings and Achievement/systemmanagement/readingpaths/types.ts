@@ -19,6 +19,7 @@ export type Collectors = {
   ENABLE_HH_PRINTING: boolean;
 };
 export type CollectorCellProps = {
+  shownameWithId?: boolean;
   assignedCollectorId: number;
   collectors: Collectors[];
   onCollectorChange: (newCollectorId: number) => void;

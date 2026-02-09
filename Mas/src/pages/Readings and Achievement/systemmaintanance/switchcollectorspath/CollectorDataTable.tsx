@@ -34,10 +34,7 @@ export default function CollectorDataTable({
   headers,
 }: CollectorDataTableProps) {
   return (
-    <Paper
-      elevation={2}
-      sx={{ border: "1px solid #ddd", width: "100%", height: "100%" }}
-    >
+    <Paper elevation={2} sx={{ border: "1px solid #ddd", height: "100%" }}>
       <Box sx={{ backgroundColor: titleColor, p: 1, width: "100%" }}>
         <Typography
           variant="h6"
@@ -56,7 +53,7 @@ export default function CollectorDataTable({
           overflow: "auto",
         }}
       >
-        <Table stickyHeader size="small">
+        <Table stickyHeader>
           <TableHead>
             <TableRow
               sx={{

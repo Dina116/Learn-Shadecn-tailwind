@@ -24,8 +24,8 @@ export default function AddRemovePathsScreen() {
         <div className="bg-white rounded-md shadow-sm p-4 flex flex-col gap-4 h-[85%]">
           <CollectorFilterBar />
           <div
-            className="grid grid-cols-[1.5fr_1fr] gap-4 flex-1 overflow-hidden "
-            dir="rtl"
+          className="grid grid-cols-[1.5fr_1fr] gap-4 flex-1 overflow-hidden "
+          dir="rtl"
           >
             <AvailablePathsTable />
             <SelectedPathsTable />

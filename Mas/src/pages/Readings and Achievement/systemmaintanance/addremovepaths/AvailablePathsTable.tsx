@@ -5,8 +5,8 @@ const data: any[] = [];
 
 export default function SelectedPathsTable() {
   return (
-    <div className="h-full flex flex-col " dir="rtl">
-      <SharedTablePagination data={data} columns={pathsColumns} />
+    <div className="h-full flex " dir="rtl">
+      <SharedTablePagination columns={pathsColumns} data={data} />
     </div>
   );
 }

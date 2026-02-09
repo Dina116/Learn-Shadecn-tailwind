@@ -91,6 +91,9 @@ export default function UploadCards({ data = [] }: UploadCardsProps) {
               data={data}
               title={item.content}
               id={item.id}
+              onClick={() => {
+                console.log("hi");
+              }}
             />
           </div>
         );

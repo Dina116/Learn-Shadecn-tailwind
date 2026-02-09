@@ -14,6 +14,7 @@ type BasicCardContentProps = {
   data: billGroupsTypes[];
   title: string;
   id: string;
+  onClick: () => void;
 };
 type OutlinedCardProps = {
   content: string;
@@ -21,6 +22,7 @@ type OutlinedCardProps = {
   data: billGroupsTypes[];
   title: string;
   id: string;
+  onClick: () => void;
 };
 
 const card = ({
@@ -29,6 +31,7 @@ const card = ({
   data,
   title,
   id,
+
 }: BasicCardContentProps) => (
   <React.Fragment>
     {children}
@@ -47,6 +50,7 @@ const card = ({
     </CardContent>
     <CardActions className="flex flex-row justify-center items-center">
       <ShowDialog data={data} title={title} id={id} />
+      {/* <Button onClick={onClick}>Test</Button> */}
     </CardActions>
   </React.Fragment>
 );
@@ -57,6 +61,7 @@ export default function OutlinedCardWithDialog({
   data,
   title,
   id,
+  onClick,
 }: OutlinedCardProps) {
   console.log("data from OutlinedCardWithDialog ", data);
   return (
@@ -71,6 +76,7 @@ export default function OutlinedCardWithDialog({
           data: data,
           title: title,
           id: id,
+          onClick: onClick,
         })}
       </Card>
     </Box>

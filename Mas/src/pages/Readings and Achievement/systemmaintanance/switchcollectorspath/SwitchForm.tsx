@@ -8,6 +8,7 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import { renderselectField } from "./RenderSelectField";
 import { renderField } from "./FieldsRender";
+import useSwitchCollectorPath from "./api/useSwitchCollectorPath";
 
 export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
   ({ onSubmit, defaultValues }, ref): ReactNode => {
@@ -26,6 +27,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
       },
       resolver: zodResolver(SwitchSchema),
     });
+    const { emp } = useSwitchCollectorPath();
     const onValidSubmit: SubmitHandler<SwitchFormType> = (data) => {
       if (onSubmit) {
         onSubmit(data);
@@ -62,6 +64,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
             control,
             errors,
             [],
+            emp,
           )}
           {renderselectField<SwitchFormType>(
             "to",
@@ -70,6 +73,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
             control,
             errors,
             [],
+            emp,
           )}
           {renderField<SwitchFormType>(
             "group_id",

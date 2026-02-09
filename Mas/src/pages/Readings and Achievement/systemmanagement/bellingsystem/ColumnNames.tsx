@@ -14,6 +14,7 @@ export const createColumns = (
       <CollectorCell
         assignedCollectorId={value}
         collectors={collectors}
+        shownameWithId={false}
         onCollectorChange={(newCollectorId) => {
           console.log(
             `سيتم تحديث المسار ${row.WALK_NO} إلى المحصل ${newCollectorId}`,

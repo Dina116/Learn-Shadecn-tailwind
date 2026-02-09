@@ -17,6 +17,7 @@ export default function ShowDialog({ data, title, id }: ShowDialogProps) {
   } = useDialog(id);
 
   console.log("data from ShowDialog ", data);
+  
   const handleNavigation = () => {
     switch (id) {
       case "switch_collectors_path":
