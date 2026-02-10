@@ -1,11 +1,18 @@
 import { Button } from "@mui/material";
-import SelectedPathsTable from "./AvailablePathsTable";
 import AvailablePathsTable from "./AvailablePathsTable";
 import CollectorFilterBar from "./CollectorFilterBar";
-// import PathsTablesSection from "./PathsTablesSection";
-// import SaveChangesFooter from "./SaveChangesFooter";
+import SelectedPathsTable from "./SelectedPathsTable";
+import useAddRemovePaths from "../../../../hooks/systemmaintanance/addremovepaths/useAddRemovePaths";
 
 export default function AddRemovePathsScreen() {
+  const {
+    emp,
+    availablePaths,
+    selectedPaths,
+    getBookForAvailable,
+    getBookForSelected,
+  } = useAddRemovePaths();
+
   return (
     <div className="w-full h-screen  bg-gray-100 pe-8">
       <div className="flex flex-col gap-2  w-full">
@@ -22,13 +29,17 @@ export default function AddRemovePathsScreen() {
           </h6>
         </div>
         <div className="bg-white rounded-md shadow-sm p-4 flex flex-col gap-4 h-[85%]">
-          <CollectorFilterBar />
+          <CollectorFilterBar
+            collectors={emp}
+            getBookMutate1={getBookForAvailable}
+            getBookMutate2={getBookForSelected}
+          />
           <div
-          className="grid grid-cols-[1.5fr_1fr] gap-4 flex-1 overflow-hidden "
-          dir="rtl"
+            className="grid grid-cols-[1.5fr_1fr] gap-4 flex-1 overflow-hidden "
+            dir="rtl"
           >
-            <AvailablePathsTable />
-            <SelectedPathsTable />
+            <AvailablePathsTable data={availablePaths} />
+            <SelectedPathsTable data={selectedPaths} />
           </div>
 
           <div className="flex justify-end pt-2">

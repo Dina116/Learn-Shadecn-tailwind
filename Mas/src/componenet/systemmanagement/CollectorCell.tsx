@@ -1,6 +1,5 @@
-import { Box, MenuItem, Select, Typography } from "@mui/material";
+import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import type { CollectorCellProps } from "../../pages/Readings and Achievement/systemmanagement/readingpaths/types";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function CollectorCell({
   assignedCollectorId,
@@ -8,54 +7,63 @@ export default function CollectorCell({
   onCollectorChange,
   shownameWithId,
 }: CollectorCellProps) {
+  const selectedCollector =
+    (collectors || []).find((c) => c.ID === assignedCollectorId) || null;
   return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
-        gap: 2,
+        gap: 1,
         flexDirection: "row-reverse",
+        width: "100%",
       }}
     >
-      <Select
-        value={assignedCollectorId ?? ""}
-        onChange={(event) => {
-          onCollectorChange(event.target.value as number);
-        }}
+      <Autocomplete
         size="small"
-        IconComponent={(props) => (
-          <KeyboardArrowDownIcon
-            {...props}
-            sx={{ left: "7px", right: "auto !important" }}
-          />
-        )}
+        options={collectors || []}
+        getOptionLabel={(option) => option.FULL_NAME}
+        value={selectedCollector}
+        onChange={(_, newValue) => {
+          onCollectorChange(newValue ? newValue.ID : 0);
+        }}
         sx={{
           flexGrow: 1,
-          height: 30,
-          fontSize: "0.8rem",
+          direction: "rtl",
           backgroundColor: "#fcfcfc",
-          "& .MuiSelect-select": {
-            padding: "3px 10px",
-            textAlign: "right",
+          "& .MuiOutlinedInput-root": {
+            height: 30,
+            fontSize: "0.8rem",
+          },
+          "& .MuiAutocomplete-endAdornment": {
+            right: "auto  !important",
+            left: 8,
           },
         }}
-      >
-        {collectors.map((collector) => (
-          <MenuItem key={collector.ID} value={collector.ID}>
+        renderInput={(params) => <TextField {...params} variant="outlined" />}
+        renderOption={(props, option) => (
+          <Box
+            component="li"
+            {...props}
+            sx={{ fontSize: "0.8rem", textAlign: "right", direction: "rtl" }}
+          >
             {shownameWithId
-              ? `${collector.FULL_NAME} - ${collector.ID}`
-              : collector.FULL_NAME}
-          </MenuItem>
-        ))}
-      </Select>
-      {assignedCollectorId && (
+              ? `${option.FULL_NAME} - ${option.ID}`
+              : option.FULL_NAME}
+          </Box>
+        )}
+      />
+
+      {assignedCollectorId && !shownameWithId && (
         <Typography
-          variant="body2"
+          variant="caption"
           sx={{
             backgroundColor: "gray",
-            padding: 1,
+            padding: "4px 8px",
             borderRadius: 1,
             color: "white",
+            fontWeight: "bold",
+            minWidth: "fit-content",
           }}
         >
           {assignedCollectorId}

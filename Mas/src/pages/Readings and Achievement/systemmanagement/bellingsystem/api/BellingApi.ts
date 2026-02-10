@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosClient from "../../../../../apiservices/axiosClient";
+import axiosClient from "../../../../../api/apiservices/axiosClient";
 export const getCustomerWalks = async (groups: string) => {
   try {
     const res = await axiosClient.get("/Books/CustomerWalks", {

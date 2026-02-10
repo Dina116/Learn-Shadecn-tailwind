@@ -1,4 +1,4 @@
-import axiosClient from "../../../../../apiservices/axiosClient";
+import axiosClient from "../../../../../api/apiservices/axiosClient";
 import axios from "axios";
 import type { scoutsFormType } from "../scoutstypes";
 

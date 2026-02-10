@@ -1,5 +1,10 @@
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import type { SwitchFormProps, SwitchFormRef, SwitchFormType } from "./types";
+import type {
+  SwitchFormInput,
+  SwitchFormProps,
+  SwitchFormRef,
+  SwitchFormType,
+} from "./types";
 import { forwardRef, useImperativeHandle, type ReactNode } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SwitchSchema } from "./SwitchSchema";
@@ -8,7 +13,7 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import { renderselectField } from "./RenderSelectField";
 import { renderField } from "./FieldsRender";
-import useSwitchCollectorPath from "./api/useSwitchCollectorPath";
+import useSwitchCollectorPath from "../../../../hooks/systemmaintanance/switchcollectorspath/useSwitchCollectorPath";
 
 export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
   ({ onSubmit, defaultValues }, ref): ReactNode => {
@@ -16,22 +21,21 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
       control,
       handleSubmit,
       formState: { errors },
-    } = useForm<SwitchFormType>({
+    } = useForm<SwitchFormInput, any, SwitchFormType>({
+      resolver: zodResolver(SwitchSchema),
       defaultValues: defaultValues || {
         date: new Date().toISOString().split("T")[0],
         from: "",
-        group_id: 0,
+        group_id: undefined,
         to: "",
         include_previous_invoices: false,
         last_cycle_only: false,
       },
-      resolver: zodResolver(SwitchSchema),
     });
     const { emp } = useSwitchCollectorPath();
+
     const onValidSubmit: SubmitHandler<SwitchFormType> = (data) => {
-      if (onSubmit) {
-        onSubmit(data);
-      }
+      onSubmit?.(data);
     };
     useImperativeHandle(ref, () => ({
       submit: handleSubmit(onValidSubmit),
@@ -41,6 +45,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
       <Box
         component="form"
         noValidate
+        onSubmit={handleSubmit(onValidSubmit)}
         dir="rtl"
         sx={{
           display: "flex",
@@ -174,6 +179,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
           <Button
             variant="contained"
             color="primary"
+            type="submit"
             startIcon={<DownloadIcon />}
             sx={{
               minHeight: 30,

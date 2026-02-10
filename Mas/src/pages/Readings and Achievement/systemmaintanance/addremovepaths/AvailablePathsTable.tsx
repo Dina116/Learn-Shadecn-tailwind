@@ -1,12 +1,17 @@
 import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
-import { pathsColumns } from "./columns";
+import { columnsFirst } from "./columns";
+import type { collectorType } from "./types";
 
-const data: any[] = [];
+export type AvailablePathsTableProps = {
+  data: collectorType[];
+};
 
-export default function SelectedPathsTable() {
+export default function AvailablePathsTable({
+  data,
+}: AvailablePathsTableProps) {
   return (
     <div className="h-full flex " dir="rtl">
-      <SharedTablePagination columns={pathsColumns} data={data} />
+      <SharedTablePagination columns={columnsFirst} data={data} />
     </div>
   );
 }

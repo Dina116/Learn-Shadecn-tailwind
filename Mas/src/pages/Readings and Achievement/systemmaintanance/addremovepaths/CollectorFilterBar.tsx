@@ -1,40 +1,37 @@
-import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import RedoIcon from "@mui/icons-material/Redo";
+import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
+import type { Emp } from "../types";
+import { useState } from "react";
 
-export default function CollectorFilterBar() {
+type CollectorFilterBarProps = {
+  collectors: Emp[];
+  getBookMutate1: (empid: string) => void;
+  getBookMutate2: (empid: string) => void;
+};
+export default function CollectorFilterBar({
+  collectors,
+  getBookMutate1,
+  getBookMutate2,
+}: CollectorFilterBarProps) {
+  const [assignedCollectorId1, setAssignedCollectorId1] = useState(0);
+  const [assignedCollectorId2, setAssignedCollectorId2] = useState(0);
   return (
-    <Box className="flex gap-4 items-end " sx={{ direction: "rtl" }}>
+    <Box className="flex gap-4 items-end" sx={{ direction: "rtl" }}>
       <Box className="flex gap-3 items-end">
         <div className="w-140">
           <Typography fontSize={13} fontWeight="bold">
             الكشاف / المحصل
           </Typography>
-
-          <Select
-            size="small"
-            fullWidth
-            defaultValue=""
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#fcfcfc",
-                height: 30,
-                fontSize: "0.8rem",
-              },
-              "& .MuiOutlinedInput-input": {
-                padding: "3px 5px",
-              },
-              "& .MuiInputLabel-root": {
-                fontSize: "0.75rem",
-                top: -2,
-              },
-              "& .MuiFormHelperText-root": {
-                fontSize: "0.7rem",
-                marginTop: "2px",
-              },
+          <CollectorCell
+            assignedCollectorId={assignedCollectorId1 ?? undefined}
+            collectors={collectors ?? []}
+            onCollectorChange={(newId) => {
+              setAssignedCollectorId1(newId);
+              getBookMutate1(String(newId));
             }}
-          >
-            <MenuItem value="">dd-9147</MenuItem>
-          </Select>
+            shownameWithId={true}
+          />
         </div>
 
         <Button
@@ -62,32 +59,15 @@ export default function CollectorFilterBar() {
         <Typography fontSize={13} fontWeight="bold">
           الكشاف / المحصل
         </Typography>
-
-        <Select
-          size="small"
-          fullWidth
-          defaultValue=""
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "#fcfcfc",
-              height: 30,
-              fontSize: "0.8rem",
-            },
-            "& .MuiOutlinedInput-input": {
-              padding: "3px 5px",
-            },
-            "& .MuiInputLabel-root": {
-              fontSize: "0.75rem",
-              top: -2,
-            },
-            "& .MuiFormHelperText-root": {
-              fontSize: "0.7rem",
-              marginTop: "2px",
-            },
+        <CollectorCell
+          assignedCollectorId={assignedCollectorId2 ?? undefined}
+          collectors={collectors ?? []}
+          onCollectorChange={(newId) => {
+            setAssignedCollectorId2(newId);
+            getBookMutate2(String(newId));
           }}
-        >
-          <MenuItem value="">abcd-9144</MenuItem>
-        </Select>
+          shownameWithId={true}
+        />
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosClient from "../../../../../apiservices/axiosClient";
+import axiosClient from "../../../../../api/apiservices/axiosClient";
 import type { DeviceProcedureTypes } from "../types";
 
 export const getDeviceProcedure = async () => {

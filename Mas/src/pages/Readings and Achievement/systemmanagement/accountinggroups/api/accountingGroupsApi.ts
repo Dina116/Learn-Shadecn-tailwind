@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosClient from "../../../../../apiservices/axiosClient";
+import axiosClient from "../../../../../api/apiservices/axiosClient";
 
 export const getAccountingGroups = async () => {
   try {
@@ -15,4 +15,3 @@ export const getAccountingGroups = async () => {
     }
   }
 };
-

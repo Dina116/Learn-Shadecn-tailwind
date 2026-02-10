@@ -20,7 +20,7 @@ export type Collectors = {
 };
 export type CollectorCellProps = {
   shownameWithId?: boolean;
-  assignedCollectorId: number;
+  assignedCollectorId?: number;
   collectors: Collectors[];
   onCollectorChange: (newCollectorId: number) => void;
 };

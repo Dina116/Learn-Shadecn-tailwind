@@ -9,6 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import type { WalkPath } from "./types";
+import type { Columns } from "../../../SharedTypes";
 
 export interface CollectorData {
   code: string;
@@ -19,20 +21,20 @@ export interface CollectorData {
   invoiceCount: number;
   value: number;
 }
-
 interface CollectorDataTableProps {
   title: string;
   titleColor: string;
-  data: CollectorData[];
-  headers: string[];
+  data: WalkPath[];
+  headers: Columns[];
 }
 
 export default function CollectorDataTable({
   title,
   titleColor,
-  data,
-  headers,
+  data = [],
+  headers = [],
 }: CollectorDataTableProps) {
+  const hasData = data && data.length > 0;
   return (
     <Paper elevation={2} sx={{ border: "1px solid #ddd", height: "100%" }}>
       <Box sx={{ backgroundColor: titleColor, p: 1, width: "100%" }}>
@@ -51,9 +53,18 @@ export default function CollectorDataTable({
         sx={{
           height: "calc(100% - 48px)",
           overflow: "auto",
+          padding: 1,
         }}
       >
-        <Table stickyHeader>
+        <Table
+          stickyHeader
+          sx={{
+            border: "1px solid #ccc",
+            borderRadius: 2,
+            overflow: "hidden",
+            borderCollapse: "separate",
+          }}
+        >
           <TableHead>
             <TableRow
               sx={{
@@ -61,36 +72,43 @@ export default function CollectorDataTable({
                   backgroundColor: "#004d40",
                   color: "white",
                   fontWeight: "bold",
+                  height: 20,
+                  lineHeight: 1.2,
+                  whiteSpace: "nowrap",
                 },
               }}
             >
-              {headers.map((header) => (
-                <TableCell key={header} align="right">
-                  {header}
+              {headers.map((col) => (
+                <TableCell key={col.key} align="right">
+                  {col.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.length === 0 ? (
+            {!hasData ? (
               <TableRow>
-                <TableCell colSpan={headers.length} align="center">
+                <TableCell colSpan={headers?.length || 1} align="center">
                   لا توجد بيانات لعرضها
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((row, index) => (
+              data.map((row, rowIndex) => (
                 <TableRow
-                  key={index}
+                  key={rowIndex}
                   sx={{ "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" } }}
                 >
-                  <TableCell align="right">{row.code}</TableCell>
-                  <TableCell align="right">{row.cycle}</TableCell>
-                  <TableCell align="right">{row.group}</TableCell>
-                  <TableCell align="right">{row.register}</TableCell>
-                  <TableCell align="right">{row.path}</TableCell>
-                  <TableCell align="right">{row.invoiceCount}</TableCell>
-                  <TableCell align="right">{row.value}</TableCell>
+                  {headers.map((col) => (
+                    <TableCell key={col.key} align="right">
+                      {col.render
+                        ? col.render(
+                            row[col.key as keyof WalkPath],
+                            row,
+                            rowIndex,
+                          )
+                        : row[col.key as keyof WalkPath] || "-"}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))
             )}
