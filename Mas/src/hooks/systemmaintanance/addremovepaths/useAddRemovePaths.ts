@@ -1,12 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-
 import { useState } from "react";
 import type { collectorType } from "../../../pages/Readings and Achievement/systemmaintanance/addremovepaths/types";
 import {
   getBook,
   getEmp,
 } from "../../../api/systemmaintanance/addremovepaths/AddRemovePathsApi";
-// import type { collectorType } from "../types";
+
 
 export default function useAddRemovePaths() {
   const [availablePaths, setAvailablePaths] = useState<collectorType[]>([]);
@@ -17,13 +16,6 @@ export default function useAddRemovePaths() {
   });
   console.log("emp from AddRemovePaths api", emp);
 
-  // const { mutate: getBookMutate, data: book = [] } = useMutation({
-  //   mutationFn: (empid: string) => getBook(empid),
-  //   onSuccess: (data) => {
-  //     console.log("Book data fetched:", data);
-  //     setBookData?.(data);
-  //   },
-  // });
   const getBookForAvailable = useMutation({
     mutationFn: (empid: string) => getBook(empid),
     onSuccess: (data) => {

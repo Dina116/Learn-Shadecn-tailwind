@@ -1,7 +1,6 @@
 import { IconButton, Switch } from "@mui/material";
 import type { Columns } from "../../../SharedTypes";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { RowActions } from "./RowActions";
 
 export const columnsFirst: Columns[] = [
