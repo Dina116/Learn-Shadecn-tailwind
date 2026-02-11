@@ -22,6 +22,7 @@ export type CollectorCellProps = {
   shownameWithId?: boolean;
   assignedCollectorId?: number;
   collectors: Collectors[];
+  getOptionDisabled?: (option: Collectors) => boolean;
   onCollectorChange: (newCollectorId: number) => void;
 };
 export type LoadType = "byGroup" | "unassigned" | null;

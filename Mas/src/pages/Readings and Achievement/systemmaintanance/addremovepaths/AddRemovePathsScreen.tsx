@@ -1,8 +1,9 @@
 import { Button } from "@mui/material";
-import AvailablePathsTable from "./AvailablePathsTable";
+import ShowActionPathsTable from "./ShowActionPathsTable";
 import CollectorFilterBar from "./CollectorFilterBar";
-import SelectedPathsTable from "./SelectedPathsTable";
+import SelectedActionPathsTable from "./SelectedActionPathsTable";
 import useAddRemovePaths from "../../../../hooks/systemmaintanance/addremovepaths/useAddRemovePaths";
+// import axiosClient from "../../../../api/apiservices/axiosClient";
 
 export default function AddRemovePathsScreen() {
   const {
@@ -11,6 +12,12 @@ export default function AddRemovePathsScreen() {
     selectedPaths,
     getBookForAvailable,
     getBookForSelected,
+    transferToSelected,
+    removeFromSelected,
+    hasTransferredRows,
+    lastTransferredRow,
+    isSaving,
+    handleSave,
   } = useAddRemovePaths();
 
   return (
@@ -33,18 +40,27 @@ export default function AddRemovePathsScreen() {
             collectors={emp}
             getBookMutate1={getBookForAvailable}
             getBookMutate2={getBookForSelected}
+            canUndo={hasTransferredRows}
+            onUndo={() =>
+              lastTransferredRow && removeFromSelected(lastTransferredRow)
+            }
           />
           <div
             className="grid grid-cols-[1.5fr_1fr] gap-4 flex-1 overflow-hidden "
             dir="rtl"
           >
-            <AvailablePathsTable data={availablePaths} />
-            <SelectedPathsTable data={selectedPaths} />
+            <ShowActionPathsTable
+              data={availablePaths}
+              onRemove={removeFromSelected}
+            />
+            <SelectedActionPathsTable
+              data={selectedPaths}
+              onTransfer={transferToSelected}
+            />
           </div>
-
           <div className="flex justify-end pt-2">
-            <Button variant="contained" color="primary">
-              حفظ التغييرات
+            <Button variant="contained" color="primary" onClick={handleSave} >
+              {isSaving ? "جاري الحفظ..." : "حفظ التغييرات"}
             </Button>
           </div>
         </div>

@@ -4,7 +4,10 @@ import type {
   SwitchFormType,
   WalkPath,
 } from "../../../pages/Readings and Achievement/systemmaintanance/switchcollectorspath/types";
-import { getCollectors, loadSwitchList } from "../../../api/systemmaintanance/switchcollectorspath/SwitchApi";
+import {
+  getCollectors,
+  loadSwitchList,
+} from "../../../api/systemmaintanance/switchcollectorspath/SwitchApi";
 
 export default function useSwitchCollectorPath() {
   const [selectedFrom, setSelectedFrom] = useState<{
@@ -16,10 +19,11 @@ export default function useSwitchCollectorPath() {
     name: string;
   } | null>(null);
 
-  const { data: emp = [] } = useQuery({
+  const { data: emp } = useQuery({
     queryKey: ["emp"],
     queryFn: () => getCollectors(),
   });
+
   console.log("emp from switch api", emp);
 
   const [switchData, setSwitchData] = useState<{
@@ -43,27 +47,27 @@ export default function useSwitchCollectorPath() {
   const handleSubmittion = (data: SwitchFormType) => {
     console.log("handleSubmittion called with:", data);
 
-    const fromCollector = emp.find((e) => e.id === emp.ID);
-    const toCollector = emp.find((e) => e.id === emp.ID);
+    const fromCollector = emp.find((e) => e.id === selectedFrom?.id);
+    const toCollector = emp.find((e) => e.id === selectedTo?.id);
 
     console.log("Found fromCollector:", fromCollector);
     console.log("Found toCollector:", toCollector);
 
-    if (fromCollector)
-      setSelectedFrom({ id: fromCollector.ID, name: fromCollector.FULL_NAME });
-    console.log(
-      "Selected From:",
-      fromCollector
-        ? { id: fromCollector.ID, name: fromCollector.FULL_NAME }
-        : null,
-    );
+    // if (fromCollector)
+    //   setSelectedFrom({ id: fromCollector.ID, name: fromCollector.FULL_NAME });
+    // console.log(
+    //   "Selected From:",
+    //   fromCollector
+    //     ? { id: fromCollector.ID, name: fromCollector.FULL_NAME }
+    //     : null,
+    // );
 
-    if (toCollector)
-      setSelectedTo({ id: toCollector.ID, name: toCollector.FULL_NAME });
-    console.log(
-      "Selected To:",
-      toCollector ? { id: toCollector.ID, name: toCollector.FULL_NAME } : null,
-    );
+    // if (toCollector)
+    //   setSelectedTo({ id: toCollector.ID, name: toCollector.FULL_NAME });
+    // console.log(
+    //   "Selected To:",
+    //   toCollector ? { id: toCollector.ID, name: toCollector.FULL_NAME } : null,
+    // );
 
     loadFromMutation.mutate(data.from);
     loadToMutation.mutate(data.to);

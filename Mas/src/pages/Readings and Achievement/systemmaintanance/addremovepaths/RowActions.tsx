@@ -1,12 +1,18 @@
-import { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useState } from "react";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import type { collectorType } from "./types";
+import type { WalkPath } from "../switchcollectorspath/types";
 
-export const RowActions = ({ row }) => {
+export type RowActionsProps = {
+  row: WalkPath;
+  onAction: (type: string) => void;
+};
+export const RowActions = ({ row, onAction }: RowActionsProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -14,8 +20,9 @@ export const RowActions = ({ row }) => {
     setAnchorEl(null);
   };
 
-  const handleAction = (actionType) => {
+  const handleAction = (actionType: string) => {
     console.log(`Action: ${actionType} for row:`, row);
+    onAction(actionType);
     handleClose();
   };
 
@@ -28,12 +35,20 @@ export const RowActions = ({ row }) => {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <MenuItem onClick={() => handleAction('transfer_collection')}>نقل عهدة تحصيل</MenuItem>
-        <MenuItem onClick={() => handleAction('transfer_reading')}>نقل عهدة قراءة</MenuItem>
-        <MenuItem onClick={() => handleAction('transfer_both')}>نقل عهدة قراءة وتحصيل</MenuItem>
+        <MenuItem onClick={() => handleAction("transfer_collection")}>
+          نقل عهدة تحصيل
+        </MenuItem>
+        <MenuItem onClick={() => handleAction("transfer_reading")}>
+          نقل عهدة قراءة
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleAction("transfer_collection&transfer_reading")}
+        >
+          نقل عهدة قراءة وتحصيل
+        </MenuItem>
       </Menu>
     </div>
   );

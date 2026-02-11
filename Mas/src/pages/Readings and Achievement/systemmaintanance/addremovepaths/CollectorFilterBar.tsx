@@ -8,14 +8,19 @@ type CollectorFilterBarProps = {
   collectors: Emp[];
   getBookMutate1: (empid: string) => void;
   getBookMutate2: (empid: string) => void;
+  canUndo: boolean;
+  onUndo: () => void;
 };
 export default function CollectorFilterBar({
   collectors,
   getBookMutate1,
   getBookMutate2,
+  canUndo,
+  onUndo,
 }: CollectorFilterBarProps) {
   const [assignedCollectorId1, setAssignedCollectorId1] = useState(0);
   const [assignedCollectorId2, setAssignedCollectorId2] = useState(0);
+  console.log("assignedCollectorId1", assignedCollectorId1);
   return (
     <Box className="flex gap-4 items-end" sx={{ direction: "rtl" }}>
       <Box className="flex gap-3 items-end">
@@ -26,6 +31,9 @@ export default function CollectorFilterBar({
           <CollectorCell
             assignedCollectorId={assignedCollectorId1 ?? undefined}
             collectors={collectors ?? []}
+            getOptionDisabled={(option) =>
+              Number(option?.ID) === Number(assignedCollectorId2)
+            }
             onCollectorChange={(newId) => {
               setAssignedCollectorId1(newId);
               getBookMutate1(String(newId));
@@ -37,13 +45,15 @@ export default function CollectorFilterBar({
         <Button
           variant="contained"
           size="small"
-          disabled
+          disabled={!canUndo}
+          onClick={onUndo}
           sx={{
             minHeight: 30,
             height: 30,
             gap: 1,
             px: 1.8,
             fontSize: "0.8rem",
+            backgroundColor: "#da1c29",
             textTransform: "none",
             "& .MuiButton-startIcon svg": {
               fontSize: 18,
@@ -62,6 +72,9 @@ export default function CollectorFilterBar({
         <CollectorCell
           assignedCollectorId={assignedCollectorId2 ?? undefined}
           collectors={collectors ?? []}
+          getOptionDisabled={(option) =>
+            Number(option?.ID) === Number(assignedCollectorId1)
+          }
           onCollectorChange={(newId) => {
             setAssignedCollectorId2(newId);
             getBookMutate2(String(newId));

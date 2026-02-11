@@ -1,12 +1,12 @@
-import { IconButton, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import type { Columns } from "../../../SharedTypes";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { RowActions } from "./RowActions";
+import type { WalkPath } from "./types";
 
-export const columnsFirst: Columns[] = [
+export const columnsFirst: Columns<WalkPath>[] = [
   {
     key: "number",
     label: "الكود",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
   {
@@ -25,6 +25,7 @@ export const columnsFirst: Columns[] = [
   {
     key: "IS_COLLECTION",
     label: "تحصيل",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, row: any, rowIndex: number) => (
       <Switch
         size="small"
@@ -50,6 +51,7 @@ export const columnsFirst: Columns[] = [
   {
     key: "IS_READING",
     label: "قراءة",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, row: any, rowIndex: number) => (
       <Switch
         size="small"
@@ -83,19 +85,10 @@ export const columnsFirst: Columns[] = [
   {
     key: "actions",
     label: "الاجراءات",
-    render: (_value, row, rowIndex) => (
-      <IconButton
-        size="small"
-        color="error"
-        onClick={() => console.log("Delete clicked for row", rowIndex, row)}
-      >
-        <DeleteIcon fontSize="small" />
-      </IconButton>
-    ),
   },
 ];
 
-export const columnsSecond: Columns[] = [
+export const columnsSecond: Columns<WalkPath>[] = [
   {
     key: "BILLGROUP",
     label: "المجموعة",
@@ -120,10 +113,5 @@ export const columnsSecond: Columns[] = [
   {
     key: "actions",
     label: "الاجراءات",
-    render: (_value, row) => (
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <RowActions row={row} />
-      </div>
-    ),
   },
 ];

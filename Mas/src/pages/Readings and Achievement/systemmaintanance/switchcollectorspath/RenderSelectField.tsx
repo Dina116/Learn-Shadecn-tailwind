@@ -7,10 +7,8 @@ import {
   type FieldValues,
   type Path,
 } from "react-hook-form";
-// import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
 import type { Collectors } from "../../systemmanagement/bellingsystem/types";
-// import { Collectors } from "../../systemmanagement/bellingsystem/types";
 
 export const renderselectField = <T extends FieldValues>(
   name: Path<T>,

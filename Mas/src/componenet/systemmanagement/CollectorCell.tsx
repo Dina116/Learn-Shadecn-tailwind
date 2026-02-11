@@ -6,6 +6,7 @@ export default function CollectorCell({
   collectors,
   onCollectorChange,
   shownameWithId,
+  getOptionDisabled,
 }: CollectorCellProps) {
   const selectedCollector =
     (collectors || []).find((c) => c.ID === assignedCollectorId) || null;
@@ -22,6 +23,7 @@ export default function CollectorCell({
       <Autocomplete
         size="small"
         options={collectors || []}
+        getOptionDisabled={getOptionDisabled}
         getOptionLabel={(option) => option.FULL_NAME}
         value={selectedCollector}
         onChange={(_, newValue) => {
