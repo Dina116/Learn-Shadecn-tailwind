@@ -3,7 +3,7 @@ import CollectorDataTable from "./CollectorDataTable";
 import { columnsFromHeaders, columnsToHeaders } from "./ColumnNames";
 import useSwitchCollectorPath from "../../../../hooks/systemmaintanance/switchcollectorspath/useSwitchCollectorPath";
 export default function SwitchCollectorsPathScreen() {
-  const { switchData, handleSubmittion, selectedFrom, selectedTo } =
+  const { switchData, handleSubmittion, selectedFrom, selectedTo ,emp} =
     useSwitchCollectorPath();
 
   return (
@@ -22,7 +22,7 @@ export default function SwitchCollectorsPathScreen() {
           </h6>
         </div>
         <div className="w-full bg-white max-h-[280px] overflow-auto">
-          <SwitchForm onSubmit={handleSubmittion} />
+          <SwitchForm onSubmit={handleSubmittion} emp={emp}/>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2 p-1" dir="rtl">

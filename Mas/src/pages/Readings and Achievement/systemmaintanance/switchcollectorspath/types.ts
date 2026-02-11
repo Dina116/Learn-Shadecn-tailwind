@@ -9,6 +9,7 @@ export type SwitchFormProps = {
   onSubmit?: (formData: SwitchFormType) => void;
   defaultValues?: SwitchFormType;
   onClose?: () => void;
+  emp: Collectors[];
 };
 
 export interface SwitchFormRef {

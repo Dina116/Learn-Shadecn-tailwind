@@ -13,10 +13,10 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import DownloadIcon from "@mui/icons-material/Download";
 import { renderselectField } from "./RenderSelectField";
 import { renderField } from "./FieldsRender";
-import useSwitchCollectorPath from "../../../../hooks/systemmaintanance/switchcollectorspath/useSwitchCollectorPath";
+// import useSwitchCollectorPath from "../../../../hooks/systemmaintanance/switchcollectorspath/useSwitchCollectorPath";
 
 export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
-  ({ onSubmit, defaultValues }, ref): ReactNode => {
+  ({ onSubmit, defaultValues, emp }, ref): ReactNode => {
     const {
       control,
       handleSubmit,
@@ -25,14 +25,14 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
       resolver: zodResolver(SwitchSchema),
       defaultValues: defaultValues || {
         date: new Date().toISOString().split("T")[0],
-        from: "",
+        from: undefined,
+        to: undefined,
         group_id: undefined,
-        to: "",
         include_previous_invoices: false,
         last_cycle_only: false,
       },
     });
-    const { emp } = useSwitchCollectorPath();
+    // const { emp } = useSwitchCollectorPath();
 
     const onValidSubmit: SubmitHandler<SwitchFormType> = (data) => {
       onSubmit?.(data);
@@ -40,7 +40,7 @@ export const SwitchForm = forwardRef<SwitchFormRef, SwitchFormProps>(
     useImperativeHandle(ref, () => ({
       submit: handleSubmit(onValidSubmit),
     }));
-
+    if (!emp) return null;
     return (
       <Box
         component="form"

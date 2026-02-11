@@ -21,11 +21,12 @@ export interface CollectorData {
   invoiceCount: number;
   value: number;
 }
+
 interface CollectorDataTableProps {
   title: string;
   titleColor: string;
   data: WalkPath[];
-  headers: Columns[];
+  headers: Columns<WalkPath>[];
 }
 
 export default function CollectorDataTable({
