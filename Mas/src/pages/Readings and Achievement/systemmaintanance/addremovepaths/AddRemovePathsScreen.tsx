@@ -3,7 +3,6 @@ import ShowActionPathsTable from "./ShowActionPathsTable";
 import CollectorFilterBar from "./CollectorFilterBar";
 import SelectedActionPathsTable from "./SelectedActionPathsTable";
 import useAddRemovePaths from "../../../../hooks/systemmaintanance/addremovepaths/useAddRemovePaths";
-// import axiosClient from "../../../../api/apiservices/axiosClient";
 
 export default function AddRemovePathsScreen() {
   const {
@@ -59,7 +58,7 @@ export default function AddRemovePathsScreen() {
             />
           </div>
           <div className="flex justify-end pt-2">
-            <Button variant="contained" color="primary" onClick={handleSave} >
+            <Button variant="contained" color="primary" onClick={handleSave}>
               {isSaving ? "جاري الحفظ..." : "حفظ التغييرات"}
             </Button>
           </div>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-// import type { collectorType } from "./types";
 import type { WalkPath } from "../switchcollectorspath/types";
 
 export type RowActionsProps = {

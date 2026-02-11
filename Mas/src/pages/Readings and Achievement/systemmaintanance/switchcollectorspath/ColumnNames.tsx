@@ -1,12 +1,13 @@
 import { IconButton } from "@mui/material";
 import type { Columns } from "../../../SharedTypes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import type { WalkPath } from "./types";
 
-
-export const columnsFromHeaders: Columns[] = [
+export const columnsFromHeaders: Columns<WalkPath>[] = [
   {
     key: "number",
     label: "الكود",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
   {
@@ -37,6 +38,7 @@ export const columnsFromHeaders: Columns[] = [
   {
     key: "actions",
     label: "الاجراءات",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, row: any, rowIndex: number) => (
       <IconButton
         size="small"
@@ -57,10 +59,11 @@ export const columnsFromHeaders: Columns[] = [
   },
 ];
 
-export const columnsToHeaders: Columns[] = [
+export const columnsToHeaders: Columns<WalkPath>[] = [
   {
     key: "number",
     label: "الكود",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
   {
