@@ -1,20 +1,50 @@
-// import { Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
-import SystemMaintenanceTabs from "./SystemMaintenanceTabs";
-import ReadingCards from "./ReadingCards";
-import UploadCards from "./UploadCards";
+import SystemMaintenanceTabs from "../SystemMaintenanceTabs";
+import ReadingCards from "./readings/ReadingCards";
 import { useQuery } from "@tanstack/react-query";
 import { getBillGroups } from "./api/SystemApi";
+import UploadCards from "./billscollection/UploadCards";
+import ReadingDialog from "./readings/ReadingDialog";
+import { cardReadingsItems } from "./readings/CardReadingsItems";
+import { useNavigate } from "react-router-dom";
 
 export default function SystemMaintananceScreen() {
-  //   const location = useLocation();
-  //   const isParentRoute = location.pathname === "/systemManagement";
+  const [openDialogId, setOpenDialogId] = useState<string | null>(null);
+  const [dialogTitle, setDialogTitle] = useState<string>("");
+
+  const [tab, setTab] = useState(0);
+  const navigate = useNavigate();
+
   const { data } = useQuery({
     queryKey: ["billgroups"],
     queryFn: getBillGroups,
   });
-  console.log("data from SystemMaintananceScreen ", data);
-  const [tab, setTab] = useState(0);
+
+  const handleCardClick = (id: string) => {
+    const clickedItem = cardReadingsItems.find((item) => item.id === id);
+
+    if (!clickedItem) {
+      console.error(`No card found for id: ${id}`);
+      return;
+    }
+    switch (id) {
+      case "reverse_readings":
+      case "cancel_readings_preparation":
+      case "lock_reading_collection_unit":
+      case "reprepare_readind_closed_path":
+      case "reopen_reading_group_collection":
+      case "reopen_reading_closed_paths":
+        setOpenDialogId(id);
+        setDialogTitle(clickedItem.content);
+        break;
+      case "switch_scouts_path":
+        navigate("/systemMaintanance/switchReadersPathsScreen");
+        break;
+      default:
+        console.error(`No action defined for ${id}`);
+    }
+  };
+  const handleCloseDialog = () => setOpenDialogId(null);
 
   return (
     <div className="w-full h-screen flex bg-gray-100">
@@ -34,7 +64,24 @@ export default function SystemMaintananceScreen() {
           </div>
           <SystemMaintenanceTabs value={tab} onChange={setTab} />
           {tab === 0 && <UploadCards data={data ?? []} />}
-          {tab === 1 && <ReadingCards />}
+          
+          {tab === 1 && (
+            <>
+              <ReadingCards
+                items={cardReadingsItems}
+                onCardClick={handleCardClick}
+              />
+              {openDialogId && (
+                <ReadingDialog
+                  data={data ?? []}
+                  id={openDialogId}
+                  isDialogOpen={true}
+                  handleCloseDialog={handleCloseDialog}
+                  title={dialogTitle}
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

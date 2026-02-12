@@ -8,8 +8,6 @@ export default function Layout() {
   const { open } = useDrawerStore();
   return (
     <>
-      {/* <Header /> */}
-      {/* <DrawerIconn /> */}
       <TestDrawer />
       <main
         className="pt-15 pe-12 transition-all duration-300 bg-gray-100"

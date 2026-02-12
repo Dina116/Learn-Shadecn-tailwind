@@ -1,14 +1,15 @@
 import { IconButton } from "@mui/material";
-import type { Columns } from "../../../SharedTypes";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import type { WalkPath } from "./types";
+import type { Columns } from "../../../../SharedTypes";
 
-export const columnsFromHeaders: Columns<WalkPath>[] = [
+export const createColumnsFromHeaders = (
+  onActionClick: (row: WalkPath) => void,
+): Columns<WalkPath>[] => [
   {
     key: "number",
     label: "الكود",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
+    render: (_value, _row, rowIndex) => rowIndex + 1,
   },
   {
     key: "BILNG_DATE",
@@ -18,7 +19,6 @@ export const columnsFromHeaders: Columns<WalkPath>[] = [
     key: "BILLGROUP",
     label: "المجموعة",
   },
-
   {
     key: "BOOK_NO",
     label: "السجل",
@@ -38,8 +38,7 @@ export const columnsFromHeaders: Columns<WalkPath>[] = [
   {
     key: "actions",
     label: "الاجراءات",
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render: (_value: any, row: any, rowIndex: number) => (
+    render: (_value, row) => (
       <IconButton
         size="small"
         sx={{
@@ -49,9 +48,7 @@ export const columnsFromHeaders: Columns<WalkPath>[] = [
           width: 20,
           height: 20,
         }}
-        onClick={() => {
-          console.log("Clicked action for row", rowIndex, row);
-        }}
+        onClick={() => onActionClick(row)}
       >
         <ArrowBackIcon sx={{ fontSize: 12 }} />
       </IconButton>

@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
+import SharedTablePagination from "../../../../../componenet/shared/SharedTablePagination";
 import { columnsFirst } from "./columns";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { WalkPathUI } from "./types";

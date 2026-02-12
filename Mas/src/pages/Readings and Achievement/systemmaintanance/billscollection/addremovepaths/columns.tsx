@@ -1,5 +1,5 @@
 import { Switch } from "@mui/material";
-import type { Columns } from "../../../SharedTypes";
+import type { Columns } from "../../../../SharedTypes";
 import type { WalkPath } from "./types";
 
 export const columnsFirst: Columns<WalkPath>[] = [

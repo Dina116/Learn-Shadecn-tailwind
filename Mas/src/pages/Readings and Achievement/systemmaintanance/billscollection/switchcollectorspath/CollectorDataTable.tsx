@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import type { WalkPath } from "./types";
-import type { Columns } from "../../../SharedTypes";
+import type { Columns } from "../../../../SharedTypes";
+
 
 export interface CollectorData {
   code: string;

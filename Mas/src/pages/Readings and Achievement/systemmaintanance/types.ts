@@ -4,7 +4,6 @@ import type { FormSchema } from "./component/threefields/FormSchema";
 export interface FormThreeFieldsRef {
   submit: () => void;
 }
-// export type FormThreeFieldTypes = z.infer<typeof FormSchema>;
 export type FormThreeFieldInput = z.input<typeof FormSchema>;
 export type FormThreeFieldTypes = z.output<typeof FormSchema>;
 
@@ -35,6 +34,11 @@ export type ShowDialogProps = {
   data?: billGroupsTypes[];
   title?: string;
   id: string;
+  isDialogOpen?: boolean;
+  formRef?: React.RefObject<FormThreeFieldsRef | null>;
+  handleFormSubmit?: () => void;
+  handleSave?: () => void;
+  handleCloseDialog?: () => void;
 };
 export type Emp = {
   ID: number;
@@ -161,4 +165,18 @@ export type WalkType = {
   Cycles: [];
   IS_ALLOWED_C_FRONT: boolean;
   IS_ALLOWED_R_FRONT: boolean;
+};
+export type CardContentProps = {
+  content: string;
+  children: React.ReactNode;
+  data?: billGroupsTypes[];
+  title?: string;
+  id?: string;
+  onClick: () => void;
+};
+
+export type CardReadingItem = {
+  id: string;
+  content: string;
+  icon: React.ReactNode;
 };

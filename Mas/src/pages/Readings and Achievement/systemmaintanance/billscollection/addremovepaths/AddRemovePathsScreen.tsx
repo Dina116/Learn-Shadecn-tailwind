@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import ShowActionPathsTable from "./ShowActionPathsTable";
 import CollectorFilterBar from "./CollectorFilterBar";
 import SelectedActionPathsTable from "./SelectedActionPathsTable";
-import useAddRemovePaths from "../../../../hooks/systemmaintanance/addremovepaths/useAddRemovePaths";
+import useAddRemovePaths from "../../../../../hooks/systemmaintanance/addremovepaths/useAddRemovePaths";
 
 export default function AddRemovePathsScreen() {
   const {

@@ -12,12 +12,14 @@ export type AlertDialogProps = {
   title: string;
   content: string;
   onDelete: () => void;
+  children?: React.ReactNode;
 };
 export default function AlertDialog({
   btnname,
   content,
   title,
   onDelete,
+  children,
 }: AlertDialogProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -33,12 +35,12 @@ export default function AlertDialog({
   return (
     <React.Fragment>
       <Button
-        variant="outlined" 
+        variant="outlined"
         onClick={handleClickOpen}
         size="small"
         sx={{
           height: 30,
-          border: "none", 
+          border: "none",
           "&:hover": {
             border: "none",
           },
@@ -71,6 +73,7 @@ export default function AlertDialog({
           >
             {content}
           </DialogContentText>
+          {children}
         </DialogContent>
         <DialogActions
           sx={{

@@ -9,7 +9,7 @@ import type { WalkPath } from "../../../pages/Readings and Achievement/systemmai
 import type {
   collectorType,
   WalkPathUI,
-} from "../../../pages/Readings and Achievement/systemmaintanance/addremovepaths/types";
+} from "../../../pages/Readings and Achievement/systemmaintanance/billscollection/addremovepaths/types";
 
 export default function useAddRemovePaths() {
   const [availablePaths, setAvailablePaths] = useState<WalkPathUI[]>([]);

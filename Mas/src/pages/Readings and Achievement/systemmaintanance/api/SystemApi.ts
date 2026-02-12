@@ -36,6 +36,7 @@ export const getEmp = async () => {
   return res.data;
 };
 
+//==========Collectings================
 export const cancelStms = async (data: {
   BILLGROUP: string;
   BOOK_NO: string;
@@ -53,7 +54,7 @@ export const cancelPrepearToDevice = async (data: {
   WALK_DESCRIPTION: string;
 }) => {
   const res = await axiosClient.get(
-    `Collection/CancelPrepearToDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+    `/Collection/CancelPrepearToDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
   );
   return res.data;
 };
@@ -64,7 +65,7 @@ export const closeInDevice = async (data: {
   WALK_DESCRIPTION: string;
 }) => {
   const res = await axiosClient.get(
-    `Collection/CloseInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+    `/Collection/CloseInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
   );
   return res.data;
 };
@@ -75,7 +76,7 @@ export const reOpenClosedInDevice = async (data: {
   WALK_DESCRIPTION: string;
 }) => {
   const res = await axiosClient.get(
-    `Collection/ReOpenClosedInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+    `/Collection/ReOpenClosedInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
   );
   return res.data;
 };
@@ -86,7 +87,62 @@ export const reOpenClosededBillgroupBook = async (data: {
   WALK_DESCRIPTION: string;
 }) => {
   const res = await axiosClient.get(
-    `Collection/ReOpenClosededBillgroupBook?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+    `/Collection/ReOpenClosededBillgroupBook?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+// ================Readings=================
+
+export const cancelReadings = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `/Reading/CancelReadings?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const CancelPrepearReadingsToDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `Reading/CancelPrepearToDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const closeInReadingsDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `/Reading/CloseInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const reOpenClosedInReadingsDevice = async (data: {
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_DESCRIPTION: string;
+}) => {
+  const res = await axiosClient.get(
+    `/Reading/ReOpenClosedInDevice?BILLGROUP=${data.BILLGROUP}&BOOK_NO=${data.BOOK_NO}&WALK_NO=${data.WALK_DESCRIPTION}`,
+  );
+  return res.data;
+};
+
+export const reOpenClosededReadingsBillgroup = async (data: {
+  BILLGROUP: string;
+}) => {
+  const res = await axiosClient.get(
+    `/Reading/ReOpenClosededBillgroup?billgroup=${data.BILLGROUP}`,
   );
   return res.data;
 };

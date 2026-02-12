@@ -5,8 +5,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Divider } from "@mui/material";
-import ShowDialog from "../../pages/Readings and Achievement/systemmaintanance/component/threefields/ShowDialog";
 import type { billGroupsTypes } from "../../pages/Readings and Achievement/systemmaintanance/types";
+import ShowDialog from "../../pages/Readings and Achievement/systemmaintanance/billscollection/ShowDialog";
 
 type BasicCardContentProps = {
   content: string;

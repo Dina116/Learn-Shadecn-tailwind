@@ -1,8 +1,9 @@
 import { Button, Box } from "@mui/material";
-import type { ShowDialogProps } from "../../types";
-import SharedDialog from "../../../../../componenet/shared/SharedDialog";
-import FormThreeFieldsWrapper from "./FormThreeFieldsWrapper";
-import useDialog from "../../../../../hooks/systemmaintanance/useDialog";
+import type { ShowDialogProps } from "../types";
+import useDialog from "../../../../hooks/systemmaintanance/useDialog";
+import SharedDialog from "../../../../componenet/shared/SharedDialog";
+import FormThreeFieldsWrapper from "../component/threefields/FormThreeFieldsWrapper";
+
 
 export default function ShowDialog({ data, title, id }: ShowDialogProps) {
   const {

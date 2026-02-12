@@ -19,8 +19,10 @@ import TreasuryInsideScreen from "./pages/Readings and Achievement/systemmanagem
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SystemMaintananceScreen from "./pages/Readings and Achievement/systemmaintanance/SystemMaintananceScreen";
 import { Toaster } from "react-hot-toast";
-import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/switchcollectorspath/SwitchCollectorsPathScreen";
-import AddRemovePathsScreen from "./pages/Readings and Achievement/systemmaintanance/addremovepaths/AddRemovePathsScreen";
+import AddRemovePathsScreen from "./pages/Readings and Achievement/systemmaintanance/billscollection/addremovepaths/AddRemovePathsScreen";
+import SwitchReadersPathsScreen from "./pages/Readings and Achievement/systemmaintanance/readings/switchreaderspaths/SwitchReadersPathsScreen";
+import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/billscollection/switchcollectorspath/SwitchCollectorsPathScreen";
+import DataProcessingScreen from "./pages/Readings and Achievement/dataprocessing/DataProcessingScreen";
 
 const queryClient = new QueryClient();
 function App() {
@@ -34,9 +36,8 @@ function App() {
             <Route path="/home" element={<HomeScreen />} />
             <Route path="/search" element={<InquiriesScreen />} />
             <Route path="/support" element={<CustomerServiceScreen />} />
-            <Route path="/readings" element={<ReadingScreen />}></Route>
             <Route path="/treasury" element={<TreasuryScreen />} />
-
+            <Route path="/readings" element={<ReadingScreen />}></Route>
             <Route
               path="/systemManagement"
               element={<SystemManagementScreen />}
@@ -72,6 +73,11 @@ function App() {
               path="/systemMaintanance/addremovepaths"
               element={<AddRemovePathsScreen />}
             />
+            <Route
+              path="/systemMaintanance/switchReadersPathsScreen"
+              element={<SwitchReadersPathsScreen />}
+            />
+            <Route path="/dataProcessing" element={<DataProcessingScreen />} />
           </Route>
         </Routes>
       </QueryClientProvider>

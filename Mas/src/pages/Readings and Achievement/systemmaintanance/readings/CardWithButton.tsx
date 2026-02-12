@@ -3,25 +3,11 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Divider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Button, Divider } from "@mui/material";
+import type { CardContentProps } from "../types";
 
-type BasicCardContentProps = {
-  content: string;
-  children: React.ReactNode;
-  onClick: () => void;
-};
-
-type OutlinedCardProps = {
-  content: string;
-  children: React.ReactNode;
-  path?: string;
-  onClick?: () => void;
-};
-
-const card = ({ content, children, onClick }: BasicCardContentProps) => (
+const card = ({ content, children, onClick }: CardContentProps) => (
   <React.Fragment>
     {children}
     <CardContent className="flex flex-col items-center justify-center">
@@ -45,21 +31,15 @@ const card = ({ content, children, onClick }: BasicCardContentProps) => (
   </React.Fragment>
 );
 
-export default function OutlinedCard({
+export default function CardWithButton({
   children,
   content,
-  path,
+  data,
+  title,
+  id,
   onClick,
-}: OutlinedCardProps) {
-  const navigation = useNavigate();
-  const handleOnClick = () => {
-    if (path) {
-      navigation(path);
-    } else {
-      onClick?.();
-    }
-  };
-
+}: CardContentProps) {
+  console.log("data from OutlinedCardWithDialog ", data);
   return (
     <Box>
       <Card
@@ -69,7 +49,10 @@ export default function OutlinedCard({
         {card({
           content: content,
           children: children,
-          onClick: handleOnClick,
+          data: data,
+          title: title,
+          id: id,
+          onClick: onClick,
         })}
       </Card>
     </Box>

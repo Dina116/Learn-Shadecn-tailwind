@@ -124,6 +124,11 @@ const FormThreeFieldsUI = ({
       case "cancel_preparation":
       case "reprepare_closed_path":
       case "reopen_mobile_unit_path":
+      case "reverse_readings":
+      case "cancel_readings_preparation":
+      case "reprepare_readind_closed_path":
+      case "reopen_reading_group_collection":
+      case "reopen_reading_closed_paths":
         return (
           <>
             {renderSelectField("BILLGROUP", "رقم المجموعة", true, dataOptions)}
@@ -133,6 +138,7 @@ const FormThreeFieldsUI = ({
         );
 
       case "lock_collection_unit":
+      case "lock_reading_collection_unit":
         return (
           <>
             {renderSelectField("BILLGROUP", "رقم المجموعة", true, dataOptions)}
@@ -152,7 +158,6 @@ const FormThreeFieldsUI = ({
         return <>{renderSelectField("ID", "المحصل", true, emp)}</>;
 
       case "reopen_closed_paths":
-        console.log("emp", emp);
         return (
           <>
             {renderSelectField("ID", "المحصل", true, emp)}
@@ -161,6 +166,7 @@ const FormThreeFieldsUI = ({
             {renderSelectField("WALK_DESCRIPTION", "المسار", true, walks)}
           </>
         );
+
       default:
         return null;
     }

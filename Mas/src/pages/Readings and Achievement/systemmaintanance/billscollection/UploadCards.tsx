@@ -1,4 +1,3 @@
-import OutlinedCardWithDialog from "../../../componenet/shared/OutlinedCardWithDialog";
 import {
   allowConcateIcon,
   declineIcon,
@@ -9,8 +8,9 @@ import {
   replayIcon,
   reverseIcon,
   switchIcon,
-} from "../../../componenet/CardsIcons";
-import type { UploadCardsProps } from "./types";
+} from "../../../../componenet/CardsIcons";
+import OutlinedCardWithDialog from "../../../../componenet/shared/OutlinedCardWithDialog";
+import type { UploadCardsProps } from "../types";
 
 const cardItems = [
   {

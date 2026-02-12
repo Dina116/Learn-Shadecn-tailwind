@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import type { SelectOption } from "../types";
 import {
   Controller,
   type Control,
@@ -7,8 +6,9 @@ import {
   type FieldValues,
   type Path,
 } from "react-hook-form";
-import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
-import type { Collectors } from "../../systemmanagement/bellingsystem/types";
+import type { Collectors } from "./types";
+import CollectorCell from "../../../../../componenet/systemmanagement/CollectorCell";
+import type { SelectOption } from "../../types";
 
 export const renderselectField = <T extends FieldValues>(
   name: Path<T>,

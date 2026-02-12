@@ -42,7 +42,7 @@ const cardItems = [
   {
     content: "معالجة البيانات",
     children: homeIcon,
-    path: "",
+    path: "/dataProcessing",
   },
   {
     content: "سجل صيانة الاجهزة",

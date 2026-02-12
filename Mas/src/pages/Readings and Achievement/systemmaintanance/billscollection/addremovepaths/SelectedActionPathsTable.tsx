@@ -1,7 +1,8 @@
-import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
-import type { WalkPath } from "../switchcollectorspath/types";
+import SharedTablePagination from "../../../../../componenet/shared/SharedTablePagination";
+
 import { columnsSecond } from "./columns";
 import { RowActions } from "./RowActions";
+import type { WalkPath } from "./types";
 
 export type SelectedActionPathsTableProps = {
   data: WalkPath[];
@@ -22,7 +23,7 @@ export default function SelectedActionPathsTable({
                 render: (_, row: WalkPath) => (
                   <RowActions
                     row={row}
-                     onAction={(type) => onTransfer && onTransfer(row, type)}
+                    onAction={(type) => onTransfer && onTransfer(row, type)}
                   />
                 ),
               }

@@ -14,8 +14,8 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
         variant="fullWidth"
         sx={{
           backgroundColor: "#e5e7eb",
-          borderRadius: 1,
-          maxHeight: 20,
+          borderRadius: 0.5,
+          minHeight: 5,
 
           "& .MuiTabs-indicator": {
             height: "100%",
@@ -32,7 +32,7 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
             zIndex: 1,
             color: "#6b7280",
             fontWeight: "bold",
-            maxHeight: 20,
+            minHeight: 5,
             "&.Mui-selected": {
               color: "white",
             },
@@ -45,7 +45,7 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
             zIndex: 1,
             color: "#6b7280",
             fontWeight: "bold",
-            maxHeight: 20,
+            minHeight: 5,
             "&.Mui-selected": {
               color: "white",
             },

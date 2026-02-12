@@ -1,6 +1,6 @@
 import axios from "axios";
 import axiosClient from "../../apiservices/axiosClient";
-import type { collectorType } from "../../../pages/Readings and Achievement/systemmaintanance/addremovepaths/types";
+import type { collectorType } from "../../../pages/Readings and Achievement/systemmaintanance/billscollection/addremovepaths/types";
 // import type { WalkPath } from "../../../pages/Readings and Achievement/systemmaintanance/switchcollectorspath/types";
 
 export const getEmp = async () => {

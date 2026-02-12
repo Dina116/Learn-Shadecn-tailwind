@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import RedoIcon from "@mui/icons-material/Redo";
-import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
-import type { Emp } from "../types";
+import CollectorCell from "../../../../../componenet/systemmanagement/CollectorCell";
+import type { Emp } from "../../types";
 import { useState } from "react";
 
 type CollectorFilterBarProps = {
