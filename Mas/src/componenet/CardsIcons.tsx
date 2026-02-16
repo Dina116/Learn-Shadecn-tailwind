@@ -16,7 +16,191 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import SwitchCameraIcon from "@mui/icons-material/SwitchCamera";
 import ReplayIcon from "@mui/icons-material/Replay";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import SyncIcon from "@mui/icons-material/Sync";
+import TableViewIcon from "@mui/icons-material/TableView";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import CancelIcon from "@mui/icons-material/Cancel";
+import SignalCellularOffIcon from "@mui/icons-material/SignalCellularOff";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import EditIcon from "@mui/icons-material/Edit";
+import PrintIcon from "@mui/icons-material/Print";
+import CameraRearIcon from "@mui/icons-material/CameraRear";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
+export const editCalendarIcon = (
+  <EditCalendarIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const cameraRearIcon = (
+  <CameraRearIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+
+export const printIcon = (
+  <PrintIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const editIcon = (
+  <EditIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const editNoteIcon = (
+  <EditNoteIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const refreshIcon = (
+  <RefreshIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const signalCellularOffIcon = (
+  <SignalCellularOffIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const cancelIcon = (
+  <CancelIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const highlightOffIcon = (
+  <HighlightOffIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+export const receiptIcon = (
+  <ReceiptIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+
+export const tableViewIcon = (
+  <TableViewIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+
+export const syncIcon = (
+  <SyncIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
+///////////////////////////////////
 export const lockOpenIcon = (
   <LockOpenIcon
     sx={{

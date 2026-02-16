@@ -13,6 +13,7 @@ export default function SystemMaintananceScreen() {
   const [dialogTitle, setDialogTitle] = useState<string>("");
 
   const [tab, setTab] = useState(0);
+  
   const navigate = useNavigate();
 
   const { data } = useQuery({

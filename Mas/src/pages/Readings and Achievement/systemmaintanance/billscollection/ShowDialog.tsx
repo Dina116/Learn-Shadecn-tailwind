@@ -1,9 +1,8 @@
 import { Button, Box } from "@mui/material";
 import type { ShowDialogProps } from "../types";
-import useDialog from "../../../../hooks/systemmaintanance/useDialog";
+import useDialog from "../../../../hooks/systemmaintanance/useShowDialog";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
 import FormThreeFieldsWrapper from "../component/threefields/FormThreeFieldsWrapper";
-
 
 export default function ShowDialog({ data, title, id }: ShowDialogProps) {
   const {
@@ -18,7 +17,7 @@ export default function ShowDialog({ data, title, id }: ShowDialogProps) {
   } = useDialog(id);
 
   console.log("data from ShowDialog ", data);
-  
+
   const handleNavigation = () => {
     switch (id) {
       case "switch_collectors_path":

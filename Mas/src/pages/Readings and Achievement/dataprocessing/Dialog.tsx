@@ -1,17 +1,21 @@
 import { Box } from "@mui/material";
-import type { ShowDialogProps } from "../types";
-import SharedDialog from "../../../../componenet/shared/SharedDialog";
-import FormThreeFieldsWrapper from "../component/threefields/FormThreeFieldsWrapper";
-import useDialog from "../../../../hooks/systemmaintanance/useShowDialog";
+import SharedDialog from "../../../componenet/shared/SharedDialog";
+import type { DialogProps } from "./types";
+import FormUI from "./form/FormUI";
 
-export default function ReadingDialog({
+export default function Dialog({
   data,
   id,
   handleCloseDialog,
   isDialogOpen,
   title,
-}: ShowDialogProps) {
-  const { formRef, handleFormSubmit, handleSave } = useDialog(id);
+  handleFormSubmit,
+  formRef,
+  control,
+  errors,
+  watch,
+  handleSave,
+}: DialogProps) {
   return (
     <Box sx={{ paddingTop: 1, mb: 1 }}>
       <SharedDialog
@@ -28,11 +32,14 @@ export default function ReadingDialog({
           onClick: handleCloseDialog ?? (() => {}),
         }}
       >
-        <FormThreeFieldsWrapper
+        <FormUI
           onSubmit={handleFormSubmit ?? (() => {})}
           ref={formRef}
           data={data}
           id={id}
+          control={control}
+          errors={errors}
+          watch={watch}
         />
       </SharedDialog>
     </Box>

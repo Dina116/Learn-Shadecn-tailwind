@@ -39,7 +39,7 @@ export default function CardWithButton({
   id,
   onClick,
 }: CardContentProps) {
-  console.log("data from OutlinedCardWithDialog ", data);
+  // console.log("data from  ", data);
   return (
     <Box>
       <Card

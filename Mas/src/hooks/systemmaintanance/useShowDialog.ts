@@ -19,8 +19,8 @@ import toast from "react-hot-toast";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function useDialog(id: string) {
-
+export default function useShowDialog(id: string) {
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const formRef = useRef<FormThreeFieldsRef>(null);
   const navigation = useNavigate();

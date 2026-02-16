@@ -11,7 +11,7 @@ import ShowDialog from "../../pages/Readings and Achievement/systemmaintanance/b
 type BasicCardContentProps = {
   content: string;
   children: React.ReactNode;
-  data: billGroupsTypes[];
+  data?: billGroupsTypes[];
   title: string;
   id: string;
   onClick: () => void;
@@ -19,7 +19,7 @@ type BasicCardContentProps = {
 type OutlinedCardProps = {
   content: string;
   children: React.ReactNode;
-  data: billGroupsTypes[];
+  data?: billGroupsTypes[];
   title: string;
   id: string;
   onClick: () => void;
@@ -31,7 +31,6 @@ const card = ({
   data,
   title,
   id,
-
 }: BasicCardContentProps) => (
   <React.Fragment>
     {children}

@@ -23,6 +23,10 @@ import AddRemovePathsScreen from "./pages/Readings and Achievement/systemmaintan
 import SwitchReadersPathsScreen from "./pages/Readings and Achievement/systemmaintanance/readings/switchreaderspaths/SwitchReadersPathsScreen";
 import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/billscollection/switchcollectorspath/SwitchCollectorsPathScreen";
 import DataProcessingScreen from "./pages/Readings and Achievement/dataprocessing/DataProcessingScreen";
+import CollectBills from "./pages/Readings and Achievement/dataprocessing/pages/CollectBills";
+import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/pages/ChangePaymentType";
+import PrintReadings from "./pages/Readings and Achievement/dataprocessing/pages/PrintReadings";
+import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/pages/RearrangementPaths";
 
 const queryClient = new QueryClient();
 function App() {
@@ -78,6 +82,13 @@ function App() {
               element={<SwitchReadersPathsScreen />}
             />
             <Route path="/dataProcessing" element={<DataProcessingScreen />} />
+            <Route path="/collectbills" element={<CollectBills />} />
+            <Route path="/changepaymenttype" element={<ChangePaymentType />} />
+            <Route path="/printreadings" element={<PrintReadings />} />
+            <Route
+              path="/rearrangementpaths"
+              element={<RearrangementPaths />}
+            />
           </Route>
         </Routes>
       </QueryClientProvider>

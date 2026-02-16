@@ -4,7 +4,6 @@ type Props = {
   value: number;
   onChange: (value: number) => void;
 };
-
 export default function SystemMaintenanceTabs({ value, onChange }: Props) {
   return (
     <Box sx={{ direction: "rtl", width: "100%" }}>
@@ -12,10 +11,12 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
         value={value}
         onChange={(e, newValue) => onChange(newValue)}
         variant="fullWidth"
+        
         sx={{
           backgroundColor: "#e5e7eb",
           borderRadius: 0.5,
-          minHeight: 5,
+          minHeight: 1,
+          tabSize:"small",
 
           "& .MuiTabs-indicator": {
             height: "100%",
@@ -32,7 +33,7 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
             zIndex: 1,
             color: "#6b7280",
             fontWeight: "bold",
-            minHeight: 5,
+            minHeight: 1,
             "&.Mui-selected": {
               color: "white",
             },
@@ -45,7 +46,7 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
             zIndex: 1,
             color: "#6b7280",
             fontWeight: "bold",
-            minHeight: 5,
+            minHeight: 1,
             "&.Mui-selected": {
               color: "white",
             },

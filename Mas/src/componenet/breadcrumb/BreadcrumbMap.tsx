@@ -20,6 +20,10 @@ const BreadcrumbMap: Record<string, string> = {
   addremovepaths: "اضافة وحذف مناطق للمحصلين",
   dataProcessing: "معالجة البيانات",
   switchReadersPathsScreen: "تبديل عهدة قراءات بين محصلين",
+  collectbills: "تحصيل الفواتير",
+  changepaymenttype: "تغيير نوع الدفع",
+  printreadings: "طباعة القراءات",
+  rearrangementpaths: "اعادة ترتيب المسارات",
 };
 
 export default function Breadcrumb() {
