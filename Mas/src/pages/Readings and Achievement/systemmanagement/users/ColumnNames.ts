@@ -1,4 +1,3 @@
-import { XCircle, CheckCircle } from "lucide-react";
 import type { Columns } from "../../../SharedTypes";
 
 export const columns: Columns[] = [

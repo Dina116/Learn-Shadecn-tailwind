@@ -46,18 +46,19 @@ export default function SharedDialog({
     >
       <DialogTitle
         sx={{
-          m: 0,
-          p: 2,
+          // m: 0,
+          fontSize: 18,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          color:"GrayText"
+          color: "GrayText",
         }}
       >
         {title}
         <IconButton
           aria-label="close"
           onClick={onClose}
+          size="small"
           sx={{
             color: (theme) => theme.palette.grey[500],
           }}

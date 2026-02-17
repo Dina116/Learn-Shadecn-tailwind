@@ -1,6 +1,6 @@
 import axios from "axios";
-import axiosClient from "../../../../api/apiservices/axiosClient";
-import type { formtDataType } from "../types";
+import axiosClient from "../apiservices/axiosClient";
+import type { formtDataType } from "../../pages/Readings and Achievement/dataprocessing/types";
 
 ////////////Collectings/////////////////
 export const UpdateCustomerBills = async ({

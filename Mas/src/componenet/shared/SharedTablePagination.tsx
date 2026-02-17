@@ -59,10 +59,7 @@ export default function SharedTablePagination<T>({
                     className=" text-black text-center border-l border-sky-900 text-center"
                   >
                     {columns.map((col, colIndex) => {
-                      const value = row[col.key] ?? "";
-                      // console.log("row:", row);
-                      // console.log("col.key:", col.key);
-                      // console.log("value:", value);
+                      const value = row[col.key as keyof T] ?? "";
                       return (
                         <TableCell
                           key={colIndex}

@@ -55,7 +55,6 @@ export default function CollectorCell({
           </Box>
         )}
       />
-
       {assignedCollectorId && !shownameWithId && (
         <Typography
           variant="caption"

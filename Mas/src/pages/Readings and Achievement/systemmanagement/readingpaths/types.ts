@@ -6,7 +6,6 @@ export type ReadingTypes = {
   BILLGROUP: string;
   ASSIGNED_TO_HH: number;
 };
-
 export type Collectors = {
   ID: number;
   USER_NAME: string;
