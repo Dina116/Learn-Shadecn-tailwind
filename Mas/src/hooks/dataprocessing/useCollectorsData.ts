@@ -1,19 +1,32 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   Collectors,
+  PaymentType,
   UnpostedDetail,
-} from "../../../pages/Readings and Achievement/dataprocessing/types";
+} from "../../pages/Readings and Achievement/dataprocessing/types";
 import {
+  changePaymentMethod,
   collectBill,
   getCollectors,
+  getPaymentMethods,
   GetUnPostedDetails,
-} from "../../../api/dataparocessing/collectbills/CollectBillsApi";
+} from "../../api/dataparocessing/collectbills/CollectBillsApi";
 import toast from "react-hot-toast";
 
 export function useCollectors() {
   return useQuery<Collectors[]>({
     queryKey: ["collectors"],
     queryFn: getCollectors,
+  });
+}
+
+export function usePaymentMethods() {
+  return useQuery<PaymentType[]>({
+    queryKey: ["paymentMethods"],
+    queryFn: async () => {
+      const res = await getPaymentMethods();
+      return res;
+    },
   });
 }
 export function useUnpostedDetails(empid: number | null) {
@@ -35,7 +48,6 @@ export default function useCollectBill(
 
     onSuccess: () => {
       toast.success("تم تحصيل الفاتورة بنجاح!");
-
       queryClient.invalidateQueries({
         queryKey: ["unpostedDetails", selectedCollectorId],
       });
@@ -47,6 +59,27 @@ export default function useCollectBill(
       } else {
         onCollectError("حدث خطأ غير معروف");
       }
+    },
+  });
+
+  return mutation;
+}
+
+export function useChangePaymentMethod(empid: number | null) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: changePaymentMethod,
+
+    onSuccess: () => {
+      toast.success("تم تغيير طريقة الدفع بنجاح!");
+      queryClient.invalidateQueries({
+        queryKey: ["unpostedDetails", empid],
+      });
+    },
+
+    onError: (error: Error) => {
+      toast.error(`فشل التغيير: ${error.message}`);
     },
   });
 

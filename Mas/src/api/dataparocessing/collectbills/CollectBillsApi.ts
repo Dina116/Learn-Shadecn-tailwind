@@ -16,6 +16,20 @@ export const getCollectors = async () => {
   }
 };
 
+export const getPaymentMethods = async () => {
+  try {
+    const res = await axiosClient.get("/Collection/getPaymentMethods");
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Failed to fetch payment methods",
+      );
+    } else {
+      throw new Error("Failed to fetch payment methods");
+    }
+  }
+};
 export const GetUnPostedDetails = async ({ empid }: { empid: number }) => {
   try {
     const res = await axiosClient.get(
@@ -56,5 +70,29 @@ export const collectBill = async ({
     } else {
       throw new Error("حدث خطأ غير معروف");
     }
+  }
+};
+
+type ChangeMethodPayload = {
+  PaymentMethod: number;
+  Recipts: string[];
+};
+export const changePaymentMethod = async (payload: ChangeMethodPayload) => {
+  try {
+    const res = await axiosClient.post(
+      "/Collection/ChangePayMethodUnPostedReciptsNos",
+      payload,
+    );
+
+    if (typeof res.data === "string" && res.data.includes("خطأ")) {
+      throw new Error(res.data);
+    }
+
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "فشل تغيير طريقة الدفع");
+    }
+    throw error;
   }
 };

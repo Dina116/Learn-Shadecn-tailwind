@@ -113,3 +113,23 @@ export type BillsFieldsProps = {
   isLoadingDetails: boolean;
   onCollectError: (errorMessage: string) => void;
 };
+
+export type PaymentType = {
+  TYPE_ID: number;
+  DESCRIPTION: string;
+  BILING_CODE: string;
+  IS_SYSTEM: boolean;
+  SELECTABLE: boolean;
+  SELECTABLE_HH: boolean;
+  ID: number;
+};
+export type ChangePaymentFieldsProps = {
+  collectors: Collectors[];
+  isSearchByAccount: boolean;
+  onSearchTypeChange: (isByAccount: boolean) => void;
+  accountNumber: string;
+  onAccountNumberChange: (value: string) => void;
+  selectedCollectorId: number | null;
+  onCollectorChange: (id: number | null) => void;
+  onSearch: () => void;
+};

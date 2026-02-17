@@ -21,7 +21,7 @@ const BreadcrumbMap: Record<string, string> = {
   dataProcessing: "معالجة البيانات",
   switchReadersPathsScreen: "تبديل عهدة قراءات بين محصلين",
   collectbills: "تحصيل الفواتير",
-  changepaymenttype: "تغيير نوع الدفع",
+  changepaymenttype: "تغيير طريقة الدفع",
   printreadings: "طباعة القراءات",
   rearrangementpaths: "اعادة ترتيب المسارات",
 };

@@ -24,9 +24,10 @@ import SwitchReadersPathsScreen from "./pages/Readings and Achievement/systemmai
 import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/billscollection/switchcollectorspath/SwitchCollectorsPathScreen";
 import DataProcessingScreen from "./pages/Readings and Achievement/dataprocessing/DataProcessingScreen";
 import CollectBills from "./pages/Readings and Achievement/dataprocessing/collectbills/CollectBills";
-import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/changepaymenttype/ChangePaymentType";
+import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/changepaymentmethod/ChangePaymentMethod";
 import PrintReadings from "./pages/Readings and Achievement/dataprocessing/printreadings/PrintReadings";
 import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/rearrangementpaths/RearrangementPaths";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 function App() {
@@ -91,6 +92,7 @@ function App() {
             />
           </Route>
         </Routes>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );

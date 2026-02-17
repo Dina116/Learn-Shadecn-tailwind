@@ -7,7 +7,7 @@ import MistakesDialog from "./MistakesDialog";
 import {
   useCollectors,
   useUnpostedDetails,
-} from "../../../../hooks/dataprocessing/collectbills/useCollectorsData";
+} from "../../../../hooks/dataprocessing/useCollectorsData";
 import useCollectionErrors from "../../../../hooks/dataprocessing/collectbills/useCollectionErrors";
 import { useCollectionSummary } from "../../../../hooks/dataprocessing/collectbills/useCollectionSummary";
 
