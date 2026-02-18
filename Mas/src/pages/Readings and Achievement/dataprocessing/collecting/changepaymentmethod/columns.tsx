@@ -1,4 +1,4 @@
-import type { Columns } from "../../../SharedTypes";
+import type { Columns } from "../../../../SharedTypes";
 import {
   Select,
   MenuItem,
@@ -7,7 +7,7 @@ import {
   CircularProgress,
   Checkbox,
 } from "@mui/material";
-import type { UnpostedDetail, PaymentType } from "../types";
+import type { UnpostedDetail, PaymentType } from "../../types";
 import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
 
@@ -161,4 +161,3 @@ export const getColumns = ({
     },
   ];
 };
-

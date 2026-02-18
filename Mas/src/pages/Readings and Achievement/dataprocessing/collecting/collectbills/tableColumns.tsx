@@ -1,5 +1,5 @@
-import type { Columns } from "../../../SharedTypes";
-import type { mistakeTableTypes, UnpostedDetail } from "../types";
+import type { Columns } from "../../../../SharedTypes";
+import type { mistakeTableTypes, UnpostedDetail } from "../../types";
 
 export const maintableColumns: Columns<UnpostedDetail>[] = [
   {

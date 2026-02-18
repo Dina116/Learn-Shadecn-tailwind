@@ -4,14 +4,14 @@ import {
   useCollectors,
   usePaymentMethods,
   useUnpostedDetails,
-} from "../../../../hooks/dataprocessing/useCollectorsData";
-import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
-import useChangePaymentState from "../../../../hooks/dataprocessing/changepaymentmethod/useChangePaymentState";
+} from "../../../../../hooks/dataprocessing/useCollectorsData";
+import SharedTablePagination from "../../../../../componenet/shared/SharedTablePagination";
+import useChangePaymentState from "../../../../../hooks/dataprocessing/changepaymentmethod/useChangePaymentState";
 
 import ChangePaymentFields from "./ChangePaymentFields";
-import useEditRow from "../../../../hooks/dataprocessing/changepaymentmethod/useEditRow";
-import useReceiptSelection from "../../../../hooks/dataprocessing/changepaymentmethod/useReceiptSelection";
-import useTableColumns from "../../../../hooks/dataprocessing/changepaymentmethod/useTableColumns";
+import useEditRow from "../../../../../hooks/dataprocessing/changepaymentmethod/useEditRow";
+import useReceiptSelection from "../../../../../hooks/dataprocessing/changepaymentmethod/useReceiptSelection";
+import useTableColumns from "../../../../../hooks/dataprocessing/changepaymentmethod/useTableColumns";
 
 export default function ChangePaymentMethod() {
   const { data: collectorsData } = useCollectors();

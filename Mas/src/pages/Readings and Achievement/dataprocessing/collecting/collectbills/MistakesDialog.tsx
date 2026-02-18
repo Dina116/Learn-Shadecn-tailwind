@@ -1,9 +1,9 @@
 import { Box, Button } from "@mui/material";
-import SharedDialog from "../../../../componenet/shared/SharedDialog";
+import SharedDialog from "../../../../../componenet/shared/SharedDialog";
 import { useState } from "react";
-import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
+import SharedTablePagination from "../../../../../componenet/shared/SharedTablePagination";
 import { mistaketablecolumns } from "./tableColumns";
-import type { MistakesDialogProps } from "../types";
+import type { MistakesDialogProps } from "../../types";
 
 export default function MistakesDialog({ data }: MistakesDialogProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

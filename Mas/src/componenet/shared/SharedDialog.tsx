@@ -68,14 +68,27 @@ export default function SharedDialog({
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
       {(primaryAction || secondaryAction) && (
-        <DialogActions>
+        <DialogActions
+          sx={{
+            gap: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "start",
+          }}
+          dir="ltr"
+        >
           {secondaryAction && (
-            <Button onClick={secondaryAction.onClick}>
+            <Button
+              onClick={secondaryAction.onClick}
+              size="small"
+              sx={{ border: 1, borderColor: "orangered", color: "orangered" }}
+            >
               {secondaryAction.text}
             </Button>
           )}
           {primaryAction && (
             <Button
+              size="small"
               onClick={primaryAction.onClick}
               variant="contained"
               disabled={primaryAction.disabled}

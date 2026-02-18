@@ -1,6 +1,6 @@
 import { Box, Checkbox, TextField, Typography, Button } from "@mui/material";
-import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
-import type { ChangePaymentFieldsProps } from "../types";
+import CollectorCell from "../../../../../componenet/systemmanagement/CollectorCell";
+import type { ChangePaymentFieldsProps } from "../../types";
 
 export default function ChangePaymentFields({
   collectors,

@@ -23,10 +23,10 @@ import AddRemovePathsScreen from "./pages/Readings and Achievement/systemmaintan
 import SwitchReadersPathsScreen from "./pages/Readings and Achievement/systemmaintanance/readings/switchreaderspaths/SwitchReadersPathsScreen";
 import SwitchCollectorsPathScreen from "./pages/Readings and Achievement/systemmaintanance/billscollection/switchcollectorspath/SwitchCollectorsPathScreen";
 import DataProcessingScreen from "./pages/Readings and Achievement/dataprocessing/DataProcessingScreen";
-import CollectBills from "./pages/Readings and Achievement/dataprocessing/collectbills/CollectBills";
-import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/changepaymentmethod/ChangePaymentMethod";
-import PrintReadings from "./pages/Readings and Achievement/dataprocessing/printreadings/PrintReadings";
-import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/rearrangementpaths/RearrangementPaths";
+import CollectBills from "./pages/Readings and Achievement/dataprocessing/collecting/collectbills/CollectBills";
+import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/collecting/changepaymentmethod/ChangePaymentMethod";
+import PrintReadings from "./pages/Readings and Achievement/dataprocessing/readings/printreadings/PrintReadings";
+import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/readings/rearrangementpaths/RearrangementPaths";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();

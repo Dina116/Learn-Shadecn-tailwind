@@ -6,9 +6,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
-import CollectorCell from "../../../../componenet/systemmanagement/CollectorCell";
-import type { BillsFieldsProps } from "../types";
-import useCollectBill from "../../../../hooks/dataprocessing/useCollectorsData";
+import CollectorCell from "../../../../../componenet/systemmanagement/CollectorCell";
+import type { BillsFieldsProps } from "../../types";
+import useCollectBill from "../../../../../hooks/dataprocessing/useCollectorsData";
 
 export default function BillsFields({
   collectors,

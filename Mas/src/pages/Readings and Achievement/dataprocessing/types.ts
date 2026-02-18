@@ -2,10 +2,24 @@ import type React from "react";
 import type { formSchema } from "./form/formSchema";
 import type z from "zod";
 import type { Control, FieldErrors, UseFormWatch } from "react-hook-form";
+import type { WalkFormSchema } from "./readings/printreadings/WalkFormSchema";
 
 export type formInputDataType = z.input<typeof formSchema>;
 export type formtDataType = z.output<typeof formSchema>;
 
+export type WalkFormProps = {
+  onSubmit?: (data: WalkFormValues) => void;
+};
+export type WalkFormUIRef = {
+  submit: () => void;
+};
+export type ReaderCellProps = {
+  shownameWithId?: boolean;
+  selectedReaderId: number;
+  readers: Readers[];
+  getOptionDisabled?: (option: Readers) => boolean;
+  onReaderChange?: (newCollectorId: number) => void;
+};
 export type DialogProps = {
   data?: formtDataType[];
   title?: string;
@@ -132,4 +146,185 @@ export type ChangePaymentFieldsProps = {
   selectedCollectorId: number | null;
   onCollectorChange: (id: number | null) => void;
   onSearch: () => void;
+};
+
+export type IActivityType = {
+  id: number;
+  title: string;
+  filter: string;
+};
+
+export type Readers = {
+  ID: number;
+  USER_NAME: string;
+  PASSWORD: string;
+  FULL_NAME: string;
+  DEVICE_ID: string;
+  BRANCH_ID: number;
+  DISABLED: boolean;
+  READING: boolean;
+  COLLECTION: boolean;
+  REPORTING_VIEWER: boolean;
+  CASHER: boolean;
+  EMP_TYPE: number;
+  MARKETING: boolean;
+  CLOSE_READING_CYCLE: boolean;
+  CLOSE_COLLECTION_CYCLE: boolean;
+  ENABLE_HH_PRINTING: boolean;
+};
+
+export interface ReadersFormRef {
+  submit: () => void;
+}
+export type redaersDialogProps = {
+  data: Readers[];
+  title?: string;
+  id?: string;
+  isDialogOpen?: boolean;
+  formRef?: React.RefObject<ReadersFormRef | null>;
+  handleFormSubmit?: (params: ReaderFormValues) => void;
+  handleSave?: () => void;
+  handleCloseDialog?: () => void;
+};
+export type ReaderFormValues = {
+  readerId: number;
+  activityId: number;
+  consumpFrom?: number;
+  consumpTo?: number;
+};
+export type SubmitParams = {
+  empId?: number;
+  group?: string;
+  path?: string;
+  book?: string;
+  filter?: string;
+};
+export type QueryParams = {
+  empId?: number;
+  group?: string;
+  path?: string;
+  book?: string;
+  filter?: string;
+};
+
+export type renderFormProps = {
+  readers: Readers[];
+  onSubmit?: (data: ReaderFormValues) => void;
+};
+
+export type WalkFormValues = z.infer<typeof WalkFormSchema>;
+
+export type walkingDialogProps = {
+  data?: WalkFormValues;
+  title?: string;
+  id?: string;
+  isDialogOpen?: boolean;
+  formRef?: React.RefObject<ReadersFormRef | null>;
+  handleFormSubmit?: (params: WalkFormValues) => void;
+  handleSave?: () => void;
+  handleCloseDialog?: () => void;
+};
+export type SubmitParamsFromWalkForm = {
+  group: string;
+  path: string;
+  book: string;
+  filter?: string;
+};
+export type PrintReadingsProps = {
+  onSubmit?: (params: SubmitParamsFromWalkForm) => void;
+};
+
+export type ReadingDataType = {
+  STATION_NO: number;
+  CUSTKEY: string;
+  CYCLE_ID: number;
+  BILNG_DATE: string;
+  no_units: number;
+  c_type: string;
+  READ_TYPE: number;
+  cl_blnce: number;
+  OP_BLNCE: number;
+  CUR_CHARGES: number;
+  S_CONSUMP: number;
+  S_CR_READING: number;
+  S_PR_READING: number;
+  S_METER_STATUS: string;
+  CONN_STATUS: number;
+  NO_METER: boolean;
+  CONSUMP_SANITARY: number;
+  AGREM_REMINDER_AMOUNT: number;
+  AGREM_REMINDER_COUNT: number;
+  DIAM_OWNER_DESC: string;
+  BILLGROUP: string;
+  BOOK_NO_C: string;
+  WALK_NO_C: string;
+  BOOK_NO_R: string;
+  WALK_NO_R: string;
+  EMPID_C: number;
+  IS_READING_ROW: number;
+  IS_COLLECTION_ROW: number;
+  delivery_st: number;
+  payment_no: string;
+  STATM_NO: number;
+  READING_DEVICEID: string;
+  COLLECTION_DEVICEID: string;
+  SEQ_NO_C: number;
+  SEQ_NO_R: number;
+  tent_name: string;
+  meter_type: string;
+  meter_ref: string;
+  ua_adress1: string;
+  prop_ref: string;
+  PR_DATE1: string;
+  pr_read1: number;
+  descrepancy: number;
+  op_status: number;
+  min_consump: number;
+  max_consump: number;
+  ctypegrp_id: string;
+  serv_aloc: string;
+  READING_NOTE: number;
+  COLLECTION_NOTE: number;
+  EMPID_R: number;
+  OLD_KEY: string;
+  UPDATE_COUNT_C: number;
+  SYNC_COUNT_C: number;
+  UPDATE_COUNT_R: number;
+  SYNC_COUNT_R: number;
+  LAT_REF: number;
+  LNG_REF: number;
+  IS_REF: boolean;
+  DISTANCE_REF: number;
+  HAFZA_PRINT_COUNT: number;
+  GROUP_CODE: number;
+  FILE_NO: number;
+  ACCES_CODE: string;
+  PR_ACCES_CODE: string;
+  PR_OP_STATUS: number;
+  NO_DIALS: number;
+  INSTALMENT: number;
+  CUR_PAYMNTS: number;
+  BILL_READY: boolean;
+  PR_CONS: number;
+  CALC_TYPE: string;
+  AMOUNT_COLLECTED: number;
+  BILL_AMOUNT: number;
+  DUE_AMOUNT: number;
+  INSTALMENT_DATE: string;
+  NO_UNITS_NEW: number;
+  C_TYPE_NEW: string;
+  CONNECTION_ID: number;
+  PROPERTY_ID: number;
+  METER_ID: number;
+  GARD_PAYMENT_NO: string;
+  IS_MULTI_CONN: boolean;
+  TOTAL_CL_BLNCE: number;
+  SYNC_MAS_ST: number;
+  SYNC_MAS_HH: number;
+  IS_MANUAL_ESTIM: boolean;
+  CON_DIAMETER: string;
+  METER_DIAMETER: string;
+  SERIAL_NO: string;
+  S_METER_DIAMETER: string;
+  PR_READING_NOTE: number;
 };

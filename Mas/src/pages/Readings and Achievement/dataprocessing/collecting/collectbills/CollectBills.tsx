@@ -1,15 +1,15 @@
 import BillsFields from "./BillsFields";
 import { useState } from "react";
-import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
+import SharedTablePagination from "../../../../../componenet/shared/SharedTablePagination";
 import { Box, Paper, Typography } from "@mui/material";
 import { maintableColumns } from "./tableColumns";
 import MistakesDialog from "./MistakesDialog";
 import {
   useCollectors,
   useUnpostedDetails,
-} from "../../../../hooks/dataprocessing/useCollectorsData";
-import useCollectionErrors from "../../../../hooks/dataprocessing/collectbills/useCollectionErrors";
-import { useCollectionSummary } from "../../../../hooks/dataprocessing/collectbills/useCollectionSummary";
+} from "../../../../../hooks/dataprocessing/useCollectorsData";
+import useCollectionErrors from "../../../../../hooks/dataprocessing/collectbills/useCollectionErrors";
+import { useCollectionSummary } from "../../../../../hooks/dataprocessing/collectbills/useCollectionSummary";
 
 export default function CollectBills() {
   const [selectedCollectorId, setSelectedCollectorId] = useState<number | null>(
