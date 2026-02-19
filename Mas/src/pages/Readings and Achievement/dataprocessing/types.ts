@@ -328,3 +328,11 @@ export type ReadingDataType = {
   S_METER_DIAMETER: string;
   PR_READING_NOTE: number;
 };
+
+export type RearrangementFormValues = {
+  bookno: string;
+  walkno: string;
+  mode: "READER" | "COLLECTOR" | "BOTH";
+};
+
+export type SubmitAction = "download" | "save" | "post" | "postMain";

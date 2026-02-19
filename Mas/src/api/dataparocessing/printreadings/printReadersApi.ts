@@ -10,31 +10,31 @@ export const getReaders = async (): Promise<Readers[]> => {
   return response.data;
 };
 
-type DynamicApiResponse = {
+export type DynamicApiResponse = {
   [key: string]: ReadingDataType;
 };
 
 export const getReadingsData = async (
-  params: QueryParams,
+  params: QueryParams | null,
 ): Promise<DynamicApiResponse[]> => {
-  if (Object.keys(params).length === 0) {
+  if (params && Object.keys(params).length === 0) {
     return Promise.resolve([]);
   }
 
   const searchParams = new URLSearchParams();
-  if (params.empId) {
+  if (params && params.empId) {
     searchParams.append("EMP_ID", String(params.empId));
   }
-  if (params.group) {
+  if (params && params.group) {
     searchParams.append("BILLGROUP", params.group);
   }
-  if (params.path) {
+  if (params && params.path) {
     searchParams.append("WALK_NO", params.path);
   }
-  if (params.book) {
+  if (params && params.book) {
     searchParams.append("BOOK_NO", params.book);
   }
-  if (params.filter) {
+  if (params && params.filter) {
     searchParams.append("$filter", params.filter);
   }
 

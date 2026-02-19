@@ -20,13 +20,7 @@ export default function PrintReadings() {
   const [isReaderDialogOpen, setIsReaderDialogOpen] = useState(false);
   const [isWalkingDialogOpen, setIsWalkingDialogOpen] = useState(false);
 
-  const [queryParams, setQueryParams] = useState<QueryParams>({
-    empId: 0,
-    filter: "",
-    book: "",
-    group: "",
-    path: "",
-  });
+  const [queryParams, setQueryParams] = useState<QueryParams | null>(null);
 
   const { data: readersData } = useReaders();
   const { data: TableData } = useReadingsData(queryParams);
@@ -158,6 +152,7 @@ export default function PrintReadings() {
               </>
             </div>
           </div>
+          {/* {readingdataLoading && <CircularProgress />} */}
           <SharedTablePagination columns={columns} data={flattenedTableData} />
         </div>
       </div>
