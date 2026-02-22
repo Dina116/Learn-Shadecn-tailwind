@@ -3,6 +3,7 @@ import type { UnpostedDetail } from "../../../pages/Readings and Achievement/dat
 import { getColumns } from "../../../pages/Readings and Achievement/dataprocessing/collecting/changepaymentmethod/columns";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function useTableColumns(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any,
   unpostedDetails: UnpostedDetail[] | undefined,
 ) {

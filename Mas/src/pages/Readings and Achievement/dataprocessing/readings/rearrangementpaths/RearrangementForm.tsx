@@ -10,25 +10,41 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
-import type { RearrangementFormValues, SubmitAction } from "../../types";
+import type {
+  CustomerSeq,
+  RearrangementFormProps,
+  SubmitAction,
+} from "../../types";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import FireplaceIcon from "@mui/icons-material/Fireplace";
 
-export default function RearrangementForm() {
+export default function RearrangementForm({
+  onDownload,
+  onSave,
+  onPost,
+}: RearrangementFormProps) {
   const [action, setAction] = useState<SubmitAction | null>(null);
-
-  const { control, handleSubmit } = useForm<RearrangementFormValues>({
+  const { control, handleSubmit } = useForm<CustomerSeq>({
     defaultValues: {
       bookno: "",
-      walkno: "",
+      walkno: "1",
       mode: "READER",
     },
   });
 
-  const onSubmit = (data: RearrangementFormValues) => {
-    console.log("ACTION:", action);
-    console.log("DATA:", data);
+  const onSubmit = (data: CustomerSeq) => {
+    switch (action) {
+      case "download":
+        onDownload(data);
+        break;
+      case "save":
+        onSave(data);
+        break;
+      case "post":
+        onPost(data);
+        break;
+    }
   };
 
   return (
@@ -51,13 +67,14 @@ export default function RearrangementForm() {
               السجل
             </Typography>
             <Controller
-              name="walkno"
+              name="bookno"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   fullWidth
                   size="small"
+                  required
                   sx={{
                     backgroundColor: "#f3f4f6",
                     "& .MuiOutlinedInput-input": {
@@ -77,12 +94,13 @@ export default function RearrangementForm() {
               المسار
             </Typography>
             <Controller
-              name="bookno"
+              name="walkno"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   fullWidth
+                  required
                   size="small"
                   sx={{
                     backgroundColor: "#f3f4f6",
@@ -157,7 +175,7 @@ export default function RearrangementForm() {
                       }}
                     />
                     <FormControlLabel
-                      value="BOTH"
+                      value="COLLECTOR_READER"
                       control={
                         <Radio
                           size="small"
