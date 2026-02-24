@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 export const SectionRow = ({ children }: { children: React.ReactNode }) => (
   <Box
     sx={{
-      background: "#e9ecef",
+      background: "#efecec",
       px: 2,
       py: 1,
       mt: 2,

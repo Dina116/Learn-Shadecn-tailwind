@@ -25,7 +25,7 @@ export const CollectingCardItems = [
   },
   {
     id: "cancel_invoice_collection",
-    title: "الغاء تحصيل فاتورغير موردة",
+    title: "الغاء تحصيل فاتورة",
     icon: highlightOffIcon,
   },
   {

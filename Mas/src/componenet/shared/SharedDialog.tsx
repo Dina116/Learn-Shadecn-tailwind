@@ -25,6 +25,7 @@ export interface SharedDialogProps {
     onClick: () => void;
   };
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+  // height: number;
 }
 
 export default function SharedDialog({
@@ -35,6 +36,7 @@ export default function SharedDialog({
   primaryAction,
   secondaryAction,
   maxWidth = "md",
+  // height,
 }: SharedDialogProps) {
   return (
     <Dialog
@@ -43,6 +45,7 @@ export default function SharedDialog({
       maxWidth={maxWidth}
       fullWidth
       dir="rtl"
+      // sx={{ height: { height } }}
     >
       <DialogTitle
         sx={{

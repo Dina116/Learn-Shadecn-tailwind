@@ -12,6 +12,7 @@ import {
   GetUnPostedDetails,
 } from "../../api/dataparocessing/collectbills/CollectBillsApi";
 import toast from "react-hot-toast";
+import { GetCustomerReader } from "../../api/dataparocessing/DataProcessingApi";
 
 export function useCollectors() {
   return useQuery<Collectors[]>({
@@ -81,6 +82,14 @@ export function useChangePaymentMethod(empid: number | null) {
     onError: (error: Error) => {
       toast.error(`فشل التغيير: ${error.message}`);
     },
+  });
+
+  return mutation;
+}
+
+export function useGetCustomerReader() {
+  const mutation = useMutation({
+    mutationFn: GetCustomerReader,
   });
 
   return mutation;

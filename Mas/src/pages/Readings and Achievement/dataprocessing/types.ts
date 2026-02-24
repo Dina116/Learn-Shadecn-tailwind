@@ -1,8 +1,15 @@
 import type React from "react";
 import type { formSchema } from "./form/formSchema";
 import type z from "zod";
-import type { Control, FieldErrors, UseFormWatch } from "react-hook-form";
+import type {
+  Control,
+  ControllerRenderProps,
+  FieldErrors,
+  FieldPath,
+  UseFormWatch,
+} from "react-hook-form";
 import type { WalkFormSchema } from "./readings/printreadings/WalkFormSchema";
+import type { ReactElement } from "react";
 
 export type formInputDataType = z.input<typeof formSchema>;
 export type formtDataType = z.output<typeof formSchema>;
@@ -21,17 +28,26 @@ export type ReaderCellProps = {
   onReaderChange?: (newCollectorId: number) => void;
 };
 export type DialogProps = {
+  tableData: Receipt[];
+  selectedRows: Receipt[];
+  setSelectedRows: (rows: Receipt[]) => void;
+  onSuccessfulSubmit: (data: formInputDataType) => void;
   data?: formtDataType[];
   title?: string;
   id: string;
   isDialogOpen?: boolean;
   formRef?: React.RefObject<FormUIRef | null>;
   handleFormSubmit?: React.FormEventHandler<HTMLFormElement>;
-  handleSave?: () => void;
   handleCloseDialog?: () => void;
-  control: Control<formInputDataType>;
-  errors: FieldErrors<formInputDataType>;
-  watch: UseFormWatch<formInputDataType>;
+  handleSave?: () => void;
+  onFetchComplete: (
+    fetchedData: Partial<formInputDataType>,
+    fieldNames: string[],
+  ) => void;
+  control?: Control<formInputDataType>;
+  errors?: FieldErrors<formInputDataType>;
+  watch?: UseFormWatch<formInputDataType>;
+  disabledFields: string[];
 };
 
 export interface FormUIRef {
@@ -368,4 +384,284 @@ export type RearrangementFormProps = {
     save: boolean;
     post: boolean;
   };
+};
+
+export type ReadingResponseItem = {
+  STATION_NO: number;
+  CUSTKEY: string;
+  CYCLE_ID: number;
+  BILNG_DATE: string;
+  no_units: number;
+  c_type: string;
+  CONN_AVRG_CONSUMP: number;
+  READ_TYPE: number;
+  cl_blnce: number;
+  OP_BLNCE: number;
+  S_CONSUMP: number;
+  S_CR_READING: number;
+  S_PR_READING: number;
+  CONN_STATUS: number;
+  NO_METER: boolean;
+  BILLGROUP: string;
+  BOOK_NO_C: string;
+  WALK_NO_C: string;
+  BOOK_NO_R: string;
+  WALK_NO_R: string;
+  EMPID_C: number;
+  IS_READING_ROW: number;
+  IS_COLLECTION_ROW: number;
+  delivery_st: number;
+  payment_no: string;
+  READING_DEVICEID: string;
+  SEQ_NO_C: number;
+  SEQ_NO_R: number;
+  tent_name: string;
+  description: string;
+  meter_type: string;
+  meter_ref: string;
+  ua_adress1: string;
+  prop_ref: string;
+  pr_read1: number;
+  descrepancy: number;
+  op_status: number;
+  min_consump: number;
+  max_consump: number;
+  ctypegrp_id: string;
+  serv_aloc: string;
+  READING_NOTE: number;
+  EMPID_R: number;
+  OLD_KEY: string;
+  UPDATE_COUNT_R: number;
+  SYNC_COUNT_R: number;
+  GROUP_CODE: number;
+  FILE_NO: number;
+  ACCES_CODE: string;
+  PR_ACCES_CODE: string;
+  PR_OP_STATUS: number;
+  PR_READ2: number;
+  PR_CONS: number;
+  CALC_TYPE: string;
+  AMOUNT_COLLECTED: number;
+  BILL_AMOUNT: number;
+  DUE_AMOUNT: number;
+  CONNECTION_ID: number;
+  PROPERTY_ID: number;
+  METER_ID: number;
+  GARD_PAYMENT_NO: string;
+  IS_MULTI_CONN: boolean;
+  SYNC_MAS_ST: number;
+  SYNC_MAS_HH: number;
+  IS_MANUAL_ESTIM: boolean;
+  CON_DIAMETER: string;
+  METER_DIAMETER: string;
+  SERIAL_NO: string;
+  NFC_TAG: string;
+  S_METER_DIAMETER: string;
+  PR_READING_NOTE: number;
+  COUNT_REDING_NO: number;
+};
+
+export type ReadingResponse = ReadingResponseItem[];
+
+export type ModifyReadingParams = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  CUSTKEY: any;
+  note: string;
+  empid: number;
+  cycleid: number;
+  reading?: number | string;
+  MODIFIED_AVRG_CONSUMP?: number | string;
+};
+
+export type UpdateMetroInfoParam = {
+  CUSTKEY: string;
+  meter_ref: string;
+  meter_type: string;
+  new_meter_type: string;
+  new_no_dials: number;
+  new_meter_ref?: number;
+};
+
+export type UpdateCustomerReaderProps = {
+  CUSTKEY: string;
+  LAT?: number;
+  LNG?: number;
+  METAR_NOTE: string;
+  METER_ID: number;
+};
+
+export type FieldProps<TFieldName extends FieldPath<formInputDataType>> = {
+  name: TFieldName;
+  label: string;
+  control: Control<formInputDataType>;
+  errors: FieldErrors<formInputDataType>;
+  type?: string;
+  required?: boolean;
+  disabled?: boolean | undefined;
+  render?: (
+    field: ControllerRenderProps<formInputDataType, TFieldName>,
+  ) => ReactElement;
+};
+
+export type RefreshButtonProps = {
+  valueToFetch: string | number | undefined;
+  paramName: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  extraParams?: Record<string, any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchFn: (value: any) => Promise<Partial<formInputDataType>>;
+  onFetchComplete: (
+    fetchedData: Partial<formInputDataType>,
+    fieldNames: string[],
+  ) => void;
+};
+
+export type GetLastReceiptsProps = {
+  CUSTKEY: string;
+  includeDeposted: boolean;
+};
+
+export type CtypesDetail = {
+  DESCRIPTION: string;
+  TOTAL_AMOUNT: number;
+  WATER_AMT: number;
+  SEWER_AMT: number;
+  OTHER_AMT: number;
+};
+
+export type Receipt = {
+  PAYMENT_NO: string;
+  RECEIPT_NO: string;
+  COLLECTED_AMOUNT: number;
+  COLLECTION_DATE: string; // Or Date if you plan to parse it
+  DEPOSTED_AMOUNT: number;
+  CL_BLNCE: number;
+  DELIVERY_ST: number;
+  OP_BLNCE: number;
+  WATER_AMT: number;
+  SEWER_AMT: number;
+  BASIC_AMT: number;
+  TAX_AMT: number;
+  INSTALLS_AMT: number;
+  DBT_AMT: number;
+  CRDT_AMT: number;
+  AGREEM_AMT: number;
+  TANZEEM_AMT: number;
+  OTHER_AMT: number;
+  ROUND_AMT: number;
+  CONTRACT_AMT?: number; // Optional as it's not in all objects
+  CLEAN_AMT: number;
+  NO_UNITS: number;
+  ACTIVITY: string;
+  CALC_TYPE: string;
+  CR_REAING: number;
+  PR_READING: number;
+  CONSUMP: number;
+  READ_TYPE: number;
+  PR_READ1: number;
+  METER_REF: string;
+  COLLECTOR: string;
+  COLLECTION_TYPE: string;
+  COLLECTION_TYPE_ID: number;
+  COLLECTION_METHOD: string;
+  COLLECTION_METHOD_ID: number;
+  PAYMENT_TYPE: string;
+  PAYMENT_TYPE_ID: number;
+  COLLECTION_ID: number;
+  IS_COLLECTED_BY_OWNER: boolean;
+  IS_COLLECTED_BY_OTHER: boolean;
+  CTYPES_DTL: CtypesDetail[]; // Array of the nested type
+  IS_HH_PRINTING: boolean;
+  LAST_FOR_COLLECT_CYCLE: boolean;
+  IS_CODY: boolean;
+  DTO_CASH_AMOUNT: number;
+  DTO_FEES_COLLECTED_AMOUNT: number;
+  DTO_OTHER_AMOUNT: number;
+  EMP_ID: number;
+  CUSTKEY: string;
+  SEQ_NO: number;
+  ISSUED_AMOUNT: number;
+  ISSUED_COUNT: number;
+  BILLGROUP: string;
+  BILNG_DATE: string; // Or Date
+  BOOK_NO: string;
+  WALK_NO: string;
+  CYCLE_ID: number;
+  SURNAME: string;
+  ADDRESS: string;
+  OLD_KEY: string;
+  HAS_ERORR: boolean;
+  IS_CTYPES: boolean;
+  INSTALMENT?: number; // Optional
+  CUR_CHARGES?: number; // Optional
+  INSTALMENT_DATE?: string; // Optional
+  S_CONSUMP?: number; // Optional
+  S_CR_READING?: number; // Optional
+  S_PR_READING?: number; // Optional
+  CONN_STATUS?: number; // Optional
+  NO_METER?: boolean; // Optional
+  WALK_ID_R?: number; // Optional
+  WALK_ID_C?: number; // Optional
+  EMPID_C?: number; // Optional
+  IS_READING_ROW?: number; // Optional
+  IS_COLLECTION_ROW?: number; // Optional
+  delivery_st?: number; // Optional
+  READING_DEVICEID?: string; // Optional
+  SEQ_NO_C?: number; // Optional
+  SEQ_NO_R?: number; // Optional
+  tent_name?: string; // Optional
+  meter_type?: string; // Optional
+  ua_adress1?: string; // Optional
+  prop_ref?: string; // Optional
+  descrepancy?: number; // Optional
+  op_status?: number; // Optional
+  min_consump?: number; // Optional
+  max_consump?: number; // Optional
+  ctypegrp_id?: string; // Optional
+  serv_aloc?: string; // Optional
+  READING_DATE?: string; // Optional
+  IS_POSTED_R?: boolean; // Optional
+  READING_NOTE?: number; // Optional
+  UPDATE_COUNT_R?: number; // Optional
+  SYNC_COUNT_R?: number; // Optional
+  IS_CANCELLED_R?: boolean; // Optional
+  CANCEL_DATE_R?: string; // Optional
+  CANCEL_BY_R?: string; // Optional
+  IS_LOCKED_R?: boolean; // Optional
+  GROUP_CODE?: number; // Optional
+  FILE_NO?: number; // Optional
+  ACCES_CODE?: string; // Optional
+  PR_ACCES_CODE?: string; // Optional
+  PR_OP_STATUS?: number; // Optional
+  PR_READ2?: number; // Optional
+  PR_CONS?: number; // Optional
+  READ_BY?: string; // Optional
+  READ_METHOD?: string; // Optional
+  IS_ESTIM_READING?: boolean; // Optional
+  IS_HQ_NOTIFIED_R?: boolean; // Optional
+  CONNECTION_ID?: number; // Optional
+  PROPERTY_ID?: number; // Optional
+  METER_ID?: number; // Optional
+  GARD_PAYMENT_NO?: string; // Optional
+  IS_MULTI_CONN?: boolean; // Optional
+  SYNC_MAS_ST?: number; // Optional
+  SYNC_MAS_HH?: number; // Optional
+  IS_MANUAL_ESTIM?: boolean; // Optional
+  CON_DIAMETER?: string; // Optional
+  METER_DIAMETER?: string; // Optional
+  SERIAL_NO?: string; // Optional
+  NFC_TAG?: string; // Optional
+  S_METER_DIAMETER?: string; // Optional
+  PR_READING_NOTE?: number; // Optional
+  COUNT_REDING_NO?: number; // Optional
+};
+
+export type ReceiptsResponse = Receipt[];
+
+export type CancelCollectionParams = {
+  custkey: string;
+  payment_no: string;
+  collectionId: number;
+  cancelledAmount: number;
+  receipt_no: string;
 };

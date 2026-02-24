@@ -1,16 +1,76 @@
-import type { formInputDataType } from "../types";
+import type { formInputDataType, Receipt } from "../types";
 import type { Control, FieldErrors, UseFormWatch } from "react-hook-form";
-import { RenderCheckbox, RenderField } from "./components/FormFields";
+import {
+  RenderCheckbox,
+  RenderField,
+  RenderSelect,
+} from "./components/FormFields";
 import { TwoColumns } from "./components/LayoutHelpers";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import RefreshButton from "../readings/RefreshButton";
+import {
+  GetCustomerMeters,
+  GetCustomerReader,
+  GetLastBilngReading,
+  GetLastReceipts,
+  GetPayment,
+} from "../../../../api/dataparocessing/DataProcessingApi";
+import { TextField, Typography } from "@mui/material";
+// import { useState } from "react";
+import { getCancelCollectionColumns } from "../collecting/getCancelCollectionColumns ";
+import SharedTablePagination from "../../../../componenet/shared/SharedTablePagination";
+import { useMemo } from "react";
 
 type Props = {
   id: string;
   control: Control<formInputDataType>;
   errors: FieldErrors<formInputDataType>;
   watch: UseFormWatch<formInputDataType>;
+  onFetchComplete: (
+    fetchedData: Partial<formInputDataType>,
+    fieldNames: string[],
+    // setTableData?: (data: Receipt[]) => void,
+  ) => void;
+  disabledFields: string[];
+  tableData: Receipt[];
+  selectedRows: Receipt[];
+  setSelectedRows: (rows: Receipt[]) => void;
 };
 
-export const renderForm = ({ id, control, errors, watch }: Props) => {
+const noteOptions = [
+  { value: "-1", label: "لا يوجد رسالة" },
+  { value: "1", label: "مغلق" },
+  { value: "2", label: "متعذر" },
+  { value: "3", label: "العداد معطل" },
+  { value: "4", label: "حبس مياة" },
+  { value: "5", label: "تسوية" },
+  { value: "6", label: "وصلة حرة" },
+];
+
+export const RenderForm = ({
+  id,
+  control,
+  errors,
+  watch,
+  disabledFields,
+  onFetchComplete,
+  tableData,
+  selectedRows,
+  setSelectedRows,
+}: Props) => {
+  
+  const totalCollected = useMemo(() => {
+    return selectedRows.reduce(
+      (sum, row) => sum + (row.COLLECTED_AMOUNT || 0),
+      0,
+    );
+  }, [selectedRows]);
+  const includeDeposted = id === "cancel_supplier_invoice_collection";
+  console.log(
+    `[CancelCollectionForm] Current ID is: "${id}", so includeDeposted is:`,
+    includeDeposted,
+  );
+
   switch (id) {
     case "update_customer_invoices":
       return (
@@ -22,7 +82,7 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
             watch={watch}
           />
           <RenderField
-            name="custkey"
+            name="CUSTKEY"
             label="رقم الحساب"
             control={control}
             errors={errors}
@@ -49,6 +109,8 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
 
     case "add_invoice_collection": {
       const includeInvoice = watch("includeInvoice");
+      const custkeyValue = watch("CUSTKEY");
+      const paymentValue = watch("PAYMENT_NO");
 
       return (
         <>
@@ -61,59 +123,95 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
 
           {includeInvoice ? (
             <TwoColumns>
-              <RenderField
-                name="payment_no"
-                label="رقم الفاتورة"
-                control={control}
-                errors={errors}
-                required
-              />
-              <RenderField
-                name="custkey"
-                label="رقم الحساب"
-                control={control}
-                errors={errors}
-              />
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="CUSTKEY"
+                  valueToFetch={custkeyValue}
+                  fetchFn={GetPayment}
+                  onFetchComplete={onFetchComplete}
+                />
+                <RenderField
+                  name="CUSTKEY"
+                  label="رقم الحساب"
+                  control={control}
+                  errors={errors}
+                />
+              </div>
+
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="PAYMENT_NO"
+                  valueToFetch={paymentValue}
+                  fetchFn={GetPayment}
+                  onFetchComplete={onFetchComplete}
+                />
+                <RenderField
+                  name="PAYMENT_NO"
+                  label="رقم الفاتورة"
+                  control={control}
+                  errors={errors}
+                  required
+                />
+              </div>
             </TwoColumns>
           ) : (
             <TwoColumns>
-              <RenderField
-                name="payment_no"
-                label="رقم الفاتورة"
-                control={control}
-                errors={errors}
-              />
-              <RenderField
-                name="custkey"
-                label="رقم الحساب"
-                control={control}
-                errors={errors}
-                required
-              />
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="PAYMENT_NO"
+                  valueToFetch={paymentValue}
+                  fetchFn={GetPayment}
+                  onFetchComplete={onFetchComplete}
+                />
+                <RenderField
+                  name="PAYMENT_NO"
+                  label="رقم الفاتورة"
+                  control={control}
+                  errors={errors}
+                />
+              </div>
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="CUSTKEY"
+                  valueToFetch={custkeyValue}
+                  fetchFn={GetPayment}
+                  onFetchComplete={onFetchComplete}
+                />
+                <RenderField
+                  name="CUSTKEY"
+                  label="رقم الحساب"
+                  control={control}
+                  errors={errors}
+                  required
+                />
+              </div>
             </TwoColumns>
           )}
 
           <RenderField
-            name="name"
+            name="SURNAME"
             label="الاسم"
             control={control}
             errors={errors}
+            disabled={disabledFields.includes("SURNAME")}
           />
 
           <TwoColumns>
             <RenderField
-              name="current_balance"
+              name="CL_BLNCE"
               label="الرصيد"
               control={control}
               errors={errors}
+              disabled
             />
             <RenderField
-              name="cycleDate"
+              name="BILNG_DATE"
               label="تاريخ الدورة"
               control={control}
               errors={errors}
               type="date"
               required
+              disabled={disabledFields.includes("BILNG_DATE")}
             />
           </TwoColumns>
 
@@ -142,7 +240,7 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
           </RenderCheckbox>
 
           <RenderCheckbox
-            name="enableInstallment"
+            name="enableDiscount"
             label="تفعيل الاستقطاعات"
             control={control}
             watch={watch}
@@ -166,7 +264,7 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
           </RenderCheckbox>
 
           <RenderCheckbox
-            name="preventStatusEdit"
+            name="locked"
             label="عدم السماح للوحدة المحمولة بتعديل حالة التحصيل"
             control={control}
             watch={watch}
@@ -178,150 +276,233 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
     case "cancel_invoice_collection":
     case "cancel_supplier_invoice_collection": {
       const searchByInvoice = watch("searchByInvoice");
+      const custkeyValue = watch("CUSTKEY");
+      const paymentValue = watch("PAYMENT_NO");
 
+      const columns = getCancelCollectionColumns(
+        tableData,
+        selectedRows,
+        setSelectedRows,
+      );
+      console.log(
+        "Rendering CancelCollectionForm. Table data length:",
+        tableData.length,
+      );
       return (
         <>
-          <RenderCheckbox
-            name="searchByInvoice"
-            label="البحث باستخدام رقم الفاتورة"
-            control={control}
-            watch={watch}
-          />
+          <div className="flex items-center justify-between w-full gap-4">
+            <div className="flex-grow">
+              <RenderCheckbox
+                name="searchByInvoice"
+                label="البحث باستخدام رقم الفاتورة"
+                control={control}
+                watch={watch}
+              />
+            </div>
+
+            {tableData.length > 0 && (
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#0e466b",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                إجمالي المحصل: {totalCollected.toFixed(2)}
+              </Typography>
+            )}
+          </div>
 
           {searchByInvoice ? (
             <TwoColumns>
-              <RenderField
-                name="payment_no"
-                label="رقم الفاتورة"
-                control={control}
-                errors={errors}
-                required
-              />
-              <RenderField
-                name="custkey"
-                label="رقم الحساب"
-                control={control}
-                errors={errors}
-              />
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="CUSTKEY"
+                  valueToFetch={custkeyValue}
+                  fetchFn={GetLastReceipts}
+                  onFetchComplete={onFetchComplete}
+                  extraParams={{ includeDeposted }}
+                />
+                <RenderField
+                  name="CUSTKEY"
+                  label="رقم الحساب"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </div>
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="PAYMENT_NO"
+                  valueToFetch={paymentValue}
+                  fetchFn={GetLastReceipts}
+                  onFetchComplete={onFetchComplete}
+                  extraParams={{ includeDeposted }}
+                />
+                <RenderField
+                  name="PAYMENT_NO"
+                  label="رقم الفاتورة"
+                  control={control}
+                  errors={errors}
+                  required
+                />
+              </div>
             </TwoColumns>
           ) : (
             <TwoColumns>
-              <RenderField
-                name="payment_no"
-                label="رقم الفاتورة"
-                control={control}
-                errors={errors}
-              />
-              <RenderField
-                name="custkey"
-                label="رقم الحساب"
-                control={control}
-                errors={errors}
-                required
-              />
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="PAYMENT_NO"
+                  valueToFetch={paymentValue}
+                  fetchFn={GetLastReceipts}
+                  onFetchComplete={onFetchComplete}
+                  extraParams={{ includeDeposted }}
+                />
+                <RenderField
+                  name="PAYMENT_NO"
+                  label="رقم الفاتورة"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </div>
+              <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+                <RefreshButton
+                  paramName="CUSTKEY"
+                  valueToFetch={custkeyValue}
+                  fetchFn={GetLastReceipts}
+                  onFetchComplete={onFetchComplete}
+                  extraParams={{ includeDeposted }}
+                />
+                <RenderField
+                  name="CUSTKEY"
+                  label="رقم الحساب"
+                  control={control}
+                  errors={errors}
+                  required
+                />
+              </div>
             </TwoColumns>
           )}
+          {tableData.length > 0 ? (
+            <div style={{ marginTop: "16px" }}>
+              <SharedTablePagination columns={columns} data={tableData} />
+            </div>
+          ) : (
+            <>
+              <TwoColumns>
+                <RenderField
+                  name="tent_name"
+                  label="الاسم"
+                  control={control}
+                  errors={errors}
+                  required
+                  disabled
+                />
+                <RenderField
+                  name="operationCode"
+                  label="كود العملية"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </TwoColumns>
 
-          <TwoColumns>
-            <RenderField
-              name="name"
-              label="الاسم"
-              control={control}
-              errors={errors}
-              required
-            />
-            <RenderField
-              name="operationCode"
-              label="كود العملية"
-              control={control}
-              errors={errors}
-            />
-          </TwoColumns>
+              <TwoColumns>
+                <RenderField
+                  name="collectionDate"
+                  label="تاريخ التحصيل"
+                  control={control}
+                  errors={errors}
+                  type="date"
+                  disabled
+                />
+                <RenderField
+                  name="invoiceAmount"
+                  label="قيمة الفاتورة"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </TwoColumns>
 
-          <TwoColumns>
-            <RenderField
-              name="collectionDate"
-              label="تاريخ التحصيل"
-              control={control}
-              errors={errors}
-              type="date"
-            />
-            <RenderField
-              name="invoiceAmount"
-              label="قيمة الفاتورة"
-              control={control}
-              errors={errors}
-            />
-          </TwoColumns>
+              <TwoColumns>
+                <RenderField
+                  name="collectedAmount"
+                  label="المبلغ المحصل"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+                <RenderField
+                  name="BILNG_DATE"
+                  label="تاريخ الدورة"
+                  control={control}
+                  errors={errors}
+                  type="date"
+                  disabled
+                />
+              </TwoColumns>
 
-          <TwoColumns>
-            <RenderField
-              name="collectedAmount"
-              label="المبلغ المحصل"
-              control={control}
-              errors={errors}
-            />
-            <RenderField
-              name="cycleDate"
-              label="تاريخ الدورة"
-              control={control}
-              errors={errors}
-              type="date"
-            />
-          </TwoColumns>
+              <TwoColumns>
+                <RenderField
+                  name="paymentMethod"
+                  label="طريقة الادخال"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+                <RenderField
+                  name="paymentType"
+                  label="نوع السداد"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </TwoColumns>
 
-          <TwoColumns>
-            <RenderField
-              name="paymentMethod"
-              label="طريقة الادخال"
-              control={control}
-              errors={errors}
-            />
-            <RenderField
-              name="paymentType"
-              label="نوع السداد"
-              control={control}
-              errors={errors}
-            />
-          </TwoColumns>
-
-          <TwoColumns>
-            <RenderField
-              name="collector"
-              label="اسم المحصل"
-              control={control}
-              errors={errors}
-            />
-            <RenderField
-              name="collectionType"
-              label="نوع التحصيل"
-              control={control}
-              errors={errors}
-            />
-          </TwoColumns>
+              <TwoColumns>
+                <RenderField
+                  name="collector"
+                  label="اسم المحصل"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+                <RenderField
+                  name="collectionType"
+                  label="نوع التحصيل"
+                  control={control}
+                  errors={errors}
+                  disabled
+                />
+              </TwoColumns>
+            </>
+          )}
         </>
       );
     }
-
+    //////////////تعطيل ترحيل إيصال/////////
     case "disable_receipt_posting":
       return (
         <>
           <RenderField
-            name="custkey"
+            name="CUSTKEY"
             label="رقم الحساب"
             control={control}
             errors={errors}
             required
           />
           <RenderField
-            name="payment_no"
+            name="PAYMENT_NO"
             label="رقم الفاتورة"
             control={control}
             errors={errors}
             required
           />
           <RenderField
-            name="payment_no"
+            name="collection_id"
             label="كود الايصال"
             control={control}
             errors={errors}
@@ -330,84 +511,104 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
         </>
       );
 
+    ////////////////تعديل القراءة لعميل//////////////////
     case "edit_customer_reading": {
+      const custkeyValue = watch("CUSTKEY");
       return (
         <>
-          <RenderField
-            name="custkey"
-            label="رقم الحساب"
-            control={control}
-            errors={errors}
-            required
-          />
+          <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+            <RefreshButton
+              paramName="custkey"
+              valueToFetch={custkeyValue}
+              fetchFn={GetCustomerReader}
+              onFetchComplete={onFetchComplete}
+            />
+            <RenderField
+              name="CUSTKEY"
+              label="رقم الحساب"
+              control={control}
+              errors={errors}
+              required
+              disabled={disabledFields.includes("custkey")}
+            />
+          </div>
           <TwoColumns>
-            <RenderField
-              name="sub_number"
-              label="رقم الاشتراك"
-              control={control}
-              errors={errors}
-              required={false}
-            />
-            <RenderField
-              name="oldcustkey"
-              label="رقم المفتاح القديم"
-              control={control}
-              errors={errors}
-              required={false}
-            />
+            <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+              <RefreshIcon sx={{ marginTop: "20px", color: "gray" }} />
+              <RenderField
+                name="PROPERTY_ID"
+                label="رقم الاشتراك"
+                control={control}
+                errors={errors}
+                required={false}
+              />
+            </div>
+            <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+              <RefreshIcon sx={{ marginTop: "20px", color: "gray" }} />
+              <RenderField
+                name="OLD_KEY"
+                label="رقم المفتاح القديم"
+                control={control}
+                errors={errors}
+                required={false}
+              />
+            </div>
           </TwoColumns>
-
           <TwoColumns>
             <RenderField
-              name="name"
+              name="tent_name"
               label="الاسم"
               control={control}
               errors={errors}
               required={false}
+              disabled={disabledFields.includes("tent_name")}
             />
             <RenderField
-              name="cycleDate"
+              name="BILNG_DATE"
               label="تاريخ الدورة"
               control={control}
               errors={errors}
               type="date"
+              disabled={disabledFields.includes("BILNG_DATE")}
             />
           </TwoColumns>
 
           <TwoColumns>
             <RenderField
-              name="oldreading"
+              name="pr_read1"
               label="القراءة السابقة"
               control={control}
               errors={errors}
               required={false}
+              disabled={disabledFields.includes("pr_read1")}
             />
             <RenderField
-              name="currentreading"
+              name="cr_reading"
               label="القراءة الحالية"
               control={control}
               errors={errors}
               type="number"
+              disabled={disabledFields.includes("cr_reading")}
             />
           </TwoColumns>
-
           <TwoColumns>
             <RenderField
-              name="consumption"
+              name="consump"
               label="الاستهلاك"
               control={control}
               errors={errors}
               required={false}
+              disabled={disabledFields.includes("consump")}
             />
             <RenderField
-              name="avarege"
+              name="CONN_AVRG_CONSUMP"
               label="المتوسط"
               control={control}
               errors={errors}
               type="number"
+              disabled={disabledFields.includes("CONN_AVRG_CONSUMP")}
             />
           </TwoColumns>
-
           <TwoColumns>
             <RenderField
               name="MODIFIED_AVRG_CONSUMP"
@@ -415,16 +616,17 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
               control={control}
               errors={errors}
               required={false}
+              disabled={disabledFields.includes("MODIFIED_AVRG_CONSUMP")}
             />
-            <RenderField
+            <RenderSelect
               name="note"
               label="ملاحظات"
               control={control}
               errors={errors}
-              type="text"
+              options={noteOptions}
+              disabled={disabledFields.includes("note")}
             />
           </TwoColumns>
-
           <RenderCheckbox
             name="disable_mobile_edit"
             label="عدم السماح للوحدة المحمولة بتعديل القراءة"
@@ -434,61 +636,77 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
         </>
       );
     }
-
+    /////////////تغيير حالة عداد////////////////
     case "change_meter_status": {
+      const custkeyValue = watch("CUSTKEY");
       return (
         <>
-          <RenderField
-            name="custkey"
-            label="رقم العميل"
-            control={control}
-            errors={errors}
-            required
-          />
+          <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+            <RefreshButton
+              paramName="cuskey"
+              valueToFetch={custkeyValue}
+              fetchFn={GetCustomerReader}
+              onFetchComplete={onFetchComplete}
+            />
+            <RenderField
+              name="CUSTKEY"
+              label="رقم العميل"
+              control={control}
+              errors={errors}
+              required
+              disabled={disabledFields.includes("CUSTKEY")}
+            />
+          </div>
+
           <TwoColumns>
             <RenderField
-              name="name"
+              name="tent_name"
               label="الاسم"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("tent_name")}
             />
 
             <RenderField
-              name="cycleDate"
+              name="BILNG_DATE"
               label="تاريخ الدورة"
               control={control}
               errors={errors}
               type="date"
+              disabled={disabledFields.includes("BILNG_DATE")}
             />
           </TwoColumns>
 
           <TwoColumns>
             <RenderField
-              name="book"
+              name="BOOK_NO_C"
               label="السجل"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("BOOK_NO_C")}
             />
 
             <RenderField
-              name="walk"
+              name="WALK_NO_C"
               label="المسار"
               control={control}
               errors={errors}
               type="text"
+              disabled={disabledFields.includes("WALK_NO_C")}
             />
           </TwoColumns>
 
           <TwoColumns>
             <RenderField
-              name="meter_no"
+              name="meter_ref"
               label="رقم العداد"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("meter_ref")}
             />
 
             <RenderField
-              name="new_meter_type"
+              name="new_meter_ref"
               label="جديد"
               control={control}
               errors={errors}
@@ -498,28 +716,40 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
         </>
       );
     }
+    ///////////طلب ادخال قراءة سابقة/////////////
     case "request_previous_reading": {
+      const custkeyValue = watch("CUSTKEY");
       return (
         <>
-          <RenderField
-            name="custkey"
-            label="رقم الحساب"
-            control={control}
-            errors={errors}
-            required
-          />
+          <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+            <RefreshButton
+              paramName="custkey"
+              valueToFetch={custkeyValue}
+              fetchFn={GetLastBilngReading}
+              onFetchComplete={onFetchComplete}
+            />
+            <RenderField
+              name="CUSTKEY"
+              label="رقم الحساب"
+              control={control}
+              errors={errors}
+              required
+            />
+          </div>
           <TwoColumns>
             <RenderField
-              name="name"
+              name="tent_name"
               label="اسم العميل"
               control={control}
               errors={errors}
+              disabled
             />
             <RenderField
-              name="oldreading"
+              name="Reading"
               label="القراءة السابقة"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("Reading")}
             />
           </TwoColumns>
 
@@ -530,12 +760,37 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
               control={control}
               errors={errors}
               type="date"
+              disabled={disabledFields.includes("oldreadingdate")}
             />
             <RenderField
-              name="is_invoiced"
+              name="IsInvoiced"
               label="مفوترة"
               control={control}
               errors={errors}
+              // disabled={disabledFields.includes("IsInvoiced")}
+              render={(field) => {
+                const displayValue =
+                  field.value === true
+                    ? "نعم"
+                    : field.value === false
+                      ? "لا"
+                      : "";
+                return (
+                  <TextField
+                    value={displayValue}
+                    size="small"
+                    fullWidth
+                    disabled
+                    defaultValue={undefined}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000",
+                        backgroundColor: "#f0f0f0",
+                      },
+                    }}
+                  />
+                );
+              }}
             />
           </TwoColumns>
 
@@ -549,7 +804,7 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
               required
             />
             <RenderField
-              name="oldreadingdate"
+              name="date"
               label="تاريخ القراءة"
               control={control}
               errors={errors}
@@ -559,30 +814,40 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
           </TwoColumns>
 
           <RenderField
-            name="description"
+            name="comment"
             label="سبب تعديل السابقة"
             control={control}
             errors={errors}
             type="text"
             required
+            // disabled={disabledFields.includes("comment")}
           />
         </>
       );
     }
-
+    /////////////////تعديل ملاحظة خط السير//////////////
     case "edit_sir_notes": {
+      const custkeyValue = watch("CUSTKEY");
       return (
         <>
           <TwoColumns>
+            <div className="flex flex-row-reverse items-center justify-end gap-2 w-full">
+              <RefreshButton
+                paramName="custkey"
+                valueToFetch={custkeyValue}
+                fetchFn={GetCustomerMeters}
+                onFetchComplete={onFetchComplete}
+              />
+              <RenderField
+                name="CUSTKEY"
+                label="رقم الحساب"
+                control={control}
+                errors={errors}
+                required
+              />
+            </div>
             <RenderField
-              name="custkey"
-              label="رقم الحساب"
-              control={control}
-              errors={errors}
-              required
-            />
-            <RenderField
-              name="meter_no"
+              name="METER_ID"
               label="رقم العداد"
               control={control}
               errors={errors}
@@ -592,21 +857,23 @@ export const renderForm = ({ id, control, errors, watch }: Props) => {
 
           <TwoColumns>
             <RenderField
-              name="x_coordinate"
+              name="LNG"
               label="إحداثي X"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("LNG")}
             />
             <RenderField
-              name="y_coordinate"
+              name="LAT"
               label="إحداثي Y"
               control={control}
               errors={errors}
+              disabled={disabledFields.includes("LAT")}
             />
           </TwoColumns>
 
           <RenderField
-            name="description"
+            name="METAR_NOTE"
             label="الوصف"
             control={control}
             errors={errors}
