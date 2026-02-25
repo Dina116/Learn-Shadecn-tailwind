@@ -37,12 +37,12 @@ const cardItems = [
   {
     content: "صيانه النظام",
     children: phoneIcon,
-    path: "/systemMaintanance",
+    path: "/readings/systemMaintanance",
   },
   {
     content: "معالجة البيانات",
     children: homeIcon,
-    path: "/dataProcessing",
+    path: "/readings/dataProcessing",
   },
   {
     content: "سجل صيانة الاجهزة",
@@ -57,7 +57,7 @@ const cardItems = [
   {
     content: "ادارة تنشيط التحصيل",
     children: gasIcon,
-    path: "",
+    path: "/readings/collectionsactivation",
   },
 ];
 export default function ReadingScreen() {

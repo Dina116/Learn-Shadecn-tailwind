@@ -28,6 +28,8 @@ import ChangePaymentType from "./pages/Readings and Achievement/dataprocessing/c
 import PrintReadings from "./pages/Readings and Achievement/dataprocessing/readings/printreadings/PrintReadings";
 import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/readings/rearrangementpaths/RearrangementPaths";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import CollectionsActivationScreen from "./pages/Readings and Achievement/collectionsactivationmanagement/CollectionsActivationScreen";
+import MarketingPlanExecution from "./pages/Readings and Achievement/collectionsactivationmanagement/marketingplanexecution";
 
 const queryClient = new QueryClient();
 function App() {
@@ -67,7 +69,7 @@ function App() {
               <Route path="treasuryinside" element={<TreasuryInsideScreen />} />
             </Route>
             <Route
-              path="/systemMaintanance"
+              path="/readings/systemMaintanance"
               element={<SystemMaintananceScreen />}
             />
             <Route
@@ -82,13 +84,24 @@ function App() {
               path="/systemMaintanance/switchReadersPathsScreen"
               element={<SwitchReadersPathsScreen />}
             />
-            <Route path="/dataProcessing" element={<DataProcessingScreen />} />
+            <Route
+              path="/readings/dataProcessing"
+              element={<DataProcessingScreen />}
+            />
             <Route path="/collectbills" element={<CollectBills />} />
             <Route path="/changepaymenttype" element={<ChangePaymentType />} />
             <Route path="/printreadings" element={<PrintReadings />} />
             <Route
               path="/rearrangementpaths"
               element={<RearrangementPaths />}
+            />
+            <Route
+              path="/readings/collectionsactivation"
+              element={<CollectionsActivationScreen />}
+            />
+            <Route
+              path="/readings/collectionsactivation/MarketingPlanExecution"
+              element={<MarketingPlanExecution />}
             />
           </Route>
         </Routes>

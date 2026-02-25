@@ -24,6 +24,8 @@ const BreadcrumbMap: Record<string, string> = {
   changepaymenttype: "تغيير طريقة الدفع",
   printreadings: "طباعة القراءات",
   rearrangementpaths: "اعادة ترتيب المسارات",
+  collectionsactivation: "إدارة تنشيط التحصيل",
+  MarketingPlanExecution: "تنفيذ خطة التسويق",
 };
 
 export default function Breadcrumb() {

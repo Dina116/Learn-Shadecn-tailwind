@@ -28,7 +28,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import PrintIcon from "@mui/icons-material/Print";
 import CameraRearIcon from "@mui/icons-material/CameraRear";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
 
+export const publishWithChangeIcon = (
+  <PublishedWithChangesIcon
+    sx={{
+      position: "absolute",
+      left: 16,
+      top: -15,
+      color: "rgb(12 74 110)",
+      fontSize: "2rem",
+      backgroundColor: "rgb(185, 210, 225)",
+      borderRadius: "50%",
+      padding: "4px",
+    }}
+  />
+);
 export const editCalendarIcon = (
   <EditCalendarIcon
     sx={{

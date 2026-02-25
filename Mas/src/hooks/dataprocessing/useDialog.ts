@@ -28,9 +28,11 @@ function toInputDateString(date: Date): string {
   return date.toISOString().split("T")[0];
 }
 export default function useDialog() {
+  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [openDialogId, setOpenDialogId] = useState<string | null>(null);
   const [dialogTitle, setDialogTitle] = useState<string>("");
+  
   const [disabledFields, setDisabledFields] = useState<string[]>([]);
   const [tableData, setTableData] = useState<Receipt[]>([]);
   const [selectedRows, setSelectedRows] = useState<Receipt[]>([]);

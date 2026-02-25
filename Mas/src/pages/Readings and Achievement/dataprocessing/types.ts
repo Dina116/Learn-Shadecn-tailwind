@@ -490,16 +490,20 @@ export type UpdateCustomerReaderProps = {
   METER_ID: number;
 };
 
-export type FieldProps<TFieldName extends FieldPath<formInputDataType>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FieldProps<TFieldName extends FieldPath<any>> = {
   name: TFieldName;
   label: string;
-  control: Control<formInputDataType>;
-  errors: FieldErrors<formInputDataType>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  errors: FieldErrors<any>;
   type?: string;
   required?: boolean;
   disabled?: boolean | undefined;
   render?: (
-    field: ControllerRenderProps<formInputDataType, TFieldName>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    field: ControllerRenderProps<any, TFieldName>,
   ) => ReactElement;
 };
 

@@ -18,7 +18,8 @@ import {
 import { SectionRow } from "./LayoutHelpers";
 import type { FieldProps, formInputDataType, SelectOption } from "../../types";
 
-export const RenderField = <TFieldName extends FieldPath<formInputDataType>>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const RenderField = <TFieldName extends FieldPath<any>>({
   name,
   label,
   control,
@@ -81,7 +82,6 @@ export const RenderCheckbox = ({
   control,
   watch,
   children,
-
 }: CheckboxProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const value = watch(name as any);
