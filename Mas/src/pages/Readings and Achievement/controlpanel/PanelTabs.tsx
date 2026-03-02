@@ -2,9 +2,9 @@ import { Box, Tab, Tabs } from "@mui/material";
 
 type Props = {
   value: number;
-  onChange: (value: number) => void;
+  onChange: (value: 0 | 1 | 2 | 3) => void;
 };
-export default function SystemMaintenanceTabs({ value, onChange }: Props) {
+export default function PanelTabs({ value, onChange }: Props) {
   return (
     <Box sx={{ direction: "rtl", width: "100%" }}>
       <Tabs
@@ -12,22 +12,23 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
         onChange={(e, newValue) => onChange(newValue)}
         variant="fullWidth"
         sx={{
-          bgcolor: "#e5e7eb",
+          bgcolor:  "#e5e7eb",
           borderRadius: "3px",
-          minHeight: 1,
+          minHeight:1,
           "& .MuiTab-root": {
             borderLeft: "2px solid gray",
             fontWeight: "bold",
+
           },
           "& .MuiTab-root:nth-last-child(1)": { borderLeft: "none" },
           "& .Mui-selected": {
-            background: "#1565a9",
+            background:  "#1565a9",
             color: "white",
           },
         }}
       >
         <Tab
-          label="التحصيل"
+          label="العمليات"
           value={0}
           sx={{
             zIndex: 1,
@@ -40,8 +41,34 @@ export default function SystemMaintenanceTabs({ value, onChange }: Props) {
           }}
         />
         <Tab
-          label="القراءات"
+          label="عمليات التجهيز"
           value={1}
+          sx={{
+            zIndex: 1,
+            color: "#6b7280",
+            fontWeight: "bold",
+            minHeight: 1,
+            "&.Mui-selected": {
+              color: "white",
+            },
+          }}
+        />
+        <Tab
+          label="خاص بالوحده المحمولة"
+          value={2}
+          sx={{
+            zIndex: 1,
+            color: "#6b7280",
+            fontWeight: "bold",
+            minHeight: 1,
+            "&.Mui-selected": {
+              color: "white",
+            },
+          }}
+        />
+        <Tab
+          label="عمليات خارجية"
+          value={3}
           sx={{
             zIndex: 1,
             color: "#6b7280",

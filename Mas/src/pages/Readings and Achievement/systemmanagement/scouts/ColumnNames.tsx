@@ -62,6 +62,7 @@ export const columns: Columns[] = [
   {
     key: "number",
     label: "م",
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (_value: any, _row: any, rowIndex: number) => rowIndex + 1,
   },
 ];

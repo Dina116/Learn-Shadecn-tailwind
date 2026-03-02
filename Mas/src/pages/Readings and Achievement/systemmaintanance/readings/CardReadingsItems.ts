@@ -6,7 +6,7 @@ import {
   replayIcon,
   reverseIcon,
   switchIcon,
-} from "../../../../componenet/CardsIcons";
+} from "../../../../componenet/card/CardsIcons";
 import type { CardReadingItem } from "../types";
 
 export const cardReadingsItems: CardReadingItem[] = [

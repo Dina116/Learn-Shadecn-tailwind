@@ -12,6 +12,7 @@ type BasicCardContentProps = {
   content: string;
   children: React.ReactNode;
   onClick: () => void;
+  subTitle?: string;
 };
 
 type OutlinedCardProps = {
@@ -19,9 +20,15 @@ type OutlinedCardProps = {
   children: React.ReactNode;
   path?: string;
   onClick?: () => void;
+  subTitle?: string;
 };
 
-const card = ({ content, children, onClick }: BasicCardContentProps) => (
+const card = ({
+  content,
+  children,
+  onClick,
+  subTitle,
+}: BasicCardContentProps) => (
   <React.Fragment>
     {children}
     <CardContent className="flex flex-col items-center justify-center">
@@ -35,6 +42,18 @@ const card = ({ content, children, onClick }: BasicCardContentProps) => (
       >
         {content}
       </Typography>
+      {subTitle && (
+        <Typography
+          component="div"
+          color="gray"
+          sx={{
+            fontSize: "0.80rem",
+          }}
+        >
+          {subTitle}
+        </Typography>
+      )}
+
       <Divider className="flex flex-row w-full" />
     </CardContent>
     <CardActions className="flex flex-row justify-center items-center">
@@ -50,6 +69,7 @@ export default function OutlinedCard({
   content,
   path,
   onClick,
+  subTitle,
 }: OutlinedCardProps) {
   const navigation = useNavigate();
   const handleOnClick = () => {
@@ -70,6 +90,7 @@ export default function OutlinedCard({
           content: content,
           children: children,
           onClick: handleOnClick,
+          subTitle: subTitle,
         })}
       </Card>
     </Box>

@@ -26,6 +26,11 @@ const BreadcrumbMap: Record<string, string> = {
   rearrangementpaths: "اعادة ترتيب المسارات",
   collectionsactivation: "إدارة تنشيط التحصيل",
   MarketingPlanExecution: "تنفيذ خطة التسويق",
+  controlpanel: "لوحة التحكم الرئيسية",
+  collectedPulledPerGroup: "سحب التحصيل ",
+  readingsPulled: "سحب القراءات ",
+  collectionPosting: "ترحيل التحصيل",
+  readingsPosting: "ترحيل القراءات ",
 };
 
 export default function Breadcrumb() {

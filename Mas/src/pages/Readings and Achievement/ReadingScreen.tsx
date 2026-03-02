@@ -7,7 +7,7 @@ import {
   homeIcon,
   phoneIcon,
   userIcon,
-} from "../../componenet/CardsIcons";
+} from "../../componenet/card/CardsIcons";
 
 const groupIcon = (
   <GroupsIcon
@@ -27,7 +27,7 @@ const cardItems = [
   {
     content: "لوحة التحكم الرئيسية",
     children: groupIcon,
-    path: "",
+    path: "/readings/controlpanel",
   },
   {
     content: "ادارة النظام",

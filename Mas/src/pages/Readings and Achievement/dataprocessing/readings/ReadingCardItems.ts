@@ -5,7 +5,7 @@ import {
   editNoteIcon,
   gasIcon,
   printIcon,
-} from "../../../../componenet/CardsIcons";
+} from "../../../../componenet/card/CardsIcons";
 
 export const ReadingCardItems = [
   {

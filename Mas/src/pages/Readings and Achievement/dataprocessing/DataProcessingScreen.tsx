@@ -12,7 +12,6 @@ export default function DataProcessingScreen() {
   const [tab, setTab] = useState(0);
   const collectingCards = useMemo(() => CollectingCardItems, []);
   const readingCards = useMemo(() => ReadingCardItems, []);
-
   const currentCards = tab === 0 ? collectingCards : readingCards;
   const navigate = useNavigate();
   const {

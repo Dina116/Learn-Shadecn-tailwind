@@ -15,7 +15,7 @@ export default function MarketingPlanExecution() {
   return (
     <div className="w-full h-screen flex bg-gray-100">
       <div className="flex-1">
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" />
         <div className="flex flex-col gap-5">
           <div className=" text-right pe-12 ">
             <h6
@@ -30,7 +30,7 @@ export default function MarketingPlanExecution() {
             </h6>
           </div>
           <Paper elevation={3} sx={{ p: 3 }}>
-            <FilterForm onSubmit={handleFilterSubmit}  />
+            <FilterForm onSubmit={handleFilterSubmit} />
           </Paper>
 
           <Paper elevation={3} sx={{ p: 3 }}>

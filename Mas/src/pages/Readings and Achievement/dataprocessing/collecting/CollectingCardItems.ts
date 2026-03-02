@@ -5,7 +5,7 @@ import {
   signalCellularOffIcon,
   syncIcon,
   tableViewIcon,
-} from "../../../../componenet/CardsIcons";
+} from "../../../../componenet/card/CardsIcons";
 
 export const CollectingCardItems = [
   {

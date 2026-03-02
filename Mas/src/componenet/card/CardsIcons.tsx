@@ -1,0 +1,97 @@
+import GroupsIcon from "@mui/icons-material/Groups";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import GasMeterIcon from "@mui/icons-material/GasMeter";
+import ConstructionIcon from "@mui/icons-material/Construction";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import FlipCameraAndroidIcon from "@mui/icons-material/FlipCameraAndroid";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
+import PhonelinkLockIcon from "@mui/icons-material/PhonelinkLock";
+import RepeatOnIcon from "@mui/icons-material/RepeatOn";
+import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import SwitchCameraIcon from "@mui/icons-material/SwitchCamera";
+import ReplayIcon from "@mui/icons-material/Replay";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import SyncIcon from "@mui/icons-material/Sync";
+import TableViewIcon from "@mui/icons-material/TableView";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import CancelIcon from "@mui/icons-material/Cancel";
+import SignalCellularOffIcon from "@mui/icons-material/SignalCellularOff";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import EditIcon from "@mui/icons-material/Edit";
+import PrintIcon from "@mui/icons-material/Print";
+import CameraRearIcon from "@mui/icons-material/CameraRear";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import PublishedWithChangesIcon from "@mui/icons-material/PublishedWithChanges";
+import DownloadIcon from "@mui/icons-material/Download";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import StoreIcon from "@mui/icons-material/Store";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import ChecklistIcon from "@mui/icons-material/Checklist";
+import SyncAltIcon from "@mui/icons-material/SyncAlt";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import PublicIcon from "@mui/icons-material/Public";
+import PublicOffIcon from "@mui/icons-material/PublicOff";
+import { IconStyle } from "./IconStyle";
+import ContentPasteSearchIcon from "@mui/icons-material/ContentPasteSearch";
+import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
+import InventoryIcon from "@mui/icons-material/Inventory";
+
+export const inventoryIcon = <InventoryIcon sx={IconStyle} />;
+export const driveFileIcon = <DriveFileMoveIcon sx={IconStyle} />;
+export const contentSearchIcon = <ContentPasteSearchIcon sx={IconStyle} />;
+export const publicOffIcon = <PublicOffIcon sx={IconStyle} />;
+export const publicIcon = <PublicIcon sx={IconStyle} />;
+export const disLike = <ThumbDownIcon sx={IconStyle} />;
+export const syncAlt = <SyncAltIcon sx={IconStyle} />;
+export const checkList = <ChecklistIcon sx={IconStyle} />;
+export const factCheck = <FactCheckIcon sx={IconStyle} />;
+export const storeIcon = <StoreIcon sx={IconStyle} />;
+export const closeIcone = <DoDisturbIcon sx={IconStyle} />;
+
+export const uploadIcon = <FileUploadIcon sx={IconStyle} />;
+export const downloadIcon = <DownloadIcon sx={IconStyle} />;
+export const publishWithChangeIcon = (
+  <PublishedWithChangesIcon sx={IconStyle} />
+);
+export const editCalendarIcon = <EditCalendarIcon sx={IconStyle} />;
+export const cameraRearIcon = <CameraRearIcon sx={IconStyle} />;
+
+export const printIcon = <PrintIcon sx={IconStyle} />;
+export const editIcon = <EditIcon sx={IconStyle} />;
+export const editNoteIcon = <EditNoteIcon sx={IconStyle} />;
+export const refreshIcon = <RefreshIcon sx={IconStyle} />;
+export const signalCellularOffIcon = <SignalCellularOffIcon sx={IconStyle} />;
+export const cancelIcon = <CancelIcon sx={IconStyle} />;
+export const highlightOffIcon = <HighlightOffIcon sx={IconStyle} />;
+export const receiptIcon = <ReceiptIcon sx={IconStyle} />;
+
+export const tableViewIcon = <TableViewIcon sx={IconStyle} />;
+
+export const syncIcon = <SyncIcon sx={IconStyle} />;
+///////////////////////////////////
+export const lockOpenIcon = <LockOpenIcon sx={IconStyle} />;
+export const replayIcon = <ReplayIcon sx={IconStyle} />;
+export const switchIcon = <SwitchCameraIcon sx={IconStyle} />;
+export const allowConcateIcon = <OpenInNewIcon sx={IconStyle} />;
+export const repeatOpenIcon = <OpenInBrowserIcon sx={IconStyle} />;
+export const repeatOnIcon = <RepeatOnIcon sx={IconStyle} />;
+export const phoneLockIcon = <PhonelinkLockIcon sx={IconStyle} />;
+export const declineIcon = <DisabledByDefaultIcon sx={IconStyle} />;
+export const reverseIcon = <FlipCameraAndroidIcon sx={IconStyle} />;
+export const moneyIcon = <MonetizationOnIcon sx={IconStyle} />;
+export const constructionIcon = <ConstructionIcon sx={IconStyle} />;
+export const gasIcon = <GasMeterIcon sx={IconStyle} />;
+export const directionIcon = <DirectionsIcon sx={IconStyle} />;
+export const accountTree = <AccountTreeIcon sx={IconStyle} />;
+export const homeIcon = <HomeIcon sx={IconStyle} />;
+export const groupIcon = <GroupsIcon sx={IconStyle} />;
+export const userIcon = <PeopleAltIcon sx={IconStyle} />;
+export const phoneIcon = <PhoneAndroidIcon sx={IconStyle} />;

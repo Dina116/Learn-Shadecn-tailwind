@@ -77,6 +77,7 @@ export default function MarketingTable({
               <TableCell rowSpan={2} sx={{ p: 1, width: "5%" }}>
                 <Checkbox
                   sx={{ color: "white", "&.Mui-checked": { color: "white" } }}
+                  size="small"
                   indeterminate={
                     selectedBillGroups.length > 0 &&
                     selectedBillGroups.length < tableData.length

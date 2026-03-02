@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import type { CellRenderResult, TableProbs } from "../../pages/SharedTypes";
+import { Typography } from "@mui/material";
 
 export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
   return (
@@ -31,63 +32,48 @@ export default function SharedTable<T>({ data, columns }: TableProbs<T>) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
-                {columns.map((col) => {
-                  const cellValue = col.key ? row[col.key] : null;
-                  let content: React.ReactNode = cellValue;
-                  let cellStyle: React.CSSProperties = {};
-                  if (col.render) {
-                    const renderResult: CellRenderResult = col.render(
-                      cellValue,
-                      row,
-                      rowIndex,
-                    );
-                    if (
-                      typeof renderResult === "object" &&
-                      renderResult !== null &&
-                      "content" in renderResult
-                    ) {
-                      content = renderResult.content;
-                      cellStyle = renderResult.cellStyle || {};
-                    } else {
-                      content = renderResult;
-                    }
-                  }
+            {data && data.length > 0 ? (
+              data.map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  {columns.map((col) => {
+                    const cellValue = col.key ? row[col.key] : null;
+                    let content: React.ReactNode = cellValue;
+                    let cellStyle: React.CSSProperties = {};
 
-                  return (
-                    <TableCell key={col.label} style={cellStyle}>
-                      {content}
-                    </TableCell>
-                  );
-                })}
+                    if (col.render) {
+                      const renderResult: CellRenderResult = col.render(
+                        cellValue,
+                        row,
+                        rowIndex,
+                      );
+
+                      if (
+                        typeof renderResult === "object" &&
+                        renderResult !== null &&
+                        "content" in renderResult
+                      ) {
+                        content = renderResult.content;
+                        cellStyle = renderResult.cellStyle || {};
+                      } else {
+                        content = renderResult;
+                      }
+                    }
+
+                    return (
+                      <TableCell key={col.label} style={cellStyle}>
+                        {content}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} align="center">
+                  No data
+                </TableCell>
               </TableRow>
-            ))}
-            {/* {data.map((row, rowIndex) => (
-              <TableRow
-                key={rowIndex}
-                className=" border-l border-sky-900"
-                sx={{ textAlign: "center" }}
-              >
-                {columns.map((col, colIndex) => {
-                  const value = row[col.key];
-                  console.log("row:", row);
-                  console.log("col.key:", col.key);
-                  console.log("value:", value);
-                  return (
-                    <TableCell
-                      key={colIndex}
-                      className="border-l border-sky-900"
-                      sx={{ textAlign: "center" }}
-                    >
-                      {col.render
-                        ? col.render(value, row, rowIndex)
-                        : String(value ?? "")}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))} */}
+            )}
           </TableBody>
         </Table>
       </TableContainer>

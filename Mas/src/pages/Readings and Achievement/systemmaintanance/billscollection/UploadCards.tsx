@@ -8,7 +8,7 @@ import {
   replayIcon,
   reverseIcon,
   switchIcon,
-} from "../../../../componenet/CardsIcons";
+} from "../../../../componenet/card/CardsIcons";
 import OutlinedCardWithDialog from "../../../../componenet/shared/OutlinedCardWithDialog";
 import type { UploadCardsProps } from "../types";
 

@@ -30,6 +30,11 @@ import RearrangementPaths from "./pages/Readings and Achievement/dataprocessing/
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import CollectionsActivationScreen from "./pages/Readings and Achievement/collectionsactivationmanagement/CollectionsActivationScreen";
 import MarketingPlanExecution from "./pages/Readings and Achievement/collectionsactivationmanagement/marketingplanexecution";
+import ControlPanel from "./pages/Readings and Achievement/controlpanel";
+import CollectedPulledPerGroup from "./pages/Readings and Achievement/controlpanel/operations/collectedPulledPerGroup";
+import ReadingsPulled from "./pages/Readings and Achievement/controlpanel/operations/readingsPulled";
+import CollectionPosting from "./pages/Readings and Achievement/controlpanel/operations/collectionPosting";
+import ReadingsPosting from "./pages/Readings and Achievement/controlpanel/operations/readingPosting";
 
 const queryClient = new QueryClient();
 function App() {
@@ -102,6 +107,23 @@ function App() {
             <Route
               path="/readings/collectionsactivation/MarketingPlanExecution"
               element={<MarketingPlanExecution />}
+            />
+            <Route path="/readings/controlpanel" element={<ControlPanel />} />
+            <Route
+              path="/readings/controlpanel/collectedPulledPerGroup"
+              element={<CollectedPulledPerGroup />}
+            />
+            <Route
+              path="/readings/controlpanel/readingsPulled"
+              element={<ReadingsPulled />}
+            />
+            <Route
+              path="/readings/controlpanel/collectionPosting"
+              element={<CollectionPosting />}
+            />
+            <Route
+              path="/readings/controlpanel/readingsPosting"
+              element={<ReadingsPosting />}
             />
           </Route>
         </Routes>

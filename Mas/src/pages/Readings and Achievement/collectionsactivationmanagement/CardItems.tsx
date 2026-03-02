@@ -1,7 +1,7 @@
 import {
   publishWithChangeIcon,
   syncIcon,
-} from "../../../componenet/CardsIcons";
+} from "../../../componenet/card/CardsIcons";
 
 export const CardItems = [
   {
