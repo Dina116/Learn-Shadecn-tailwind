@@ -8,6 +8,9 @@ const Routes = {
   READING_PULL: "/readings/controlpanel/readingsPulled",
   COLLECTION_POSTING: "/readings/controlpanel/collectionPosting",
   READING_POSTING: "/readings/controlpanel/readingsPosting",
+  closeRWalk: "/readings/controlpanel/closeRWalk",
+  closeCWalk: "/readings/controlpanel/closeCWalk",
+  pulledHistory:"/readings/controlpanel/pulledHistory"
 };
 export const OperationsCardItems = [
   {
@@ -49,20 +52,20 @@ export const OperationsCardItems = [
     title: "إغلاق مسار تحصيل",
     subTitle: "إغلاق دورة التحصيل للاستعداد لدورة جديدة",
     icon: closeIcone,
-    // path: Routes.COLLECTION_PULL,
+    path: Routes.closeCWalk,
   },
   {
     id: "readings_route_close",
     title: "إغلاق مسار قراءة",
     subTitle: "إغلاق دورة القراءات للاستعداد لدورة جديدة",
     icon: closeIcone,
-    // path: Routes.COLLECTION_PULL,
+    path: Routes.closeRWalk,
   },
   {
     id: "billing_update_log",
     title: "سجل تحديث الفواتير",
     subTitle: "سجل تحديث الفواتير على مستوى مجموعة/مسار",
     icon: downloadIcon,
-    // path: Routes.COLLECTION_PULL,
+    path: Routes.pulledHistory,
   },
 ];

@@ -31,6 +31,7 @@ export type CardList = {
 export interface FilterValues {
   billingDate?: string;
   groups?: { id: string; name: string }[];
+  AllBilingDate?: boolean;
 }
 
 export interface CounterValues {
@@ -55,7 +56,11 @@ export interface ControlPanelFormProps {
   isGroupsLoading?: boolean;
   completedCounterTitle?: string;
   showDivider?: boolean;
+  isAllOption?: boolean;
+  isAllBillings?: boolean;
+  handleChageAllBilings?: (value: boolean) => void;
 }
+
 export interface NewDataType {
   group: string;
   description: string;
@@ -389,14 +394,82 @@ export type Mas2BillingProcessResponse = {
   BookNo: string;
   Walkno: string;
   CycleId: number;
-  BilngDate: string; 
+  BilngDate: string;
   ProcessId: string;
   User: string;
   HasError: boolean;
   AffectedRows: number;
   Status: number;
-  StartDate: string; 
-  EndDate: string;   
+  StartDate: string;
+  EndDate: string;
   Period: number;
   SKIP_COUNT: number;
 };
+
+export const bookCycleUnique = (item: BOOKCYCLE): string => {
+  const uniqueID: string = `${item?.BOOK_NO}${item?.WALK_NO}${item?.BILLGROUP}`;
+  // console.log(uniqueID, 'uniqueID -1');
+  return uniqueID;
+};
+
+export interface STATIONS {
+  stationNo: number;
+  stationName: string;
+  description: string;
+  iscurrent: number;
+  dbStandalone: number;
+  dbAccess: number;
+  isHeadquarters: number;
+  isMaintsite: number;
+  isMrreading: number;
+  isCservices: number;
+  isReceipting: number;
+  telWork: string;
+  telFax: string;
+  telEmail: string;
+  telAhours: string;
+  telCompl: string;
+  lnAddress1: string;
+  lnAddress2: string;
+  lnAddress3: string;
+  lnCity: string;
+  lnPostal: string;
+  workingMon: number;
+  workingTue: number;
+  workingWed: number;
+  workingThu: number;
+  workingFri: number;
+  workingSat: number;
+  workingSun: number;
+  overtimeMon: number;
+  overtimeTue: number;
+  overtimeWed: number;
+  overtimeThu: number;
+  overtimeFri: number;
+  overtimeSat: number;
+  overtimeSun: number;
+  siteMemo: string;
+  stampDate: string;
+  stampUser: string;
+  maintsiteCode: number;
+  defaultwarehouse: number;
+  defaultdepot: number;
+  warehousesetting: number;
+  depotdsetting: number;
+  ipAddress: string;
+  portNo: number;
+  sectorCode: number;
+  sectorName: string;
+  isDeleted: boolean;
+}
+export interface ADDSTATIONREQ {
+  entity: STATIONS;
+}
+
+export interface UPDATESTATIONREQ {
+  id?: number | string;
+  entity: STATIONS;
+}
+export interface DELETESTATIONREQ {
+  id?: number | string;
+}

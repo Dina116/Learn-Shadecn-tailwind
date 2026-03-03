@@ -31,6 +31,9 @@ const BreadcrumbMap: Record<string, string> = {
   readingsPulled: "سحب القراءات ",
   collectionPosting: "ترحيل التحصيل",
   readingsPosting: "ترحيل القراءات ",
+  closeRWalk: "إغلاق مسار قراءة",
+  closeCWalk: "إغلاق مسار تحصيل",
+  pulledHistory: "سجل تحديث بيانات الفواتير",
 };
 
 export default function Breadcrumb() {

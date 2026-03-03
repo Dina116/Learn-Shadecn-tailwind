@@ -28,9 +28,9 @@ export interface Identifiable {
 }
 export interface MultiLevelHeaderTableProps<T extends Identifiable> {
   columns: MultiLevelHeaderTableColumn[];
-  data: T[] | null;
+  data?: T[] | null;
   isLoading?: boolean;
-  keyField: keyof T;
+  keyField?: keyof T;
   updatingRowKey?: string | number | null;
 }
 

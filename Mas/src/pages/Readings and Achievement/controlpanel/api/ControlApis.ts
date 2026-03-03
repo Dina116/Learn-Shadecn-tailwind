@@ -1,9 +1,10 @@
 import axios from "axios";
 import axiosClient from "../../../../api/apiservices/axiosClient";
 import type {
+  // BOOKCYCLE,
   FilterValues,
   Mas2BillingPayload,
-  ReadingWalkData,
+  // ReadingWalkData,
   STATMDEPOSIT,
   WalkData,
 } from "../types";
@@ -51,21 +52,38 @@ export const getCustomerWalkCycle = async (
   }
 };
 
-export const getMeterWalkCycle = async (
-  filters: FilterValues,
-): Promise<ReadingWalkData[]> => {
-  const groupsString = filters.groups?.map((g) => g.id).join(",");
-  if (!groupsString || !filters.billingDate) {
-    return [];
-  }
-  const params = new URLSearchParams({
-    groups: groupsString,
-    order: "desc",
-  });
+// export const getMeterWalkCycle = async (
+//   filters: FilterValues,
+// ): Promise<ReadingWalkData[]> => {
+//   const groupsString = filters.groups?.map((g) => g.id).join(",");
+//   if (!groupsString || !filters.billingDate) {
+//     return [];
+//   }
+//   const params = new URLSearchParams({
+//     groups: groupsString,
+//     order: "desc",
+//   });
+//   try {
+//     const res = await axiosClient.get(
+//       `/Books/MeterWalkCycle?${params.toString()}`,
+//     );
+//     return res.data;
+//   } catch (error: unknown) {
+//     if (axios.isAxiosError(error)) {
+//       throw new Error(
+//         error.response?.data?.message || "فشل في جلب بيانات الجدول",
+//       );
+//     }
+//     throw new Error("فشل في جلب بيانات الجدول");
+//   }
+// };
+export const getMeterWalkCycle = async <T>(
+  params: Record<string, string>,
+): Promise<T[]> => {
   try {
-    const res = await axiosClient.get(
-      `/Books/MeterWalkCycle?${params.toString()}`,
-    );
+    const res = await axiosClient.get("/Books/MeterWalkCycle", {
+      params,
+    });
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -298,3 +316,233 @@ export const readingPostingMas2Billing = async (
     throw new Error("فشل في جلب بيانات الجدول");
   }
 };
+
+////////////////////CloseRWalk////////////////////////
+export const closeWalkRoute = async (payload: BOOKCYCLEWithStatus) => {
+  const params = new URLSearchParams({
+    STATION_NO: String(payload.STATION_NO),
+    BILLGROUP: payload.BILLGROUP,
+    BOOK_NO: payload.BOOK_NO,
+    WALK_NO: payload.WALK_NO,
+    CYCLE_ID: String(payload.CYCLE_ID),
+
+    IS_COLLECTION: String(payload.IS_COLLECTION),
+    IS_READING: String(payload.IS_READING),
+    ASSIGNED_TO_HH: String(payload.ASSIGNED_TO_HH ?? ""),
+
+    BILNG_DATE: payload.BILNG_DATE ?? "",
+
+    BDB_CDB_C: String(payload.BDB_CDB_C ?? ""),
+    BDB_CDB_DATE_C: payload.BDB_CDB_DATE_C ?? "",
+    BDB_CDB_R: String(payload.BDB_CDB_R ?? ""),
+    BDB_CDB_DATE_R: payload.BDB_CDB_DATE_R ?? "",
+    BDB_CDB_USER_R: payload.BDB_CDB_USER_R,
+
+    CDB_HH_C: String(payload.CDB_HH_C ?? ""),
+    CDB_HH_DATE_C: payload.CDB_HH_DATE_C ?? "",
+    CDB_HH_R: String(payload.CDB_HH_R ?? ""),
+    CDB_HH_DATE_R: payload.CDB_HH_DATE_R ?? "",
+    CDB_HH_USER_R: payload.CDB_HH_USER_R,
+
+    HH_CDB_R: String(payload.HH_CDB_R ?? ""),
+
+    CDB_BDB_C: String(payload.CDB_BDB_C ?? ""),
+    CDB_BDB_DATE_C: payload.CDB_BDB_DATE_C ?? "",
+    CDB_BDB_USER_C: payload.CDB_BDB_USER_C,
+    CDB_BDB_R: String(payload.CDB_BDB_R ?? ""),
+    CDB_BDB_DATE_R: payload.CDB_BDB_DATE_R ?? "",
+    CDB_BDB_USER_R: payload.CDB_BDB_USER_R,
+
+    ISCYCLE_COMPLETED_C: String(payload.ISCYCLE_COMPLETED_C ?? ""),
+    ISCYCLE_COMPLETED_R: String(payload.ISCYCLE_COMPLETED_R ?? ""),
+
+    DEVICEID_R: payload.DEVICEID_R,
+    DEVICEID_C: payload.DEVICEID_C,
+
+    WALK_DESCRIPTION: payload.WALK_DESCRIPTION,
+
+    IS_ALLOWED_C: String(payload.IS_ALLOWED_C ?? ""),
+    IS_ALLOWED_R: String(payload.IS_ALLOWED_R ?? ""),
+    IS_READY_C: String(payload.IS_READY_C ?? ""),
+    IS_READY_R: String(payload.IS_READY_R ?? ""),
+
+    COUNT_R: String(payload.COUNT_R ?? ""),
+    EMPID_C: String(payload.EMPID_C ?? ""),
+    EMPID_R: String(payload.EMPID_R ?? ""),
+
+    ISSUED_COUNT: String(payload.ISSUED_COUNT ?? ""),
+    IS_METER_BOOK: String(payload.IS_METER_BOOK ?? ""),
+
+    ISCLOSED_INDEVICE_C: String(payload.ISCLOSED_INDEVICE_C ?? ""),
+
+    ALLOW_FAWRY: String(payload.ALLOW_FAWRY ?? ""),
+
+    READER: payload.READER,
+    COLLECTOR: payload.COLLECTOR,
+
+    COUNT_CYCLES: String(payload.COUNT_CYCLES ?? ""),
+    ALL_BILL_DATE: String(payload.ALL_BILL_DATE ?? ""),
+
+    IS_ALLOWED_C_FRONT: String(payload.IS_ALLOWED_C_FRONT ?? ""),
+    IS_ALLOWED_R_FRONT: String(payload.IS_ALLOWED_R_FRONT ?? ""),
+
+    uniqueID: String(payload.guid ?? ""),
+    rowIndex: "0",
+    billgroup: payload.BILLGROUP,
+    bookno: payload.BOOK_NO,
+    walkno: payload.WALK_NO,
+    guid: String(payload.guid ?? ""),
+
+    postNegativeFlage: "false",
+    isretry: "false",
+
+    bilng_date: payload.BILNG_DATE ?? "",
+    bilngDate: payload.BILNG_DATE ?? "",
+
+    uflag: "false",
+  });
+
+  try {
+    const res = await axiosClient.get(
+      `/Reading/CloseWalkRoute?${params.toString()}`,
+    );
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "فشل في إغلاق المسار");
+    }
+    throw new Error("فشل في إغلاق المسار");
+  }
+};
+
+///////////////////////CloseCWalk///////////////////////////
+
+export const customerWalkCycle = async <T>(
+  params: Record<string, string>,
+): Promise<T[]> => {
+  try {
+    const res = await axiosClient.get("/Books/CustomerWalkCycle", {
+      params,
+    });
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "فشل في جلب بيانات الجدول",
+      );
+    }
+    throw new Error("فشل في جلب بيانات الجدول");
+  }
+};
+
+export const closeCollectionWalkRoute = async (
+  payload: BOOKCYCLEWithStatus,
+) => {
+  const params = new URLSearchParams({
+    STATION_NO: String(payload.STATION_NO),
+    BILLGROUP: payload.BILLGROUP,
+    BOOK_NO: payload.BOOK_NO,
+    WALK_NO: payload.WALK_NO,
+    CYCLE_ID: String(payload.CYCLE_ID),
+
+    IS_COLLECTION: String(payload.IS_COLLECTION),
+    IS_READING: String(payload.IS_READING),
+    ASSIGNED_TO_HH: String(payload.ASSIGNED_TO_HH ?? ""),
+
+    BDB_CDB_C: String(payload.BDB_CDB_C ?? ""),
+    BDB_CDB_DATE_C: payload.BDB_CDB_DATE_C ?? "",
+    BDB_CDB_R: String(payload.BDB_CDB_R ?? ""),
+    BDB_CDB_DATE_R: payload.BDB_CDB_DATE_R ?? "",
+    BDB_CDB_USER_R: payload.BDB_CDB_USER_R,
+
+    CDB_HH_C: String(payload.CDB_HH_C ?? ""),
+    CDB_HH_DATE_C: payload.CDB_HH_DATE_C ?? "",
+    CDB_HH_R: String(payload.CDB_HH_R ?? ""),
+    CDB_HH_DATE_R: payload.CDB_HH_DATE_R ?? "",
+    CDB_HH_USER_R: payload.CDB_HH_USER_R,
+
+    HH_CDB_R: String(payload.HH_CDB_R ?? ""),
+
+    CDB_BDB_R: String(payload.CDB_BDB_R ?? ""),
+    CDB_BDB_DATE_R: payload.CDB_BDB_DATE_R ?? "",
+    CDB_BDB_USER_R: payload.CDB_BDB_USER_R,
+
+    ISCYCLE_COMPLETED_C: String(payload.ISCYCLE_COMPLETED_C ?? ""),
+    ISCYCLE_COMPLETED_R: String(payload.ISCYCLE_COMPLETED_R ?? ""),
+
+    DEVICEID_R: payload.DEVICEID_R,
+    DEVICEID_C: payload.DEVICEID_C,
+
+    WALK_DESCRIPTION: payload.WALK_DESCRIPTION,
+
+    IS_ALLOWED_C: String(payload.IS_ALLOWED_C ?? ""),
+    IS_ALLOWED_R: String(payload.IS_ALLOWED_R ?? ""),
+    IS_READY_C: String(payload.IS_READY_C ?? ""),
+    IS_READY_R: String(payload.IS_READY_R ?? ""),
+
+    COUNT_R: String(payload.COUNT_R ?? ""),
+    EMPID_C: String(payload.EMPID_C ?? ""),
+    EMPID_R: String(payload.EMPID_R ?? ""),
+
+    ISSUED_COUNT: String(payload.ISSUED_COUNT ?? ""),
+    IS_METER_BOOK: String(payload.IS_METER_BOOK ?? ""),
+
+    ISCLOSED_INDEVICE_C: String(payload.ISCLOSED_INDEVICE_C ?? ""),
+
+    ALLOW_FAWRY: String(payload.ALLOW_FAWRY ?? ""),
+
+    READER: payload.READER,
+    COLLECTOR: payload.COLLECTOR,
+
+    COUNT_CYCLES: String(payload.COUNT_CYCLES ?? ""),
+    ALL_BILL_DATE: String(payload.ALL_BILL_DATE ?? ""),
+
+    IS_ALLOWED_C_FRONT: String(payload.IS_ALLOWED_C_FRONT ?? ""),
+    IS_ALLOWED_R_FRONT: String(payload.IS_ALLOWED_R_FRONT ?? ""),
+
+    uniqueID: String(payload.guid ?? ""),
+    rowIndex: "0",
+    billgroup: payload.BILLGROUP,
+    bookno: payload.BOOK_NO,
+    walkno: payload.WALK_NO,
+    guid: String(payload.guid ?? ""),
+
+    postNegativeFlage: "false",
+    isretry: "false",
+
+    bilng_date: payload.BILNG_DATE ?? "",
+    bilngDate: payload.BILNG_DATE ?? "",
+
+    uflag: "false",
+  });
+
+  try {
+    const res = await axiosClient.get(
+      `/Collection/CloseWalkRoute?${params.toString()}`,
+    );
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "فشل إغلاق المسار");
+    }
+    throw new Error("فشل إغلاق المسار");
+  }
+};
+
+//////////////////PulledHistory//////////////////
+export const getAllStations = async () => {
+  try {
+    const res = await axiosClient.get("/Stations/Get");
+    return res.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "فشل جلب الفروع ");
+    }
+    throw new Error("فشل جلب الفروع");
+  }
+};
+
+///////////////users//////////////////
+export const Getuserprofilee=async()=>{
+  
+}

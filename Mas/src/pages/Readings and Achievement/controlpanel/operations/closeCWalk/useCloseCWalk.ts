@@ -1,16 +1,22 @@
-import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { getCloseRWalkColumns } from "../closeRWalk/columns";
 import { useCallback, useMemo, useState } from "react";
+import { bookCycleUnique, type BILLGROUPS, type FilterValues } from "../../types";
 import {
+  useCloseCollectionWalkRoute,
+  useCustomerWalkCycle,
   useGetBillGroupsApi,
-  useGetMeterWalkCycle,
-  useReadingsBilling2Mas,
+  type BOOKCYCLEWithStatus,
   type ExecutionError,
 } from "../../api/useControlApi";
-import type { BILLGROUPS, FilterValues } from "../../types";
-import { getReadingPulledColumns, type ReadingDataWithStatus } from "./columns";
-import toast from "react-hot-toast";
+import dayjs from "dayjs";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function useReadingsPull() {
+type RowExtraData = {
+  status: "completed" | "failed";
+  AffectedRows?: number;
+};
+export default function useCloseCWalk() {
   const queryClient = useQueryClient();
   const [counters, setCounters] = useState({
     success: 0,
@@ -34,7 +40,7 @@ export default function useReadingsPull() {
 
   const [updatingRowKey, setUpdatingRowKey] = useState<string | null>(null);
   const [rowStatuses, setRowStatuses] = useState<
-    Record<string, "completed" | "failed" | undefined>
+    Record<string, RowExtraData | undefined>
   >({});
 
   const {
@@ -42,22 +48,50 @@ export default function useReadingsPull() {
     isLoading: isGroupsLoading,
     refetch,
   } = useGetBillGroupsApi();
+
   const queryParams = useMemo(() => {
     if (!filters?.groups?.length || !filters.billingDate) return null;
-
+    const billingDateValue = filters.AllBilingDate
+      ? "2025-08-30T21:00:00.000Z"
+      : dayjs(filters.billingDate).format("YYYY-MM-DD");
     return {
+      BILLGROUP: filters.groups.map((g) => g.id).join(","),
+      bilngDate: billingDateValue,
       groups: filters.groups.map((g) => g.id).join(","),
       order: "desc",
-      // billingDate: filters.billingDate,
+      AllBilingDate: String(filters.AllBilingDate ?? false),
     };
   }, [filters]);
 
-  const { data: initialTableData, isLoading: isDataLoading } =
-    useGetMeterWalkCycle<ReadingDataWithStatus>(queryParams);
+  const {
+    data: initialTableData,
+    isLoading: isDataLoading,
+    isFetching,
+  } = useCustomerWalkCycle<BOOKCYCLEWithStatus>(queryParams, {
+    select: (res) => {
+      let rowIndex = 0;
 
-  const { execute: executeBilling, isLoading: isExecuting } =
-    useReadingsBilling2Mas(
-      (bookNo: string) => {
+      return res.filter((item) => {
+        item.uniqueID = bookCycleUnique(item);
+
+        if (
+          item.IS_COLLECTION &&
+          item.ISCYCLE_COMPLETED_C !== 1 &&
+          item.MARKETING !== 1
+        ) {
+          item.rowIndex = rowIndex + 1;
+          rowIndex += 1;
+          return true;
+        }
+
+        return false;
+      });
+    },
+  });
+
+  const { closeWalkRoute: executeClose, isLoading: isExecuting } =
+    useCloseCollectionWalkRoute(
+      (response) => {
         setCounters((prev) => ({
           ...prev,
           success: prev.success + 1,
@@ -65,7 +99,10 @@ export default function useReadingsPull() {
         }));
         setRowStatuses((prev) => ({
           ...prev,
-          [bookNo]: "completed",
+          [response.BookNo]: {
+            status: "completed",
+            AffectedRows: response.AffectedRows,
+          },
         }));
       },
       (error) => {
@@ -75,21 +112,30 @@ export default function useReadingsPull() {
           failed: prev.failed + 1,
           pending: prev.pending - 1,
         }));
-
         setRowStatuses((prev) => ({
           ...prev,
-          [error.BOOK_NO]: "failed",
+          [error.BOOK_NO]: {
+            status: "failed",
+          },
         }));
       },
     );
 
-  const tableData = useMemo<ReadingDataWithStatus[]>(() => {
+  const tableData: BOOKCYCLEWithStatus[] = useMemo(() => {
     if (!initialTableData) return [];
-
-    return initialTableData.map((row) => ({
-      ...row,
-      status: rowStatuses[row.BOOK_NO],
-    }));
+    return initialTableData.map((row) => {
+      const extraData = rowStatuses[row.BOOK_NO];
+      if (!extraData) {
+        return row;
+      }
+      return {
+        ...row,
+        status: extraData.status,
+        ...(extraData.AffectedRows !== undefined && {
+          AffectedRows: extraData.AffectedRows,
+        }),
+      };
+    });
   }, [initialTableData, rowStatuses]);
 
   const selectableRows = useMemo(
@@ -125,7 +171,7 @@ export default function useReadingsPull() {
 
   const columns = useMemo(
     () =>
-      getReadingPulledColumns(
+      getCloseRWalkColumns(
         tableData || [],
         selectedRowKeys,
         setSelectedRowKeys,
@@ -157,9 +203,9 @@ export default function useReadingsPull() {
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);
       try {
-        await executeBilling({
+        await executeClose({
           ...row,
-          bilngDate: filters?.billingDate || "",
+          //   bilngDate: filters?.billingDate || "",
         });
       } catch {
         //
@@ -188,5 +234,6 @@ export default function useReadingsPull() {
     handleExecuteAction,
     tableData,
     bookNoForErrorDialog,
+    isFetching,
   };
 }

@@ -1,4 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  type UseQueryOptions,
+} from "@tanstack/react-query";
 import { useLoginStore } from "../../../../hooks/login/useLoginStore";
 import type {
   BILLGROUPS,
@@ -6,13 +10,19 @@ import type {
   FilterValues,
   Mas2BillingPayload,
   Mas2BillingProcessResponse,
+  STATIONS,
+  // ReadingWalkData,
   STATMDEPOSIT,
   WalkData,
 } from "../types";
 import type { AxiosError } from "axios";
 import {
+  closeCollectionWalkRoute,
+  closeWalkRoute,
   collectionMas2Billing,
+  customerWalkCycle,
   executeBilling2Mas,
+  getAllStations,
   getBillGroups,
   getCustomerWalkCycle,
   getMeterWalkCycle,
@@ -24,7 +34,7 @@ import {
   type ReadingBillingPayload,
 } from "./ControlApis";
 import toast from "react-hot-toast";
-import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns";
+// import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns";
 import type { StatusType } from "../status";
 
 const options = {
@@ -61,19 +71,39 @@ export const useGetCustomerWalkCycleApi = (filters: FilterValues | null) => {
   });
   return query;
 };
-export const useGetMeterWalkCycle = (filters: FilterValues | null) => {
-  const query = useQuery<ReadingDataWithStatus[], AxiosError>({
-    queryKey: ["meterWalkCycle", filters],
+export const useGetMeterWalkCycle = <T>(
+  params: Record<string, string> | null,
+) => {
+  return useQuery<T[], Error>({
+    queryKey: ["meterWalkCycle", JSON.stringify(params)],
     queryFn: () => {
-      if (!filters) return Promise.resolve([]);
-      return getMeterWalkCycle(filters);
+      if (!params) return Promise.resolve([] as T[]);
+      return getMeterWalkCycle(params) as Promise<T[]>;
     },
-    enabled: !!filters,
+    enabled: !!params,
     refetchOnWindowFocus: false,
     retry: false,
   });
-  return query;
 };
+// const query = useQuery<ReadingDataWithStatus[], AxiosError>({
+//   queryKey: ["meterWalkCycle", filters],
+//   queryFn: () => {
+//     const groupsString = filters?.groups?.map((g) => g.id).join(",");
+//     if (!groupsString || !filters?.billingDate) return;
+//     const params = new URLSearchParams({
+//       groups: groupsString,
+//       order: "desc",
+//     });
+
+//     if (!filters) return Promise.resolve([]);
+//     return getMeterWalkCycle(params);
+//   },
+//   enabled: !!filters,
+//   refetchOnWindowFocus: false,
+//   retry: false,
+// });
+// return query;
+
 export interface ExecutionError {
   BOOK_NO: string;
   BILLGROUP: string;
@@ -231,4 +261,107 @@ export const useReadingPostingMas2Billing = (
   });
 
   return { execute: mutateAsync, ...rest };
+};
+
+///////////////////CloseRWalk/////////////////////
+
+export const useCloseWalkRoute = (
+  onNewSuccess: (payload: Mas2BillingProcessResponse) => void,
+  onNewError: (error: ExecutionError) => void,
+) => {
+  const { mutateAsync, ...rest } = useMutation<
+    Mas2BillingProcessResponse,
+    Error,
+    BOOKCYCLEWithStatus
+  >({
+    mutationFn: (payload: BOOKCYCLEWithStatus) => closeWalkRoute(payload),
+
+    onSuccess: (data, variables) => {
+      toast.success(`تم إغلاق المسار: ${variables.BOOK_NO}`);
+      onNewSuccess(data);
+    },
+
+    onError: (error: Error, variables) => {
+      const message = error.message || "فشل إغلاق المسار";
+
+      toast.error(message);
+      onNewError({
+        BILLGROUP: variables.BILLGROUP,
+        WALK_NO: variables.WALK_NO,
+        BOOK_NO: variables.BOOK_NO,
+        message,
+      });
+    },
+  });
+
+  return {
+    closeWalkRoute: mutateAsync,
+    // isLoading,
+    ...rest,
+  };
+};
+
+///////////////////CloseCWalk///////////////////
+export const useCustomerWalkCycle = <T>(
+  params: Record<string, string> | null,
+  options?: Omit<UseQueryOptions<T[], Error>, "queryKey" | "queryFn">,
+) => {
+  return useQuery<T[], Error>({
+    queryKey: ["customerWalkCycle", JSON.stringify(params)],
+    queryFn: () => {
+      if (!params) return Promise.resolve([] as T[]);
+      return customerWalkCycle(params) as Promise<T[]>;
+    },
+    enabled: !!params,
+    refetchOnWindowFocus: false,
+    retry: false,
+    ...options,
+  });
+};
+
+export const useCloseCollectionWalkRoute = (
+  onNewSuccess: (payload: Mas2BillingProcessResponse) => void,
+  onNewError: (error: ExecutionError) => void,
+) => {
+  const { mutateAsync, ...rest } = useMutation<
+    Mas2BillingProcessResponse,
+    Error,
+    BOOKCYCLEWithStatus
+  >({
+    mutationFn: (payload) => closeCollectionWalkRoute(payload),
+
+    onSuccess: (data, variables) => {
+      toast.success(`تم إغلاق المسار: ${variables.BOOK_NO}`);
+      onNewSuccess(data);
+    },
+
+    onError: (error: Error, variables) => {
+      const message = error.message || "فشل إغلاق المسار";
+
+      toast.error(message);
+      onNewError({
+        BILLGROUP: variables.BILLGROUP,
+        WALK_NO: variables.WALK_NO,
+        BOOK_NO: variables.BOOK_NO,
+        message,
+      });
+    },
+  });
+
+  return {
+    closeWalkRoute: mutateAsync,
+    ...rest,
+  };
+};
+
+/////////////PulledHistory//////////////////////
+export const useGetAllStationsApi = () => {
+  const { user } = useLoginStore();
+  const query = useQuery<STATIONS[], Error>({
+    queryKey: ["'getStations'"],
+    queryFn: () => getAllStations(),
+    enabled: user?.isSuccess as boolean,
+    ...options,
+  });
+  return query;
 };

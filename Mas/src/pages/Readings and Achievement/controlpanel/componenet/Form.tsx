@@ -3,13 +3,15 @@ import CachedIcon from "@mui/icons-material/Cached";
 import {
   Box,
   Button,
-  Grid,
+  // Grid,
   Paper,
   TextField,
   Typography,
   Autocomplete,
   CircularProgress,
   Divider,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import {
   CalendarIcon,
@@ -67,13 +69,18 @@ export default function Form({
   completedCounterTitle = "التامة",
   showLoadingBtn,
   showDivider,
+  isAllOption,
+  isAllBillings,
+  handleChageAllBilings,
 }: ControlPanelFormProps) {
-  const { control, handleSubmit } = useForm<FilterValues>({
+  const { control, handleSubmit, watch } = useForm<FilterValues>({
     defaultValues: {
       billingDate: new Date().toISOString().split("T")[0],
       groups: [],
+      AllBilingDate: false,
     },
   });
+  const isAllBillingDateChecked = watch("AllBilingDate");
 
   const onSubmit: SubmitHandler<FilterValues> = (data) => {
     const dataForApi = {
@@ -92,7 +99,7 @@ export default function Form({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mb: 2 }}
+          // sx={{ mb: 2 }}
         >
           {showCompletedCounter ? (
             <CounterCard
@@ -146,9 +153,10 @@ export default function Form({
       {showDivider && <Divider />}
 
       <form onSubmit={handleSubmit(onSubmit)} dir="rtl">
-        <Grid container spacing={2} alignItems="flex-end">
+        {/* <Grid container spacing={2} alignItems="flex-end"> */}
+        <Box display="flex" alignItems="flex-end" gap={3} flexWrap="wrap">
           {showGroups && (
-            <Grid item>
+            <Box>
               <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
                 المجموعات
               </Typography>
@@ -210,10 +218,11 @@ export default function Form({
                   />
                 )}
               />
-            </Grid>
+            </Box>
           )}
-          {showBillingDate && (
-            <Grid item>
+
+          {showBillingDate && !isAllBillingDateChecked && (
+            <Box>
               <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
                 تاريخ الدورة
               </Typography>
@@ -268,21 +277,48 @@ export default function Form({
                   </LocalizationProvider>
                 )}
               />
-            </Grid>
+            </Box>
           )}
+          {isAllOption || isAllBillings ? (
+            <Box>
+              <Controller
+                name="AllBilingDate"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        {...field}
+                        checked={field.value}
+                        size="small"
+                        sx={{ paddingRight: 0 }}
+                      />
+                    }
+                    label="كل الدورات"
+                    onChange={(_e, checked: boolean) => {
+                      field.onChange(checked);
+                      if (handleChageAllBilings) {
+                        handleChageAllBilings(checked);
+                      }
+                    }}
+                  />
+                )}
+              />
+            </Box>
+          ) : null}
           {showLoadingBtn && (
-            <Grid item>
+            <Box sx={{paddingRight:2}}>
               <Button
                 type="submit"
                 variant="outlined"
                 startIcon={<CachedIcon />}
-                sx={{ height: 40, fontWeight: "bold", gap: 1 }}
+                sx={{ height: 35, fontWeight: "bold", gap: 1 }}
               >
                 تحميل
               </Button>
-            </Grid>
+            </Box>
           )}
-        </Grid>
+        </Box>
       </form>
     </Paper>
   );

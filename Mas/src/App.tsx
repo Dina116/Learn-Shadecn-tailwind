@@ -35,6 +35,9 @@ import CollectedPulledPerGroup from "./pages/Readings and Achievement/controlpan
 import ReadingsPulled from "./pages/Readings and Achievement/controlpanel/operations/readingsPulled";
 import CollectionPosting from "./pages/Readings and Achievement/controlpanel/operations/collectionPosting";
 import ReadingsPosting from "./pages/Readings and Achievement/controlpanel/operations/readingPosting";
+import CloseRWalk from "./pages/Readings and Achievement/controlpanel/operations/closeRWalk";
+import CloseCWalk from "./pages/Readings and Achievement/controlpanel/operations/closeCWalk";
+import PulledHistory from "./pages/Readings and Achievement/controlpanel/operations/pulledHistory";
 
 const queryClient = new QueryClient();
 function App() {
@@ -125,6 +128,15 @@ function App() {
               path="/readings/controlpanel/readingsPosting"
               element={<ReadingsPosting />}
             />
+            <Route
+              path="/readings/controlpanel/closeRWalk"
+              element={<CloseRWalk />}
+            />
+            <Route
+              path="/readings/controlpanel/closeCWalk"
+              element={<CloseCWalk />}
+            />
+            <Route path="/readings/controlpanel/pulledHistory" element={<PulledHistory/>}/>
           </Route>
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />

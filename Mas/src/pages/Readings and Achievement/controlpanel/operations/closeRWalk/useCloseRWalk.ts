@@ -1,61 +1,77 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import {
+  useCloseWalkRoute,
   useGetBillGroupsApi,
-  useGetReadingsMeterWalkCycleApi,
-  useReadingPostingMas2Billing,
+  useGetMeterWalkCycle,
   type BOOKCYCLEWithStatus,
   type ExecutionError,
 } from "../../api/useControlApi";
 import type { BILLGROUPS, FilterValues } from "../../types";
 import toast from "react-hot-toast";
-import { getReadingsPostingColumns } from "./columns";
-import type { Flages } from "./PostedFlages";
+import dayjs from "dayjs";
+import { getCloseRWalkColumns } from "./columns";
 
 type RowExtraData = {
   status: "completed" | "failed";
   AffectedRows?: number;
 };
-
-export default function useReadingsPosting() {
+export default function useCloseRWalk() {
+  const queryClient = useQueryClient();
   const [counters, setCounters] = useState({
     success: 0,
     failed: 0,
     pending: 0,
   });
-  const [flagesDialogOpen, setFlagesDialogOpen] = useState(false);
-  const [selectedFlages, setSelectedFlages] = useState<Flages | null>(null);
   const [executionErrors, setExecutionErrors] = useState<ExecutionError[]>([]);
   const [bookNoForErrorDialog, setBookNoForErrorDialog] = useState<
     string | null
   >(null);
 
+  const errorToShow = useMemo(() => {
+    if (!bookNoForErrorDialog) return [];
+    const foundError = executionErrors.find(
+      (err) => err.BOOK_NO === bookNoForErrorDialog,
+    );
+    return foundError ? [foundError] : [];
+  }, [bookNoForErrorDialog, executionErrors]);
+  const [filters, setFilters] = useState<FilterValues | null>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+
   const [updatingRowKey, setUpdatingRowKey] = useState<string | null>(null);
   const [rowStatuses, setRowStatuses] = useState<
     Record<string, RowExtraData | undefined>
   >({});
-  const [filters, setFilters] = useState<FilterValues | null>(null);
 
   const {
     data: billGroupsData,
     isLoading: isGroupsLoading,
     refetch,
   } = useGetBillGroupsApi();
+  const queryParams = useMemo(() => {
+    if (!filters?.groups?.length || !filters.billingDate) return null;
+
+    return {
+      BILLGROUP: filters.groups.map((g) => g.id).join(","),
+      bilngDate: dayjs(filters.billingDate).format("YYYY-MM-DD"),
+      groups: filters.groups.map((g) => g.id).join(","),
+      order: "desc",
+    };
+  }, [filters]);
   const {
     data: initialTableData,
     isLoading: isDataLoading,
     isFetching,
-  } = useGetReadingsMeterWalkCycleApi(filters);
+  } = useGetMeterWalkCycle<BOOKCYCLEWithStatus>(queryParams);
 
-  const { execute: postMas2Billing, isLoading: isExecuting } =
-    useReadingPostingMas2Billing(
+  const { closeWalkRoute: executeClose, isLoading: isExecuting } =
+    useCloseWalkRoute(
       (response) => {
         setCounters((prev) => ({
           ...prev,
           success: prev.success + 1,
           pending: prev.pending - 1,
         }));
-
         setRowStatuses((prev) => ({
           ...prev,
           [response.BookNo]: {
@@ -71,7 +87,6 @@ export default function useReadingsPosting() {
           failed: prev.failed + 1,
           pending: prev.pending - 1,
         }));
-
         setRowStatuses((prev) => ({
           ...prev,
           [error.BOOK_NO]: {
@@ -81,49 +96,13 @@ export default function useReadingsPosting() {
       },
     );
 
-  const handleLoadData = useCallback((values: FilterValues) => {
-    console.log("تم تحديث الفلاتر:", values);
-    setFilters(values);
-  }, []);
-
-  const handleShowRowError = useCallback((book_No: string) => {
-    setBookNoForErrorDialog(book_No);
-  }, []);
-
-  const handleUpdateRow = useCallback((book_No: string) => {
-    console.log("سيتم تحديث الصف:", book_No);
-    setUpdatingRowKey(book_No);
-  }, []);
-
-  const handleCloseErrorDialog = () => {
-    setBookNoForErrorDialog(null);
-  };
-
-  const errorToShow = useMemo(() => {
-    if (!bookNoForErrorDialog) return [];
-
-    const foundError = executionErrors.find(
-      (err) => err.BOOK_NO === bookNoForErrorDialog,
-    );
-    return foundError ? [foundError] : [];
-  }, [bookNoForErrorDialog, executionErrors]);
-
-  const formattedGroups = useMemo(() => {
-    if (!billGroupsData) return [];
-    return billGroupsData.map((group: BILLGROUPS) => ({
-      id: group.GROUP_ID,
-      name: `${group.GROUP_ID} - ${group.DESCRIPTION}`,
-    }));
-  }, [billGroupsData]);
   const tableData: BOOKCYCLEWithStatus[] = useMemo(() => {
     if (!initialTableData) return [];
-
     return initialTableData.map((row) => {
       const extraData = rowStatuses[row.BOOK_NO];
       if (!extraData) {
         return row;
       }
-
       return {
         ...row,
         status: extraData.status,
@@ -138,24 +117,52 @@ export default function useReadingsPosting() {
     () => tableData.filter((row) => row.status !== "completed"),
     [tableData],
   );
-  const columns = useMemo(() => {
-    console.log("🎨 USEMEMO (columns): يُعاد حسابه.");
-    return getReadingsPostingColumns(
-      tableData || [],
+
+  const handleLoadData = useCallback((values: FilterValues) => {
+    console.log("تم تحديث الفلاتر:", values);
+    setFilters(values);
+  }, []);
+
+  const handleShowRowError = useCallback((bookNo: string) => {
+    setBookNoForErrorDialog(bookNo);
+  }, []);
+
+  const handleUpdateRow = useCallback((bookNo: string) => {
+    console.log("سيتم تحديث الصف:", bookNo);
+    setUpdatingRowKey(bookNo);
+  }, []);
+
+  const handleCloseErrorDialog = () => {
+    setBookNoForErrorDialog(null);
+  };
+
+  const formattedGroups = useMemo(() => {
+    if (!billGroupsData) return [];
+    return billGroupsData.map((group: BILLGROUPS) => ({
+      id: group.GROUP_ID,
+      name: `${group.GROUP_ID} - ${group.DESCRIPTION}`,
+    }));
+  }, [billGroupsData]);
+
+  const columns = useMemo(
+    () =>
+      getCloseRWalkColumns(
+        tableData || [],
+        selectedRowKeys,
+        setSelectedRowKeys,
+        handleUpdateRow,
+        handleShowRowError,
+        selectableRows,
+      ),
+    [
+      tableData,
       selectedRowKeys,
-      setSelectedRowKeys,
       handleUpdateRow,
       handleShowRowError,
       selectableRows,
-    );
-  }, [
-    tableData,
-    selectedRowKeys,
-    handleUpdateRow,
-    handleShowRowError,
-    selectableRows,
-  ]);
-  const handleExecuteAction = () => {
+    ],
+  );
+  const handleExecuteAction = async () => {
     const rowsToExecute = selectableRows.filter((row) =>
       selectedRowKeys.includes(row.BOOK_NO),
     );
@@ -164,69 +171,44 @@ export default function useReadingsPosting() {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
-    setFlagesDialogOpen(true);
-  };
-  const handleSubmitFlages = async (flages: Flages) => {
-    setSelectedFlages(flages);
-    setFlagesDialogOpen(false);
-
-    const rowsToExecute = selectableRows.filter((row: { BOOK_NO: string }) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
 
     setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
     setExecutionErrors([]);
-    setRowStatuses({});
 
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);
       try {
-        await postMas2Billing({
-          STATION_NO: row.STATION_NO,
-          BILLGROUP: row.BILLGROUP,
-          BOOK_NO: row.BOOK_NO,
-          WALK_NO: row.WALK_NO,
-          CYCLE_ID: row.CYCLE_ID,
-          BILNG_DATE: row.BILNG_DATE ?? "",
-
-          flags: {
-            ...row,
-            COUNT_CYCLES: row.COUNT_CYCLES ?? null,
-            ALL_BILL_DATE: row.ALL_BILL_DATE ?? null,
-
-            IS_RETRY: flages.isretry ?? false,
-            UFLAG: flages.uflag ?? false,
-            postNegativeFlage: flages.consumpFlages ?? 0,
-          },
+        await executeClose({
+          ...row,
+          //   bilngDate: filters?.billingDate || "",
         });
-      } catch (error) {
-        console.error(`فشل الطلب للصف ${row.BOOK_NO}:`, error);
+      } catch {
+        //
       }
     }
     setUpdatingRowKey(null);
+    setSelectedRowKeys([]);
+
+    toast.loading("جاري تحديث الجدول...");
+    await queryClient.invalidateQueries(["customerWalkCycle"]);
+    toast.dismiss();
   };
 
   return {
     counters,
+    errorToShow,
     updatingRowKey,
     isGroupsLoading,
-    isDataLoading,
     refetch,
+    isDataLoading,
     isExecuting,
     handleLoadData,
     handleCloseErrorDialog,
-    errorToShow,
     formattedGroups,
     columns,
     handleExecuteAction,
-    initialTableData,
-    bookNoForErrorDialog,
     tableData,
-    flagesDialogOpen,
-    selectedFlages,
-    setSelectedFlages,
-    setFlagesDialogOpen,
-    handleSubmitFlages,
+    bookNoForErrorDialog,
     isFetching,
   };
 }
