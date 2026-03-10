@@ -1,0 +1,1183 @@
+syntax = "proto2";
+option go_package = "../pb;pb";
+package GoAuth;
+import "date.proto";
+
+service login {
+
+  // SignIn
+
+  rpc SignIn(LoginRequest) returns (LoginResponse) {}
+  rpc SignInWithProfile(LoginRequest) returns (SignInResponse) {}
+  rpc LinkeWith(RELATED_ACOUNTS) returns (RegisterResponse) {}
+  rpc AdminSignIn(AdminSignInRequest) returns (LoginResponse) {}
+  rpc SignInWith(SignInWithRequest) returns (LoginResponse) {}
+
+  // Register portal
+
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc validatecode(ValRequest) returns (RegisterResponse) {}
+
+  // ForgetPass portal
+
+  rpc ForgetPass(ForgetRequest) returns (RegisterResponse) {}
+
+  // backend
+
+  rpc GetCrmAppSignInToken(Emptymessage) returns (LoginResponse) {}
+  rpc GetNotifSignInToken(Emptymessage) returns (LoginResponse) {}
+
+  // lookups
+
+  rpc GetAllSites(Emptymessage) returns (GetAllSitesResponse) {}
+  rpc GetCounts(GetCountsRequest) returns (GetCountsResponse) {}
+
+  rpc GetLicence(Emptymessage) returns (licenceResponse) {}
+}
+
+service GoAuth {
+
+  // User
+
+  rpc GetUserProfile(Emptymessage) returns (GetUserProfileResponse) {}
+  rpc GetAllUser(Emptymessage) returns (GetAllUserResponse) {}
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterResponse) {}
+  rpc UpdateUser(RegisterUserRequest) returns (RegisterResponse) {}
+  rpc UpdateUserpass(PassUserRequest) returns (RegisterResponse) {}
+  rpc GetUserbyid(GetUserRequest) returns (GetUserProfileResponse) {}
+  rpc GetUserbyUserName(GetUserByNameRequest) returns (GetUserProfileResponse) {
+  }
+  rpc DeleteUser(USERS) returns (RegisterResponse) {}
+  rpc ResetPass(ResetPassRequest) returns (RegisterResponse) {}
+  rpc GetUsetAccessContraint(Emptymessage) returns (access_contraint_response) {
+  }
+  rpc GetUserByCashier(CashierRequest) returns (GetUserProfileResponse) {}
+
+  // clint
+
+  rpc AddRelatedCustkey(AddRelatedCustkeyRequest) returns (RegisterResponse) {}
+  rpc UpdateProfile(RegisterRequest) returns (RegisterResponse) {}
+  rpc GetClientbyid(GetClientRequest) returns (CLIENTS) {}
+  rpc Activation(ActivationRequest) returns (RegisterResponse) {}
+  rpc ResendActivation(Emptymessage) returns (RegisterResponse) {}
+  rpc GetClientProfile(Emptymessage) returns (CLIENTS) {}
+  rpc GetClientbyCustkey(CustRequest) returns (CLIENTS) {}
+  rpc GetAllData(AllDataRequest) returns (AllDataResponse) {}
+  rpc RefreshToken(Emptymessage) returns (RegisterResponse) {}
+  rpc RefreshTokenWithNewSt(Min_USER_STATIONS) returns (RegisterResponse) {}
+  rpc MIcroUpdateClient(MicroUpdateRequest) returns (RegisterResponse) {}
+  rpc GetClientSCounts(Emptymessage) returns (GetlientSCountsResponse) {}
+
+  // admin
+
+  rpc AdminRegister(AdminRegisterRequest) returns (RegisterResponse) {}
+  rpc AdminUpdateProfile(UpdateProfileRequest) returns (RegisterResponse) {}
+  rpc UpdateAdminpass(PassUserRequest) returns (RegisterResponse) {}
+  rpc ResetAdminPass(ResetAdminPassRequest) returns (RegisterResponse) {}
+  rpc AdminGetProfile(Emptymessage) returns (ADMINS) {}
+  rpc GetAdminbyid(GetAdminRequest) returns (ADMINS) {}
+  rpc GetAllAdmin(Emptymessage) returns (GetAllADMINSResponse) {}
+  rpc DeleteAdmin(GetAdminRequest) returns (RegisterResponse) {}
+  rpc AddTesterByAdmin(GetClientRequest) returns (RegisterResponse) {}
+
+  // users management
+  // PROFILES
+
+  rpc EditProfile(AddProfilesRequest) returns (ProfileResponse) {}
+  rpc GetAllProfiles(Emptymessage) returns (All_PROFILES) {}
+  rpc GetProfile(ProfileId) returns (All_PROFILES) {}
+  rpc DeleteProfile(ProfileId) returns (ProfileResponse) {}
+  rpc DeleteLinkedProfile(DeleteProfileReq) returns (ProfileResponse) {}
+  rpc UserToProfile(UserToProfileRq) returns (ProfileResponse) {}
+  rpc GetUsersByProfile(ProfileId) returns (UserArry) {}
+  rpc GetUsersProfiles(GetUserRequest) returns (All_PROFILES) {}
+
+  // TAX CLIENT IDS
+  rpc GetAllTaxClientIds(Emptymessage) returns (ALL_TAX_CLIENT_IDS) {}
+  rpc EditTaxClientId(TAX_CLIENT_ID_REQ) returns (MessageResponse) {}
+  rpc DeleteTaxClientId(CLIENT_ID_REQ) returns (MessageResponse) {}
+
+  // USER DEPARTMENTS
+  rpc GetAllDepartments(GETDEPARTMENTSFILTER) returns (AllDEPARTMENTS) {}
+  rpc GetUserDepartments(GETUSERDEPARTMENTSREQ) returns (USERDEPARTMENTSRES) {}
+  rpc EditUserDepartments(USERDEPARTMENTSMESG) returns (MessageResponse) {}
+  rpc DeleteUserDepartments(DEPARTMENTIID) returns (MessageResponse) {}
+}
+
+// login service
+
+message LoginRequest {
+  required string Username = 1;
+  required string Password = 2;
+  optional string DEVICE_TOKEN = 3;
+  optional bool ISPORTAL = 4 [ default = false ];
+}
+
+message LoginResponse {
+  optional string Token = 1;
+  optional bool Succssed = 2;
+  optional bool Activated = 3;
+  optional string Name = 4;
+  optional string Second_Name = 5;
+  optional string Third_Name = 6;
+  optional bool WITH_CUSTKEY = 7;
+  optional central.types.MasDateTime ExpiresAt = 8;
+  optional bool IS_ADMIN = 9;
+}
+
+message SignInResponse {
+  optional string Token = 1;
+  optional bool Succssed = 2;
+  optional string Name = 3;
+  optional central.types.MasDateTime ExpiresAt = 4;
+  optional USERS USER = 5;
+  optional string SITE_NAME = 6;
+  optional string STATION_NAME = 7;
+}
+
+message RegisterResponse {
+  optional string Message = 1;
+  optional int64 SaveId = 2;
+  optional string Token = 3;
+}
+
+message SignInWithRequest {
+  required Applications APPLICATION_TYPE = 1;
+  required int64 APPLICATION_ID = 2;
+  optional string USER_NAME = 4;
+  optional string EMAIL = 5;
+  optional string MOBILE_NO = 6;
+}
+
+message RegisterRequest {
+  optional int32 SITE_CODE = 1;
+  repeated RELATED_CUSTKEY RELATED_CUSTKEY = 2;
+  optional string PASSWORD = 3;
+  optional string EMAIL = 4;
+  required string MOBILE_NO = 5;
+  required string NAME = 6;
+  required string DEVICE_TOKEN = 7;
+  optional string SECOND_NAME = 8;
+  optional string THIRD_NAME = 9;
+  optional string NID = 10;
+  optional string ADDRESS = 11;
+}
+
+message ForgetRequest {
+  optional int32 SITE_CODE = 1;
+  optional string EMAIL = 2;
+  optional string MOBILE_NO = 3;
+  optional string DEVICE_TOKEN = 4;
+}
+
+message ValRequest {
+  required string ResetPassCode = 1;
+  optional string MOBILE_NO = 2;
+  required string NewPassword = 3;
+  optional string EMAIL = 4;
+}
+
+message Emptymessage {
+  optional string MODULE_ID = 1;
+  optional string VERSION = 2;
+  optional bool   IS_HAND_HELD = 3;
+}
+
+message AdminSignInRequest {
+  optional string USER_NAME = 1;
+  optional string PASSWORD = 2;
+  optional string DEVICE_TOKEN = 3;
+}
+
+message GetAllSitesResponse { repeated SITES SITES = 1; }
+
+message SITES {
+  optional int32 CODE = 1;
+  optional string DESCRIBE = 2;
+  optional bool IS_ACTIVE = 3;
+  optional int64 SEQ = 4;
+  optional string BILLING_IP = 5;
+  optional string BILLING_PASSWORD = 6;
+  optional string BILLING_PORT_NO = 7;
+  optional string BILLING_USERNAME = 8;
+  optional string SITE_IMAGE = 10; // @gotags: gorm:"type:nvarchar(max)"
+  optional bool HAS_MAS = 11;
+}
+
+message licenceResponse { optional string licence = 1; }
+
+//-----------------------
+
+message access_contraint_response { optional string AccessContraint = 1; }
+
+message CashierRequest { required int64 CASHIER_ID = 1; }
+
+message GetlientSCountsResponse {
+  optional int64 total = 1;
+  optional int64 total_Day = 2;
+  optional int64 total_Week = 3;
+  optional int64 total_MOUNTH = 4;
+  optional int64 total_YEAR = 5;
+}
+
+message ProfileResponse {
+  optional string Message = 1;
+  optional bool Done = 2;
+  optional int64 Profile_ID = 3;
+}
+
+message MessageResponse {
+  optional string Message = 1;
+  optional bool Done = 2;
+  optional int64 ID = 3;
+}
+
+message CustRequest {
+  required string CUSTKEY = 1;
+  optional int32 SITE_CODE = 2;
+}
+
+message AddRelatedCustkeyRequest {
+  required int64 CLIENT_ID = 1;
+  required string CUSTKEY = 2;
+  optional string CUSTNAME = 3;
+  required int32 SITE_CODE = 4;
+  optional string BILLGROUP = 5;
+  optional string BOOK_NO = 6;
+  required int64 STATION_NO = 7;
+  optional string ADDRESS = 8;
+}
+
+message GetCountsRequest { required Counts_type type = 1; }
+
+message GetCountsResponse {
+  optional int64 total_users = 1;
+  optional int64 total_clients = 2;
+  optional int64 total_admins = 3;
+}
+
+message AdminRegisterRequest {
+  optional int32 SITE_CODE = 1;
+  optional string PASSWORD = 2;
+  optional string EMAIL = 3;
+  required string USER_NAME = 4;
+  required string NAME = 5;
+  optional string DEVICE_TOKEN = 6;
+  optional string NID = 7;
+  optional string ADDRESS = 8;
+  optional string MOBILE_NO = 9;
+  optional bool SYS_ADMIN = 10;
+  optional bool READINGS = 11;
+  optional bool NEWS = 12;
+  optional bool SUPPORT = 13;
+  optional bool USERS = 14;
+  optional bool SERVESES = 15;
+  optional bool CTG_SERVESS = 16;
+  optional bool REPORTS = 17;
+}
+
+message GetAllADMINSResponse { repeated ADMINS ADMINS = 1; }
+
+message UpdateProfileRequest {
+  optional int32 SITE_CODE = 1;
+  optional string EMAIL = 2;
+  optional string MOBILE_NO = 3;
+  required string USER_NAME = 4;
+  optional string DEVICE_TOKEN = 5;
+  optional string ADMIN_NAME = 6;
+  optional string NID = 7;
+  optional string ADDRESS = 8;
+  optional bool SYS_ADMIN = 10;
+  optional bool READINGS = 11;
+  optional bool NEWS = 12;
+  optional bool SUPPORT = 13;
+  optional bool USERS = 14;
+  optional bool SERVESES = 15;
+  optional bool CTG_SERVESS = 16;
+  optional bool REPORTS = 17;
+}
+
+message ResetAdminPassRequest { required int64 ADMIN_ID = 1; }
+
+message ResetPassRequest {
+  required string MOBILE_NO = 1;
+  required string NewPassword = 2;
+}
+
+message GetAdminRequest { required int64 ID = 1; }
+
+message GetAllUserResponse { repeated MUSERS users = 1; }
+
+message MUSERS {
+  required int64 ID = 1;
+  optional int64 STATION_NO = 2;
+  optional string FULL_NAME = 3;
+  optional string USER_NAME = 4;
+  optional string NID = 5;
+  optional string EMAIL = 6;
+  optional int32 SITE_CODE = 7;
+  optional string MOBILE_NO = 8;
+  optional bool SUPERUSER = 9;
+  optional bool SYS_ADMIN = 10;
+  optional bool IS_CASHIER = 11;
+  repeated USER_STATIONS USER_STATIONS = 12;
+  repeated ProfileId PROFILES_ID = 13;
+  optional bool IsActive = 14;
+  optional string USER_PROFILE_IMAGE = 15;
+  optional int64  CASHIER_ID = 16;
+}
+
+message MicroUpdateRequest {
+  required int64 clientid = 1;
+  repeated RELATED_CUSTKEY RELATED_CUSTKEY = 2;
+}
+
+message AllDataRequest {
+  optional int32 SITE_CODE = 1;
+  optional int64 STATION_NO = 2;
+  optional string BILLGROUP = 3;
+  optional string BOOK_NO = 4;
+  required Dir Direction = 5;
+}
+
+message AllDataResponse {
+  repeated CLIENTS CL = 1;
+  repeated MUSERS US = 2;
+}
+
+message ActivationRequest {
+  required string ActivationPassCode = 1;
+  optional VTYPE VERIFICATION_TYPE = 2;
+}
+
+message GetUserProfileResponse {
+  optional USERS USER = 1;
+  // repeated AUTH_PROFILES PROFILE = 2;
+  optional string SITE_NAME = 3;
+  optional string STATION_NAME = 4;
+}
+
+message GetUserRequest { required int64 id = 1; }
+
+message GetUserByNameRequest { required string USER_NAME = 1; }
+
+message GetClientRequest { required int64 id = 1; }
+
+message USERSS { repeated USERS uSERS = 1; }
+
+message PassUserRequest {
+  optional int32 SITE_CODE = 1;
+  required string NEWPASSWORD = 2;
+  required string PASSWORD = 3;
+  optional string USER_NAME = 4;
+}
+
+message Add_DEPARTMENT_REQ {
+  required string SITE_ID = 2;
+  required string NAME = 4;
+  required string DESCRIPTION = 5;
+  optional string DESCRIPTION_EN = 6;
+}
+
+message DEPARTMENT_REQ { required int64 User_ID = 1; }
+
+message USERS_DEPARTMENTS {
+  required int64 DEPARTMENT_ID =1;                      // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string NAME = 4;   // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 USER_ID = 5; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional bool DELETED = 8;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+}
+
+message DEPARTMENTS {
+  required int64 DEPARTMENT_ID = 1;
+  required string SITE_ID = 2; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string NAME = 4;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string DESCRIPTION = 6;     // @gotags: gorm:"size:255"
+  repeated int64 DEPARTEMNT_USERS = 5; //@gotags: gorm:"-"
+  optional string DESCRIPTION_EN = 7;  // @gotags: gorm:"size:255"
+  optional bool DELETED = 8; // @gotags: gorm:"primaryKey;autoIncrement:false"
+}
+
+message USER_DEPARTMENTS { repeated DEPARTMENTS DEPARTMENTS = 1; }
+
+message AllDEPARTMENTS { repeated DEPARTMENTS DEPARTMENTS = 1; }
+
+message GETDEPARTMENTSFILTER { optional bool IS_DELETED = 1; }
+
+message GETUSERDEPARTMENTSREQ { required int64 USER_ID = 1; }
+
+message USERDEPARTMENTSMESG { required DEPARTMENTS DEPARTMENTS = 1; }
+
+// message DEPARTMENTS {
+//   optional string SITE_ID = 1;
+//   optional int64 DEPARTMENT_ID = 2;
+// }
+
+message DEPARTMENTIID { required int64 DEPARTMENT_ID = 1; }
+
+message USERDEPARTMENTSRES { required USER_DEPARTMENTS USER_DEPARTMENTS = 1; }
+
+message USERS_STATIONS {
+  required int64 USER_ID = 1;
+  optional int64 MAIN_STATION_NO = 2;
+  optional string STATION_NAME = 3; // @gotags: gorm:"-"
+  optional int32 SITE_CODE = 4;
+  optional string SITE_NAME = 5; // @gotags: gorm:"-"
+                                 // repeated USER_STATIONS USER_STATIONS =6;
+}
+
+message USER_STATIONS {
+  required int64 USER_ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 ORG_ID = 2;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 SITE_CODE =3; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 SECTOR_ID =4; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 STATION_ID =5; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional bool IS_MAIN = 6;
+  optional bool DELETED = 7;
+  optional central.types.MasDateTime STAMP_DATE = 8;
+  optional string STAMP_USER = 9; //@gotags: gorm:"size:100"
+  optional string SITE_NAME = 10;
+  optional string STATION_NAME = 11;
+  // repeated TAX_CLIENT_IDS            TAX_CLIENT_IDS = 137;   //@gotags:
+  // gorm:"-"
+}
+
+message ALL_TAX_CLIENT_IDS { repeated TAX_CLIENT_IDS TAX_CLIENT_IDS = 1; }
+
+message TAX_CLIENT_ID_REQ { required TAX_CLIENT_IDS TAX_CLIENT_IDS = 1; }
+
+message CLIENT_ID_REQ { required int64 ROW_ID = 1; }
+
+message TAX_CLIENT_IDS {
+  required int64 ROW_ID = 1;
+  required int64 SITE_ID = 2;    // @gotags: gorm:"primaryKey"
+  required string CLIENT_ID = 3; // @gotags: gorm:"primaryKey;type:nvarchar(50)"
+  required string BRANCH_ID = 4; // @gotags: gorm:"primaryKey;type:nvarchar(50)"
+  optional bool IS_TEST = 5;     // @gotags: gorm:"primaryKey"
+  optional bool DELETED = 6;     // @gotags: gorm:"primaryKey"
+}
+
+message Min_USER_STATIONS {
+  required int64 ORG_ID = 2; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 SITE_CODE = 3; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 SECTOR_ID = 4; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 STATION_ID = 5; // @gotags: gorm:"primaryKey;autoIncrement:false"
+}
+
+message RegisterUserRequest {
+  required USERS USERS = 1;
+  optional Getuserresponse Getuserresponse = 2;
+  // optional All_PROFILES AllProfiles = 3;
+}
+
+message Getuserresponse {
+  repeated ApplicationTypeRole application_type_roles = 1;
+  optional int32 UserID = 2;
+  optional int64 ProfileId = 3;
+}
+
+message ApplicationTypeRole {
+  repeated ApplicationRoleState application_roles = 1;
+  optional int32 ApplicationTypeID = 2;
+  optional string ApplicationTypeName = 3;
+}
+
+message ApplicationRoleState {
+  repeated ApplicationRole state_roles = 1;
+  optional int32 StateID = 2;
+  optional string StateName = 3;
+  optional int32 ApplicationTypeID = 4;
+}
+
+message ApplicationRole {
+  optional int32 ActionID = 1;
+  optional string ActionName = 2;
+  optional bool ActionDone = 3;
+  optional ACTIONVIEW ActionView = 4;
+  optional int32 ActionDuration = 5;
+  optional DurationType Action_Duration_Type = 6;
+  optional int32 StateID = 7;
+}
+
+// DBs
+
+message RELATED_ACOUNTS {
+  required int64 CLIENT_ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required Applications APPLICATION_TYPE = 2; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 APPLICATION_ID = 3; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string USER_NAME = 4; //@gotags: gorm:"size:250"
+  optional string EMAIL = 5;     //@gotags: gorm:"size:250"
+  optional string MOBILE_NO = 6; //@gotags: gorm:"size:250"
+  optional string PHOTO = 7;
+}
+
+message ADMINS {
+  required int64 ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int32 SITE_CODE = 2;  //@gotags: gorm:"size:20"
+  optional string EMAIL = 3;     //@gotags: gorm:"size:100"
+  optional string MOBILE_NO = 4; //@gotags: gorm:"size:100"
+  required string USER_NAME = 5; //@gotags: gorm:"primaryKey;size:255"
+  optional string PASSWORD = 6;  //@gotags: gorm:"size:255"
+  optional central.types.MasDateTime STAMP_DATE = 7;
+  optional string STAMP_USER = 8; //@gotags: gorm:"size:100"
+  optional bool IS_ACTIVE = 9;
+  optional string DEVICE_TOKEN = 10;  //@gotags: gorm:"size:255"
+  optional string ADMIN_NAME = 11;    //@gotags: gorm:"size:255"
+  optional string NID = 12;           //@gotags: gorm:"size:255"
+  optional string ADDRESS = 13;       //@gotags: gorm:"size:255"
+  optional string LAST_LOGIN_IP = 14; //@gotags: gorm:"size:200"
+  optional bool SYS_ADMIN = 15;
+  optional bool READINGS = 16;
+  optional bool NEWS = 17;
+  optional bool SUPPORT = 18;
+  optional bool USERS = 19;
+  optional bool SERVICES = 20;
+  optional bool CTG_SERVICES = 21;
+  optional bool REPORTS = 22;
+}
+
+message CLIENTS {
+  required int64 ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int32 SITE_CODE = 2;  //@gotags: gorm:"size:20"
+  optional string EMAIL = 3;     //@gotags: gorm:"size:100"
+  optional string MOBILE_NO = 4; //@gotags: gorm:"size:100"
+  optional string PASSWORD = 5;  //@gotags: gorm:"size:255"
+  optional central.types.MasDateTime STAMP_DATE = 6;
+  optional bool IS_ACTIVE = 7;
+  optional string ACTIVATION_CODE = 8;
+  optional string DEVICE_TOKEN = 9; //@gotags: gorm:"size:255"
+  optional string FIRST_NAME = 10;  //@gotags: gorm:"size:255"
+  optional string SECOND_NAME = 11; //@gotags: gorm:"size:255"
+  optional string THIRD_NAME = 12;  //@gotags: gorm:"size:255"
+  optional bool IS_BLOCKED = 13;
+  optional int32 COUNT_SEND_ACTIVATION = 14;
+  optional string NID = 15; //@gotags: gorm:"size:255"
+  optional string RESET_CODE = 16;
+  optional central.types.MasDateTime EXPIRESAT = 17;
+  optional string ADDRESS = 18;                  //@gotags: gorm:"size:255"
+  optional string LAST_LOGIN_IP = 19;            //@gotags: gorm:"size:200"
+  repeated RELATED_CUSTKEY RELATED_CUSTKEY = 20; //@gotags: gorm:"-"
+  optional bool IS_TESTER = 21;
+  optional string EMAIL_VCODE = 22;
+  optional bool IS_EMAIL_VERIFIED = 23;
+  optional string UN_V_EMAIL = 24; //@gotags: gorm:"size:255"
+  optional int32 CUL = 25;
+  optional central.types.MasDateTime CUL_DATE = 26;
+  optional int32 CULA = 27;
+  optional ENCRYPTION IS_ENC = 28;
+}
+
+message RELATED_CUSTKEY {
+  required int64 CLIENT_ID = 1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  required string CUSTKEY = 2;  //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string CUSTNAME = 3; //@gotags: gorm:"size:200"
+  required int32 SITE_CODE = 4; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string BILLGROUP = 5; //@gotags: gorm:"size:20"
+  optional string BOOK_NO = 6;   //@gotags: gorm:"size:20"
+  optional int64 STATION_NO = 7;
+  optional string ADDRESS = 8; //@gotags: gorm:"size:255"
+  optional bool IS_DEFAULT = 9;
+}
+
+message USERS {
+  required int64 ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64 STATION_NO = 2;
+  optional string FULL_NAME = 3; //@gotags: gorm:"size:255"
+  optional string USER_NAME = 4; //@gotags: gorm:"size:255"
+  optional string PASSWORD = 5;  //@gotags: gorm:"size:255"
+  optional bool SYS_ADMIN = 6;
+  optional bool READING_ADMIN = 7;
+  optional bool COLLECTION_ADMIN = 8;
+  optional bool REPORING_ADMIN = 9;
+  optional bool HH_MONITOR = 10;
+  optional bool USER_MANAGEMENT = 11;
+  optional bool DATA_ADMIN = 12;
+  optional bool SYSTEM_MNTINANCE = 13;
+  optional string NID = 14;   //@gotags: gorm:"size:100"
+  optional string EMAIL = 15; //@gotags: gorm:"size:255"
+  optional bool ALLOW_COLLECTION = 16;
+  optional bool ALLOW_MODIFY_READING = 17;
+  optional bool ALLOW_DEPOSIT = 18;
+  optional bool ALOOW_CANCEL = 19;
+  optional bool ALLOW_REPORTING = 21;
+  optional ENCRYPTION IS_ENC = 34;
+  optional bool ALLOW_COMPENSATION = 35;
+  optional bool ALLOW_CANCEL = 36;
+  optional bool MAP_READING = 37;
+  optional bool MAP_COLLECTION = 38;
+  optional bool MAP_LOCATION = 39;
+  optional bool MAP_PATH = 40;
+  optional bool MAP_COMPLAINTS = 41;
+  optional bool MAP_BAD_CONN = 42;
+  optional bool WALK_ARRANGE_POST = 43;
+  optional bool UPDATE_CUSTOMER_LOCATION = 44;
+  optional bool ALLOW_CANCEL_DEP_COL = 45;
+  optional bool ALLOW_RECOL_CANCEL = 46;
+  optional bool ALLOW_MAPS = 47;
+  optional bool ALLOW_LOADDATA_C = 48;
+  optional bool ALLOW_LOADDATA_R = 49;
+  optional bool IS_CASHIER = 50;
+  optional int64 CASHIER_ID = 51;
+  optional bool ALLOW_METER_MODIFY = 56;
+  optional bool ALLOW_GARD = 57;
+  optional bool RESEND_COLLECTION = 58;
+  optional bool RESEND_READING = 59;
+  optional bool CLOSE_COLLECTION = 60;
+  optional bool CLOSE_READING = 61;
+  optional bool COLLECTION_DISCOUNT = 62;
+  optional bool REFRESH_BILLS_DATA = 63;
+  optional bool CALCULATE_DUE_AMOUNT = 64;
+  optional bool COLLECT_BILL_SINGL_UINT = 65;
+  optional bool PRINT_PAYMENT_REQUEST = 66;
+  optional bool PARTIAL_COLLECTION = 67;
+  optional bool ALONE_PANEL = 68;
+  optional bool REFRESH_CUSTOMER_BILLS = 69;
+  optional bool EDAMS_RECALC_NEW = 70;
+  optional bool ALLOW_FAWRY_OPEN = 71;
+  optional bool ALLOW_FAWRY_CLOSE = 72;
+  optional bool ALLOW_MODIFY_PREV_READING = 73;
+  optional bool LIST_COLLECTION = 74;
+  optional bool MARKETING = 75;
+  optional bool PREPEAR_HAFZA = 76;
+  optional bool CASH_BOX = 77;
+  optional bool SWITCH = 78;
+  optional bool UFLAG = 79;
+  optional bool PORTAL = 80;
+  optional bool SURVEY = 81;
+  optional bool REPORTS = 82;
+  optional bool DASHBOARD = 83;
+  optional bool QUERY = 84;
+  optional bool DEVICE_MANAGMENT = 85;
+  optional bool SYNC = 86;
+  optional bool CANCEL_BILL = 87;
+  optional bool CANCEL_DELIVERY = 88;
+  optional int64 DEPARTMENT = 89;
+  optional bool ALLOW_CUST_MOD = 90;
+  optional bool ALLOW_ESTIM_READING = 91;
+  optional bool ALLOW_BATCH_ESTIM_READING = 92;
+  optional bool CREATE_APPLICATION = 93;
+  optional bool BILLER = 94;
+  optional bool CANCEL_APPLICATION = 95;
+  optional bool EDIT_APPLICATION = 96;
+  optional bool DELETE_APPLICATION = 97;
+  optional bool PRESENT_CANCEL_BILL = 98;
+  optional bool CLOSED_APPLICATION = 99;
+  optional bool IsActive = 100;
+  optional bool DELETED = 101;
+  optional int32 SITE_CODE = 102;  //@gotags: gorm:"size:30"
+  optional string MOBILE_NO = 103; //@gotags: gorm:"size:20"
+  optional bool SUPERUSER = 104;
+  repeated ProfileId PROFILE_ID = 105;                 //@gotags: gorm:"-"
+  repeated USER_STATIONS USER_STATIONS = 106;          //@gotags: gorm:"-"
+  optional AUTH_ALL_PERMISSIONS ALL_PERMISSIONS = 107; //@gotags: gorm:"-"
+  optional int32 CUL = 108;
+  optional central.types.MasDateTime CUL_DATE = 109;
+  optional int32 CULA = 110;
+  optional bool SYSTEM_REPORTS = 111;
+  optional bool CRYSTAL_REPORTS = 112;
+  optional bool CRM_REPORTS = 113;
+  optional bool GENERAL_REPORT = 114;
+  optional bool APP_REPORT = 115;
+  optional string ACCESS_CONSTRAINT = 116; //@gotags: gorm:"size:40000"
+  optional bool CDU_COMMITE = 117;
+  optional bool CDU_EDIT = 118;
+  optional bool CDU_VERIFY = 119;
+  optional bool CDU_APPROVE = 120;
+  optional bool CDU_REPORTS = 121;
+  optional bool CDU_DASHBORAD = 122;
+  optional bool CDU_VERIFY_KHELSA = 123;
+  optional bool CDU_APPROVE_KHELSA = 124;
+  optional central.types.MasDateTime STAMP_DATE = 125;
+  optional string STAMP_USER = 126; //@gotags: gorm:"size:100"
+  optional bool ALLOW_GOV_COLLECTION = 127;
+  optional bool ALLOW_METER_STATUS_CHANGE = 128;
+  optional bool ALLOW_ESTIM_CONSUMP = 129;
+  optional bool ALLOW_CUSTOMER_RESEQUENCE = 130;
+  optional bool ALLOW_TAX_PUSH = 131;
+  optional bool EMP_MANAGEMENT = 132;
+  optional bool WALKC_ASSIGNMENT = 133;
+  optional bool WALKR_ASSIGNMENT = 134;
+  optional string PRINTER_TYPE = 135;
+  optional string USER_PROFILE_IMAGE = 136; // @gotags: gorm:"type:nvarchar(max)"
+  repeated DEPARTMENTS DEPARTMENTS = 137; //@gotags: gorm:"-"
+}
+
+//------------------------------
+
+// roles and profiles and usergroups
+message UserArry { repeated GetUserRequest USER_ID = 1; }
+
+message ProfileId { required int64 PROFILES_ID = 1; }
+message DeleteProfileReq {
+  required int64 PROFILES_ID = 1;
+  required string DELETION_REASON = 2;
+}
+
+message AUTH_PROFILES {
+  optional int64 PROFILE_ID = 1;                    // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string NAME = 2; // @gotags: gorm:"uniqueIndex;size:255;not null"
+  optional string DESCRIPTION = 3; // @gotags: gorm:"size:255;not null"
+  optional bool DELETED = 4;
+  optional central.types.MasDateTime STAMP_DATE = 5;
+  optional string STAMP_USER = 6; //@gotags: gorm:"size:100"
+  optional bool IS_ACTIVE = 7;
+  optional string DELETION_REASON = 8;
+  optional AUTH_ALL_PERMISSIONS All_PERMISSIONS = 9; //@gotags: gorm:"-"
+  optional int64 USERS_COUNT = 10;                   //@gotags: gorm:"-"
+}
+
+message All_PROFILES { repeated AUTH_PROFILES All_PROFILES = 1; }
+
+message AUTH_USERS_PROFILES {
+  required int64 PROFILE_ID = 1;                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 USER_ID = 2; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional bool IS_ACTIVE = 3;
+  optional bool DELETED = 4;
+  optional central.types.MasDateTime STAMP_DATE = 5;
+  optional string STAMP_USER = 6; //@gotags: gorm:"size:100"
+}
+
+message AddProfilesRequest { required AUTH_PROFILES PROFILE = 1; }
+
+message UserToProfileRq {
+  required int64 USER_ID = 1;
+  required int64 Profile_ID = 2;
+}
+
+message AUTH_ALL_PERMISSIONS {
+  optional CASHBOX_PERMISSIONS CASHBOX = 2; //@gotags: gorm:"embedded"
+  optional CRM_PERMISSIONS CRM = 3;         //@gotags: gorm:"embedded"
+  optional AUTH_PERMISSIONS AUTH = 4;       //@gotags: gorm:"embedded"
+  optional PAYMENTGETWAY_PERMISSIONS PAYMENTGETWAY = 5; //@gotags: gorm:"embedded"
+  optional CDU_PERMISSIONS CDU = 6;          //@gotags: gorm:"embedded"
+  optional BI_PERMISSIONS BI = 7;            //@gotags: gorm:"embedded"
+  optional BPM_PERMISSIONS BPM = 8;          //@gotags: gorm:"embedded"
+  optional PORTAL_PERMISSIONS PORTAL = 9;    //@gotags: gorm:"embedded"
+  optional GENERAL_PERMISSIONS GENERAL = 10; //@gotags: gorm:"embedded"
+  optional BILLER_PERMISSIONS BILLER = 11;   //@gotags: gorm:"embedded"
+  optional BILLING_PERMISSIONS BILLING = 12; //@gotags: gorm:"embedded"
+  optional TAX_PERMISSIONS TAX = 13;         //@gotags: gorm:"embedded"
+  optional MAS_PERMISSIONS MAS = 14;         //@gotags: gorm:"embedded"
+  optional GOV_PERMISSIONS GOV = 15;         //@gotags: gorm:"embedded"
+}
+
+message AUTH_CASHBOX_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional CASHBOX_PERMISSIONS CASHBOX = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_CRM_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional CRM_PERMISSIONS CRM = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_OWN_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional AUTH_PERMISSIONS AUTH = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_PAYMENTGETWAY_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional PAYMENTGETWAY_PERMISSIONS PAYMENTGETWAY =2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_CDU_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional CDU_PERMISSIONS CDU = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_BI_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional BI_PERMISSIONS BI = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_BPM_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional BPM_PERMISSIONS BPM = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_PORTAL_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional PORTAL_PERMISSIONS PORTAL = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_GENERAL_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional GENERAL_PERMISSIONS GENERAL = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_BILLER_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional BILLER_PERMISSIONS BILLER = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_BILLING_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional BILLING_PERMISSIONS BILLING = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_TAX_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional TAX_PERMISSIONS TAX = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_MAS_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional MAS_PERMISSIONS MAS = 2; //@gotags: gorm:"embedded"
+}
+
+message AUTH_GOV_PERMISSIONS {
+  required int64 PROFILE_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional GOV_PERMISSIONS GOV = 2; //@gotags: gorm:"embedded"
+}
+
+message CASHBOX_PERMISSIONS {
+  optional bool CASH_BOX = 1;
+  optional bool COLLECTION_ADMIN = 2;
+  optional bool ALLOW_COLLECTION = 3;
+  optional bool IS_CASHIER = 4;
+  optional bool ALLOW_CANCEL = 5;
+  optional bool ADD_COLLECTION_DATE = 6;
+  optional bool CASHBOX_REPORTS = 7;
+  optional bool SKIP_RECEIPT = 8;
+  optional bool ALLOW_PRINT_DAMAGE_RECEIPT = 9;
+  optional bool CANCEL_RECEIPT = 10;
+  optional bool CANCEL_PAYMENT = 11;
+  optional bool CRUD_CASHBOXES = 12;
+  optional bool CASHAIR_RE_PRINT_RECEIPT = 13;
+  optional bool CASHBOX_REVIEW = 14;
+  optional bool EDIT_RECEIPT_DTL = 15;
+  optional bool CLOSE_CASHBOX_SESSION = 16;
+}
+
+message CRM_PERMISSIONS { optional bool SYS_ADMIN = 1; }
+
+message AUTH_PERMISSIONS {
+  optional bool SYS_ADMIN = 1; // المستخدمين
+  optional bool EDIT_USER = 2;
+  optional bool DELETE_USER = 3;
+  optional bool PROFILE_ADMIN = 4; // الوظائف
+  optional bool EDIT_PROFILE = 5;
+  optional bool DELETE_PROFILE = 6;
+  optional bool DEPARTMENT = 7;
+  optional bool EDIT_DEPARTMENT = 8;
+  optional bool DELETE_DEPARTMENT = 9;
+  optional bool TAX_CLIENT_ID = 10;
+  optional bool EDIT_TAX_CLIENT_ID = 11;
+  optional bool DELETE_TAX_CLIENT_ID = 12;
+  optional bool DELETE_LINKED_PROFILE = 13;
+}
+
+message PAYMENTGETWAY_PERMISSIONS { optional bool SYS_ADMIN = 1; }
+
+message CDU_PERMISSIONS {
+  optional bool SYS_ADMIN = 1;
+  optional bool CDU_COMMITE = 2;
+  optional bool CDU_EDIT = 3;
+  optional bool CDU_VERIFY = 4;
+  optional bool CDU_APPROVE = 5;
+  optional bool CDU_REPORTS = 6;
+  optional bool CDU_DASHBORAD = 7;
+  optional bool CDU_VERIFY_KHELSA = 8;
+  optional bool CDU_APPROVE_KHELSA = 9;
+}
+
+message BI_PERMISSIONS {
+  optional bool QUERY_MAS = 1;
+  optional bool QUERY_TAX = 2;
+  optional bool QUERY_BILING = 3;
+  optional bool QUERY_CRM = 4;
+
+  optional bool MAS_REPORTS = 5;
+  optional bool BILING_REPORTS = 6;
+  optional bool CRM_REPORTS = 7;
+  optional bool TAX_REPORTS = 8;
+  optional bool SYSTEM_REPORTS = 9;
+  optional bool CRYSTAL_REPORTS = 10;
+  optional bool OTHER_REPORTS = 11;
+
+  optional bool REPORING_ADMIN = 13;
+
+  optional bool MAIN_DASHBOARD = 14;
+  optional bool DASHBOARD_MAS = 15;
+  optional bool DASHBOARD_BPM = 16;
+  optional bool DASHBOARD_TAX = 17;
+  optional bool DASHBOARD_CDU = 18;
+  optional bool SENSITIVE_DATA = 19;
+  optional bool DASHBOARD_ESDAR = 20;
+  optional bool SHOW_CLIENT_FILE = 21;
+
+  optional bool LONG_SESSION = 22;
+  optional bool CEO_DASHBOARD_PAIR_STATION =23;
+
+  optional bool CTO_DASHBOARD = 24; //cto_dashboard
+  optional bool CTO_DASHBOAR_PER_STATION = 25;  //cto_dashboard_per_station
+}
+
+message BPM_PERMISSIONS {
+  optional bool SUPERUSER = 1;
+  optional bool SYS_ADMIN = 2;
+  optional bool DASHBOARD = 3;
+  optional bool CANCEL_APPLICATION = 4;
+  optional bool REPORTS = 5;
+  optional bool SYSTEMM_NTINANCE = 6;
+  optional bool APP_REPORT = 7;
+  optional bool GENERAL_REPORT = 8;
+  optional bool DASHBOARD_TOTALMASCOLLECTIONS = 9; // اجمالي تحصيل الفواتير
+  optional bool DASHBOARD_TOTALCRMCOLLECTIONS = 10; // اجمالي تحصيلات خدمة العملاء
+  optional bool DASHBOARD_TOTALSUMMASCRM = 11; // اجمالي الايراد
+  optional bool DASHBOARD_CURRENTAPPSCOUNT = 12; // عدد الطلبات الحالية
+  optional bool DASHBORAD_CANCELEDAPPSCOUNT = 13; // عدد الطلبات الملغاه
+  optional bool DASHBOARD_PENDINGAPPSCOUNT = 14; // عدد الطلبات المعلقة
+  optional bool DASHBOARD_RUNNINGAPPSCOUNT = 15; // عدد الطلبات الجارية
+  optional bool DASHBOARD_CLOSEDAPPSCOUNT = 16; // عدد الطلبات المغلقة
+  optional bool DASHBOARD_REQUIREDUSERAPPSCOUNT = 17; // عدد الطلبات المطلوبة من المستخدم
+  optional bool DASHBOARD_USERTAKEACTIONSCOUNT = 18; // عدد الطلبات التي تم اخذ اجراء عليها
+  optional bool DASHBOARD_AVERAGEDAYSEXECAPP = 19; // متوسط الأيام المستغرقة لتنفيذ الطلب
+  optional bool DASHBORAD_TOTALMONTHCOMPAREWITHPREV = 20; // إيراد الشهر الحالي مقارنة بالشهر السابق
+  optional bool DASHBOARD_TOTALINCOMEFORAPP = 21; // الإيراد على مستوى نوع الطلب
+  optional bool DASHBOARD_COUNTS_PERSANTAGESDONEAPPS = 22; // نسب وأعداد الطلبات التامة
+  optional bool DASHBOARD_EXECAPPSPEEDINDICATOR = 23; // مؤشر سرعة تنفيذ الطلب
+  optional bool CANCEL_APPS = 24;
+}
+
+message PORTAL_PERMISSIONS { optional bool SYS_ADMIN = 1; }
+
+message GENERAL_PERMISSIONS {
+  optional string ACCESS_CONSTRAINT = 1; // @gotags: gorm:"type:nvarchar(max)"
+  optional bool DASHBOARD = 2;
+  optional bool QUERY = 3;
+}
+
+message BILLER_PERMISSIONS {
+  optional bool SYS_ADMIN = 1;
+  optional bool CREATE_APPLICATION = 2;
+  optional bool BILLER = 3;
+  optional bool CANCEL_APPLICATION = 4;
+  optional bool EDIT_APPLICATION = 5;
+  optional bool DELETE_APPLICATION = 6;
+  optional bool PRESENT_CANCEL_BILL = 7;
+  optional bool CLOSED_APPLICATION = 8;
+}
+
+message BILLING_PERMISSIONS {
+  optional bool SYS_ADMIN = 1;
+  optional bool BILLER = 2;
+  optional bool EDAMS_BILLING_STEPS = 3;
+  optional bool EDAMS_BILLING_STEPS_SETTINGS = 4;
+}
+
+message MAS_PERMISSIONS {
+  optional bool SYS_ADMIN = 1;
+  optional bool READING_ADMIN = 2;
+  optional bool COLLECTION_ADMIN = 3;
+  optional bool REPORING_ADMIN = 4;
+  optional bool HH_MONITOR = 5;
+  optional bool USER_MANAGEMENT = 6;
+  optional bool DATA_ADMIN = 7;
+  optional bool SYSTEM_MNTINANCE = 8;
+  optional bool ALLOW_COLLECTION = 9;
+  optional bool ALLOW_MODIFY_READING = 10;
+  optional bool ALLOW_DEPOSIT = 11;
+  optional bool ALOOW_CANCEL = 12;
+  optional bool ALLOW_REPORTING = 13;
+  optional bool ALLOW_COMPENSATION = 14;
+  optional bool ALLOW_CANCEL = 15;
+  optional bool MAP_READING = 16;
+  optional bool MAP_COLLECTION = 17;
+  optional bool MAP_LOCATION = 18;
+  optional bool MAP_PATH = 19;
+  optional bool MAP_COMPLAINTS = 20;
+  optional bool MAP_BAD_CONN = 21;
+  optional bool WALK_ARRANGE_POST = 22;
+  optional bool UPDATE_CUSTOMER_LOCATION = 23;
+  optional bool ALLOW_CANCEL_DEP_COL = 24;
+  optional bool ALLOW_RECOL_CANCEL = 25;
+  optional bool ALLOW_MAPS = 26;
+  optional bool ALLOW_LOADDATA_C = 27;
+  optional bool ALLOW_LOADDATA_R = 28;
+  optional bool IS_CASHIER = 29;
+  optional bool ALLOW_METER_MODIFY = 30;
+  optional bool ALLOW_GARD = 31;
+  optional bool RESEND_COLLECTION = 32;
+  optional bool RESEND_READING = 33;
+  optional bool CLOSE_COLLECTION = 34;
+  optional bool CLOSE_READING = 35;
+  optional bool COLLECTION_DISCOUNT = 36;
+  optional bool REFRESH_BILLS_DATA = 37;
+  optional bool CALCULATE_DUE_AMOUNT = 38;
+  optional bool COLLECT_BILL_SINGL_UINT = 39;
+  optional bool PRINT_PAYMENT_REQUEST = 40;
+  optional bool PARTIAL_COLLECTION = 41;
+  optional bool ALONE_PANEL = 42;
+  optional bool REFRESH_CUSTOMER_BILLS = 43;
+  optional bool EDAMS_RECALC_NEW = 44;
+  optional bool ALLOW_FAWRY_OPEN = 45;
+  optional bool ALLOW_FAWRY_CLOSE = 46;
+  optional bool ALLOW_MODIFY_PREV_READING = 47;
+  optional bool LIST_COLLECTION = 48;
+  optional bool MARKETING = 49;
+  optional bool PREPEAR_HAFZA = 50;
+  optional bool CASH_BOX = 51;
+  optional bool SWITCH = 52;
+  optional bool UFLAG = 53;
+  optional bool PORTAL = 54;
+  optional bool SURVEY = 55;
+  optional bool REPORTS = 56;
+  optional bool DASHBOARD = 57;
+  optional bool QUERY = 58;
+  optional bool DEVICE_MANAGMENT = 59;
+  optional bool SYNC = 60;
+  optional bool CANCEL_BILL = 61;
+  optional bool CANCEL_DELIVERY = 62;
+  optional bool ALLOW_CUST_MOD = 63;
+  optional bool ALLOW_ESTIM_READING = 64;
+  optional bool ALLOW_BATCH_ESTIM_READING = 65;
+  optional bool CREATE_APPLICATION = 66;
+  optional bool BILLER = 67;
+  optional bool CANCEL_APPLICATION = 68;
+  optional bool EDIT_APPLICATION = 69;
+  optional bool DELETE_APPLICATION = 70;
+  optional bool PRESENT_CANCEL_BILL = 71;
+  optional bool CLOSED_APPLICATION = 72;
+  optional bool IsActive = 73;
+  optional bool DELETED = 74;
+  optional bool ALLOW_CUSTOMER_RESEQUENCE = 75; // new
+  optional bool ALLOW_ESTIM_CONSUMP = 76;
+  optional bool ALLOW_TAX_PUSH = 77;
+  optional bool CLOSE_COLLECTION_INDEVICE = 78;
+  optional bool EDAMS_RECALC = 79;
+  optional bool ALLOW_METER_STATUS_CHANGE = 80;
+  optional bool ALLOW_POST_C = 81;
+  optional bool ALLOW_POST_R = 82;
+  optional bool CLOSE_READING_INDEVICE = 83;
+  optional bool EDAMS_CLEAR_READINGS = 84;
+  optional bool EDAMS_CS = 85;
+  optional bool EMP_MANAGEMENT = 86;
+  optional string PRINTER_TYPE = 87;
+  optional bool WALKC_ASSIGNMENT = 88;
+  optional bool WALKR_ASSIGNMENT = 89;
+  optional bool REPRINT_RECEIPT =90;
+  optional bool ALLOW_OPERATIONS_COLLECTION_WALK =91;
+  optional bool CUSTOMER_NOTIFICATION = 92;    // إخطارات العملاء
+  optional bool MANAGE_CUSTOMER_NOTIFICATION_MODULES = 93; // إدارة نماذج إخطارات العملاء
+  optional bool SEND_CUSTOMER_SERVICE_NOTIFICATION = 94; // إرسال إخطارات خدمة العملاء
+}
+
+message GOV_PERMISSIONS {
+  optional bool ALLOW_GOV_COLLECTION = 1; // صلاحيه التعامل مع منظومه التحصيل الحكومي عموما
+  optional bool IS_CASHIER = 2;          // صلاحيه التحصيل
+  optional bool ADD_PAYMENT_FILE = 3;    // اضافه ملف تحصيل
+  optional bool EDIT_PAYMENT_FILE = 4;   // تعديل ملف تحصيل
+  optional bool DELETE_PAYMENT_FILE = 5; // ازاله ملف تحصيل
+  optional bool ADD_PAYMENT = 6;         // اضافه مستند تحصيل
+  optional bool EDIT_PAYMENT = 7;        // تعديل مستند تحصيل
+  optional bool DELETE_PAYMENT = 8;      // ازاله مستند تحصيل
+  optional bool ADD_EMP = 9; // اضافة موظف للتحصيل الحكومي
+  optional bool EDIT_EMP = 10; // تعديل موظف للتحصيل الحكومي
+  optional bool CANCEL_COLLECTION = 11; // الغاء التحصيل
+  optional bool VIEW_REPORTS = 12;      // التقارير
+  optional bool ADD_CENTRAL = 13;       // إضافة مركزية جديدة
+  optional bool REVIEW_CENTRAL = 14;    // مراجعة المركزية
+  optional bool APPROVE_CENTRAL = 15;   // إعتماد المركزية
+  optional bool DELETE_CENTRAL = 16;    // حذف المركزية
+  optional bool CENTRAL_REPORT = 17;    // عرض تقرير المركزية
+  optional bool MERGE_AMOUNT = 18;    // دمج مبلغ جديد ف المستند
+  optional bool REASSIGNE_AMOUNT = 19; //إعادة توزيع المبلغ المتبقي
+  optional bool MERGE_ALL_ITEMS = 20;  //دمج جميع البنود ف بند واحد 
+  optional bool MERGE_WATER_ITEMS = 21; //دمج جميع البنود عدا الصرف
+  optional bool AUTO_FILL_ITEMS = 22;  //توزيع المبلغ اتوماتيك
+  optional bool CANCEL_ALLOCATE_PAYMENT = 23; //الغاء تخصيص المبلغ
+  optional bool REDUCE_FILE_AMOUNT = 24; //خصم مبلغ من المبلغ المتبقي
+}
+
+message TAX_PERMISSIONS {
+  optional bool MANAGE_ITEMS = 1;
+  optional bool MANEGE_CLIENTS = 2;
+  optional bool CUSTOMER_TO_GROUP = 3;
+  optional bool MANAGE_GROUPS = 4;
+  optional bool GROUPS = 5;
+  optional bool SUB_GROUPS = 6;
+  optional bool ACCECPT_COLLECTED_INVOICES_GROUPS = 7;
+  optional bool COLLECTE_INVOICES = 8;
+  optional bool ADD_CLIENTS_TO_SUBGROUP = 9;
+  optional bool MANAGE_SUBGROUP_INVOICES = 10;
+  optional bool CANCEL_COLLECTED_INVOICES = 11;
+  optional bool ACCECPT_COLLECTED_INVOICES_SUBGROUPS = 12;
+  optional bool TAX_TYPES = 13;
+  optional bool MANAGE_ACTIVITY = 14;
+  optional bool MANAGE_REPORTS = 15;
+  optional bool CLIENT_REPORTS = 16;
+  optional bool OTHER_REPORTS = 17;
+  optional bool MANAGE_PURCHASES = 18;
+  optional bool ACCEPT_PURCHASES = 19;
+  optional bool CANCEL_PURCHASES = 20;
+  optional bool MANAGE_INVOICES = 21;
+  optional bool CREATE_INVOICE = 22;
+  optional bool UPLOAD_INVOICE_EXCEL = 23;
+  optional bool DRAFT_INVOICES = 24;
+  optional bool ACCEPT_DRAFT_INVOICES = 25;
+  optional bool ACCEPT_INVOICES = 26;
+  optional bool REVIEW_INVOICES = 27;
+  optional bool SENT_INVOICES = 28;
+  optional bool PRINT_CLIENT_INVOICES = 29;
+  optional bool PRINT_ETA_INVOICES = 30;
+}
+
+message AUTH_LICENCE {
+  optional string LICENCE = 1; // @gotags: gorm:"type:nvarchar(max)"
+}
+
+message AUTH_SETTINGS {
+  optional string KEY = 2; // @gotags: gorm:"primaryKey:size:100"
+  optional int32 VALUE = 3; // @gotags: gorm:"size:255"
+  optional string DESCRIPTION = 4; // @gotags: gorm:"size:255"
+  }
+
+// enums
+
+enum Applications {
+  FaceBook = 1;
+  Google = 2;
+  Twitter = 3;
+  LinkedIn = 4;
+  apple = 5;
+}
+
+enum ACTIONVIEW {
+  ONEVIEW = 1;
+  TWOVIEW = 2;
+  THREEVIEW = 3;
+  NOVIEW = 0;
+}
+
+enum DurationType {
+  HOUR = 0;
+  DAY = 1;
+}
+
+enum Counts_type {
+  COUNT_CLIENTS = 1;
+  COUNT_USERS = 2;
+  COUNT_ADMINS = 3;
+  COUNT_ALL = 4;
+}
+
+enum VTYPE {
+  EMAIL = 1;
+  MOBILE = 2;
+}
+
+enum Dir {
+  CLS = 0;
+  USS = 1;
+  BOTH = 2;
+}
+
+enum ENCRYPTION {
+  NOT_ENCRYPTION = 0;
+  PASS_ENCRYPTION_ONLY = 1;
+  ALL_SENSITIVE_DATA_ENCRYPTION = 2;
+}
+
+//------------------------------------------------

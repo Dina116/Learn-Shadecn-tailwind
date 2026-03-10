@@ -1,10 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import LoginForm from "./LoginForm";
-import { useLoginStore } from "../../hooks/login/useLoginStore";
-
+// import { useLoginStore } from "../../hooks/login/useLoginStore";
+// import { useLoginViewModel } from "./useLogin";
+import { removeCookie } from "../../utils/cookies";
+import { useEffect } from "react";
 
 export default function LoginScreen() {
-  const handleLogin = useLoginStore((state) => state.handleLogin);
+
+  useEffect(() => {
+    removeCookie("token");
+  }, []);
+  // const handleLogin = useLoginStore((state) => state.handleLogin);
   return (
     <Box className="min-h-screen w-full flex items-center justify-center bg-[radial-gradient(circle,_#0086cf_0%,_#005a8e_100%)] p-4">
       <div className="flex flex-col md:flex-row-reverse items-center gap-20 max-w-5xl w-full justify-center">
@@ -23,7 +29,7 @@ export default function LoginScreen() {
             منظومة إدارة القراء والمحصلين
           </Typography>
         </div>
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm />
       </div>
 
       <div

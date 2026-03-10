@@ -1,0 +1,2707 @@
+syntax = "proto3";
+option go_package = "../pb;pb";
+package govcollector;
+import "date.proto";
+import "bpm-reg.proto";
+
+// import "descriptor.proto";
+
+// extend google.protobuf.FieldOptions {
+//   string go_tag = 50001;
+// }
+
+service govcollector {
+  rpc Ping                    (Emptymessage)         returns (Version) {}
+  rpc GetGROUPS               (Emptymessage)         returns (All_GROUPS) {}
+  rpc GetSubGROUPS            (GROUPS_ID)            returns (All_SUB_GROUPS) {}
+  rpc GetSubGROUPSBySubGROUPID(SUB_GROUPS_ID)        returns (SUB_GROUPS_RELATED_GROUP) {}
+  rpc GetCustomers            (SUB_GROUPS_ID)        returns (Customers) {}
+  rpc GetCustomersBills       (Bills_Parameters)     returns (Arr_CustomersBills) {}
+  rpc SyncCustomers           (Emptymessage)         returns (MessageResponse) {}
+  rpc GetCustomer             (GetCustomerReq)       returns (Customers_s){}
+  rpc ConverCustToPrepaied    (ConvCustToPreReq)     returns (MessageResponse) {}
+  rpc ConverCustToPostpaied   (ConvCustToPreReq)     returns (MessageResponse) {}
+
+  rpc EditGROUP               (GROUP_DTL)            returns (MessageResponse) {}
+  rpc EditSubGROUP            (SUB_GROUP_DTL)        returns (MessageResponse) {} 
+  rpc DeleteGROUP             (GROUPS_ID)            returns (MessageResponse) {} 
+  rpc DeleteSubGROUP          (SUB_GROUPS_ID)        returns (MessageResponse) {} 
+  rpc AddCustomer             (NCustomerReq)         returns (MessageResponse) {}
+  rpc MoveCustomers           (NCustomerReq)         returns (MessageResponse) {}
+  rpc DeleteCustomer          (NCustomerReq)          returns (MessageResponse) {}
+
+//--------------------------------------------------------------------------------     Collection
+
+  rpc CollectReq              (Arr_CustomersBills)   returns (CollectReqRes) {}
+  rpc GetCollectedByCustkey   (GetCancelleRequste)   returns (ArrCancelleRequste) {}
+  rpc CancelleCollection      (ArrCancelleRequste)   returns (MessageResponse) {}
+  rpc CancelCollectedFile     (CancelFileRequste)    returns (MessageResponse) {}
+  rpc CancelCollectedPayment  (CancelPaymentRequste) returns (MessageResponse) {}
+  rpc GetAllCentralPayments   (Emptymessage)         returns (CentralPaymentsRes) {}        // مركزية
+  rpc AddNewCentralPayments    (Gov_CENTRAL_PAYMENTS) returns (MessageResponse) {}    
+  rpc ReviewCentralPayments    (CentralPaymentsReq)   returns (MessageResponse) {}    
+  rpc EditableCentralPayments  (CentralPaymentsReq)   returns (MessageResponse) {}    
+  rpc ApproveCentralPayments   (CentralPaymentsReq)   returns (MessageResponse) {}    
+  rpc DeleteCentralPayments    (CentralPaymentsReq)   returns (MessageResponse) {}    
+
+//--------------------------------------------------------------------------------     PAYMENTS
+
+  rpc AddPayment              (PaymentReq)           returns (MessageResponse) {}
+  rpc GetPayments             (PAY_RQ)               returns (Arr_Payments){}
+  rpc EditPayment             (PAYMENTS)             returns (MessageResponse) {}
+  rpc DeletePayment           (PAYMENT_ID)           returns (MessageResponse) {}
+  rpc AddSettlementFile       (SettlFileRequst)      returns (MessageResponse) {}
+  rpc GetSettlementFiles      (GetSFRequest)         returns (ArrSettlFiles){}
+  rpc GetSettlementFile       (GetFileRequest)       returns (ArrSettlFiles){}
+  rpc EditSettlementFile      (GOV_SETTLEMENT_FILES) returns (MessageResponse) {}
+  rpc DeleteSettlementFile    (GOV_FILES_ID)         returns (MessageResponse) {}
+  rpc GetPaymentCollDtl       (PaymentCollDtlReq)    returns (ArrPaymentCollDtl){}
+  rpc MergePaymentsToFile     (MergePaymentsFilesReq)returns (MessageResponse) {}
+  rpc CancelAllocatePayment   (CancelAllocateRequste) returns (MessageResponse) {}
+  rpc ReduceFileAmount        (ReduceFileAmountRequst)   returns (MessageResponse) {}
+
+//--------------------------------------------------------------------------------     GOV_EMP
+
+  rpc AddEmp                  (GOV_EMP)              returns (MessageResponse){}
+  rpc EditEmp                 (GOV_EMP)              returns (MessageResponse){}
+  rpc GetEmp                  (Emp_Id_rq)            returns (GOV_EMP){}
+  rpc GetAllEmp               (Emptymessage)         returns (Arr_Emps){}
+
+//--------------------------------------------------------------------------------     REPORTS
+
+  rpc DalyCollReport          (ReportRequest)        returns (DalyallCollRes){}          // بيان ايرادات يومي
+  rpc DalyCollDtlReport       (ReportRequest)        returns (DalyCollRes){}             //بيان ايرادات يومي تفصيلي
+  rpc DalyCollectorsCollReport(ReportRequest)        returns (DalyallCollectorCollRes){} // بيان ايرادات يومي لمندوب
+  rpc DalyTaxDtlReport        (ReportRequest)        returns (DalyTaxDtlRes){}           // استقطاعات الضرائب
+  rpc MnthCollReport          (ReportRequest)        returns (DalyallCollRes){}          // مجمع ايراد شهري
+
+  rpc TotalCustYear           (ReportRequest)        returns (CustYearResp){}            // حساب دورات تفصيلي
+  rpc DtlCustYear             (ReportRequest)        returns (CustYearResp){}            // اشتراكات تفصيلي
+  rpc TotalSubGroubC          (ReportRequest)        returns (SubGroubCRes){}            // اشتراكات مجمع
+  rpc DtlSubGroub             (ReportRequest)        returns (DtlSubGroubRes){}          // حساب دورات مجمع
+  rpc DtlSubGroubYear         (ReportRequest)        returns (DtlSubGroubRes){}          //  حساب سنوي تفصيلي
+  rpc DtlCustFYear            (ReportRequest)        returns (DtlCustFYearRes){}         //  اشتراكات سنوي 
+  rpc TotalSubGroub           (ReportRequest)        returns (TotalSubGroubRes){}        //  مديونيه حساب
+  rpc TotalSubGroubQuery      (ReportRequest)        returns (TotalSubGroubQueryRes){}        //  بيان مديونيه حساب
+  rpc DalySettlementReport    (ReportRequest)        returns (SettlementReportsRSP){}    // بيان سداد مالية
+  rpc DalyOnlySettlementReport(ReportRequest)        returns (SettlementReportsRSP){}    // بيان سداد تسويات مالية
+  rpc HafzaSettlementReport   (HafzaRequest)         returns (GOV_FOLDERS){}    // بيان سداد تسويات مالية
+  rpc HafzaPayReport          (HafzaRequest)         returns (HafzaReports){}    // بيان سداد تسويات مالية
+
+  rpc GetCancelledCollection  (CancelleRepRequest)   returns (CancelledReport){}        // الفواتير الملغاه خلال فتره
+
+  rpc GetCentralHistory       (CentralPaymentsReq)   returns (GOV_CENTRAL_HISTORY_REPORT){}
+
+  rpc PaymentSettlementDtl    (ReportRequest)        returns (PaymentSettlementDtlRSP){}    // بيان مستندات مالية تفصيلي
+
+  rpc EditingRecReport        (ReportRequest)        returns (EditingRecDtlRSP){}    // تقرير التعديلات
+
+  rpc GetGovGard              (GardRequest)          returns (GardResponse) {}
+
+  rpc SubsMeterExeptionReport (ReportRequest)        returns (SubsMeterExeptionReportResponse) {} // تقرير كافة الجهات  المستثناه من تركيب العدادات مسبقة الدفع
+
+  rpc GovGroupsClaims         (ReportRequest)          returns (GovGroupsClaimsResponse) {} // تقرير المطالبات للجهات
+
+  rpc SubGroupsDepts         (ReportRequest)          returns (SubGroupsDeptsResponse) {} // مديونية الهيئات الاقتصادية
+
+  rpc PartiallyPaidReport         (ReportRequest)          returns (PartiallyPaidReportRes) {} // تقرير الدفعات 
+
+
+//--------------------------------------------------------------------------------     FOLDERS
+rpc GetAllFolders             (Emptymessage)         returns (ALL_FOLDERS){}
+rpc AddFolder                  (FOLDER_REQ)              returns (MessageResponse){}
+rpc EditFolder                 (FOLDER_REQ)              returns (MessageResponse){}
+rpc GetFolder                  (FOLDER_ID_REQ)            returns (GOV_FOLDERS){}
+
+//--------------------------------------------------------------------------------- LOCKUPS
+
+//--------------------------------------------------------------------------------     MINISTRIES
+rpc GetAllMinistries          (Emptymessage)         returns (All_MINISTRIES){}   // الوزارات
+rpc EditMinistry            (MINISTRY)             returns (MessageResponse){}
+rpc DeleteMinistry         (MINISTRY_ID)          returns (MessageResponse){}
+
+//--------------------------------------------------------------------------------    ACCOUNTING UNITS
+rpc GetAllAccountsUnits       (Emptymessage)         returns (All_ACCOUNTING_UNITS){}   //  الوحدات الحسابية
+rpc EditAccountUnits          (ACCOUNTING_UNITS)      returns (MessageResponse){}
+rpc DeleteAccountUnits        (ACCOUNTING_UNITS_ID)   returns (MessageResponse){}
+
+//--------------------------------------------------------------------------------    ASSOCIATIONS
+rpc GetAllAssociations       (Emptymessage)         returns (All_ASSOCIATIONS){}   //  التصنيف 1 ( مصادقات)
+rpc EditAssociation          (ASSOCIATION)         returns (MessageResponse){}
+rpc DeleteAssociation       (ASSOCIATIONS_ID)      returns (MessageResponse){}
+
+//------------------------------------------------------------------------------   UNITS 
+rpc GetAllUnits               (Emptymessage)         returns (All_UNITS){}   //  التصنيف2(وحدات)
+rpc EditUnit                 (UNIT)                returns (MessageResponse){}
+rpc DeleteUnit               (UNITS_ID)             returns (MessageResponse){}
+
+//--------------------------------------------------------------------------------   DEPENDENCIES
+rpc GetAllDependencies       (Emptymessage)         returns (All_DEPENDENCIES){}   //  تابعية الاداره
+rpc EditDependency           (DEPENDENCY)         returns (MessageResponse){}
+rpc DeleteDependency        (DEPENDENCIES_ID)      returns (MessageResponse){}
+
+
+//---------------------------------------------------------------------------------   المصادقات
+rpc ViewMosadakat            (MosadakatReq)         returns (All_Mosadakat){}   // المصادقات
+rpc ViewMosadakatCusts       (MosadakatReq)         returns (All_Mosadakat_Custs){}   // المصادقات
+rpc DeliveryMosadakat        (DeliveryMosadakatReq) returns (MessageResponse){}   // تسليم المصادقات
+rpc ApproveFullMosadakat     (All_Mosadakat)         returns (MessageResponse){}   // اعتماد المصادقات كلي
+rpc RejectFullMosadakat      (All_Mosadakat)         returns (MessageResponse){}   // رفض المصادقات
+rpc ApprovePartialMosadakat  (All_Mosadakat_Custs)   returns (MessageResponse){}   // اعتماد المصادقات جزئي
+rpc RejectPartialMosadakat  (All_Mosadakat_Custs)   returns (MessageResponse){}   // اعتماد المصادقات جزئي
+rpc MosadakaReports          (MosadakaRepReq)         returns (MosadakaRepRes){}
+
+//---------------------------------------------------------------------------------   PROTOCOLS
+rpc GetAllProtocols          (Emptymessage)         returns (AllProtocols){}   //  بروتوكولات
+rpc AddNewProtocol           (GOV_Protocol)             returns (MessageResponse) {} 
+rpc DeleteProtocol           (ProtocolReq)          returns (MessageResponse) {}
+rpc CollProtocol           (ProtocolReq)          returns (MessageResponse) {}
+
+  //---------------------------------------------------------------------------------تصنيفات العملاء
+  rpc GetAllStatements         (Emptymessage)         returns (AllStatements){}   //  تصنيفات البيان
+  rpc EditStatement            (STATEMENT)             returns (MessageResponse) {}
+  rpc DeleteStatement         (StatementID)          returns (MessageResponse) {}
+
+  rpc GetAllStatementItems     (Emptymessage)         returns (AllStatementItems){}   //  تصنيفات بنود البيان
+  rpc EditStatementItem        (STATEMENT_ITEMS)             returns (MessageResponse) {}
+  rpc DeleteStatementItem     (StatementItemID)          returns (MessageResponse) {}
+
+  rpc GetAllExeptions         (Emptymessage)         returns (AllExeptions){}   //  تصنيفات المستثني
+  rpc EditExeption            (EXEPTION)             returns (MessageResponse) {}
+  rpc DeleteExeption         (ExeptionID)          returns (MessageResponse) {}
+
+  //-----------------------
+
+  rpc GetLastProtocol (Emptymessage) returns (LAST_GOV_Protocol) {}
+
+  //--------------------------------------------------------------------------------    RAINS
+
+  rpc GetAllRains (Emptymessage) returns (All_RAINS){}
+  rpc AddRainConsump (GOV_RAIN_WATER) returns (MessageResponse){}
+  rpc EditRainConsump (GOV_RAIN_WATER) returns (MessageResponse){}
+  rpc ViewSubsRainConsump (GOV_RAIN_REQ) returns (SubsRainConsumpRes){}
+  rpc CollectRainConsump (GOV_RAIN_SETETLEMENT) returns (MessageResponse){}
+
+  rpc ViewRainMosadakat            (RainMosadakatReq)         returns (All_Rain_Mosadakat){}   // المصادقات
+  rpc ViewRainMosadakatCusts       (RainMosadakatReq)         returns (All_RAIN_Mosadakat_Subs){}   // المصادقات
+  rpc RainDeliveryMosadakat        (RainDeliveryMosadakatReq) returns (MessageResponse){}   // تسليم المصادقات
+  rpc ApproveFullRainMosadakat     (All_Rain_Mosadakat)         returns (MessageResponse){}   // اعتماد المصادقات كلي
+  rpc RejectFullRainMosadakat      (All_Rain_Mosadakat)         returns (MessageResponse){}   // رفض المصادقات
+  rpc ApprovePartialRainMosadakat  (All_RAIN_Mosadakat_Subs)   returns (MessageResponse){}   // اعتماد المصادقات جزئي
+  rpc RejectPartialRainMosadakat  (All_RAIN_Mosadakat_Subs)   returns (MessageResponse){}   // اعتماد المصادقات جزئي
+
+//-------------------------------------------------------------------------------- banks
+
+  rpc GetAllBanks         (Emptymessage)         returns (AllBanks){}   //  بنوك الشركه
+  rpc EditBank            (Bank)             returns (MessageResponse) {}
+  rpc DeleteBank          (BankID)          returns (MessageResponse) {}
+
+
+// ------------------------------------------------------------------------------- Upprove gard tables
+  rpc ReviewGovGardData (GardRequest) returns (GardResponse) {}
+  rpc UpproveGovGardData (GardResponse) returns (MessageResponse) {}
+
+//------------------------------------------------------------------------------- Settings
+  rpc GetSetting (Emptymessage) returns (SettingRes) {}
+
+// go application
+  rpc Execute (APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY){}
+  rpc ActivityPaid(ArrEXTERNAL_FEES)returns(MessageResp){}
+  rpc ActivityPaidCheck(ArrEXTERNAL_FEES)returns(MessageResponse){}
+  rpc NotifyClose(APP_EXTERNAL_ACTIVITY) returns (MessageResp){}
+  rpc CancelActivity(CancelPaymentActivity) returns (APP_EXTERNAL_ACTIVITY){}
+  rpc Rollback(APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY){}
+
+    // go application
+  // rpc InitalValues (APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY){}
+  // rpc InitDatasources(ACTIVITY_DATASOURCES)returns(ACTIVITY_DATASOURCES){}
+  rpc InitLookups(LookupDatasource)returns(LookupDatasource){}
+  rpc GetLookupVal(LookupValues)returns(LookupValues){}
+  // rpc GetAllActivityLookups(APP_EXTERNAL_ACTIVITY)returns(ArrALL_CR_DATASOURCE_LU){}
+  // rpc CancelPayments(ArrEXTERNAL_FEES)returns(MessageResp){}
+}
+//--------------------------------------------------------------------------------
+
+message Emptymessage {}
+
+message PartiallyPaidReportRes{
+  repeated PartiallyPaidData       RepData =2;
+  repeated SummaryData               SummaryData=1;
+}
+
+message PartiallyPaidData{
+  optional string                    OLD_KEY = 1;                                       //  رقم الاشتراك 
+  optional string                    ITEM_NAME = 2;                                    //  نوع الدفعه 
+  optional int64                     GROUP_ID = 3;                                     // رقم الجهه
+  optional string                    GROUP_NAME =4;                                    // اسم الجهه
+  optional int64                     SUB_GROUP_ID = 5;                                // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 6;                              // اسم الإدارة
+  optional string                    FILE_NO = 7;                                      // رقم المستند
+  optional central.types.MasDateTime COLLECTION_DATE  =8;                             // تاريخ السداد 
+  optional central.types.MasDateTime BILING_DATE  =9;                                 // تاريخ الدوره 
+  optional int64                     STATION_NO =10;                                   // رقم الفرع
+  optional string                    STATION_NAME =11;                                 // اسم الفرع
+  optional double                    TOTAL_AMT =12;                                     // اجمالي الفاتورة
+  optional double                    NOT_SEWER_AMT =13;                                // قيمة جميع البنود عدا الصرف
+  optional double                    SEWER_AMT =14;                                     // قيمة صرف
+  optional double                    NOT_SEWER_AMT_COLL =15;                           // قيمه المسدد جميع البنود عدا الصرف
+  optional double                    SEWER_AMT_COLL =16;                               // قيمه المسدد صرف
+  optional double                    COLL_AMT =17;                                     // اجمالي المسدد
+  optional double                    NOT_SEWER_AMT_REM =18;                           // متبقي جميع البنود عدا الصرف
+  optional double                    SEWER_AMT_REM =19;                               // متبقي صرف
+  optional double                    TOTAL_REM_AMT =20;                                // اجمالي المتبقي
+  optional string                    PAY_ID=21;
+}
+
+message CollectReqRes {
+  optional string                    Message = 1;
+  optional bool                      Done = 2;
+  optional int64                     ID = 3;
+  optional ReportData                ReportData= 4;
+}
+
+message ReportData {
+  optional int64  EMP_ID= 1;
+  optional string EMP_NAME= 2;
+  optional string CUSTKEY= 3;
+  optional string CUSTNAME= 4;
+  optional central.types.MasDateTime COLLECT_DATE= 5;
+  repeated Receipts_list RECEIPTS_LIST= 6;
+  optional int64  GROUP_ID= 7;
+  optional int64  SUBGROUP_ID= 8;
+  optional string GROUP_NAME = 9;
+  optional string SUBGROUP_NAME = 10;
+  optional string DISCOUNT_DOCUMENT =11; 
+}
+
+message Receipts_list {
+  optional double AMOUNT=1;
+  optional central.types.MasDateTime BILING_DATE=2;
+  optional string                    RECEIPT_NO=3; 
+}
+
+message SettingRes {
+  optional bool Required_Sub_Group=1;
+}
+
+message AllBanks {
+  repeated Bank BANKS = 1; 
+}
+
+message Bank {
+  optional int64  BANK_ID = 1;                                 // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional string BANK_CODE = 2;                               // رقم حساب البنك 
+  optional string BANK_NAME = 3;                               // اسم البنك
+  optional string BANK_DESC = 4;                               // وصف البنك
+  optional bool DELETED = 5;  
+}
+
+message BankID {
+  optional int64 BANK_ID = 1;
+}
+
+
+
+message RainMosadakatReq {
+  optional int64                     SUB_GROUP_ID = 1;                                  // رقم الاداره
+  optional central.types.MasDateTime FROM_BILING_DATE = 2;                                    // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 3;                                      // تاريخ دورات الى
+  optional int64                     MINISTRY_ID = 4;  
+  optional int64                     UNIT_ACCOUNT_ID = 5; 
+  optional int64                     ASSOCIATION_ID = 6;
+  optional int64                     UNIT_ID = 7; 
+  optional int64                     DEPENDENCY_ID = 8; 
+  optional int64                     GROUP_ID = 9;
+  optional bool                      PRINT = 10;
+  optional GOV_GROUP_BY              GROUP_BY = 11;
+}
+
+message All_RAIN_Mosadakat_Subs {
+  optional int64                     SUB_GROUP_ID = 1;
+  optional string                    SUB_GROUP_NAME = 2;
+  optional double                    TOTAL_AMT = 3;                                  //إجمالي المديونية
+  optional double                    REMINDER_AMT = 4;                               //الغير مسدد ف الفتره
+  repeated RainMosadakat             SUBSBILLS = 5;
+  optional string                    PARTIAL_COMMENT = 6;                                   // تعليق المصادقه الجزئي
+}
+
+
+
+message All_Rain_Mosadakat {
+  repeated RainMosadakat                RainMosadakat = 1;
+}
+
+message RainMosadakat {
+  optional double                    TOTAL_AMT = 2;                                  //إجمالي المديونية
+  optional double                    REMINDER_AMT = 3;                               //الغير مسدد ف الفتره
+  optional central.types.MasDateTime BILNG_DATE = 4;                                 // تاريخ الدوره
+  optional int64                     SUB_GROUP_ID =5;
+  optional string                    NAME = 6;
+  optional string                    ADDRESS = 7;
+  optional int32                     SITE_CODE = 8;
+  optional int64                     GROUP_ID =9;
+  optional int64                     MINISTRY_ID = 10;                                 // الوزاره
+  optional int64                     ACCOUNTING_UNIT_ID = 11;                          // الوحدة الحسابية
+  optional int64                     ASSOCIATION_ID = 12;                              // التصنيف 1 (مصادقات)
+  optional int64                     UNIT_ID = 13;                                     // التصنيف 2 (وحدات)
+  optional int64                     DEPENDENCY_ID = 14;                               // تابعية الاداره
+  optional string                    MINISTRY_NAME = 15;                                 // اسم الوزاره
+  optional string                    ACCOUNTING_UNIT_NAME = 16;                          // اسم الوحدة الحسابية
+  optional string                    ASSOCIATION_NAME = 17;                              // اسم التصنيف 1 (مصادقات)
+  optional string                    UNIT_NAME = 18;                                     // اسم التصنيف 2 (وحدات)
+  optional string                    DEPENDENCY_NAME = 19;                               // اسم تابعية الاداره
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 20;                   //كود الهيئة الموازنية                             
+  optional string                    GROUP_NAME = 22;                                    // اسم المجموعه
+  optional double                    MOSADAKA_AVILABLE_AMT = 23;                         // المبلغ المتاح للمصادقه
+  optional string                    PAYMENT_NO = 24;                        
+  optional MOSADAKA_STATUS           MOSADAKA_STATUS=25;       
+  optional int64                     COLLECTOR_ID = 26;  
+  optional string                    COLLECTOR_NAME = 27;
+  optional DELIVERY_STATUS           DELIVERY_STATUS = 28;
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 29;                               
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 30;  
+  optional central.types.MasDateTime REQ_TO_BILNG_DATE = 31; 
+  optional central.types.MasDateTime REQ_FROM_BILING_DATE = 32; 
+  optional double                    MOSADAKA_AMT = 33;                                    //المبلغ المصادق
+  optional string                    REJECTED_REASON = 34;                                   // سبب الرفض
+  optional bool                      SUB_NEW = 35;                                         // هل الجهه جديده
+  optional string                    PARTIAL_COMMENT = 36;                                   // تعليق المصادقه الجزئي
+  optional bool                      IS_REJECTED = 37;                                        // هل مرفوضه
+  optional double                    REJECTED_AMT = 38;                                // المبلغ المرفوض
+}
+
+message RainDeliveryMosadakatReq {
+  repeated RAIN_MOSADAKA_DELIVERY RAIN_MOSADAKA_DELIVERY = 1;         // تسليم المصادقات
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 2;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 3;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 4;                                      // المحصل
+  optional bool                      SUB_DELIVERY = 5;
+}
+
+message RainMosadakaReq {
+  repeated RAIN_MOSADAKA_DELIVERY RAIN_MOSADAKA_DELIVERY = 1;
+}
+
+message RAIN_MOSADAKA_DELIVERY {
+  optional string                    MOSADAKA_KEY = 1;                                     //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64                     SUB_GROUP_ID =2;                                    
+  optional int64                     GROUP_ID =3;
+  optional string                    SUB_GROUP_NAME = 4;
+  optional string                    GROUP_NAME = 5;  
+  optional central.types.MasDateTime FROM_BILING_DATE = 6;                                  // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 7;                                    //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 8;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 9;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 10;                                      // المحصل
+  optional double                    TOTAL_AMT = 11;                                        //إجمالي المديونية
+  optional double                    COLLECT_REMINDER_AMT = 12;                                     //الغير مسدد ف الفتره
+  optional double                    MOSADAKA_REMINDER_AMT = 13;                            //المبلغ المتبقي مصادقه
+}
+
+message RAIN_MOSADAKA {
+  optional int64                     MOSADAKA_ID = 1;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    MOSADAKA_KEY = 2;                                     //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64                     SUB_GROUP_ID =3; 
+  optional int64                     GROUP_ID =4;
+  optional string                    SUB_GROUP_NAME = 5;
+  optional string                    GROUP_NAME = 6;  
+  optional central.types.MasDateTime FROM_BILING_DATE = 7;                                  // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 8;                                    //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 9;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 10;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 11;                                      // المحصل
+  optional double                    TOTAL_AMT = 12;                                        //إجمالي المديونية
+  optional double                    MOSADAKA_AMT = 13;                                    //المبلغ المصادق
+  optional double                    MOSADAKA_REMINDER_AMT = 14;                            //المبلغ المتبقي مصادقه
+  optional double                    COLLECT_REMINDER_AMT = 15;                             //الغير مسدد ف الفتره
+  optional central.types.MasDateTime MOSADAKA_DATE = 16;                                  // تاريخ المصادقه
+  optional bool                      ACCEPTED = 17;                                         // معتمد
+  optional bool                      REJECTED = 18;                                        // مرفوض
+  optional bool                      DELIVERED = 19;                                        // مسلمة
+  optional bool                      PARTAIL= 20;                                           // جزئي
+  optional string                    REJECTED_REASON = 21;                                   // سبب الرفض
+  optional string                    PARTIAL_COMMENT = 22;                                   // تعليق المصادقه الجزئي
+  optional string                    PAYMENT_NO = 23;                                        //@gotags: gorm:"-"
+}
+
+message RAIN_BILL_MOSADAKA {
+  optional int64                     MOSADAKA_ID = 1;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    PAYMENT_NO = 2;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double                    TOTAL_AMT = 3;                                        //إجمالي المديونية
+  optional double                    BILL_APPROVED_AMT=4;   
+  optional double                    BILL_REJECTED_AMT=5;                               // المديونية المعتمدة
+  optional double                    MOSADAKA_REMINDER_AMT = 6;                            //المبلغ المتبقي مصادقه
+  optional string                    PARTIAL_COMMENT = 7;                                   // تعليق المصادقه الجزئي
+  optional bool                      IS_REJECTED = 8;                                        // هل مرفوضه
+  optional string                    REJECTED_REASON = 9;                                   // سبب الرفض
+  optional bool                      IS_DELIVERED = 10;                                       // هل مسلمة
+}
+
+message GOV_RAIN_REQ {
+  repeated int64 GROUP_ID = 2;
+  repeated int64 SUB_GROUP_ID = 3;
+  repeated int64 MINISTRY_ID = 4;                              // الوزاره
+  repeated int64 ACCOUNTING_UNIT_ID = 5;                       // الوحدة الحسابية
+  repeated int64 ASSOCIATION_ID = 6;                            // التصنيف 1 (مصادقات)
+  repeated int64 UNIT_ID = 7;                                  // التصنيف 2 (وحدات)
+  repeated int64 DEPENDENCY_ID = 8;                             // تابعية الاداره
+  optional central.types.MasDateTime FROM_RAIN_BILING_DATE = 9;
+  optional central.types.MasDateTime TO_RAIN_BILING_DATE = 10;
+  optional bool IS_COLLECT = 11;
+}
+
+message SubsRainConsumpRes {
+  repeated SubsRainConsump SubsRainConsump = 1;
+}
+
+message SubsRainConsump {
+  optional int64 GROUP_ID = 1;
+  optional int64 SUB_GROUPS_ID = 2;
+  optional string GROUP_NAME = 3;
+  optional string SUB_GROUP_NAME = 4;
+  repeated SubsBills SubsBills = 5;
+}
+
+message SubsBills {
+  optional int64 RAIN_ID = 1;
+  optional int64 SUB_GROUP_ID = 2;
+  optional string RAIN_PAYMENT_NO = 3;
+  optional central.types.MasDateTime RAIN_BILING_DATE = 4;
+  optional central.types.MasDateTime RAIN_DATE = 5;
+  optional double RAIN_CONSUMP = 7;
+  optional double RAIN_AMOUNT = 8;
+  optional double RAIN_COLLECTED_AMOUNT = 9;
+  optional double RAIN_MOSADAKA_AMOUNT = 10;
+  optional double RAIN_REMAINDER_AMOUNT = 11;
+  optional double RAIN_MOSADAKA_SELECTED_AMOUNT = 12;
+  optional double RAIN_MOSADAKA_AVILABLE_AMOUNT = 13;
+  optional bool   SELECTED = 15;
+}
+
+message All_RAINS {
+  repeated GOV_RAIN_WATER RAINS = 1;
+}
+
+message GOV_RAIN_WATER {
+  optional int64 RAIN_ID = 1;        // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional int64 SUB_GROUP_ID = 2;
+  optional string RAIN_PAYMENT_NO = 3;
+  optional central.types.MasDateTime RAIN_BILING_DATE = 4;
+  optional central.types.MasDateTime RAIN_DATE = 5;
+  optional central.types.MasDateTime STAMP_DATE = 6;
+  optional int64 STAMP_USER = 7;
+  optional double RAIN_CONSUMP = 8;
+  optional double RAIN_AMOUNT = 9;
+  optional double RAIN_COLLECTED_AMOUNT = 10;
+  optional double RAIN_MOSADAKA_AMOUNT = 11;
+  optional double RAIN_REMAINDER_AMOUNT = 12;
+}
+
+message GOV_RAIN_RECEIPTS {
+  optional string RECEIPT_ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional int64  SUB_GROUP_ID = 2;
+  optional string RAIN_PAYMENT_NO = 3;
+  optional central.types.MasDateTime RAIN_BILING_DATE = 5;
+  optional central.types.MasDateTime RAIN_COLLECTION_DATE = 6;
+  optional central.types.MasDateTime STAMP_DATE = 7;
+  optional int64  STAMP_USER = 8;
+  optional double RAIN_TOTAL_AMOUNT = 9;
+  optional double RAIN_COLLECTED_AMOUNT = 10;
+  optional bool   IS_PARTIAL = 11;
+  optional bool   IS_CANCELLED = 12;
+  optional central.types.MasDateTime CANCELLED_DATE = 13;
+  optional int64 CANCELLED_USER = 14; 
+  optional string CANCELLED_REASON = 15;
+  optional int64  PAY_NO = 16;// رقم المستند
+}
+
+message GOV_RAIN_SETETLEMENT {
+  optional int64  PAY_NO = 1; // @gotags: gorm:"primaryKey;autoIncrement:false" // رقم المستند
+  optional central.types.MasDateTime PAY_DATE = 2;// تاريخ المستند
+  optional PaymentType PAY_TYPE = 3; // نوع المستند
+  optional double AMOUNT = 4; // قيمة المستند
+  optional central.types.MasDateTime FROM_BILING_DATE = 5; // السداد عام مالي من
+  optional central.types.MasDateTime TO_BILING_DATE = 6; // السداد عام مالي حتى
+}
+
+message LAST_GOV_Protocol {
+  optional int64                     PROTOCOL_ID = 1;                            // رقم البروتوكول
+  optional string                    PROTOCOL_NAME = 2;                          // اسم البروتوكول
+  optional string                    PROTOCOL_DESC = 3;                          // وصف البروتوكول
+  optional central.types.MasDateTime FROM_PROTOCOL_DATE = 4;                     // تاريخ بداية البروتوكول
+  optional central.types.MasDateTime TO_PROTOCOL_DATE = 5;                       // تاريخ نهانة البروتوكول
+  optional int64                     MINISTRY_ID = 6;                              // الوزاره
+  optional double                    PROTOCOL_AMOUNT = 7;                          // مبلغ البروتوكول
+  optional double                    PROTOCOL_COLL_AMT=8;                          // مبلغ التحصيل
+  optional double                    PROTOCOL_REMINDER_AMT=9;                      // المبلغ المتبقي
+  optional string                    STAMP_USER = 10;
+  optional central.types.MasDateTime STAMP_DATE = 11;                               // تاريخ البروتوكول
+  optional bool                      DELETED = 12;                                    // هل البروتوكول محذوف
+  optional PROTOCOL_STATUS           PROTOCOL_STATUS = 13;                            // حالة البروتوكول
+  optional bool                      IS_COLLECTED = 14;                                // هل تم التحصيل
+  optional bool                      IS_MOSADAKA = 15;                                  // هل تم المصادقه
+  optional string                    MINISTRY_NAME = 16;                                
+}
+
+message AllStatements{
+  repeated STATEMENT STATEMENTS = 1; // تصنيفات البيان
+}
+
+message STATEMENT {
+  optional int64                     STATEMENT_ID = 1;                               // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional string                    STATEMENT_CODE = 2;                                
+  optional string                    STATEMENT_NAME = 3;                             //  (تصنيف البيان (اسم البيان
+  optional string                    STATEMENT_DESC = 4;                             //  (وصف البيان)
+  optional bool                      DELETED = 5;                                    // هل التصنيف محذوف
+}
+
+message StatementID {
+  optional int64                     STATEMENT_ID = 1;                               
+}
+
+message AllStatementItems{
+  repeated STATEMENT_ITEMS STATEMENT_ITEMS = 1; // تصنيفات بنود البيان
+}
+
+message STATEMENT_ITEMS {
+  optional int64                     STATEMENT_ITEMS_ID = 1;                         // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional int64                     STATEMENT_ITEMS_CODE = 2;                               // (تصنيف البيان (رقم البيان
+  optional string                    STATEMENT_ITEMS_NAME = 3;                       //  (تصنيف بنود البيان (اسم بنود البيان
+  optional string                    STATEMENT_ITEMS_DESC = 4;                       //  (وصف بنود البيان)
+  optional bool                      DELETED = 5;                                    // هل التصنيف محذوف
+}
+message StatementItemID {
+  optional int64                     STATEMENT_ITEMS_ID = 1;                               
+}
+
+message AllExeptions{
+  repeated EXEPTION EXEPTIONS = 1; // تصنيفات المستثني
+}
+
+message EXEPTION {
+  optional int64                     EXEPTION_ID = 1;                                 // @gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional string                    EXEPTION_CODE = 2;                               // (تصنيف المستثني (رقم المستثني
+  optional string                    EXEPTION_NAME = 3;                               // تصنيف المستثني (اسم المستثني)
+  optional string                    EXEPTION_DESC = 4;                               // وصف المستثني
+  optional bool                      DELETED = 5;                                    // هل التصنيف محذوف
+}
+
+message ExeptionID {
+  optional int64                     EXEPTION_ID = 1;                               
+}
+
+message AllProtocols {
+  repeated GOV_Protocol PROTOCOLS = 1; // بروتوكولات
+}
+
+message GOV_Protocol {
+  optional int64                     PROTOCOL_ID = 1;                           //@gotags: gorm:"primaryKey;autoIncrement:false" // رقم البروتوكول
+  optional string                    PROTOCOL_NAME = 2;                          // اسم البروتوكول
+  optional string                    PROTOCOL_DESC = 3;                          // وصف البروتوكول
+  optional central.types.MasDateTime FROM_PROTOCOL_DATE = 4;                     // تاريخ بداية البروتوكول
+  optional central.types.MasDateTime TO_PROTOCOL_DATE = 5;                       // تاريخ نهانة البروتوكول
+  optional int64                     MINISTRY_ID = 6;                              // الوزاره
+  optional double                    PROTOCOL_AMOUNT = 7;                          // مبلغ البروتوكول
+  optional string                     STAMP_USER = 8;
+  optional central.types.MasDateTime STAMP_DATE = 9;                               // تاريخ البروتوكول
+  optional bool                      DELETED = 10;                                    // هل البروتوكول محذوف
+  optional PROTOCOL_STATUS           PROTOCOL_STATUS = 11;                            // حالة البروتوكول
+  optional bool                      IS_COLLECTED = 12;                                // هل تم التحصيل
+  optional bool                      IS_MOSADAKA = 13;                                  // هل تم المصادقه
+  optional string                    MINISTRY_NAME = 14;                                //@gotags: gorm:"-"
+}
+
+message ProtocolReq {
+  optional int64                     PROTOCOL_ID = 1;                           // رقم البروتوكول
+}
+
+
+
+message MosadakaRepReq {
+  optional int64                     STATION_NO = 1;        //رقم الفرع
+  optional int64                     GROUP_ID=2;            //رقم الجهة
+  optional int64                     SUB_GROUP_ID=3;        //رقم الإداره
+  optional int64                     COLLECTOR_ID = 4;      //رقم المندوب
+  optional int64                     REVIEWER_ID = 5;       //رقم المراجع
+  optional MOSADAKA_STATUS           MOSADAKA_STATUS=6;     //حالة التصادق
+  optional DELIVERY_STATUS           DELIVERY_STATUS = 7;      // حاله التسليم
+  optional central.types.MasDateTime FROM_BILING_DATE = 8;  // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 9;    // تاريخ دورات الى
+  optional central.types.MasDateTime FROM_APPROVEAL_DATE = 10;  // تاريخ اعتماد من
+  optional central.types.MasDateTime TO_APPROVEAL_DATE = 11;    // تاريخ اعتماد الى
+  optional int64                     ACCOUNTING_UNITS_ID = 12;
+  optional int64                     UNITS_ID=13;
+  optional int64                     ASSOCIATION_ID = 14;            //تصنيف المصادقات
+  optional bool                      IS_APPROVED_MOSADAKA = 15;            // هل مصادقه
+  optional bool                      IS_REJECTED_MOSADAKA = 16;            // هل مرفوضه
+  optional bool                      ALL_DATA = 17;
+}
+
+message MosadakaRepRes {
+  repeated MosadakaRepData MosadakaRepData=1;
+}
+
+message MosadakaRepData {
+  optional int32                     STATION_NO = 1;                               //رقم الفرع
+  optional string                     STATION_NAME = 35;                               //رقم الفرع
+  optional int64                     GROUP_ID =2;                                  //رقم الجهة
+  optional string                    group_NAME = 3;                               //اسم الجهه
+  optional int64                     SUB_GROUP_ID = 4;                             //رقم الاداره
+  optional string                    SUB_Group_NAME = 5;                           //اسم الاداره
+  optional string                     CUSTKEY = 6;                                  // رقم العميل
+  optional int64                     MINISTRY_ID = 7;                              // الوزاره
+  optional int64                     ACCOUNTING_UNIT_ID = 8;                       // الوحدة الحسابية
+  optional int64                     ASSOCIATION_ID = 9;                            // التصنيف 1 (مصادقات)
+  optional int64                     UNIT_ID = 10;                                  // التصنيف 2 (وحدات)
+  optional int64                     DEPENDENCY_ID = 11;                             // تابعية الاداره
+  optional string                    MINISTRY_NAME = 12;                              // اسم الوزاره
+  optional string                    ACCOUNTING_UNIT_NAME = 13;                        // اسم الوحدة الحسابية
+  optional string                    ASSOCIATION_NAME = 14;                            // اسم التصنيف 1 (مصادقات)
+  optional string                    UNIT_NAME = 15;                                   // اسم التصنيف 2 (وحدات)
+  optional string                    DEPENDENCY_NAME = 16;                             // اسم تابعية الاداره
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 17;                    //كود الهيئة الموازنية 
+  optional int64                     COLLECTOR_ID = 18;                                // رقم المندوب
+  optional string                    COLLECTOR_NAME = 19;                              // اسم المندوب
+  optional int64                     REVIEWER_ID = 20;                                 // رقم المراجع
+  optional string                    REVIEWER_NAME = 21;                               // اسم المراجع
+  optional double                    TOTAL_AMT = 22;                                   //إجمالي المديونية
+  optional double                    MOSADAKA_AMT = 23;                                // المبلغ المصادق
+  optional double                    NOT_MOSADAKA_AMT = 24;                            // المبلغ الغير مصادق
+  optional double                    REJECTED_AMT = 36;                                // المبلغ المرفوض
+  optional MOSADAKA_STATUS           MOSADAKA_STATUS=25;                               // حالة التصادق
+  optional DELIVERY_STATUS           DELIVERY_STATUS = 26;                             // حالة التسليم
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 27;                          // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 28;                            // تاريخ التسليم للجهه
+  optional central.types.MasDateTime MOSADAKA_DATE = 29;                                 // تاريخ المصادقه
+  optional string                    REJECTED_REASON = 30;                               // سبب الرفض
+  optional string                    PARTIAL_COMMENT = 31;                               // تعليق المصادقه الجزئي
+  optional int64                     MOSADAKA_ID=32;                                     // تصنيف المصادقه
+  optional central.types.MasDateTime MOSADAKA_FROM_BILNG_DATE = 33;                      // تاريخ من دورات المصادقه
+  optional central.types.MasDateTime MOSADAKA_TO_BILNG_DATE = 34;                        // تاريخ الي دورات المصادقه
+}
+
+message SubsMeterExeptionReportResponse {
+  repeated  SubsMeterExeptionData SubsMeterExeptionData = 1; //          
+}
+
+message SubsMeterExeptionData{
+  optional int64                     GROUP_ID = 1;
+  optional string                    GROUP_NAME = 2;
+  optional int64                     SUB_GROUP_ID =3; 
+  optional string                    SUB_GROUP_NAME = 4;
+  optional int64                     METER_MICHANICS_NUM = 5;         
+  optional int64                     METER_PREPAID_NUM = 6;
+  optional int64                     METER_NOT_WORKING_NUM = 7;
+  optional int64                     METER_NOT_METER_NUM = 8;  
+  optional int64                     ALL_GROUP_SUBS_COUNT = 9;
+  optional int64                     METER_CUSTS_NUM = 10;
+  optional int64                     DEPENDENCY_ID = 11;                               // تابعية الاداره
+  optional string                    DEPENDENCY_NAME = 12;                               // اسم تابعية الاداره
+  optional central.types.MasDateTime BILINGDATE  =13;                                   // تاريخ الدورة
+  optional double                    TOTAL_AMT =14;                                     // اجمالي الفاتورة
+  optional double                    MAD_AMT =15;                                       // مديونية
+  optional double                    TOTAL_COLLECTED_AMOUNT=16;                          // اجمالي المبلغ المحصل
+  optional string                    MONTH =17;                                          // الشهر
+  optional double                    MOSADAKA_AMT =18;                                   // قيمة المصادقة
+  optional double                    NOT_MOSADAKA_AMT =19;                               // قيمة غير المصادقة
+  optional string                    PAYMENT_NO = 20; 
+  optional string                    CUSTKEY = 21;                                      // رقم الحساب
+  optional string                    CUSTNAME = 22;                                     // اسم العميل
+}
+
+message MosadakatReq {
+  optional int64                     SUB_GROUP_ID = 1;                                  // رقم الاداره
+  optional central.types.MasDateTime FROM_BILING_DATE = 2;                                    // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 3;                                      // تاريخ دورات الى
+  repeated int64                     STATION_NO=4;
+  repeated string                    CUSTKEY = 5; 
+  optional int64                     MINISTRY_ID = 6;  
+  optional int64                     UNIT_ACCOUNT_ID = 7; 
+  optional int64                     ASSOCIATION_ID = 8;
+  optional int64                     UNIT_ID = 9; 
+  optional int64                     DEPENDENCY_ID = 10; 
+  optional int64                     GROUP_ID = 11;
+  optional bool                      PRINT = 12;
+  optional GOV_GROUP_BY              GROUP_BY = 20;
+}
+
+message All_Mosadakat_Custs {
+  optional int64                     SUB_GROUP_ID =1;
+  optional string                    CUSTKEY=7;
+  optional string                    NAME = 2;
+  optional double                    TOTAL_AMT = 3;                                  //إجمالي المديونية
+  optional double                    REMINDER_AMT = 4;                               //الغير مسدد ف الفتره
+  repeated CustsBills                CUSTOMER = 5;
+  optional string                    PARTIAL_COMMENT = 6;                                   // تعليق المصادقه الجزئي
+}
+
+message CustsBills {
+  optional string                     CUSTKEY = 1; 
+  repeated Mosadakat                CUSTBILLS = 4;
+}
+
+message All_Mosadakat {
+  repeated Mosadakat                Mosadakat = 1;
+}
+
+message Mosadakat {
+  optional string                     CUSTKEY = 1;  
+  optional double                    TOTAL_AMT = 2;                                  //إجمالي المديونية
+  optional double                    REMINDER_AMT = 3;                               //الغير مسدد ف الفتره
+  optional central.types.MasDateTime BILNG_DATE = 4;                                 // تاريخ الدوره
+  optional int64                     SUB_GROUP_ID =5;
+  optional string                    NAME = 6;
+  optional string                    ADDRESS = 7;
+  optional int32                     SITE_CODE = 8;
+  optional int64                     GROUP_ID =9;
+  optional int64                     MINISTRY_ID = 10;                                 // الوزاره
+  optional int64                     ACCOUNTING_UNIT_ID = 11;                          // الوحدة الحسابية
+  optional int64                     ASSOCIATION_ID = 12;                              // التصنيف 1 (مصادقات)
+  optional int64                     UNIT_ID = 13;                                     // التصنيف 2 (وحدات)
+  optional int64                     DEPENDENCY_ID = 14;                               // تابعية الاداره
+  optional string                    MINISTRY_NAME = 15;                                 // اسم الوزاره
+  optional string                    ACCOUNTING_UNIT_NAME = 16;                          // اسم الوحدة الحسابية
+  optional string                    ASSOCIATION_NAME = 17;                              // اسم التصنيف 1 (مصادقات)
+  optional string                    UNIT_NAME = 18;                                     // اسم التصنيف 2 (وحدات)
+  optional string                    DEPENDENCY_NAME = 19;                               // اسم تابعية الاداره
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 20;                   //كود الهيئة الموازنية 
+  optional int32                     STATION_NO = 21;                                 
+  optional string                    GROUP_NAME = 22;                                    // اسم المجموعه
+  optional double                    MOSADAKA_AVILABLE_AMT = 23;                         // المبلغ المتاح للمصادقه
+  optional string                    PAYMENT_NO = 24;                        
+  optional MOSADAKA_STATUS           MOSADAKA_STATUS=25;       
+  optional int64                     COLLECTOR_ID = 26;  
+  optional string                    COLLECTOR_NAME = 27;
+  optional DELIVERY_STATUS           DELIVERY_STATUS = 28;
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 29;                               
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 30;  
+  optional central.types.MasDateTime REQ_TO_BILNG_DATE = 31; 
+  optional central.types.MasDateTime REQ_FROM_BILING_DATE = 32; 
+  optional double                    MOSADAKA_AMT = 33;                                    //المبلغ المصادق
+  optional string                    REJECTED_REASON = 34;                                   // سبب الرفض
+  optional bool                      SUB_NEW = 35;                                         // هل الجهه جديده
+  optional string                    PARTIAL_COMMENT = 36;                                   // تعليق المصادقه الجزئي
+  optional bool                      IS_REJECTED = 37;                                        // هل مرفوضه
+  optional double                    REJECTED_AMT = 38;                                // المبلغ المرفوض
+}
+
+message DeliveryMosadakatReq {
+  repeated MOSADAKA_DELIVERY MOSADAKA_DELIVERY = 1;         // تسليم المصادقات
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 2;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 3;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 4;                                      // المحصل
+  optional bool                      SUB_DELIVERY = 5;
+}
+
+message MosadakaReq {
+  repeated MOSADAKA MOSADAKA = 1;
+}
+
+message MOSADAKA_DELIVERY {
+  optional string                    MOSADAKA_KEY = 1;                                     //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64                     SUB_GROUP_ID =2; 
+  optional string                    CUSTKEY =3;                                      
+  optional int64                     GROUP_ID =4;
+  optional string                    SUB_GROUP_NAME = 5;
+  optional string                    GROUP_NAME = 6;  
+  optional central.types.MasDateTime FROM_BILING_DATE = 7;                                  // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 8;                                    //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 9;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 10;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 11;                                      // المحصل
+  optional double                    TOTAL_AMT = 12;                                        //إجمالي المديونية
+  optional double                    COLLECT_REMINDER_AMT = 13;                                     //الغير مسدد ف الفتره
+  optional double                    MOSADAKA_REMINDER_AMT = 14;                            //المبلغ المتبقي مصادقه
+}
+
+message MOSADAKA {
+  optional int64                     MOSADAKA_ID = 1;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    MOSADAKA_KEY = 2;                                     //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64                     SUB_GROUP_ID =3; 
+  optional string                     CUSTKEY =4;   
+  optional int64                     GROUP_ID =5;
+  optional string                    SUB_GROUP_NAME = 6;
+  optional string                    GROUP_NAME = 7;  
+  optional central.types.MasDateTime FROM_BILING_DATE = 8;                                  // تاريخ دورات من
+  optional central.types.MasDateTime TO_BILING_DATE = 9;                                    //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional central.types.MasDateTime COLL_DELIVERY_DATE = 10;                                // تاريخ التسليم للمحصل
+  optional central.types.MasDateTime SUB_DELIVERY_DATE = 11;                                 // تاريخ التسليم للجهه,
+  optional int64                     COLLECTOR_ID = 12;                                      // المحصل
+  optional double                    TOTAL_AMT = 13;                                        //إجمالي المديونية
+  optional double                    MOSADAKA_AMT = 14;                                    //المبلغ المصادق
+  optional double                    MOSADAKA_REMINDER_AMT = 15;                            //المبلغ المتبقي مصادقه
+  optional double                    COLLECT_REMINDER_AMT = 16;                             //الغير مسدد ف الفتره
+  optional central.types.MasDateTime MOSADAKA_DATE = 17;                                  // تاريخ المصادقه
+  optional bool                      ACCEPTED = 18;                                         // معتمد
+  optional bool                      REJECTED = 19;                                        // مرفوض
+  optional bool                      DELIVERED = 20;                                        // مسلمة
+  optional bool                      PARTAIL= 21;                                           // جزئي
+  optional string                    REJECTED_REASON = 22;                                   // سبب الرفض
+  optional string                    PARTIAL_COMMENT = 23;                                   // تعليق المصادقه الجزئي
+  optional string                    PAYMENT_NO = 24;                                        //@gotags: gorm:"-"
+}
+
+message BILL_MOSADAKA {
+  optional int64                     MOSADAKA_ID = 1;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    PAYMENT_NO = 2;                                      //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double                    TOTAL_AMT = 3;                                        //إجمالي المديونية
+  optional double                    BILL_APPROVED_AMT=4;   
+  optional double                    BILL_REJECTED_AMT=5;                               // المديونية المعتمدة
+  optional double                    MOSADAKA_REMINDER_AMT = 6;                            //المبلغ المتبقي مصادقه
+  optional string                    CUSTKEY = 7;
+  optional string                    PARTIAL_COMMENT = 8;                                   // تعليق المصادقه الجزئي
+  optional bool                      IS_REJECTED = 9;                                        // هل مرفوضه
+  optional string                    REJECTED_REASON = 10;                                   // سبب الرفض
+  optional bool                      IS_DELIVERED = 11;                                       // هل مسلمة
+}
+
+message MINISTRY {
+  optional int64                     MINISTRY_ID = 1;                            //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    MINISTRY_CODE = 2;                          
+  optional string                    MINISTRY_NAME = 3;                                         
+  optional string                    MINISTRY_DESCRIPTION = 4;   
+  optional bool                      DELETED = 5;                                    
+}
+
+message MINISTRY_ID {
+  optional int64                     MINISTRY_ID = 1;                          
+}
+
+message All_MINISTRIES {
+  repeated MINISTRY                  MINISTRIES = 1;
+}
+
+message ACCOUNTING_UNITS {
+  optional int64                     UNIT_ACCOUNT_ID = 1;                            //@gotags: gorm:"primaryKey;autoIncrement:false"  اسم الوحدة الحسابية
+  optional string                    UNIT_ACCOUNT_CODE = 2;                          
+  optional string                    UNIT_ACCOUNT_NAME = 3;                                         
+  optional string                    UNIT_ACCOUNT_DESCRIPTION = 4;       
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 5;                   //كود الهيئة الموازنية    
+  optional bool                      DELETED = 6;                             
+}
+
+message All_ACCOUNTING_UNITS {     
+  repeated ACCOUNTING_UNITS                  ACCOUNTING_UNITS = 1;
+
+}
+
+message ACCOUNTING_UNITS_ID {
+  optional int64                     UNIT_ACCOUNT_ID = 1; 
+}
+
+message  ASSOCIATION {
+  optional int64                     ASSOCIATION_ID = 1;                            //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    ASSOCIATION_CODE = 2;                          
+  optional string                    ASSOCIATION_NAME = 3;                                         
+  optional string                    ASSOCIATION_DESCRIPTION = 4;                  
+  optional bool                      DELETED = 5;                       
+}
+message ASSOCIATIONS_ID {
+  optional int64                     ASSOCIATION_ID = 1;                          
+}
+message All_ASSOCIATIONS {
+  repeated ASSOCIATION              ASSOCIATIONS = 1;
+}
+
+message UNIT {
+  optional int64                     UNIT_ID = 1;                            //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    UNIT_CODE = 2;                          
+  optional string                    UNIT_NAME = 3;                                         
+  optional string                    UNIT_DESCRIPTION = 4;                   
+  optional bool                      DELETED = 5;                      
+}
+message UNITS_ID {
+  optional int64                     UNIT_ID = 1;                          
+}
+message All_UNITS {
+  repeated UNIT                     UNITS = 1;
+}
+
+message DEPENDENCY {
+  optional int64                     DEPENDENCY_ID = 1;                            //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    DEPENDENCY_CODE = 2;                          
+  optional string                    DEPENDENCY_NAME = 3;                                         
+  optional string                    DEPENDENCY_DESCRIPTION = 4;               
+  optional bool                      DELETED = 5;                          
+}
+message DEPENDENCIES_ID {
+  optional int64                     DEPENDENCY_ID = 1;                          
+}
+message All_DEPENDENCIES {
+  repeated DEPENDENCY              DEPENDENCIES = 1;
+}
+
+message Version {
+  optional string                    Version = 1;
+}
+
+message All_GROUPS {
+  repeated GROUPS                    GROUPS = 1;
+}
+
+message PaymentCollDtlReq {
+  optional int64                     PAY_ID = 1; 
+  optional string                    DOC_DTL = 2;
+  optional central.types.MasDateTime FROM_COLLECTION_DATE = 3;
+  optional central.types.MasDateTime TO_COLLECTION_DATE = 4;  
+  optional int64                     GROUP_ID = 5;
+  optional int64                     SUB_GROUPS_ID = 6;
+  optional PaymentType               paymentType = 7;                                 // نوع السداد
+  optional int64                     REVIEWER_ID = 8;                                 // المراجع
+  optional int64                     COLLECTOR_ID = 9;                                 // المحصل
+}
+
+message PaymentCollDtl {
+  optional int64                     GROUP_ID =1;
+  optional int64                     SUB_GROUP_ID =2;
+  optional string                    GROUP_NAME =3;
+  optional string                    SUB_GROUP_NAME =4;
+  optional string                    RECEIPT_NO = 5;
+  optional string                    CUSTKEY = 6;
+  optional string                    TARGET_PAYMENT_NO = 7;
+  optional central.types.MasDateTime COLLECTION_DATE = 8;
+  optional central.types.MasDateTime BILLING_DATE = 9;
+  optional double                    TOTAL_AMT = 10;
+  optional double                    WATER_AMT = 11;
+  optional double                    SEWER_AMT = 12;
+  optional double                    BASIC_AMT = 13;
+  optional double                    OTHER_AMT = 14;
+  optional string                    COLLECTOR_NAME =15;
+  optional string                    REVIEWER_NAME = 16;
+  optional double                    AMOUNT=17;  
+  optional string                    ITEM_NAME= 18;  
+  optional int64                     REVIEWER_ID= 19;
+  optional int64                     COLLECTOR_ID= 20;
+  optional int64                     HIST_GROUP_ID = 21;                                // رقم الجهه تاريخية
+  optional int64                     HIST_SUB_GROUP_ID = 22;                                // رقم الاداره تاريخية
+}
+
+message ArrPaymentCollDtl {
+  repeated PaymentCollDtl         PaymentCollDtl = 1;
+}
+
+message GetSFRequest {
+  optional string                    FILE_NO = 1;    
+  optional int64                     GROUP_ID = 2; 
+  optional central.types.MasDateTime FROM_DATE = 3;
+  optional central.types.MasDateTime TO_DATE = 4; 
+  optional central.types.MasDateTime FROM_DAILY_DATE = 5;
+  optional central.types.MasDateTime TO_DAILY_DATE = 6;       
+  optional central.types.MasDateTime FROM_FINANCIAL_DOC_DATE =8;
+  optional central.types.MasDateTime TO_FINANCIAL_DOC_DATE=9;     
+  optional bool                      IS_ALL = 7;   
+  optional string                     BANK_CODE =10;       //رقم حساب البنك      
+}
+
+message GetFileRequest {
+  optional string                    FILE_NO = 1;   
+    optional string                     BANK_CODE =2;       //رقم حساب البنك                
+}
+
+message All_SUB_GROUPS {
+  repeated SUB_GROUPS                SUB_GROUPS = 1;
+}
+
+message SUB_GROUPS_RELATED_GROUP {
+  optional GROUPS                    GROUPS = 1;
+  repeated SUB_GROUPS                SUB_GROUPS = 2;
+  optional int64                     SUB_GROUPS_ID = 3;
+}
+
+message GROUPS_ID {
+  optional int64                     GROUP_ID = 1;
+}
+
+message  PAY_RQ {
+  optional int64                     GROUP_ID = 1;
+  optional bool                      WITH_ZERO = 2;
+  optional string                    DOC_DTL = 3;    
+  optional central.types.MasDateTime FROM_DATE = 4;
+  optional central.types.MasDateTime TO_DATE = 5;    
+  optional central.types.MasDateTime FROM_DAILY_DATE = 6;
+  optional central.types.MasDateTime TO_DAILY_DATE = 7;    
+  optional central.types.MasDateTime FROM_FINANCIAL_DOC_DATE =8;
+  optional central.types.MasDateTime TO_FINANCIAL_DOC_DATE=9;
+  optional int64                     SUB_GROUP_ID = 10;
+  optional string                     BANK_CODE =11;       //رقم حساب البنك
+}
+
+message SUB_GROUPS_ID {
+  optional int64                     ID = 1;
+}
+
+message Customers {
+repeated Customer                    Customer =1;
+}
+
+message  Customer {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  optional int64                     Count = 3;
+  optional double                    Amount = 4;
+  optional int64                     STATION_NO = 5;
+  optional string                    BILLGROUP = 6;
+  optional string                    BOOK_NO = 7;
+  optional string                    WALK_NO = 8;
+  optional string                    OLD_KEY = 9;
+  optional string                    ADDRESS=10;
+  optional bool                      PREPAID=11;
+  optional bool                      DELETED = 12;
+  optional int64                     GROUP_ID = 13;
+  optional string                    GROUP_NAME = 14;
+  optional int64                     SUB_GROUP_ID = 15;
+  optional string                    SUB_GROUP_NAME = 16;
+  optional int64                     STATEMENT_ID = 17;                               // (تصنيف البيان (رقم البيان
+  optional string                    STATEMENT_NAME = 18;                             //  (تصنيف البيان (اسم البيان
+  optional int64                     STATEMENT_ITEMS_ID = 19;                         //  (تصنيف بنود البيان (رقم بنود البيان
+  optional string                    STATEMENT_ITEMS_NAME = 20;                       //  (تصنيف بنود البيان (اسم بنود البيان
+  optional int64                     EXEPTION_ID = 21;                                 //تصنيف المستثني (رقم المستثني)
+  optional string                    EXEPTION_NAME = 23;                               // تصنيف المستثني (اسم المستثني)
+}
+
+message  CustomerReq {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  optional int64                     GROUP_ID = 3;
+  optional string                    GROUP_NAME = 4;
+  optional int64                     SUB_GROUP_ID = 5;
+  optional string                    SUB_GROUP_NAME = 6;
+  optional int64                     STATION_NO = 7;
+  optional string                    BILLGROUP = 8;
+  optional string                    BOOK_NO = 9;
+  optional string                    WALK_NO = 10;
+  optional string                    OLD_KEY = 11;
+  optional string                    ADDRESS=12;
+  optional bool                      PREPAID=13;
+}
+
+message  NCustomerReq {
+  optional string                    CUSTKEY = 1;
+  optional int64                     GROUP_ID = 2;
+  optional int64                     SUB_GROUP_ID = 3;
+  optional int64                     STATEMENT_ID = 17;                               // (تصنيف البيان (رقم البيان
+  optional string                    STATEMENT_NAME = 18;                             //  (تصنيف البيان (اسم البيان
+  optional int64                     STATEMENT_ITEMS_ID = 19;                         //  (تصنيف بنود البيان (رقم بنود البيان
+  optional string                    STATEMENT_ITEMS_NAME = 20;                       //  (تصنيف بنود البيان (اسم بنود البيان
+  optional int64                     EXEPTION_ID = 21;                                 //تصنيف المستثني (رقم المستثني)
+  optional string                    EXEPTION_NAME = 23;                               // تصنيف المستثني (اسم المستثني)
+}
+
+
+
+message Customers_s {
+  repeated Customer_s                Customer_s =1;
+}
+  
+  message  Customer_s {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  optional int64                     GROUP_ID = 3;
+  optional string                    GROUP_NAME = 4;
+  optional int64                     SUB_GROUP_ID = 5;
+  optional string                    SUB_GROUP_NAME = 6;
+  optional int64                     Count = 7;
+  optional double                    Amount = 8;
+  optional int64                     STATION_NO = 9;
+  optional string                    BILLGROUP = 10;
+  optional string                    BOOK_NO = 11;
+  optional string                    WALK_NO = 12;
+  optional string                    OLD_KEY = 13;
+  optional string                    ADDRESS=14;
+  optional bool                      PREPAID=15;
+  bool                      DELETED = 16;
+
+}
+
+message GetCustomerReq {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  optional string                    OLD_KEY = 3;
+}
+
+message ConvCustToPreReq {
+  optional string                    CUSTKEY = 1;
+}
+
+message Bills_Parameters {
+  optional GROUPS_ID                 GROUP_ID = 1;
+  optional SUB_GROUPS_ID             SUB_GROUP_ID = 2;
+  optional arr_Customer              Customers = 3;
+  optional bool                      IS_WATER_MERGED= 4;            
+  optional bool                      MERGE_ALL= 5;            
+}
+
+message arr_Customer {
+  repeated string                    CUSTKEY =1;
+}
+
+message Arr_CustomersBills {
+  repeated CustomersBills            CustomersBills = 1;
+  repeated hedar                     hedars=2;
+  optional Bills_Parameters          Bills_Parameters =3;
+  optional Arr_Payments              Arr_Payments  =4;
+  optional central.types.MasDateTime COLL_DATE = 5;
+  optional int64                     REVIEWER_ID =6;
+  optional int64                     COLLECTOR_ID =7;
+  optional PaymentType               paymentType = 8;
+  optional double                    AMOUNT =9;
+  optional string                    DISCOUNT_DOCUMENT =10;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =11;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =12;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =13;
+  optional string                    BANK_NAME =14;
+  optional string                    DOC_DTL=15;  
+  optional string                    BANK_CODE=16;
+  optional bool                      SPECIAL_COLL =17;
+}
+
+message Arr_Activity_CustomersBills {
+  repeated ACTIVITY_HEADER           ACTIVITY_HEADER=2;
+  repeated ACTIVITY_CUSTOMER_BILLS   ACTIVITY_CUSTOMER_BILLS = 1;
+  optional string                    CUSTKEY =3;
+  optional bool                      IS_WATER_MERGED= 4;      
+  optional central.types.MasDateTime COLL_DATE = 5;
+  optional int64                     REVIEWER_ID =6;
+  optional int64                     COLLECTOR_ID =7;
+  optional string                    PAYMENT_TYPE = 8;
+  optional double                    AMOUNT =9;
+  optional string                    DISCOUNT_DOCUMENT =10;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =11;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =12;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =13;
+  optional string                    BANK_NAME =14;
+  optional string                    DOC_DTL=15;  
+  optional string                    BANK_CODE=16;
+  optional bool                      SPECIAL_COLL =17;
+}
+
+message ACTIVITY_CUSTOMER_BILLS {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  optional string                    PAYMENT_NO = 3;
+  optional central.types.MasDateTime BILNG_DATE = 4;
+  optional string                    MONTH =5;
+  optional int32                     CYCLE_ID =6;
+  optional string                    ITEM_ID = 7;
+  optional string                    ITEM_NAME = 8;
+  optional double                    ITEM_AMOUNT = 9;
+  optional double                    REMAINING_AMOUNT = 10;
+  optional bool                      SELECTED = 11;
+  optional bool                      COLLECTED = 12;
+  optional double                    COLL_AMOUNT = 13;
+  optional double                    ORG_AMOUNT = 14;
+  optional double                    CREDIT_AMOUNT = 15;
+}
+
+message ACTIVITY_HEADER {
+  optional central.types.MasDateTime BILNG_DATE = 1;
+  optional string                    Description =2;
+  optional string                    ITEM_ID = 3;
+  optional string                    ITEM_NAME = 4;
+}
+
+message hedar {
+  optional central.types.MasDateTime BILNG_DATE = 1;
+  optional string                    Description =2;
+  repeated DTL                       STLS =3;
+}
+
+message DTL {
+  optional string                    ITEM_ID = 1;
+  optional string                    ITEM_NAME = 2;
+}
+
+message CustomersBills {
+  optional string                    CUSTKEY = 1;
+  optional string                    Name = 2;
+  repeated BILL                      BILLS = 8;
+}
+
+message BILLS {
+  repeated  BILL                     BILLS = 1;
+}
+
+message BILL {
+  optional string                    CUSTKEY = 1;
+  optional double                    CL_BLNCE = 2;
+  optional double                    TOTAL_COLLECTED_AMOUNT =3;
+  optional central.types.MasDateTime BILNG_DATE = 4;
+  optional string                    PAYMENT_NO = 5;
+  repeated BILL_DTL                  BILLS_DTL = 6;
+  optional string                    MONTH =7;
+  optional int32                     CYCLE_ID =8;
+}
+
+message BILL_DTL {
+  optional string                    PAYMENT_NO = 1;
+  optional string                    ITEM_ID = 2;
+  optional string                    ITEM_NAME = 3;
+  optional double                    ITEM_AMOUNT = 4;
+  optional double                    REMAINING_AMOUNT = 5;
+  optional bool                      SELECTED = 6;
+  optional bool                      COLLECTED = 7;
+  optional double                    COLL_AMOUNT = 8;
+  optional double                    ORG_AMOUNT = 9;
+  optional double                    CREDIT_AMOUNT = 10;
+}
+
+message MessageResponse {
+  optional string                    Message = 1;
+  optional bool                      Done = 2;
+  optional int64                     ID = 3;
+}
+
+message All_GROUPS_CUSTKEYS {
+  repeated GROUPS_CUSTOMERS          GROUPS_CUSTOMERS = 1;
+}
+
+message GROUPS {
+  optional string                    NAME = 1;
+  optional string                    NAME_EN = 2;
+  optional string                    TAX_NO = 3;
+  optional string                    ADDRESS = 4;
+  optional string                    EMAIL = 5;
+  optional string                    PHONE_NO = 6;
+  optional int32                     SITE_CODE = 7;
+  optional int64                     GROUP_ID =8;
+  optional string                    ADDRESS_2 = 9;
+}
+
+message SUB_GROUPS {
+  optional string                    NAME = 1;
+  optional string                    NAME_EN = 2;
+  optional string                    TAX_NO = 3;
+  optional string                    ADDRESS = 4;
+  optional string                    EMAIL = 5;
+  optional string                    PHONE_NO = 6;
+  optional int32                     SITE_CODE = 7;
+  optional int64                     SUB_GROUP_ID =8;
+  optional int64                     GROUP_ID =9;
+  optional string                    ADDRESS_2 = 10;
+  optional int64                     MINISTRY_ID = 16;                                 // الوزاره
+  optional int64                     ACCOUNTING_UNIT_ID = 17;                          // الوحدة الحسابية
+  optional int64                     ASSOCIATION_ID = 18;                              // التصنيف 1 (مصادقات)
+  optional int64                     UNIT_ID = 19;                                     // التصنيف 2 (وحدات)
+  optional int64                     DEPENDENCY_ID = 20;                               // تابعية الاداره
+  optional string                    MINISTRY_NAME = 21;                                 // اسم الوزاره
+  optional string                    ACCOUNTING_UNIT_NAME = 22;                          // اسم الوحدة الحسابية
+  optional string                    ASSOCIATION_NAME = 23;                              // اسم التصنيف 1 (مصادقات)
+  optional string                    UNIT_NAME = 24;                                     // اسم التصنيف 2 (وحدات)
+  optional string                    DEPENDENCY_NAME = 25;                               // اسم تابعية الاداره
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 26;                   //كود الهيئة الموازنية 
+}
+
+message GROUP_DTL {
+  optional int64                     GROUP_ID = 1;                                     //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    NAME = 2;                                         //@gotags: gorm:"size:255"
+  optional string                    NAME_EN = 3;
+  optional string                    TAX_NO = 4;                                       //@gotags: gorm:"size:20"
+  optional string                    ADDRESS = 5;                                      //@gotags: gorm:"size:255"
+  optional string                    EMAIL = 6;                                        //@gotags: gorm:"size:50"
+  optional string                    PHONE_NO = 7;                                     //@gotags: gorm:"size:20"
+  optional int32                     SITE_CODE = 8;
+  optional central.types.MasDateTime STAMP_DATE = 9;
+  optional string                    ADDRESS_2 = 10;
+  optional bool                      DELETED = 11;
+  optional string                    STAMP_USER = 13;
+  optional int64                     OLD_GROUP_ID = 14;                                //@gotags: gorm:"-"
+}
+
+message SUB_GROUP_DTL {
+  optional int64                     SUB_GROUP_ID = 1;                                 //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    NAME = 2;                                         //@gotags: gorm:"size:255"
+  optional string                    NAME_EN = 3;
+  optional string                    TAX_NO = 4;                                       //@gotags: gorm:"size:20"
+  optional string                    ADDRESS = 5;                                      //@gotags: gorm:"size:255"
+  optional string                    EMAIL = 6;                                        //@gotags: gorm:"size:50"
+  optional string                    PHONE_NO = 7;                                     //@gotags: gorm:"size:20"
+  optional int32                     SITE_CODE = 8;
+  optional central.types.MasDateTime STAMP_DATE = 9;
+  optional int64                     GROUP_ID = 10;                                    //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    ADDRESS_2 = 11;
+  optional bool                      DELETED = 12;
+  optional string                    STAMP_USER = 14; 
+  optional int64                     OLD_SUB_GROUP_ID = 15;                            //@gotags: gorm:"-"
+  optional int64                     MINISTRY_ID = 16;                                 // الوزاره
+  optional int64                     ACCOUNTING_UNIT_ID = 17;                          // الوحدة الحسابية
+  optional int64                     ASSOCIATION_ID = 18;                              // التصنيف 1 (مصادقات)
+  optional int64                     UNIT_ID = 19;                                     // التصنيف 2 (وحدات)
+  optional int64                     DEPENDENCY_ID = 20;                               // تابعية الاداره
+  optional string                    MINISTRY_NAME = 21;                                 // اسم الوزاره
+  optional string                    ACCOUNTING_UNIT_NAME = 22;                          // اسم الوحدة الحسابية
+  optional string                    ASSOCIATION_NAME = 23;                              // اسم التصنيف 1 (مصادقات)
+  optional string                    UNIT_NAME = 24;                                     // اسم التصنيف 2 (وحدات)
+  optional string                    DEPENDENCY_NAME = 25;                               // اسم تابعية الاداره
+  optional int64                     BUDGETARY_AUTHORITY_CODE = 26;                   //كود الهيئة الموازنية 
+  optional bool                      METER_EXEPTION = 27;                             // مستثناه من تركيب العداد
+}
+
+message GROUPS_CUSTOMERS {
+  optional int64                     GROUP_ID = 21;                                     
+  optional int64                     SUB_GROUP_ID = 1;
+  optional string                    CUSTKEY = 2;                                      //@gotags: gorm:"size:20;primaryKey;"
+  optional string                    CUSTNAME = 3;
+  optional int64                     STATION_NO = 4;
+  optional string                    BILLGROUP = 5;
+  optional string                    BOOK_NO = 6;
+  optional string                    WALK_NO = 7;
+  optional string                    OLD_KEY = 8;
+  optional string                    ADDRESS=9;
+  optional bool                      PREPAID=10;
+  optional bool                      DELETED = 11;
+  optional central.types.MasDateTime STAMP_DATE = 12;
+  optional string                    STAMP_USER = 13;
+  optional METER_TYPE                METER_TYPE = 14;                                 // نوع العداد
+  optional int64                     STATEMENT_ID = 15;                               // (تصنيف البيان (رقم البيان
+  optional string                    STATEMENT_NAME = 16;                             //  (تصنيف البيان (اسم البيان
+  optional int64                     STATEMENT_ITEMS_ID = 17;                         //  (تصنيف بنود البيان (رقم بنود البيان
+  optional string                    STATEMENT_ITEMS_NAME = 18;                       //  (تصنيف بنود البيان (اسم بنود البيان
+  optional int64                     EXEPTION_ID = 19;                                 //تصنيف المستثني (رقم المستثني)
+  optional string                    EXEPTION_NAME = 20;                               // تصنيف المستثني (اسم المستثني)
+}
+
+message QueryResult {
+  optional string                    CUSTKEY = 1;
+  optional double                    CL_BLNCE = 2;
+  optional double                    TOTAL_COLLECTED_AMOUNT = 3;
+  optional string                    PAYMENT_NO = 4;
+  optional central.types.MasDateTime BILNG_DATE = 5;
+  optional double                    WATER_AMT = 6;
+  optional double                    SEWER_AMT = 7;
+  optional double                    TAX_AMT = 8;
+  optional double                    BASIC_AMT = 9;
+  optional double                    TANZEEM_AMT = 10;
+  optional double                    OTHER = 11;
+  repeated BILL_DTL                  REC_DTL =12;                                      //@gotags: gorm:"-"
+  optional int32                     CYCLE_ID = 13;
+}
+
+message QueryResult2 {
+  optional string                    CUSTKEY = 1;
+  optional string                    OLD_KEY = 23;
+  optional double                    CL_BLNCE = 2;
+  optional double                    TOTAL_COLLECTED_AMOUNT = 3;
+  optional string                    PAYMENT_NO = 4;
+  optional central.types.MasDateTime BILNG_DATE = 5;
+  optional double                    WATER_AMT = 6;
+  optional double                    SEWER_AMT = 7;
+  optional double                    TAX_AMT = 8;
+  optional double                    BASIC_AMT = 9;
+  optional double                    TANZEEM_AMT = 10;
+  optional double                    OTHER = 11;
+  repeated BILL_DTL                  REC_DTL =12;                                       //@gotags: gorm:"-"
+  optional int32                     CYCLE_ID = 13;
+  optional string                    CUSTNAME =14;                                     
+  optional string                    CUSTADDERSS =15;              
+  optional string                    FINANCIAL_YEAR =16;                                // سنه مالية  
+  optional PaymentType               paymentType = 17;  //@gotags: gorm:"-"  //نوع الدفع
+  optional string                    PAY_ID = 18;                                       //@gotags: gorm:"-"
+  optional string                    FINANCIAL_DOC =19;                                 //@gotags: gorm:"-"     
+  optional int64                     STATION_NO =21;   
+  optional string                    STATION_NAME =22;      //@gotags: gorm:"-"   
+  optional string                    C_TYPE =24;
+  optional string                    BILING_MONTH =25;        
+  optional string                    BILING_YEAR =26;   
+  optional int64                     GROUP_ID=27;
+  optional int64                     SUB_GROUP_ID=28;
+  optional payType                   payType=29;//@gotags: gorm:"-"  // نوع السداد
+  optional string                    FILE_NO = 30;                                      // رقم المستند
+}
+
+message OutQueryResult2 {
+   optional GroupSubGoupData         Data = 1;                                         //@gotags: gorm:"-" 
+   repeated QueryResult2             QueryResult2 = 2;
+}
+
+//--------------------------------------------------------------------------------     Collection
+
+message GetCancelleRequste {
+  optional string                    CUSTKEY = 1; 
+  optional central.types.MasDateTime FROM_BILNG_DATE = 2;
+  optional central.types.MasDateTime TO_BILNG_DATE = 3;
+}
+
+message CancelleRequste {
+  optional string                    CUSTKEY = 1; 
+  optional central.types.MasDateTime BILNG_DATE = 2;
+  optional double                    Amount = 5;
+  optional string                    RECEIPT_NO =6;
+  optional PAYMENTS                  pAYMENTS = 7;
+  optional bool                      SELECTED = 8;      
+  optional string                    OLD_KEY = 9;                      
+}
+
+message ArrCancelleRequste {
+  repeated CancelleRequste           CancelleRequste=1;
+}
+
+message CancelFileRequste {
+  optional string                     CANCELLED_REASON = 1;
+  optional string                     FILE_NO = 2;
+  optional int64                      PAY_ID = 3;
+  optional double                     Amount = 4;
+}
+
+message  CancelPaymentRequste {
+  optional string                     CANCELLED_REASON = 1;
+  optional int64                      PAY_ID = 2;
+  optional string                     DOC_NO = 3;
+  optional double                     Amount = 4;
+}
+
+message  CentralPaymentsRes {
+  repeated Gov_CENTRAL_PAYMENTS                     CentralPayments = 1;
+}
+
+message CentralPaymentsReq {
+  optional int64                    CENTRAL_ID = 1;
+}
+
+message  GOV_CENTRALS_STATIONS {
+  optional int64                     CENTRAL_ID = 1;                  //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64                     STATION_NO = 2;                  //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    STATION_NAME = 3;                //@gotags: gorm:"primaryKey;autoIncrement:false" 
+  optional bool                      APPROVED=4;                      //@gotags: gorm:"primaryKey;autoIncrement:false" 
+}
+
+message  CENTRAL_STATIONS {
+  optional int64                     STATION_NO = 1;                  
+  optional string                     STATION_NAME = 2;               
+}
+
+
+message  Gov_CENTRAL_PAYMENTS {
+  optional int64                     CENTRAL_ID = 1;                  //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    DESCRIPTION = 2;
+  optional central.types.MasDateTime TO_DATE = 3;
+  optional central.types.MasDateTime FROM_DATE = 4;
+  optional central.types.MasDateTime CREATION_DATE = 5;
+  optional central.types.MasDateTime REVIEW_DATE = 6;
+  optional central.types.MasDateTime APPROVAL_DATE = 7;
+  optional string                    CREATION_USER = 8;
+  optional string                    REVIEWER_USER = 9;
+  optional string                    APPRVAL_USER = 10;
+  optional bool                      REVIEWED = 11;
+  optional bool                      APPROVED = 12;
+  optional bool                      CANCELLED = 13;
+  optional bool                      EDITABLE = 14;
+  repeated CENTRAL_STATIONS          CENTRAL_STATIONS=15;             //@gotags: gorm:"-"
+  // optional int64                     STATION_NO = 14;
+  // optional string                    STATION_NAME = 15;
+}
+
+message  GOV_CENTRAL_HISTORY {
+  optional int64                     CENTRAL_ID = 1;                  
+  optional central.types.MasDateTime EDITION_DATE = 2;   
+  optional string                    DOC_NO = 3;                                       //  رقم الملف 
+  optional string                    PAY_ID = 4;                                       //  رقم المستند 
+  optional int64                     GROUP_ID = 5;                                     // رقم الجهه
+  optional string                    GROUP_NAME =6;                                    // اسم الجهه
+  optional double                    TOTAL_AMT =7;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =8;                                     // قيمة مياه
+  optional double                    SEWER_AMT =9;                                     // قيمة صرف
+  optional double                    BASIC_AMT =10;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =11;                                     // اخرى
+  optional double                    COLL_AMT =12;                                      // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =13;                                 // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =14;                                    // صافي المسدد
+  optional double                    part_AMT =15;                                     // دفعات
+  optional int64                     STATION_NO =16;                                   // رقم الفرع
+  optional string                    STATION_NAME =17;                                 // اسم الفرع
+  optional central.types.MasDateTime DAY  =18;                                         // تاريخ التحصيل 
+  optional int64                     SUB_GROUP_ID = 19;                                     // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 20;                                    // اسم الإدارة
+  optional string                    PAYMENT_TYPE = 21;                                      // نوع الدفع
+
+}
+
+// message  GOV_CENTRAL_HISTORY_DATA {
+//   optional int64                     HISTORY_ID = 1;                
+//   optional int64                     CENTRAL_ID = 2;                  
+//   optional central.types.MasDateTime EDITATION_DATE = 3;  
+//   repeated GOV_CENTRAL_HISTORY GOV_CENTRAL_HISTORY = 4;
+// }
+
+message  GOV_CENTRAL_HISTORY_REPORT {
+  repeated GOV_CENTRAL_HISTORY GOV_CENTRAL_HISTORY = 1;
+}
+
+//--------------------------------------------------------------------------------     PAYMENTS
+
+
+message PaymentReq {
+  optional PaymentType               paymentType = 2;
+  optional int64                     GROUP_ID =3;
+  optional double                    AMOUNT =4;
+  optional string                    DISCOUNT_DOCUMENT =5;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =6;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =7;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =8;
+  optional string                    BANK_NAME =9;
+  optional string                    DOC_DTL =12;
+  optional central.types.MasDateTime DAILY_DATE =15;
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =16;
+  optional int64                     REVIEWER_ID =17; 
+  optional int64                     COLLECTOR_ID =18;
+  optional int64                     SUB_GROUPS_ID =19;            // المستند متاح للتحصيل على الجهه الفرعيه فقط في حال اختيارها
+  optional string                    CUSTKEY =20;                  // المستند متاح للتحصيل على العميل فقط في حال اختياره 
+  optional int64                     FOLDER_ID=22;
+  optional string                    BANK_CODE =23;       //رقم حساب البنك
+  optional bool                      SPECIAL_PAYMENT= 24;
+}
+
+message Arr_Payments {
+  repeated PAYMENTS                  payments = 1;
+}
+
+message PAYMENTS {
+  optional int64                     PAY_ID =1;                                        //@gotags: gorm:"primaryKey;autoIncrement:true"
+  optional PaymentType               paymentType = 2;
+  optional int64                     GROUP_ID =3;
+  optional double                    AMOUNT =4;
+  optional string                    DISCOUNT_DOCUMENT =5;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =6;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =7;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =8;
+  optional string                    BANK_NAME =9;
+  optional string                    DOC_DTL =10;
+  optional string                    FILE_DTL = 11;
+  optional string                    FILE_NO = 12;
+  optional bool                      COMPLETED =15;
+  optional central.types.MasDateTime STAMP_DATE = 16;
+  optional central.types.MasDateTime DAILY_DATE =17;
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =18;
+  optional bool                      CANCELED =19;
+  optional central.types.MasDateTime CANCELED_DATE = 20;
+  optional bool                      SELECTED = 21;                                    //@gotags: gorm:"-"
+  optional double                    REMAINDER_AMOUNT =22;
+  optional string                    HASH = 23;                                        //@gotags: gorm:"size:4001"
+  optional string                    STAMP_USER = 25;
+  optional double                    TOTAL_AMOUNT =26;
+  optional int64                     REVIEWER_ID =27; 
+  optional int64                     COLLECTOR_ID =28;
+  optional bool                      EDITABLE =29;                                     //@gotags: gorm:"-"
+  optional int64                     SUB_GROUPS_ID =30;                 // المستند متاح للتحصيل على الجهه الفرعيه فقط في حال اختيارها
+  optional string                    CUSTKEY =31;                       // المستند متاح للتحصيل على العميل فقط في حال اختياره 
+  optional int64                     FOLDER_ID=32;
+  optional string                    GROUP_NAME = 33;   //@gotags: gorm:"-"
+  optional string                    SUB_GROUP_NAME = 34;   //@gotags: gorm:"-"
+  optional string                    COLLECTOR_NAME = 35;   //@gotags: gorm:"-"
+  optional string                    REVIEWER_NAME = 36;   //@gotags: gorm:"-"
+  optional string                    BANK_CODE =37;       //رقم حساب البنك
+  optional bool                      SPECIAL_PAYMENT =38;
+}
+
+
+
+
+message  GOV_SETTLEMENT_FILES {
+  optional int64                     PAY_ID =1;                                        //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double                    AMOUNT =2;
+  optional string                    FILE_NO =3;                                       
+  optional string                    DOC_DTL =4;
+  optional FILE_DTL                  File_Dtl =5;                                      //@gotags: gorm:"-"
+  optional bool                      COMPLETED =6;
+  optional central.types.MasDateTime STAMP_DATE = 7;
+  optional string                    STAMP_USER = 8;
+  optional central.types.MasDateTime DAILY_DATE =9;
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =10;
+  optional bool                      CANCELED =11;
+  optional central.types.MasDateTime CANCELED_DATE = 12;
+  optional string                    HASH = 13;                                        //@gotags: gorm:"size:4001"
+  optional string                    SETTLEMENT_FILE_ISSUER =14;
+  optional string                    DISCOUNT_DOCUMENT =15;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =16;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =17;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =18;
+  optional double                    TOTAL_AMOUNT =19;
+  optional PaymentType               PAY_TYPE=20;
+  optional bool                      EDITABLE =21;                                     //@gotags: gorm:"-"
+  optional double                    REMAINDER_AMOUNT =22;                             //@gotags: gorm:"-"
+  optional int64                     REVIEWER_ID =23; 
+  optional int64                     COLLECTOR_ID =24;
+  optional int64                     FOLDER_ID=25;
+  optional string                     BANK_CODE =26;       //رقم حساب البنك
+
+}
+
+message  MergePaymentsFilesReq {
+  optional int64                     PAY_ID =1;                                        
+  optional double                    AMOUNT =2;
+  optional string                    FILE_NO =3;                                       
+  optional string                    DOC_DTL =4;
+  optional FILE_DTL                  File_Dtl =5;                                      
+  optional bool                      COMPLETED =6;
+  optional central.types.MasDateTime STAMP_DATE = 7;
+  optional string                    STAMP_USER = 8;
+  optional central.types.MasDateTime DAILY_DATE =9;
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =10;
+  optional bool                      CANCELED =11;
+  optional central.types.MasDateTime CANCELED_DATE = 12;
+  optional string                    HASH = 13;                                        
+  optional string                    SETTLEMENT_FILE_ISSUER =14;
+  optional string                    DISCOUNT_DOCUMENT =15;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =16;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =17;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =18;
+  optional double                    TOTAL_AMOUNT =19;
+  optional PaymentType               PAY_TYPE=20;
+  optional bool                      EDITABLE =21;                                     
+  optional double                    REMAINDER_AMOUNT =22;                             
+  optional int64                     REVIEWER_ID =23; 
+  optional int64                     COLLECTOR_ID =24;
+  optional int64                     FOLDER_ID=25;
+  optional double                    NEW_AMOUNT =26;
+  optional double                    NEW_DISCOUNT_DOCUMENT_AOMUNT_1 =27;
+  optional double                    NEW_DISCOUNT_DOCUMENT_AOMUNT_2 =28;
+  optional double                    NEW_DISCOUNT_DOCUMENT_AOMUNT_3 =29;
+  optional double                    NEW_TOTAL_AMOUNT =30;
+  optional FILE_DTL                  NEW_File_Dtl =31; 
+  optional bool                      REASSIGN_AMOUNT =32;
+}
+
+message CancelAllocateRequste {
+  optional string                    FileNo =1;     //settlement file no
+  optional int64                    FilePayId =2;  //settlement pay_id
+  optional int64                     paymentId =3;  //payment pay_id
+  optional int64                     paymentSubGroupId =4;  //payment sub_group_id
+}
+
+message ReduceFileAmountRequst {
+  optional string                    FileNo =1;     //settlement file no
+  optional int64                     FilePayId =2;  //settlement pay_id
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =3;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =4;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =5;
+  optional double                    AMOUNT =6;
+}
+
+
+message SettlFileRequst {
+  optional double                    AMOUNT =2;
+  optional string                    FILE_NO =3;
+  optional string                    DOC_DTL =4;
+  optional FILE_DTL                  File_Dtl =5;
+  optional central.types.MasDateTime DAILY_DATE =6;
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =7;
+  optional string                    SETTLEMENT_FILE_ISSUER =8;
+  optional PaymentType               PAY_TYPE=9;
+  optional string                    DISCOUNT_DOCUMENT =10;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =11;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =12;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =13;
+  optional double                    TOTAL_AMOUNT =14;
+  optional int64                     REVIEWER_ID =15; 
+  optional int64                     COLLECTOR_ID =16;
+  optional int64                     FOLDER_ID=17;
+  optional string                     BANK_CODE =18;       //رقم حساب البنك
+}
+
+message ArrSettlFiles {
+  repeated GOV_SETTLEMENT_FILES      SettlFiles=1;
+}
+
+message FILE_DTL {
+  repeated GROUP_SUBS                ARR_CUSTOMERS  = 1; 
+}
+message GROUP_SUBS {
+  optional int64                     GROUP_ID = 1;                                     
+  optional SUBS                      SUB_GROUPS =2;
+  optional double                    AMOUNT=3;
+ // optional string                    DISCOUNT_DOCUMENT =10;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =11;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =12;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =13;
+  optional double                    TOTAL_AMOUNT =14;
+  optional string                    GROUP_NAME = 15;
+  optional bool                      EDITABLE = 16;
+}
+
+message SUBS {
+  optional int64                     SUB_GROUP_ID = 1; 
+  optional string                    CUSTKEY =2;
+}
+
+message  GOV_FILES_GROUPS {
+  optional int64                     PAY_ID =1;                                        
+  optional int64                     GROUP_ID = 2;                                     
+  optional int64                     SUB_GROUPS =3;                                    
+  optional double                    AMOUNT=4;
+  optional string                    CUSTKEY = 5;
+  optional bool                      CANCELED =6; 
+  optional string                    FILE_NO = 7;
+}
+
+
+
+message CUST_COUNT_AMOUNT {
+  optional string                    CUSTKEY = 1;
+  optional int64                     COUNT_BILLS = 2;
+  optional double                    TOTAL_AMOUNT = 3;
+}
+
+message  GOV_FILES_ID {
+  optional int64                     PAY_ID =1;     
+}
+
+message  PAYMENT_ID {
+  optional int64                     PAY_ID =1;     
+}
+//--------------------------------------------------------------------------------     GOV_EMP
+
+message  GOV_EMP {
+  optional int64                     ID = 1;                                           // @gotags: gorm:"primaryKey;autoIncrement:true"
+  optional int64                     STATION_NO = 2;
+  optional string                    FULL_NAME = 3;                                    //@gotags: gorm:"size:255"
+  optional string                    NID = 4;                                          //@gotags: gorm:"size:100"
+  optional string                    EMAIL = 5;                                        //@gotags: gorm:"size:255"
+  optional string                    MOBILE_NO = 6;                                    //@gotags: gorm:"size:20"
+  optional EMPS_TYPES                EMP_TYPE = 7;
+  optional bool                      IsActive = 8;
+  optional bool                      DELETED = 9;
+}
+
+message Arr_Emps {
+repeated GOV_EMP                     EMP =1;
+}
+
+message Emp_Id_rq {
+  optional int64                     ID = 1;
+}
+
+enum FISCAL_YEAR {
+  YEAR_NOT_SELECTED=0;
+  FY_2024=1;
+  FY_2025=2;
+  FY_2026=3;
+  FY_2027=4;
+  FY_2028=5;
+  FY_2029=6;
+  FY_2030=7;
+  FY_2031=8;
+  FY_2032=9;
+  FY_2033=10;
+}
+
+enum FISCAL_MONTH {
+  MONTH_NOT_SELECTED=0;
+  MONTH_1=1;
+  MONTH_2=2;
+  MONTH_3=3;
+  MONTH_4=4;
+  MONTH_5=5;
+  MONTH_6=6;
+  MONTH_7=7;
+  MONTH_8=8;
+  MONTH_9=9;
+  MONTH_10=10;
+  MONTH_11=11;
+  MONTH_12=12;
+}
+
+enum GARD_GROUP_BY {
+  NO_GROUP_BY=0;
+  GROUP_BY_GOV_SUB_GEHA=1;
+  GROUP_BY_GOV_GEHA=2;
+  GROUP_BY_STATION=3;
+  GROUP_BY_CTYPE=4;
+  GROUP_BY_BILLGROUP=5;
+  GROUP_BY_CTYPE_GROUP=6;
+  GROUP_BY_STATEMENT_ID =7;
+  GROUP_BY_STATEMENT_ITEMS_ID =8;
+  GROUP_BY_EXEPTION_ID =9;
+  GROUP_BY_SUB_UNITS = 10;
+  GROUP_BY_CUSTKEY = 11;
+}
+
+message GardRequest {
+  optional int32 GEHA=1;
+  optional int32 SUB_GEHA=2;
+  optional bool BASED_ON_HISTORY=5;
+  optional FISCAL_YEAR FISCAL_YEAR=6;
+  optional FISCAL_MONTH FISCAL_MONTH=7;
+  optional int32 STATION_NO=8;
+  optional GARD_GROUP_BY GROUP_BY=9;
+  optional string CUSTKEY=10;
+  optional bool IS_GOV=11;
+  optional string BILLGROUP=12;
+  optional string CTYPE=13;
+  optional string CTYPE_GROUP=14;
+  optional int64  MINISTRY_ID = 15;  
+  optional int64  UNIT_ACCOUNT_ID = 16; 
+  optional int64  ASSOCIATION_ID = 17;
+  optional int64  UNIT_ID = 18; 
+  optional int64  DEPENDENCY_ID = 19; 
+  repeated int64  STATEMENT_ID = 20;
+  repeated int64  STATEMENT_ITEMS_ID = 21;
+  repeated int64  EXEPTION_ID = 22; 
+  optional bool   PERIOD_NOT_COLL = 23; // 'الجهات الممتنعه عن السداد الاصدار'
+  optional bool   ARREAR_NOT_MOSADKA_NOT_COLL = 24; // 'الجهات الممتنعه عن التصادق علي المديونيه'
+  optional bool   IS_MINISTRY = 25;
+}
+
+message GardResponse {
+  optional string DESCRIPTION=1;
+  optional GardItem SUMMARY=2;
+  optional string PERIOD_END_DATE=3;
+  optional string ITEMS_KEY_TITLE=4;
+  optional string ITEMS_DESCRIPTION_TITLE=5;
+  optional string START_DATE=6;
+  optional string END_DATE=7;
+  repeated GardItem Items=10;
+  optional string SUB_DESCRIPTION=11;
+  repeated MinistriesMap MinistriesMap=12;
+}
+
+message MinistriesMap {
+  string bayan = 1; // البيان (العمود الأول)
+  map<string, double> values = 2; // الأعمدة الديناميك (وزارات وجهات)
+}
+
+message GardItem {
+  optional string KEY=1;
+  optional string DESCRIPTION=2;
+  optional string SUB_DESCRIPTION=3;
+  double OPEN_BALANCE=4;                 // 'الرصيد الافتتاحي'
+  double OPEN_BALANCE_ADJUSTMENT_DBT=5;
+  double OPEN_BALANCE_ADJUSTMENT_CRDT=6;
+  double PERIOD_ISSUE=7;                        //'اصدارات الفترة'
+  double PERIOD_ISSUE_ADJUSTMENT_DBT=8;
+  double PERIOD_ISSUE_ADJUSTMENT_CRDT=9;
+  double PERIOD_COLLECTION=10;                 // 'تحصيل الاصدار'
+  double ARREARS_COLLECTION=11;                //'تحصيل متأخرات'
+  optional double TOTAL_DEU_AMOUNT = 12;             // 'إجمالي المبلغ المستحق'
+  optional double TOTAL_COLL_AMOUNT = 13;          // 'إجمالي المحصل'
+  optional double TOTAL_COLL_PERCENTAGE = 14;      // 'إجمالي نسبة التحصيل'
+  optional double OPEN_BALANCE_UNCOLL=15;       // 'الرصيد الافتتاحي غير المحصل'
+  optional double PERIOD_ISSUE_UNCOLL=16;        // 'اصدارات الفترة غير المحصلة'
+  optional double TOTAL_UNCOLL_AMOUNT = 17;          // 'إجمالي المبلغ غير المحصل'
+  optional int64  SUB_GROUP_ID=18;
+  double CLOSE_BALANCE=19;                    // 'الرصيد الختامي'
+  optional int32  COUNT=20;
+  optional int32   GROUP_ID=21;
+  optional int32   STATION_NO=22;              // الفرع التابع
+  optional string  STATION_NAME=23;           // اسم الفرع
+  optional string  OLD_KEY=24;                 // 'رقم الاشتراك'
+  optional string  ADDRESS = 25;
+  optional string  METER_TYPE=26; // 'نوع العداد'
+  optional METER_TYPE  METER_STATUS=27; // 'حالة العداد'
+  optional PaymentType PAYMENT_TYPE=28; // 'نوع الدفع'
+  optional double  PERIOD_MOSADAKA=29; //  'الفترة مصادقة'
+  optional double  ARREARS_MOSADAKA=30; // 'متأخرات مصادقة'
+  optional double  PERIOD_MOSADAKA_REJECT=67; //  'الفترة مصادقة مرفوضة'
+  optional double  ARREARS_MOSADAKA_REJECT=68; // 'متأخرات مصادقة مرفوضة'
+  optional double  PERIOD_NOT_MOSADAKA=31; //  'الفترة غير مصادقة'
+  optional double  ARREARS_NOT_MOSADAKA=32; // 'متأخرات غير مصادقة'
+  optional double  PERIOD_NOT_MOSADAKA_NOTCOLL=33; //  'الفترة غير مصادقة غير مسدد'
+  optional double  ARREARS_NOT_MOSADAKA_NOTCOLL=34; // 'متأخرات غير مصادقة غير مسدد' 
+  optional double  PERIOD_MOSADAKA_NOTCOLL=35; //  'الفترة مصادقة غير مسدد'
+  optional double  ARREARS_MOSADAKA_NOTCOLL=36; // 'متأخرات مصادقة غير مسدد' 
+  optional double  PERIOD_NOT_MOSADAKA_COLL=37; //  'الفترة غير مصادقة  مسدد'
+  optional double  ARREARS_NOT_MOSADAKA_COLL=38; // 'متأخرات غير مصادقة  مسدد' 
+  optional double  PERIOD_MOSADAKA_COLL=39; //  'الفترة مصادقة  مسدد'
+  optional double  ARREARS_MOSADAKA_COLL=40; // 'متأخرات مصادقة  مسدد' 
+  optional double  TOTAL_NOT_MOSADAKA_NOTCOLL =41; // 'إجمالي المبلغ غير مصادق وغير محصل'
+  optional double  TOTAL_NOT_MOSADAKA =42; // 'إجمالي المبلغ غير مصادق'
+  optional double  TOTAL_DEBT =43; // 'إجمالي المديونيه(وزاره الداخليه)'
+  optional double  ARREARS_SETTLEMENT_AMT= 44;       //ما تم تسويته متأخرات
+  optional double  ARREARS_NOT_SETTLEMENT_AMT =45;  // صافي رصيد المده بعد خصم التسويات متأخرات
+  optional double  SETTLEMENT_MOSADAKA_AMT= 46;    //ما تم تسويته مصادقة متأخرات
+  optional int64   UNITS_ID = 47; // الوحدة 
+  optional string  UNIT_NAME = 48; // اسم الوحدة 
+  optional int64   UNIT_ACCOUNT_ID = 49; // الوحدة الحسابية
+  optional string  UNIT_ACCOUNT_NAME = 50; // اسم الوحدة الحسابية
+  optional int64   BUDGETARY_AUTHORITY_CODE = 51; //كود الهيئة الموازنية
+  optional string  GROUP_NAME = 52; // اسم الجهه
+  optional string  SUB_GROUP_NAME = 53; // اسم الادارة
+  optional int64   MICANICAL_COUNT = 54; // عدد العدادات الميكانيكية
+  optional int64   MICANICAL_COUNT_NOT_WORKING_COUNT = 55; // عدد العدادات الميكانيكية التي لا تعمل
+  optional int64   NO_METER_COUNT = 56; // عدد العملاء التي لا يوجد لها عداد
+  optional int64   PREPAID_COUNT = 57; // عدد العملاء مسبقي الدفع
+  optional int64   TOTAL_CUSTOMERS = 58; // اجمالي العملاء
+  optional double  PERIOD_SETTLEMENT_AMT= 59;       //ما تم تسويته
+  optional double  PERIOD_NOT_SETTLEMENT_AMT =60;  // صافي رصيد المده بعد خصم التسويات
+  optional int64   STATEMENT_ID = 61;              // (تصنيف البيان (رقم البيان
+  optional int64   STATEMENT_ITEMS_ID = 62;        //  (تصنيف بنود البيان (رقم بنود البيان
+  optional int64   EXEPTION_ID = 63;              //تصنيف المستثني (رقم المستثني)
+  optional string  STATEMENT_NAME = 64;          //  (تصنيف البيان (اسم البيان
+  optional string  STATEMENT_ITEMS_NAME = 65;    //  (تصنيف بنود البيان (اسم بنود البيان
+  optional string  EXEPTION_NAME = 66;          // تصنيف المستثني (اسم المستثني)
+  optional string  MOSADAKA_REJECTED_REASON = 69; // 'سبب رفض المصادقة'
+  optional double  OPEN_BALANCE_ADJUSTMENT =70; // 'صافي الرصيد الافتتاحي تعديل'
+  optional double  PERIOD_ISSUE_ADJUSTMENT =71; // 'صافي اصدارات الفترة تعديل`
+  optional double  ARREARS_MOSADAKA_DELIVERED =72; // 'متأخرات مصادقة مسلمة'
+  optional double  PERIOD_MOSADAKA_DELIVERED =73; // 'الفترة مصادقة مسلمة'
+  optional double  ARREARS_MOSADAKA_NOT_DELIVERED =74; // ' متأخرات مصادقة غير مسلمة'
+  optional double  PERIOD_MOSADAKA_NOT_DELIVERED =75; // 'الفترة مصادقة غير مسلمة'
+  optional double  ARREARS_MOSADAKA_PERCENTAGE =76; // 'نسبة متأخرات مصادقة'
+  optional double  PERIOD_MOSADAKA_PERCENTAGE =77; // 'نسبة الفترة مصادقة'
+  optional double  ARREARS_NOT_MOSADAKA_PERCENTAGE =78; // 'نسبة متأخرات غير مصادقة'
+  optional double  PERIOD_NOT_MOSADAKA_PERCENTAGE =79; // 'نسبة الفترة غير مصادقة'
+  optional double  ARREARS_COLL_PERCENTAGE =80; // 'نسبة متأخرات مسددة'
+  optional double  PERIOD_COLL_PERCENTAGE =81; // 'نسبة الفترة مسددة'
+  optional double  TOTAL_MOSADAKA_AMOUNT =82; // 'إجمالي المبلغ مصادق عليه'
+  optional int64   DEPENDENCY_ID = 83;                             // تابعية الاداره
+  optional string  DEPENDENCY_NAME = 84;                             // اسم تابعية الاداره
+  optional int64   MINISTRY_ID = 85;                             // الوزاره
+  optional string  MINISTRY_NAME = 86;                             // اسم الوزاره
+  optional string  CTYPE_ID =87;
+  optional string  CTYPE_DESCRIPTION =88;
+  optional string  CTYPEGRP_ID =89;
+  optional string  CTYPEGRP_DESCRIPTION =90;
+}
+
+message GARD_DETAILS {
+  optional string CUSTKEY=1;     // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional FISCAL_YEAR FISCAL_YEAR=56;   // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int32 GROUP_ID=2;
+  optional int64 SUB_GROUP_ID=3;
+  optional int32   STATION_NO=4;              // الفرع التابع
+  optional string  OLD_KEY=5;                 // 'رقم الاشتراك'
+  optional string  ADDRESS = 6;
+  optional string  METER_TYPE=7; // 'نوع العداد'
+  optional METER_TYPE  METER_STATUS=8; // 'حالة العداد'
+  optional PaymentType PAYMENT_TYPE=9; // 'نوع الدفع'
+  optional double OPEN_BALANCE=10;                 // 'الرصيد الافتتاحي'
+  optional double OPEN_BALANCE_ADJUSTMENT_DBT=11;
+  optional double OPEN_BALANCE_ADJUSTMENT_CRDT=12;
+  optional double PERIOD_ISSUE=13;                        //'اصدارات الفترة'
+  optional double PERIOD_ISSUE_ADJUSTMENT_DBT=14;
+  optional double PERIOD_ISSUE_ADJUSTMENT_CRDT=15;
+  optional double PERIOD_COLLECTION=16;                 // 'تحصيل الاصدار'
+  optional double ARREARS_COLLECTION=17;                //'تحصيل متأخرات'
+  optional double TOTAL_DEU_AMOUNT = 18;             // 'إجمالي المبلغ المستحق'
+  optional double OPEN_BALANCE_UNCOLL=19;       // 'الرصيد الافتتاحي غير المحصل'
+  optional double PERIOD_ISSUE_UNCOLL=20;        // 'اصدارات الفترة غير المحصلة'
+  optional double CLOSE_BALANCE=21;                    // 'الرصيد الختامي'
+  optional int32  COUNT=22;
+  optional double  PERIOD_MOSADAKA=23; //  'الفترة مصادقة'
+  optional double  ARREARS_MOSADAKA=24; // 'متأخرات مصادقة'
+  optional double  PERIOD_MOSADAKA_REJECT=25; //  'الفترة مصادقة مرفوضة'
+  optional double  ARREARS_MOSADAKA_REJECT=26; // 'متأخرات مصادقة مرفوضة'
+  optional double  PERIOD_NOT_MOSADAKA=27; //  'الفترة غير مصادقة'
+  optional double  ARREARS_NOT_MOSADAKA=28; // 'متأخرات غير مصادقة'
+  optional double  PERIOD_NOT_MOSADAKA_NOTCOLL=29; //  'الفترة غير مصادقة غير مسدد'
+  optional double  ARREARS_NOT_MOSADAKA_NOTCOLL=30; // 'متأخرات غير مصادقة غير مسدد' 
+  optional double  PERIOD_MOSADAKA_NOTCOLL=31; //  'الفترة مصادقة غير مسدد'
+  optional double  ARREARS_MOSADAKA_NOTCOLL=32; // 'متأخرات مصادقة غير مسدد' 
+  optional double  PERIOD_NOT_MOSADAKA_COLL=33; //  'الفترة غير مصادقة  مسدد'
+  optional double  ARREARS_NOT_MOSADAKA_COLL=34; // 'متأخرات غير مصادقة  مسدد' 
+  optional double  PERIOD_MOSADAKA_COLL=35; //  'الفترة مصادقة  مسدد'
+  optional double  ARREARS_MOSADAKA_COLL=36; // 'متأخرات مصادقة  مسدد' 
+  optional double  ARREARS_SETTLEMENT_AMT= 37;       //ما تم تسويته متأخرات
+  optional double  ARREARS_NOT_SETTLEMENT_AMT =38;  // صافي رصيد المده بعد خصم التسويات متأخرات
+  optional double  SETTLEMENT_MOSADAKA_AMT= 39;    //ما تم تسويته مصادقة متأخرات
+  optional int64   MICANICAL_COUNT = 40; // عدد العدادات الميكانيكية
+  optional int64   MICANICAL_COUNT_NOT_WORKING_COUNT = 41; // عدد العدادات الميكانيكية التي لا تعمل
+  optional int64   NO_METER_COUNT = 42; // عدد العملاء التي لا يوجد لها عداد
+  optional int64   PREPAID_COUNT = 43; // عدد العملاء مسبقي الدفع
+  optional int64   TOTAL_CUSTOMERS = 44; // اجمالي العملاء
+  optional double  PERIOD_SETTLEMENT_AMT= 45;       //ما تم تسويته
+  optional double  PERIOD_NOT_SETTLEMENT_AMT =46;  // صافي رصيد المده بعد خصم التسويات
+  optional string  MOSADAKA_REJECTED_REASON = 47; // 'سبب رفض المصادقة'
+  optional double  OPEN_BALANCE_ADJUSTMENT =48; // 'صافي الرصيد الافتتاحي تعديل'
+  optional double  PERIOD_ISSUE_ADJUSTMENT =49; // 'صافي اصدارات الفترة تعديل`
+  optional double  ARREARS_MOSADAKA_DELIVERED =50; // 'متأخرات مصادقة مسلمة'
+  optional double  PERIOD_MOSADAKA_DELIVERED =51; // 'الفترة مصادقة مسلمة'
+  optional double  ARREARS_MOSADAKA_NOT_DELIVERED =52; // ' متأخرات مصادقة غير مسلمة'
+  optional double  PERIOD_MOSADAKA_NOT_DELIVERED =53; // 'الفترة مصادقة غير مسلمة'
+  optional string  CTYPE_ID =54;
+  optional string  CTYPEGRP_ID =55;
+}
+
+message ARREARS {
+   optional string CUSTKEY = 1;     //@gotags: gorm:"size:255;primaryKey;autoIncrement:false"
+   optional double OPEN_ISSUE = 2;
+   optional double OPEN_COLL = 3;
+   optional double CLOSE_BALANCE= 4;  //@gotags: gorm:"not null"
+   optional central.types.MasDateTime PERIOD_END_DATE = 5; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  //  optional int32 sub_group_id = 6;
+}
+
+
+message ReportRequest {
+  optional int64                     USER_ID = 1;
+  optional central.types.MasDateTime FROM_DATE  =2;
+  optional central.types.MasDateTime TO_DATE  =3;
+  optional int64                     GROUP_ID = 4;                                     
+  optional int64                     SUB_GROUP_ID =5;
+  optional central.types.MasDateTime FROM_BILNG_DATE  =6;
+  optional central.types.MasDateTime TO_BILNG_DATE  =7;
+  repeated int64                     STATION_NO = 8; 
+  optional int64                     CUSTKEY = 9; 
+  optional bool                      GROUP_BY_GROUP = 10;
+  optional bool                      GROUP_BY_SUB_GROUP = 11;
+  optional int64                     COLLECTOR =12;                                    //مندوب
+  optional string                    DOC_DTL = 13;
+  optional PaymentType               paymentType = 14;
+  optional int64                     MINISTRY_ID = 15;  
+  optional int64                     UNIT_ACCOUNT_ID = 16; 
+  optional int64                     ASSOCIATION_ID = 17;
+  optional int64                     UNIT_ID = 18; 
+  optional int64                     DEPENDENCY_ID = 19; 
+  optional int64                     EXEPTION_ID = 20; 
+  optional string                    CUSTKEY_STR = 21; // for search by custkey string
+  optional bool                      GROUP_BY_DEPENDENCY = 22; // group by dependency
+  optional bool                      GROUP_BY_BILLING_DATE = 23; // group by billing date
+  optional bool                      IS_PROTOCOL = 24; // is protocol
+  optional bool                      YEAR = 25; // year
+  optional bool                      NOT_STATION = 26; // ignore station from group by 
+}
+
+enum GOV_GROUP_BY {
+  EMPTY_GROUP_BY=0;
+  GROUP_BY_GOV_SUB_GROUP=1;
+  GROUP_BY_GOV_GROUP=2;
+  GROUP_BY_CUSTOMER=3;
+}
+
+message HafzaRequest{
+  optional int64                     HAFZA_ID  = 1;                                      //رقم الحافظة
+  // optional central.types.MasDateTime FROM_CREATION_DATE = 2;                             //من تاريخ الانشاء
+  // optional central.types.MasDateTime TO_CREATION_DATE = 3;                               //الي تاريخ الانشاء
+  // optional central.types.MasDateTime FROM_SUPPLY_DATE = 4;                               //من تاريخ التوريد
+  // optional central.types.MasDateTime TO_SUPPLY_DATE = 5;                                 //الي تاريخ التوريد
+}
+
+message CancelleRepRequest {
+  optional central.types.MasDateTime FROM_DATE  =2;
+  optional central.types.MasDateTime TO_DATE  =3;
+}
+
+message CancelledReport {
+  repeated CancelledRec CancelledRec=1;
+}
+message CancelledRec {
+  optional string                    CUSTKEY = 1;
+  optional string                    CUST_NAME = 2;   
+  optional central.types.MasDateTime BILNG_DATE = 3;
+  optional double                    Amount = 4;
+  optional string                    RECEIPT_NO =5;
+  optional PAYMENTS                  pAYMENTS = 6;
+  optional int64                     GROUP_ID =7;
+  optional string                    GROUP_NAME =8;
+  optional int64                     SUB_GROUP_ID =9;
+  optional string                    SUB_GROUP_NAME =10;
+  repeated Items_Dtl                 Items_Dtl =11;
+  optional central.types.MasDateTime COLL_DATE = 12;
+  optional string                    Cancelled_USER = 13;
+  optional central.types.MasDateTime Cancelled_DATE = 14;
+  optional string                    OLD_KEY = 15;
+}
+
+message Items_Dtl {
+  optional string                    ITEM_NAME = 1;
+  optional double                    ITEM_AMOUNT = 2;
+}
+
+//--------------------------------------------------------------------------------     REPORS -- rep1
+
+message DalyCollRes {
+  repeated DalyCollDtl               dalyCollDtl =1;
+  
+}
+
+
+message DalyCollDtl {
+  optional string                    CUSTKEY = 1;                                      // رقم الحساب
+  optional string                    OLD_KEY = 24;                                     // رقم الاشتراك
+  optional central.types.MasDateTime BILINGDATE  =2;                                   // تاريخ الدورة
+  optional string                    FULL_NAME =3;                                     // اسم الحساب
+  optional string                    FINANCIAL_DOC =4;                                 // رقم اوراق مالية
+  optional double                    TOTAL_AMT =5;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =6;                                     // قيمة مياه
+  optional double                    SEWER_AMT =7;                                     // قيمة صرف
+  optional double                    BASIC_AMT =8;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =9;                                     // اخرى
+  optional double                    COLL_AMT =10;                                     // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =11;                                 // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =12;                                    // صافي المسدد
+  optional int64                     REVIEWER =13;                                     // مراجع
+  optional int64                     COLLECTOR =14;                                    //مندوب
+  optional string                    PAYMENT_NO = 15;
+  optional central.types.MasDateTime DAY  =16;
+  optional PaymentType               paymentType = 17;
+  optional string                    PAY_ID = 18;
+  optional string                    REVIEWER_NAME =19;                                // مراجع
+  optional string                    COLLECTOR_NAME =20;                               //مندوب
+  optional int64                     STATION_NO =21; 
+  optional string                    STATION_NAME =22; 
+  optional central.types.MasDateTime COLLECTION_DATE  =23;                              // تاريخ التحصيل
+  optional int64                     GROUP_ID =25;                                    // رقم الجهه
+  optional string                    GROUP_NAME =26;                                    // اسم الجهه
+  optional int64                     SUB_GROUP_ID =27;                                    // رقم الادارة
+  optional string                    SUB_GROUP_NAME =28;                                    // اسم الادارة
+  optional double                    WATER_PART_AMT =29;                                     // قيمة مياه
+  optional double                    SEWER_PART_AMT =30;                                     // قيمة صرف
+  optional double                    BASIC_PART_AMT =31;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_PART_AMT =32;                                     // اخرى
+  optional double                    COLL_PART_AMT =33;                                     // المبلغ المحصل
+}
+
+//--------------------------------------------------------------------------------     rep2
+
+message DalyallCollRes {
+  repeated DalyColl                  dalyColl =1;
+}
+
+message DalyColl {
+  optional PaymentType               paymentType = 1;                                  //  اوراق مالية
+  optional central.types.MasDateTime DAY  =2;
+  optional double                    TOTAL_AMT =5;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =6;                                     // قيمة مياه
+  optional double                    SEWER_AMT =7;                                     // قيمة صرف
+  optional double                    BASIC_AMT =8;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =9;                                     // اخرى
+  optional double                    COLL_AMT =10;                                     // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =11;                                 // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =12;                                    // صافي المسدد
+  optional double                    part_AMT =13;                                     // دفعات
+  optional string                    DESCRIPTION=14;
+  optional int64                     STATION_NO =15; 
+  optional string                    STATION_NAME =16; 
+  optional double                    WATER_PART_AMT =17;                                     // قيمة مياه
+  optional double                    SEWER_PART_AMT =18;                                     // قيمة صرف
+  optional double                    BASIC_PART_AMT =19;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_PART_AMT =20;                                     // اخرى
+  optional double                    COLL_PART_AMT =21;                                     // المبلغ المحصل
+
+}
+
+//--------------------------------------------------------------------------------     rep3
+
+message DalyallCollectorCollRes {
+  repeated DalyCollCollector         dalyCollCollector =1;
+}
+
+message DalyCollCollector {
+  optional int64                     REVIEWER =1;                                      // مراجع
+  optional int64                     COLLECTOR =2;                                     //مندوب
+  optional central.types.MasDateTime DAY  =3;
+  optional PaymentType               paymentType = 4;
+  optional double                    TOTAL_AMT =5;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =6;                                     // قيمة مياه
+  optional double                    SEWER_AMT =7;                                     // قيمة صرف
+  optional double                    BASIC_AMT =8;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =9;                                     // اخرى
+  optional double                    COLL_AMT =10;                                     // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =11;                                 // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =12;                                    // صافي المسدد
+  optional double                    part_AMT =13;                                     // دفعات
+  optional string                    REVIEWER_NAME =14;                                // مراجع
+  optional string                    COLLECTOR_NAME =15;                               //مندوب
+  optional int64                     STATION_NO =16; 
+  optional string                    STATION_NAME =17; 
+}
+
+//--------------------------------------------------------------------------------     rep4
+
+message DalyTaxDtlRes {
+  repeated DalyCollTax               dalyCollTax =1;
+  
+}
+
+message DalyCollTax {
+  optional PaymentType               paymentType = 1;                                  // نوع اوراق مالية
+  optional central.types.MasDateTime FINANCIAL_DOC_DATE =2;
+  optional string                    DISCOUNT_DOCUMENT =3;                             // رقم اوراق مالية
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =4;                    // ضريبة ارباح
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =5;                    // ضريبة دمغة عادية
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =6;                    // ضريبة  دمغة اضافية
+  optional double                    TOTAL_AMT =7;                                     // اجمالي الاستقطاعات
+  optional central.types.MasDateTime DAY  =8;
+  optional string                    PAY_ID = 9;
+  optional int64                     STATION_NO =10;
+  optional double                    REC_AMOUNT = 11;
+}
+
+//-------------------------------------------------------------------------------- rep 5
+message CustYearResp {
+  optional GroupSubGoupData          Data=1;
+  repeated RepData                   RepData =2;
+
+}
+message RepData {
+  optional string                    CUSTKEY = 1;                                      // رقم الحساب
+  optional string                    OLD_KEY = 18;                                      // رقم الاشتراك
+  optional central.types.MasDateTime BILINGDATE  =2;                                   // تاريخ الدورة
+  optional string                    CUSTNAME =3;                                      // اسم العميل
+  optional string                    CUSTADDERSS =4;                                   // عنوان العميل
+  optional string                    FINANCIAL_DOC =5;                                 // رقم اوراق مالية
+  optional double                    TOTAL_AMT =6;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =7;                                     // قيمة مياه
+  optional double                    SEWER_AMT =8;                                     // قيمة صرف
+  optional double                    BASIC_AMT =9;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =10;                                    // اخرى
+  optional double                    COLL_AMT =11;                                     // المبلغ المحصل
+  optional double                    MAD_AMT =12;                                      // مديونية
+  optional PaymentType               paymentType = 13;                                 // نوع السداد
+  optional string                    PAY_ID = 14;                                      // (المستند)رقم السداد
+  optional int64                     STATION_NO =16; 
+  optional string                    STATION_NAME =17; 
+  optional int64                     GROUP_ID=19;
+  optional int64                     SUB_GROUP_ID=20;
+  optional string                    GROUP_NAME=21;
+  optional string                    SUB_GROUP_NAME=22;
+  optional payType                   payType=23;                                       // نوع السداد
+  optional string                    BILING_YEAR =24;                                   // سنة الدورة
+  optional string                    BILING_MONTH =25;                                   // شهر الدورة
+  optional string                    FILE_NO = 26;                                      // رقم المستند
+
+}
+message GroupSubGoupData {
+  optional int64                     GROUP_ID = 1;         
+  optional string                    GROUP_NAME =2;                       
+  optional int64                     SUB_GROUP_ID =3;
+  optional string                    SUB_GROUP_NAME =4;
+  optional string                    TAX_NO =5;
+}
+//-------------------------------------------------------------------------------- rep 6
+message SubGroubCRes {
+  optional GroupSubGoupData          Data=1;
+  repeated RepData2                  RepData =2;
+
+}
+message RepData2 {
+  optional string                    CUSTKEY = 1;                                      // رقم الحساب
+  optional string                    OLD_KEY = 18;                                      // رقم الاشتراك
+  optional int64                     CYCLE_COUNT =2;                                   // عدد الدورات                  
+  optional double                    TOTAL_AMT =3;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =4;                                     // قيمة مياه
+  optional double                    SEWER_AMT =5;                                     // قيمة صرف
+  optional double                    BASIC_AMT =6;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =7;                                    // اخرى
+  optional double                    COLL_AMT =8;                                     // المبلغ المحصل
+  optional double                    MAD_AMT =9;                                      // مديونية
+  optional int64                     STATION_NO =16; 
+  optional string                    STATION_NAME =17; 
+  optional string                    CUSTADDERSS =19;                                   // عنوان العميل
+  optional payType                   payType=20;                                       // نوع السداد
+  }
+
+
+//-------------------------------------------------------------------------------- rep 7
+message DtlSubGroubRes {
+  optional GroupSubGoupData          Data=1;
+  repeated RepData3                  RepData =2;
+
+}
+message RepData3 {
+  optional central.types.MasDateTime BILINGDATE  =1;                                   // تاريخ الدورة
+  optional double                    TOTAL_AMT =2;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =3;                                     // قيمة مياه
+  optional double                    SEWER_AMT =4;                                     // قيمة صرف
+  optional double                    BASIC_AMT =5;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =6;                                     // اخرى
+  optional double                    COLL_AMT =7;                                      // المبلغ المحصل
+  optional double                    MAD_AMT =8;                                       // مديونية
+  optional string                    FINANCIAL_YEAR =9;                                // سنه مالية
+  optional int64                     STATION_NO =16; 
+  optional string                    STATION_NAME =17; 
+  optional payType                   payType=18;                                       // نوع السداد
+}
+
+//-------------------------------------------------------------------------------- rep 8
+message DtlCustFYearRes {
+  optional GroupSubGoupData          Data=1;
+  repeated RepData4                  RepData =2;
+
+}
+message RepData4 {
+  optional string                    CUSTKEY = 1;                                      // رقم الحساب
+  optional string                    OLD_KEY = 18;                                      // رقم الاشتراك
+  optional string                    CUSTNAME =2;                                      // اسم العميل
+  optional string                    CUSTADDERSS =3;                                   // عنوان العميل
+  optional central.types.MasDateTime BILINGDATE  =4;                                   // تاريخ الدورة
+  optional double                    TOTAL_AMT =5;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =6;                                     // قيمة مياه
+  optional double                    SEWER_AMT =7;                                     // قيمة صرف
+  optional double                    BASIC_AMT =8;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =9;                                     // اخرى
+  optional double                    COLL_AMT =10;                                      // المبلغ المحصل
+  optional double                    MAD_AMT =11;                                       // مديونية
+  optional string                    FINANCIAL_YEAR =12;                                // سنه مالية
+  optional string                    FINANCIAL_DOC =13;                                 // رقم اوراق مالية
+  optional PaymentType               paymentType = 14;                                 // نوع السداد
+  optional string                    PAY_ID = 15;                                      // (المستند)رقم السداد
+  optional int64                     STATION_NO =16; 
+  optional string                    STATION_NAME =17; 
+  optional string                    C_TYPE =19;                                      // النشاط
+  optional payType                   payType=20;                                       // نوع السداد
+  optional string                    FILE_NO = 21;                                      // رقم المستند
+}
+
+//-------------------------------------------------------------------------------- rep 9
+message TotalSubGroubQueryRes {
+  optional GroupSubGoupData          Data=1;
+  repeated SubGroubQueryData         SubGroubQueryData =2;
+
+}
+message SubGroubQueryData {
+  optional int64                     CYCLE_COUNT =2;                                   // عدد الدورات                  
+  optional double                    TOTAL_AMT =3;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =4;                                     // قيمة مياه
+  optional double                    NOT_SEWER_AMT =15;                                // قيمة جميع البنود عدا الصرف
+  optional double                    SEWER_AMT =5;                                     // قيمة صرف
+  optional double                    BASIC_AMT =6;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =7;                                    // اخرى
+  optional double                    WATER_AMT_REM =16;                               // متبقي مياه
+  optional double                    NOT_SEWER_AMT_REM =17;                           // متبقي جميع البنود عدا الصرف
+  optional double                    SEWER_AMT_REM =18;                               // متبقي صرف
+  optional double                    BASIC_AMT_REM =19;                               // متبقي استدامه وضريبة
+  optional double                    OTHER_AMT_REM =20;                               // اخرى
+  optional double                    COLL_AMT =8;                                     // المبلغ المحصل
+  optional double                    MAD_AMT =9;                                      // مديونية
+  optional int64                     GROUP_ID =10;                                    // رقم الجهه
+  optional string                    GROUP_NAME =11;                                    // اسم الجهه
+  optional int64                     SUB_GROUP_ID =12;                                // رقم الإدارة
+  optional string                    SUB_GROUP_NAME =13;                                // اسم الإدارة
+  optional central.types.MasDateTime BILINGDATE  =14;                                   // تاريخ الدورة
+  optional int64                     STATION_NO =21;                                   // رقم الفرع
+  optional string                    STATION_NAME =22;                                   // اسم الفرع
+  optional string                    BILING_YEAR =23;                                   // سنة الدورة
+  optional string                    BILING_MONTH =24;                                   // شهر الدورة
+  optional double                    CREDIT_AMOUNT =25;                                  // رصيد دائن
+  optional string                    CUSTKEY = 26;                                      // رقم العميل
+  optional string                    CUSTNAME = 27;                                     // اسم العميل
+  optional string                    OLD_KEY = 28;                                      // رقم الاشنراك
+}
+
+message TotalSubGroubRes {
+  optional GroupSubGoupData          Data=1;
+  repeated RepData5                  RepData =2;
+}
+message RepData5 {
+  optional int64                     CYCLE_COUNT =2;                                   // عدد الدورات                  
+  optional double                    TOTAL_AMT =3;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =4;                                     // قيمة مياه
+  optional double                    SEWER_AMT =5;                                     // قيمة صرف
+  optional double                    BASIC_AMT =6;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =7;                                    // اخرى
+  optional double                    COLL_AMT =8;                                     // المبلغ المحصل
+  optional double                    MAD_AMT =9;                                      // مديونية
+  optional payType                   payType=10;                                       // نوع السداد
+  optional int64                     STATION_NO =11;                                    // رقم الفرع
+}
+
+message SettlementReportsRSP {
+  repeated SettlementReportRSP       RepData =2;
+  repeated SummaryData               SummaryData=1;
+}
+
+message SummaryData {
+  optional string       PaymentType=1;
+  optional double            Amount=2;
+  optional int32            count=3;
+}
+
+message PaymentSettlementDtlRSP {
+  repeated PaymentSettlementDtl       PaymentSettlementDtl =1;
+}
+
+message PaymentSettlementDtl {
+  optional int64                     GROUP_ID = 1;                                      // رقم الجهه
+  optional string                    GROUP_NAME =2;                                     // اسم الجهه
+  optional double                    WATER_AMT =3;                                      // قيمة مياه
+  optional double                    SEWER_AMT =4;                                      // قيمة صرف
+  optional double                    BASIC_AMT =5;                                      // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =6;                                      // اخرى
+  optional double                    COLL_AMT =7;                                       // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =8;                                   // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =9;                                      // صافي المسدد
+  optional int64                     STATION_NO =10;                                    // رقم الفرع
+  optional string                    STATION_NAME =11;                                  // اسم الفرع
+  optional central.types.MasDateTime DAY  =12;                                          // تاريخ التحصيل 
+  optional int64                     SUB_GROUP_ID = 13;                                 // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 14;                               // اسم الإدارة
+  optional payType                   PAY_TYPE = 16;                                     // نوع السداد
+  optional int64                     REVIEWER_ID = 17;                                  // المراجع
+  optional int64                     COLLECTOR_ID = 18;                                 // المحصل
+  optional string                    REVIEWER_NAME = 19;                                // اسم المراجع
+  optional string                    COLLECTOR_NAME = 20;                               // اسم المحصل
+  optional string                    OLD_KEY = 21;                                      // رقم الاشنراك
+  optional string                    BILING_YEAR =22;                                   // سنة الدورة
+  optional string                    BILING_MONTH =23;                                  // شهر الدورة
+  optional int64                     HIST_GROUP_ID = 24;                                // رقم الجهه تاريخية
+  optional string                    PAY_ID=25;                                        // رقم المستند
+  optional string                    CUSTKEY=26;                                       // رقم الحساب
+  optional string                    DOC_DTL=27;                                     // رقم السداد
+}
+
+message EditingRecDtlRSP {
+  repeated EditingRecDtl       EditingRecDtl =1;
+}
+
+message EditingRecDtl {
+  // optional int64                     GROUP_ID = 1;                                      // رقم الجهه
+  // optional string                    GROUP_NAME =2;                                     // اسم الجهه
+  optional double                    CONSUMPTION_AMT =3;                                // قيمة استهلاك
+  optional double                    CONSUMP =4;                                        // ك استهلاك
+  optional double                    SEWER_AMT =5;                                      // صرف
+  optional double                    WATER_AMT =6;                                   //  مياه
+  optional double                    BASIC_AMT =7;                               // استدامه
+  optional double                    OTHER_AMT =8;                               // استدامه
+  optional double                    DISCOUNT_AMT =9;                                   // خصم
+  optional double                    FINAL_AMT =10;                                      // اجمالي الفاتورة
+  optional int64                     STATION_NO =11;                                    // رقم الفرع
+  optional string                    STATION_NAME =12;                                  // اسم الفرع
+  optional central.types.MasDateTime DAY  =13;                                          // تاريخ التعديل 
+  // optional int64                     SUB_GROUP_ID = 13;                                 // رقم الإدارة
+  // optional string                    SUB_GROUP_NAME = 14;                               // اسم الإدارة
+  optional string                    OLD_KEY = 14;                                      // رقم الاشنراك
+  optional string                    BILING_YEAR =15;                                   // سنة الدورة
+  optional string                    BILING_MONTH =16;                                  // شهر الدورة
+  // optional int64                     GROUP_ID_NEW = 18;                                      // رقم الجهه جديد
+  // optional string                    GROUP_NAME_NEW =19;                                     // اسم الجهه جديد
+  optional double                    CONSUMPTION_AMT_NEW =17;                                // قيمة استهلاك جديد
+  optional double                    CONSUMP_NEW =18;                                        // ك استهلاك جديد
+  optional double                    SEWER_AMT_NEW =19;                                      // صرف جديد
+  optional double                    WATER_AMT_NEW =20;                                   //  خدمات جديد
+  optional double                    BASIC_AMT_NEW =21;                               // الاقساط جديد
+  optional double                    OTHER_AMT_NEW =22;                               // الاقساط جديد
+  optional double                    DISCOUNT_AMT_NEW =23;                                   // خصم جديد
+  optional double                    FINAL_AMT_NEW =24;                                      // اجمالي الفاتورة جديد
+  optional int64                     STATION_NO_NEW =25;                                    // رقم الفرع جديد
+  optional string                    STATION_NAME_NEW =26;                                  // اسم الفرع جديد
+  optional central.types.MasDateTime DAY_NEW  =27;                                          // تاريخ التعديل جديد
+  // optional int64                     SUB_GROUP_ID_NEW = 30;                                 // رقم الإدارة جديد
+  // optional string                    SUB_GROUP_NAME_NEW = 31;                               // اسم الإدارة جديد
+  optional string                    OLD_KEY_NEW = 28;                                      // رقم الاشنراك جديد
+  optional string                    BILING_YEAR_NEW =29;                                   // سنة الدورة جديد
+  optional string                    BILING_MONTH_NEW =30;                                  // شهر الدورة جديد
+}
+
+message HafzaReports {
+  optional int64                     FOLDER_ID = 1;                                //  رقم الحافظه 
+  optional string                    BANK_NAME = 2;                                // اسم البنك
+  optional central.types.MasDateTime CREATION_DATE = 3;                             //تاريخ الانشاء
+  optional central.types.MasDateTime SUPPLY_DATE = 4;                               //تاريخ التوريد
+  repeated CHEQSREPORTS              CHEQSREPORTS = 5;                                    //@gotags: gorm:"-"
+  optional double                    TOTALCHEQSAMOUNT = 6;                         //@gotags: gorm:"-"
+}
+
+message CHEQSREPORTS {  
+  optional int64                     PAY_ID =1;   
+  optional double                    AMOUNT =2;
+  optional string                    DISCOUNT_DOCUMENT =3;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =4;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =5;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =6;
+  optional string                    BANK_NAME =7;
+  optional double                    REMAINDER_AMOUNT =8;
+  optional double                    TOTAL_AMOUNT =9;                                    
+  optional bool                      IS_PAYMENT =10;    
+  optional double                    WATER_AMT = 11;
+  optional double                    SEWER_AMT = 12;
+  optional double                    BASIC_AMT = 13;
+  optional double                    OTHER_AMT = 14;      
+  optional central.types.MasDateTime STAMP_DATE = 15;
+  optional string                    FILE_NO = 16;
+  optional PaymentType               PAYMENT_TYPE = 17;       //@gotags: gorm:"-"    
+
+}
+
+message SettlementReportRSP {
+  optional string                    DOC_NO = 1;                                       //  رقم الملف 
+  optional string                    PAY_ID = 19;                                       //  رقم المستند 
+  optional int64                     GROUP_ID = 2;                                     // رقم الجهه
+  optional string                    GROUP_NAME =3;                                    // اسم الجهه
+  optional double                    TOTAL_AMT =4;                                     // اجمالي الفاتورة
+  optional double                    WATER_AMT =5;                                     // قيمة مياه
+  optional double                    SEWER_AMT =6;                                     // قيمة صرف
+  optional double                    BASIC_AMT =7;                                     // قيمة استدامه وضريبة
+  optional double                    OTHER_AMT =8;                                     // اخرى
+  optional double                    COLL_AMT =9;                                      // المبلغ المحصل
+  optional double                    DISCOUNT_AMT =10;                                 // اجمالي الاستقطاعات
+  optional double                    FINAL_AMT =11;                                    // صافي المسدد
+  optional double                    part_AMT =12;                                     // دفعات
+  optional int64                     STATION_NO =13;                                   // رقم الفرع
+  optional string                    STATION_NAME =14;                                 // اسم الفرع
+  optional central.types.MasDateTime DAY  =15;                                         // تاريخ التحصيل 
+  optional int64                     SUB_GROUP_ID = 16;                                     // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 17;                                    // اسم الإدارة
+  optional string                    PAYMENT_TYPE = 18;                                      // نوع الدفع
+  optional double                    WATER_PART_AMT =20;                                   // قيمة مياه الدفعات
+  optional double                    SEWER_PART_AMT =21;                                   // قيمة صرف الدفعات
+  optional double                    BASIC_PART_AMT =22;                                   // قيمة استدامه وضريبة الدفعات
+  optional double                    OTHER_PART_AMT =23;                                   // قيمة اخرى الدفعات
+  optional double                    COLL_PART_AMT =24;                                   // قيمة اخرى الدفعات
+  optional int64                     REVIEWER_ID = 25;                                 // المراجع
+  optional int64                     COLLECTOR_ID = 26;                                 // المحصل
+  optional string                    REVIEWER_NAME = 27;                                 // اسم المراجع
+  optional string                    COLLECTOR_NAME = 28;                                 // اسم المحصل
+  //optional central.types.MasDateTime DAILY_DATE =16;                                   // تاريخ يوميه
+  //optional central.types.MasDateTime FINANCIAL_DOC_DATE =17;                           // تاريخ اوراق مالية
+}
+
+message GovGroupsClaimsResponse {
+  repeated CliamsData               CliamsData = 1;                                   // بيانات المطالبات
+}
+
+message CliamsData {
+  optional int64                     STATION_NO =1; 
+  optional string                    STATION_NAME =2;
+  optional int64                     GROUP_ID = 3;                                     // رقم الجهه
+  optional string                    GROUP_NAME =4;  
+  optional int64                     SUB_GROUP_ID = 5;                                     // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 6;  
+  optional int64                     MINISTRY_ID = 7; 
+  optional string                    MINISTRY_NAME = 8; 
+  optional int64                     ASSOCIATION_ID = 9;
+  optional string                    ASSOCIATION_NAME = 10;     
+  optional string                    CUSTKEY = 11;                                      // رقم الحساب
+  optional string                    CUSTNAME = 31;                                     // اسم العميل
+  optional string                    OLD_KEY = 12;                                     
+  optional string                    CUSTADDERSS =13;   
+  optional string                    TAX_NO = 14;                                // عنوان العميل
+  optional string                    CHASSIS_NO = 15;                                  // رقم الشاسيه
+  optional METER_TYPE                METER_TYPE = 16;                                   // نوع العداد
+  optional READING_TYPE              READING_TYPE = 17;                                   // نوع القراءة
+  optional double                    TOTAL_AMT =18;                                     // اجمالي الفاتورة
+  optional double                    MAD_AMT =19;                                       // مديونية
+  optional double                    TOTAL_COLLECTED_AMOUNT=20;                          // اجمالي المبلغ المحصل
+  optional payType                   payType=21;   
+  optional int64                     PR_OP_STATUS = 22;                                    // نوع السداد
+  optional string                    CONSUMP_AMOUNT = 23;                                // قيمة الاستهلاك
+  optional int64                     READ_TYPE = 24;                                    // نوع القراءة
+  optional int64                     DEPENDENCY_ID = 25;                               // تابعية الاداره
+  optional string                    DEPENDENCY_NAME = 26;                               // اسم تابعية الاداره
+  optional central.types.MasDateTime BILINGDATE  =27;                                   // تاريخ الدورة
+  optional double                    MOSADAKA_AMT =28;                                   // قيمة المصادقة
+  optional double                    NOT_MOSADAKA_AMT =29;                               // قيمة غير المصادقة
+  optional string                    PAYMENT_NO = 30; 
+  optional int64                     STATEMENT_ID = 32;
+  optional string                    STATEMENT_NAME = 33;  
+  optional int64                     STATEMENT_ITEMS_ID = 34;
+  optional string                    STATEMENT_ITEMS_NAME = 35;               
+
+}
+
+message SubGroupsDeptsResponse {
+  repeated DeptsData               DeptsData = 1;                                   // بيانات المطالبات
+}
+
+message DeptsData {
+  optional int64                     STATION_NO =1; 
+  optional string                    STATION_NAME =2;
+  optional int64                     GROUP_ID = 3;                                     // رقم الجهه
+  optional string                    GROUP_NAME =4;  
+  optional int64                     SUB_GROUP_ID = 5;                                     // رقم الإدارة
+  optional string                    SUB_GROUP_NAME = 6;  
+  optional double                    TOTAL_COLLECTED_AMOUNT=7;                          // اجمالي المبلغ المحصل
+  optional int64                     STATEMENT_ID = 8;
+  optional string                    STATEMENT_NAME = 9;  
+  optional int64                     STATEMENT_ITEMS_ID = 10;
+  optional string                    STATEMENT_ITEMS_NAME = 11;   
+  optional double                    TOTAL_AMT =12;                                     // اجمالي الفاتورة
+  optional double                    MAD_AMT =13;                                       // مديونية
+}
+
+message GOV_FOLDERS {
+  optional int64                     FOLDER_ID = 1;                                         // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    INTERNAL_ID = 2;
+  optional string                    BANK_NAME = 3;
+  optional central.types.MasDateTime CREATION_DATE = 4;                             //تاريخ الانشاء
+  optional central.types.MasDateTime SUPPLY_DATE = 5;                               //تاريخ التوريد
+  repeated CHEQS                     CHEQS = 6;                                     //@gotags: gorm:"-"
+  optional double                    TOTALCHEQSAMOUNT = 7;                          //@gotags: gorm:"-"
+}
+
+message ALL_FOLDERS {
+  repeated GOV_FOLDERS                    FOLDERS = 1;
+}
+
+message FOLDER_REQ {
+  optional int64                     ID = 1;                                         // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string                    INTERNAL_ID = 2;
+  optional string                    BANK_NAME = 3;
+  optional central.types.MasDateTime SUPPLY_DATE = 4;                               //تاريخ التوريد
+  repeated int64                     PAYMENTS_ID = 5;
+  repeated int64                     FILES_ID = 6;
+}
+
+message FOLDER_ID_REQ {
+  optional int64                     ID = 1;
+}
+
+message CHEQS {  
+  optional int64                     PAY_ID =1;   
+  optional double                    AMOUNT =2;
+  optional string                    DISCOUNT_DOCUMENT =3;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_1 =4;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_2 =5;
+  optional double                    DISCOUNT_DOCUMENT_AOMUNT_3 =6;
+  optional string                    BANK_NAME =7;
+  optional double                    REMAINDER_AMOUNT =8;
+  optional double                    TOTAL_AMOUNT =9;                                    
+  optional bool                      IS_PAYMENT =10;    
+  optional central.types.MasDateTime STAMP_DATE = 11; 
+  optional string                    FILE_NO = 16;  
+  optional PaymentType               PAYMENT_TYPE = 17;       //@gotags: gorm:"-"   
+}
+
+
+
+//--------------------------------------------------------------------------------     enums
+
+enum PaymentType {
+  CASH = 0;                                                                            // كاش
+  CHEQ =1;                                                                             // شيك
+  SETTLEMENT =2;                                                                       // تسوية
+  BANK_TRANSFERS=3;                                                                    // امر دفع
+  F_CLEARING =4;                                                                       // مقصة
+  OTHER=5;                                                                             // اخرى
+  Return=6;                                                                            // رد الشيء لاصله
+  BANK_TRANSFERS_2=7;                                                                  //تحويل بنكي
+  CASH_BANK =8;                                                                        //ايداع نقدي بالبنوك 
+}
+
+enum EMPS_TYPES {
+  REVIEWER = 0;                                                                        // مراجع
+  COLLECTOR =1;                                                                        // مندوب تحصيل
+}
+
+enum payType {
+  FULL_COLL = 0;                                                                           // كامل
+  PARTIAL_COLL =1;                                                                            // جزئي
+  NOT_COLL =2;                                                                            // لا يتم تحصيله
+  FULL_PART_COLL =3;                                                                      // كامل دفعات
+  PART_PARTIAL_COLL =4;                                                                      // جزئي دفعات
+}
+
+enum READING_TYPE {
+  EMPTY_TYPE = 0;                                 // فارغ
+  ACTUAL = 1;                                     // فعلي
+  EVALUATIVE = 2;                                 // تقديري
+}
+
+enum METER_TYPE {
+  EMPTY = 0;                                                                      // فارغ
+  WORKING =1;                                                                   // سليم
+  NOT_WORKING =2;                                                                 // معطل
+  NOT_METER =3;                                                                   // لا يوجد عداد
+}
+
+enum MOSADAKA_STATUS{
+  NO_STATUS = 0;                                                                      // لا يوجد حالة
+  NOT_APPROVED =1;                                                                    // لم يتم التصديق
+  APPROVED =2;                                                                        // تم التصديق
+  PARTIAL_APPROVED =3;                                                                // مصدقه جزئي
+  REJECTED = 4;                                                                      // مرفوض
+  PARTIAL_REJECTED = 5;                                                            // مرفوض جزئي
+}
+
+enum DELIVERY_STATUS{
+  NO_DELIVERY_STATUS = 0;                                                             // لا يوجد حالة
+  NOT_DELIVERED =1;                                                                   // لم يتم التسليم
+  FULLY_DELIVERED =2;                                                                 // تم التسليم جهه ومندوب
+  COLLECTOR_DELIVERED_ONLY = 3;                                                       // تم التسليم مندوب فقط
+
+}
+
+enum PROTOCOL_STATUS {
+  NO_PROTOCOL_STATUS = 0;                                                       // لا يوجد حالة
+  VALID =1;                                                                    // ساري
+  NOT_VALID =2;                                                                // منتهي
+  CANCELLED =3;                                                                // ملغى
+}

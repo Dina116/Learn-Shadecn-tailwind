@@ -1,0 +1,737 @@
+syntax = "proto3";
+option go_package = "../pb;pb";
+package edams;
+import "date.proto";
+import "bpmreqedams.proto";
+
+service BillingEngineService {
+
+    rpc GetVersion(Empty)returns (Version){}
+    rpc GetServiceName(Empty)returns(ServiceName){}
+    rpc GetBillingCycle(BillCycleRequest)returns(BillingCycle){}
+    rpc ProcessBillingStep(CalcRequest)returns(CalcResponce){}
+    rpc ReverseBillingStep(CalcRequest)returns(CalcResponce){}
+    rpc ProcessBillingStepIndividual(CalcIndividualRequest)returns(CalcResponce){}
+    rpc ReverseBillingStepIndividual(CalcIndividualRequest)returns(CalcResponce){}
+    rpc NewBillingCycle(NewCycleRequest)returns(BillingCycle){}
+    rpc CloseBillingCycle(BillCycleRequest)returns(CalcResponce){}
+    rpc GetBillingCycleList(Empty)returns(BillingCycleList){}
+    rpc GetBillingCycleByNextValidStep(STEPRq)returns(BillingCycleList){}
+
+    //rpc RecalcBills(BillResponce)returns(Empty);
+    rpc RecalcBills(BILLS_EXPECTED)returns(Empty);
+    //rpc Setup(Empty) returns (Empty){}
+    rpc GetStepReports(StepReportRequest) returns (StepReportResponce){}
+    rpc GetAllStepReports(Empty) returns (StepReports){}
+    rpc GetStepReportsErrorsWarnings(StepReportRequest) returns (StepReportsErrorsWarnings){}
+    rpc AddOrUpdateHock(CustomHock) returns (Empty) {}
+    rpc RemoveHock(ProcedureName) returns (Empty) {}
+    rpc GetHocks(Empty) returns (CustomHocks) {}
+    rpc GetPredefinedCustomSteps(Empty) returns (CustomSteps){}
+    rpc AddOrUpdateCustomStep(CustomStep) returns (Empty) {}
+    rpc RemoveCustomStep(ProcedureName) returns (Empty) {}
+    rpc GetCustomSteps(Empty) returns (CustomSteps){}
+    rpc GetLastInvoicedReading(GetLastReadingRq) returns (arrReadingRecord) {}
+
+    //stream
+    rpc GetBillingStatus(BillingCycleStatusRequest)returns(stream BillingCycle){}
+    rpc GetBillingGroups(BillgroupRequest) returns (Billgroups){}
+    rpc GetPoolStatus(Empty) returns (PoolStatus){}
+    rpc GetStatistics(StatisticsRequest) returns (BillingStatusStatistcs){}
+    
+    rpc Search(SearchRequest) returns (SearchResponse){}
+    rpc UpdateEstimCons(SearchResponse) returns (Empty){}
+    rpc GetBillingSteps(Empty) returns (BillingSteps){}
+    rpc ProccessBillgroupsForStep(CalcRequestArr) returns (CalcResponceArr){}
+
+    rpc GetSettings(Empty) returns (GetSettingsResponse);
+    rpc UpdateSettings(UpdateSettingsRequest) returns (Empty);
+
+    // Adjust Agrem
+    rpc GetAllUnCollectedCustInvoices(CustkeyRq) returns (CustDataAndArrINVOICES);
+    rpc CreateInvoiceAgreem(InvoiceAgreemReq) returns (Empty);
+
+        // go application
+    rpc Execute (APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY){}
+
+}
+
+message CalcRequestArr {
+    repeated Calc calcReq = 1;
+    string StepName = 2;
+}
+
+message CalcResponceArr {
+  repeated CalcResponce calcResponse = 1;
+}
+
+message Calc {
+  string                    Billgroup=1;
+  int64                     CycleId=2;
+  optional central.types.MasDateTime BillingDate=3;
+}
+
+enum SearchBy {
+  Custkey=0;
+  PropRef=1;
+  MeterRef=2;
+}
+
+enum OperationState {
+    NOT_PROCESSED=0;
+    ON_PROGRESS=2;
+    PROCESSED=1;
+    FAILED=3;
+}
+
+enum ReportOutputExt{
+    PDF=0;
+    EXCEL=1;
+    JSON=2;
+}
+ 
+enum HockEvent {
+    BEFOR=0;
+    AFTER=1;
+}
+
+enum Reports {
+    HIGH_CONUMP=0;
+}
+
+message STEPRq {
+  string StepName=1;
+}
+
+message BillingSteps{
+   repeated BillingStep Steps=1;
+}
+
+message BillingStep{
+    string StepName=1;
+    int64 StepNumber=2;
+    string Description=3;
+}
+
+message SearchRequest {
+    SearchBy SearchBy=1;
+    string SearchValue=2;
+}
+
+message SearchResponse {
+  string Custkey =1;
+  string PropRef =2;
+  optional string MeterRef =3;
+  optional string Billgroup =4;
+  string Name =5;
+  double EstimConsumption =6;
+
+}
+
+message StatisticsRequest {
+    optional int32 StationNo=1;
+}
+
+message BillingStatusStatistcs {
+    int64 Total=1;
+    int64 Running=2;
+    int64 Succeed=3;
+    int64 Failed=4;
+    int64 Waiting=5;
+    optional central.types.MasDate StartDate=6;
+}
+
+message ProcedureName {
+    string Procedure=1;
+}
+
+message BillingCycleStatusRequest {
+    optional int32 StationNo=1;
+    optional string StampUser=2;
+    repeated string Billgroups=3;
+}
+
+message PoolStatus{
+    int64 Running =1;
+    int64 Idle =2;
+    int64 Succeed =3;
+    int64 Failed =4;
+    int64 Waiting=5;
+    int64 MaxCapacity=6;
+    int64 MaxWorkers=7;
+    int64 MinWorkers=8;
+}
+
+message CustomHock{
+    string Description=2;
+    string Procedure=3;
+    string StepName=4;
+    HockEvent Event=5;
+    int32 Order=6;
+    bool Enabled=7;
+    string Condition=8;
+    string ReverseProcedure=9;
+}
+
+enum BillgroupRequestEnum{
+    ALL=0;
+    OPEN_ONLY=1;
+    NOT_OPEN_ONLY=2;
+}
+
+message BillgroupRequest {
+    optional int32 StationNo=1;
+    optional BillgroupRequestEnum State=2;
+}
+
+message Billgroup {
+    string GroupId=1;
+    string Description=2;
+    bool Enabled=3;
+    int32 StationNo=4;
+}
+
+message Billgroups {
+    repeated Billgroup Groups=1;
+}
+
+message CustomHocks{
+    repeated CustomHock Hocks=1;
+}
+
+message CustomStep{
+    string Description=2;
+    string Procedure=3;
+    int32 Order=4;
+    bool Enabled=5;
+    string ReverseProcedure=6;
+    bool IsFinal=7;
+    bool IsSystem=8;
+    repeated CustomFilter Filters=9;
+    string ValidationErrorReports=10;
+    string ValidationWarningReports=11;
+    repeated StepReport Reports=12;
+}
+
+message CustomFilter {
+    string Report_ID=1;
+    string Condition=2;
+}
+
+message CustomSteps{
+    repeated CustomStep Steps=1;
+}
+
+message StepReports {
+    repeated StepReport Reports=1;
+}
+
+message BillingCycleList {
+    repeated BillingCycle BillingCycles=1;
+}
+
+message StepReport {
+    string        ReportId      = 1;
+    string        Description   = 2;
+    string        ReportType    = 3;
+    bool          HasParameters = 4;
+    optional bool ExpectRows    = 5;
+}
+
+message StepReportRequest {
+    string Billgroup=1;
+    int64 CycleId=2;
+    string StepName=3;
+    string ReportId=4;
+    ReportOutputExt Ext=5;
+    repeated AnyArg Args=6;  
+}
+
+message AnyArg {
+  oneof value {
+    int32   int_val = 1;
+    string  string_val = 2;
+    bool    bool_val = 3;
+    double  double_val = 4;
+    bytes   bytes_val = 5;
+    // Add more types if needed
+  }
+}
+
+message DetailedReport {
+    optional string CUSTKEY=1;
+    optional string C_TYPE=2;
+    optional double AMOUNT=3;
+    optional string BOOK_NO=4;
+    optional double CONSUMP=5;
+    optional central.types.MasDate BILNG_DATE=6;
+    optional string BILLGROUP=7;
+    optional string C_TYPE_DESC =8;
+    optional string C_TYPE_GRP =9;
+    optional string C_TYPE_GRP_DESC =10;
+    optional string WALK_NO=11;
+    optional string DESCRIBTION=12;
+    optional int64  NO_CUSTOMERS=13;
+    optional double PR_READING=14;
+    optional double CR_READING=15;
+    optional int64  NO_UNITS=16;
+    optional string TRNS_TITLE=17;
+    optional int64  AGRM_NO=18;
+    optional double OP_BLNCE =19;
+    optional double CL_BLNCE =20;
+    optional double CUR_CHARGES =21;
+    optional double CUR_PAYMNTS =22;
+    optional double BILL_AMOUNT =23;
+    optional double DUE_AMOUNT =24;
+    optional double WATER_DISCOUNT_AMT =25;
+    optional double SEWER_DISCOUNT_AMT =26;
+    optional double TRAKOM_AGREEM_AMT =27;
+    optional double WALLET_BLNCE =28;
+    optional double HCONSUMP_AGREEM_AMT =29;
+    optional string CUSTOMER_NAME = 30;
+    optional string COUNT = 31;
+    optional string STATUS = 32;
+}
+    
+
+message StepReportsErrorsWarnings{
+    bool            IsValid             = 1;
+    repeated string ValidationErrors    = 2;
+    repeated string ValidationWarnings  = 3;
+}
+
+
+message StepReportResponce {
+    string Billgroup=1;
+    int64 CycleId=2;
+    string StepName=3;
+    string ReportId=4;
+    bytes Data=5;
+    string ContentType=6;
+    repeated DetailedReport DetailedReport=7;
+}
+
+message StepProgress{
+    double TotalProgress=1;
+    optional string Phase=2;
+    optional double PhaseProgress=3;
+    optional string Record=4;
+}
+
+message StepStatus {
+    string StepName=1;
+    OperationState State=2;
+    optional central.types.MasDate StartDate=3;
+    optional string Description=4;
+    optional bool Error=5;
+    optional StepProgress Progress=6;
+    optional string ErrorDescription=7;
+    optional central.types.MasDate EndDate=9;
+    repeated StepReport Reports=10;
+    bool EnabledCalc=11;
+    bool EnabledReverse=12;
+    optional int32 StepIndex=13;
+    optional string StampUser=14;
+    optional string Warning=15;
+    
+}
+
+message BillingCycle{
+    string Billgroup=1;
+    central.types.MasDate BilngDate=2;
+    int64 CycleId=4;
+    repeated StepStatus Steps=5;
+    bool Verified=6;
+    bool IsClosed=7;
+    optional string StampUser =8;
+    optional int32 StationNo=9;
+}
+
+
+message NewCycleRequest {
+    string Billgroup=1;
+    central.types.MasDate BilngDate =2;
+    string Description=3;
+    int32 Length=4;
+}
+
+
+message CalcRequest {
+    string Billgroup=1;
+    int64 CycleId=2;
+    string StepName=3;
+}
+
+
+message BillCycleRequest {
+    string Billgroup=1;
+    optional int64 CycleId=2;
+}
+
+
+message CalcIndividualRequest {
+    string Custkey=1;
+    int64 CycleId=2;
+}
+
+message CalcResponce {
+    string Billgroup=1;
+    optional int64 ProcessId =2;                 
+    central.types.MasDate BilngDate =3;
+    string StepName=4; 
+    OperationState State=5;    
+    int64 CycleId=6;
+}
+
+message ServiceName {
+    string ServiceName=1;
+}
+
+message Empty {
+
+}
+
+message Version {
+    string Version =1;
+} 
+
+// biller msgs
+message BillResponce{
+    repeated Bill Bills=1;    
+    optional CancelledRequest RecalcForm=2;
+    optional bool Calculated_Again=3;
+    optional int32 Read_Mode =4;
+  }
+  
+message CancelledRequest{
+    int64 FormNo=1;
+    optional central.types.MasDateTime FormDate=2;
+    optional string Status=3;  
+    optional string Comment = 4;  
+  }
+  
+  
+
+message FinantialTransaction {
+    SERVICE_TYPE ServiceType=1;
+    string Code =2;
+    central.types.MasDateTime  BilngDate=3;
+    central.types.MasDateTime  EffDate=4;
+    double Amount=5;
+    optional double TaxAmount=6;
+    optional double DiscountAmount=7;
+    optional Ctg Ctype =8;
+    optional int64 NoUnits=9;
+    optional string PropRef=10;
+    optional MeasuredTransaction MTransaction=11;
+    optional string Description=12;
+    optional double ConsumptionPercentage=13;
+    optional string TariffId=14;
+    optional bool Editable=15;
+  }
+  
+  message Bill{
+    string PaymentNo=1;
+    central.types.MasDateTime BilngDate=2;
+    repeated FinantialTransaction FTransactions=3;
+    repeated ServiceReading ServicesReadings=4;    
+    Customer Customer = 7;
+    optional double ClBalance = 8;
+    optional string Comment = 9;
+    optional bool Recalc_coll = 5; 
+  }
+  enum SERVICE_TYPE {
+    WATER =0;
+    SEWER=1;
+    ELECTRICITY=2;
+    GAS=3;
+    HYDRANT=4;
+    FIRE=5;
+  }
+
+  
+message ServiceReading {
+    SERVICE_TYPE ServiceType = 1;
+    Reading Reading=2;
+  }
+  message Reading {
+    optional double Consump=1;
+    optional double PrReading = 2; 
+    optional double CrReading=3;
+    optional central.types.MasDateTime PrDate=4;
+    optional central.types.MasDateTime CrDate=5;
+    optional READING_TYPE ReadType = 6;
+    optional string ReadingBy = 7;
+  }
+
+  message Customer {
+    string Custkey =1;
+    int64 CustType=2;
+    optional bool IsCompany =3;
+    optional string InfoFlag1 =4;
+    optional string InfoFlag2 =5;
+    optional string InfoFlag3 =6;
+    optional string InfoFlag4 =7;
+    optional string InfoFlag5 =8;
+    optional Property Property=9;
+    string Billgroup=10;
+  }
+  enum READING_TYPE {
+    ACTUAL_READING =0;
+    ESTIM_READING_WORKING_METER=1;
+    ESTIM_READING_NON_WORKING_METER=2;
+    CLOSED_LOCATION =3;
+  }
+  message Property {
+    string PropRef =1;
+    optional string InfoFlag1 =3;
+    optional string InfoFlag2 =4;
+    optional string InfoFlag3 =5;
+    optional string InfoFlag4 =6;
+    optional string InfoFlag5 =7;
+    optional int64 NoRooms=8;   
+    repeated Service Services=9;
+    optional bool IsVacated=10;
+    optional string Township=11;
+  }
+  
+  message Service {
+    SERVICE_TYPE ServiceType = 1;
+    Connection Connection=2;
+  }
+  message Connection {
+    Ctg CType =1;
+    //string CTYPE_GROUP=2;
+    int64 NoUnits=3;   
+    optional bool IsBulkMeter=4;
+    optional int64 ConnDiameter=5;
+    optional Meter Meter=6;
+    optional double EstimCons=7;
+    optional CONNECTION_STATUS_TYPE ConnectionStatus=8;
+    repeated SubConnection SubConnections=9;
+  }
+  message Ctg{
+    string CType =1;
+    optional string CTypeGroupid =2;
+    repeated ServiceTariff Tariffs=3;
+    optional double OP_ESTIM_CONS=4;
+    optional double NOOP_ESTIM_CONS=5;
+    string Description=6;
+    optional string GroupDescription=7;
+    optional double Weigth=8;
+  }
+  message Meter {
+    string MeterType = 1;    
+    string MeterRef = 2;    
+    int64 Diameter=3;
+    optional int64 ConverterFactor=4;
+    MeterOperationStatus OpStatus=5;
+  }
+  enum MeterOperationStatus{
+    WORKING=0;
+    NOT_WORKING=1;
+  }
+  message ServiceTariff{
+    SERVICE_TYPE ServiceType = 1;
+    optional string TariffCode = 2;
+    optional bool IsZeroTarif=3;//usful in case if main connection have the service while the sub connection dosn't have
+    string TransCode=4;
+    optional double TaxPercentage=5;
+    optional double DiscountPercentage=6;
+   // optional double ConsumptionPercentage=7;
+  }
+  enum CONNECTION_STATUS_TYPE {
+    CONNECTED_WITHOUT_METER =0;
+    CONNECTED_WITH_METER=1;
+    DISCONNECTED_WITH_METER=2;
+    DISCONNECTED_WITHOUT_METER=3;
+  }
+  message SubConnection {
+    Ctg CType =1;
+    optional double EstimateConsumption=3;
+    optional double ConsumptionPercentage=4;
+    optional int64 NoUnits=5;
+  }
+  message MeasuredTransaction {
+    double Consump=1;
+    optional double CrReading=2;
+    optional double PrReading=3;
+    READING_TYPE ReadType = 4;
+    optional string MeterType=5;
+    optional string MeterRef=6;
+  }
+  
+  message ReadingRq {
+  optional int32 READING_NO =1;
+  optional string CUSTKEY = 2;
+  optional int32 READING = 3;
+  optional central.types.MasDateTime READING_DATE = 4;
+  optional string COMMENT = 5;
+  optional string METER_TYPE =6;
+  optional string METER_REF =7;
+  optional int64 METER_ID =8;
+  optional int32 CONSUMPTION =9;
+}
+
+
+  message RECALC_BILLS_HST {
+  optional string CUSTKEY =1;   // @gotags: gorm:"primaryKey;column:CUSTKEY;notnull"
+  optional int64 FORM_NO = 2;   // @gotags: gorm:"primaryKey;column:FORM_NO;notnull"
+  optional string PAYMENT_NO = 3;
+  optional bool STATE =4;
+}
+message GetLastReadingRq {
+  optional string custkey = 1;
+  optional central.types.MasDateTime beforeDate = 2;
+}
+message arrReadingRecord {
+repeated ReadingRecord Records=1;
+}
+message ReadingRecord {
+   optional string Custkey = 1;
+   optional int32 LastReading = 2;
+   optional int32 LastConsump =3;
+   optional int32 EstConsump =4;
+   optional central.types.MasDateTime READ_DATE = 5;
+   optional central.types.MasDateTime INVOICED_DATE = 6;
+   optional bool INVOICED =7;
+   optional bool expected =8;
+   optional bool lastRead =9;
+}
+
+// biller msgs
+message BILL_EXPECTED {
+    double WATER_AMT     = 1;
+    double SEWER_AMT     = 2;
+    double TAX_AMT       = 3;
+    double BASIC_AMT     = 4;
+    double TANZIMI_AMT   = 5;
+    double ROUND_AMT     = 6;
+    double CLEAN_AMT     = 7;
+    double CONSTANTS_AMT = 8;
+    double DBT_AMT       = 9;
+    double CRDT_AMT      = 10;
+    double DUE_AMT       = 11;
+    string CUSTKEY       = 12;
+    int32 CYCLE_ID       = 13;
+    string PAYMENT_NO    = 14;
+    central.types.MasDateTime BilngDate=15;
+    double PrReading = 16;
+    double CrReading = 17;     
+    double Consump = 18;
+    string C_TYPE = 19;
+    int64 NO_UNITS = 20;
+    double ESTIM_CONS = 21;
+    repeated C_TYPES_EXPECTED C_TYPES = 22;
+    READING_TYPE ReadType = 23;
+}
+message C_TYPES_EXPECTED {
+    double WATER_AMT     = 1;
+    double SEWER_AMT     = 2;
+    double TAX_AMT       = 3;
+    double BASIC_AMT     = 4;
+    double TANZIMI_AMT   = 5;
+    double ROUND_AMT     = 6;
+    double CLEAN_AMT     = 7;
+    double CONSTANTS_AMT = 8;
+    double DBT_AMT       = 9;
+    double CRDT_AMT      = 10;
+    string C_TYPE = 11;
+    int32 NO_UNITS = 12;
+    double ESTIM_CONS = 13;
+}
+message BILLS_EXPECTED {
+    repeated BILL_EXPECTED Bills=1;
+    optional CancelledRequest RecalcForm=2;
+}
+
+message Settings {
+  string                    keyword         = 1;
+  string                    keyword_value   = 2;
+  string                    description     = 3;
+  string                    module          = 4;
+  string                    module_section  = 5;
+  central.types.MasDateTime stamp_date      = 6;
+  string                    stamp_user      = 7;
+  repeated string           enum_value      = 8;
+}
+
+message GetSettingsResponse {
+  repeated Settings settings = 1;
+}
+
+message UpdateSettingsRequest {
+  repeated Settings settings = 1;
+}
+
+message CustkeyRq {
+  string CUSTKEY =1;
+}
+
+message INVOICES {
+  // Customer Information
+  central.types.MasDateTime INVOICE_DATE = 2;     
+  int64 CYCLE_ID = 3;                             
+  string CUSTKEY = 4;                             
+  // optional string surname = 2;           
+  string C_TYPE = 24;                            
+  int64 NO_UNITS = 25;                         
+
+  // Billing Information
+  string BILLGROUP =37;                          
+  // optional int32 station_no = 8;   
+  double INSTALL_AMT = 15;                        
+  double CONSUMP = 23;                           
+
+  // Financial Amounts
+  double DUE_AMOUNT =18;
+  double OTHER_AMT = 14;                          // @gotags: gorm:"notnull"
+  double WATER_AMT = 6;                           // @gotags: gorm:"notnull"
+  double SEWER_AMT = 7;                           // @gotags: gorm:"notnull"
+  double TANZEEM_AMT = 9;                         // @gotags: gorm:"notnull"
+  double BASIC_AMT = 8;                           // @gotags: gorm:"notnull"
+  double TAX_AMT = 10;                            // @gotags: gorm:"notnull"
+  double ROUND_AMT = 11;                          // @gotags: gorm:"notnull"
+  double CONTRACT_AMT =56;                      
+  // optional double clean_amt = 19;        
+}
+
+// Message for a collection of bill summaries (if needed for response wrapper)
+message CustDataAndArrINVOICES {
+  string CUSTKEY =1;
+  string SURNAME =2;
+  string STATION_DESCRIBE =3;
+  string BILLGROUP_DESCRIBE =4;
+  string CTYPES_DESCRIBE =5;
+  int32 NO_UNITS =6;  
+  repeated INVOICES INVOICES=7;
+}
+
+enum AGREEM_PENALTY_TYPE {
+    NO_PENALTY = 0;
+    PERCENTAGE = 1;
+    FIXED_AMOUNT = 2;
+}
+
+message InvoiceAgreemReq {
+  string CUSTKEY =1;
+  int64 CYCLE_ID = 2;                     
+  int64 NO_MONTHS = 3;                                 
+  double PENALTY_PERCENTAGE = 4;   
+  optional bool IS_ACTIVITY =5;                     
+}
+
+enum AGREEM_STATUS {
+  ACTIVE = 0;
+  COMPLETE = 1;
+  CANCELED = 2;
+}
+
+enum DELIVERY_ST {
+  NOT_COLLECTED     = 0;
+  COLLECTED         = 1;
+  NOT_COLLECTED_GARD = 2;
+  SCHEDULED = 3;              // مجدولة
+  PARTIAL_COLLECTED   = 5;
+  CANCELLED = -1;
+}

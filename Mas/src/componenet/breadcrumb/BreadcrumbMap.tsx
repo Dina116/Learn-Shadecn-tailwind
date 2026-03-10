@@ -34,6 +34,8 @@ const BreadcrumbMap: Record<string, string> = {
   closeRWalk: "إغلاق مسار قراءة",
   closeCWalk: "إغلاق مسار تحصيل",
   pulledHistory: "سجل تحديث بيانات الفواتير",
+  moneyTransfeer: "التوريدات",
+  pendingPosts: "التوريدات المعلقة",
 };
 
 export default function Breadcrumb() {

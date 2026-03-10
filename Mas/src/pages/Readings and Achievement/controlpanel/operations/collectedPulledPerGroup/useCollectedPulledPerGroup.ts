@@ -110,6 +110,7 @@ export default function useCollectedPulledPerGroup() {
       name: `${group.GROUP_ID} - ${group.DESCRIPTION}`,
     }));
   }, [billGroupsData]);
+
   const columns = useMemo(
     () =>
       getCollectionsPulledColumns(
@@ -128,15 +129,18 @@ export default function useCollectedPulledPerGroup() {
       selectableRows,
     ],
   );
+
   const handleExecuteAction = async () => {
+
     const rowsToExecute = selectableRows.filter((row) =>
       selectedRowKeys.includes(row.BOOK_NO),
     );
+
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
+    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length }); //// updata with prev state with book , walk, group as key 
     setExecutionErrors([]);
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);

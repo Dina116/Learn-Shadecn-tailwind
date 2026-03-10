@@ -1,0 +1,32 @@
+export interface BILNGACTIONApi {
+  APPLICATION_TYPE: number;
+  DESCRIPTION: string;
+  CUSTKEY: string;
+  PROP_REF: string;
+  METER_REF: string;
+  METER_TYPE: string;
+  STAMP_DATE: string;
+  STAMP_USER: string;
+  USER_ID: number | null;
+  USER_NAME: string;
+  OLD_VALUE: string;
+  NEW_VALUE: string;
+  OLD_DATE: string | null;
+  NEW_DATE: string | null;
+  IS_VERFIED: boolean | null;
+  VERFIED_BY: string;
+  VERFIED_DATE: string | null;
+  CANCELED: boolean | null;
+  CANCEL_DATE: string | null;
+  NOTE: string;
+  CUSTOM1: string;
+  CUSTOM2: string;
+  CUSTOM3: string;
+  CUSTOM4: string;
+  CUSTOM5: string;
+  CUSTOM6: string;
+  CUSTOM7: string;
+  CUSTOM8: string;
+  CUSTOM9: string;
+  CUSTOM10: string;
+}

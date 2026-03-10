@@ -1,0 +1,3757 @@
+syntax = "proto2";
+option go_package = "../pb;pb";
+package PkgMasCustomers;
+import "date.proto";
+import "queries.proto";
+
+
+  // MAS Customers
+service MasCustomers {
+  // Get Mas Version
+  rpc GetVersion(Empty)returns (Version);
+  rpc GetServiceName(Empty)returns(ServiceName);
+  // Prepare From First Run
+
+  // Import All Customers From Billing
+  rpc ImportAllDataFromBilling(ImportAllDataFromBillingREQ)returns(MessageResp);
+  // Import All Customers From MAS
+  // rpc ImportAllDataFromMas(Empty)returns(MessageResp);
+  // Import Book From Billing After Creating New Statments
+  rpc ImportBillgroupFromBilling(BillGroupBookNoRq)returns(MessageResp);
+  // Import Specific customer
+  rpc ImportCustomerFromBilling(CustkeyRq)returns(MessageResp);
+  rpc MigrateToBillingFromEdams4(ImportAllDataFromBillingREQ)returns(Empty);
+  rpc MigratePrefix(ImportAllDataFromBillingREQ)returns(Empty);
+
+
+  // Getting Data
+  // GetAllStations
+  rpc GetAllActivityDetails(Empty)returns(ArrCS_ACTIVITIES);
+  rpc GetAllActivityHasFeesDetails(Empty)returns(ArrCS_ACTIVITIES);
+  rpc GetAllStations(Empty)returns(StationList);
+  rpc GetAllBillgroupsByStation(StationNo) returns (ArrBILLING_GROUPS);
+  rpc GetCustomerBooks(StationNoBillGroupRq) returns (ArrCUSTOMER_Books);
+  rpc GetCustomerWalks(StationNoBillgroupBookNoRq) returns (ArrCUSTOMER_WALKS);
+  rpc GetAllMeterMakes(Empty)returns(ArrLU_METERMAKES);
+  rpc GetAllMeterSizes(Empty)returns(ArrLU_METER_SIZES);
+  rpc GetAllConnectionSizes(Empty)returns(ArrLU_CONNECTION_SIZES);
+  // Get Customer Data By Custkey 
+  rpc GetCustomerByCustkey(CustkeyRq)returns(CUSTOMER_DATA);
+  rpc GetCustomerByCustkeys(ArrCustkeyRq)returns(ArrCUSTOMER_DATA);
+  rpc GetCustomersMainDataByCustkeys(ArrCustkeyRq)returns(ALL_CUSTOMER_MAIN_DATA);
+  rpc GetCustomerByStationNoCustkey(StationNoCustkeyRq)returns(CUSTOMER_DATA);
+  rpc ExistCustomerByCustkey(CustkeyRq)returns(Exists);
+  rpc GetAllMeterDetails(Empty)returns(ArrCST_METER_MAS);
+  // Get BillGroup Customers
+  rpc GetCustomersByBillGroupBookWalk(CustomersByBillGroupBookWalkReq)returns(CUSTOMERS_ARR);
+  rpc GetCountCustomerByStationNo(STATIONS_NOS)returns(GetCountCustomerByStationNoResponse);
+  rpc GetCountCustomerByStationNoGroup(STATIONS_NOS)returns(ReportCustomersSitesResponse);
+  rpc GetCustomerByStationNoBillgroup(StationNoBillGroupRq)returns(ArrCUSTOMER_DATA);
+  rpc GetCustomerByStationNoBillgroupBookNo(StationNoBillgroupBookNoRq)returns(ArrCUSTOMER_DATA);
+  rpc GetCustomerByStationNoBillgroupBookNoWalkNo(StationNoBillgroupBookNoRqWalkNo)returns(ArrCUSTOMER_DATA);
+  // Get Customer by SurName like
+  rpc GetCustomerBySurNameContain(SurNameRq)returns(ArrCUSTOMER_DATA);
+  rpc GetCustomerCtypesForBPM(CustkeyRq)returns(BBM_RS);
+  rpc GetCustomersApplications(CustkeyRq)returns(BBM_RS);
+  rpc GetAllCustomerHistory(CustkeyRq)returns(ArrCST_HISTORY);
+  rpc GetAllConnectionsByMeterIDs(ArrMeterIdsReq)returns(ArrConnections);
+  // biling info
+  rpc CalcFeesBill(PROVIDING_NEW_READING)returns(ConsumpAmount);
+  
+  // cs application
+  rpc Execute (APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY);
+  rpc InitalValues (APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY);
+  rpc InitDatasources(ACTIVITY_DATASOURCES)returns(ACTIVITY_DATASOURCES);
+  rpc InitLookups(LookupDatasource)returns(LookupDatasource);
+  rpc GetLookupVal(LookupValues)returns(LookupValues);
+  rpc ActivityPaid(ArrEXTERNAL_FEES)returns(MessageResp);
+  rpc ActivityPaidCheck(ArrEXTERNAL_FEES)returns(MessageResponse);
+  rpc GetAllActivityLookups(APP_EXTERNAL_ACTIVITY)returns(ArrALL_LU_FEE_CODES);
+  rpc CancelActivity(CancelPaymentActivity)returns(APP_EXTERNAL_ACTIVITY);
+  rpc CancelPayments(ArrEXTERNAL_FEES)returns(MessageResp);
+  rpc NotifyClose(APP_EXTERNAL_ACTIVITY) returns (MessageResp);
+  rpc Rollback(APP_EXTERNAL_ACTIVITY)returns(APP_EXTERNAL_ACTIVITY);
+
+  rpc CreateNewAgreem(CREATE_NEW_AGREEM_Rq)returns(MessageResp);
+  rpc EditAgeem(EditAgreemRq)returns(MessageResp);
+  rpc GetNoUnits(CustkeyRq)returns(GetNoUnitsRs);
+  rpc EditNoUnits(EditNoUnitsRq)returns(MessageResp);
+  rpc GetEstimConsump(CustkeyRq)returns(GetEstimConsumpRs);
+  rpc EditEstimConsump(GetEstimConsumpRs)returns(MessageResp);
+  rpc EditCustomerReading(EditCustomerReadingRq)returns(MessageResp);
+  rpc AddCheqBank(AddCheqBankRq)returns(MessageResp);
+  rpc CreditBiling(CreditBilingRq)returns(MessageResp);
+  rpc GetCustomerSurname(CustkeyRq)returns(GetSurnameRs);
+  rpc EditCustomerSurname(EditSurnameRq)returns(MessageResp);
+  rpc GetCustomerAddress(CustkeyRq)returns(GetAddressRs);
+  rpc EditCustomerAddress(EditAddressRq)returns(MessageResp);
+  rpc GetCustomerCtype(CustkeyRq)returns(GetCtypeRs);
+  rpc EditCustomerCtype(EditCtypeRq)returns(MessageResp);
+  rpc GetMeterSize(CustkeyRq)returns(GetCMeterSizeRs);
+  rpc EditMeterSize(EditMeterSizeRq)returns(MessageResp);
+  rpc GetKhelsaCustomer(CustkeyRq)returns(EditKhelsaCustomerRq);
+  rpc EditKhelsaCustomer(EditKhelsaCustomerRq)returns(EditKhelsaCustomerRs);
+  rpc EditMultiCtypes(EDIT_MULTI_C_TYPES)returns(MessageResp);
+  rpc UpdateMultiCtg(ArrCST_MULTI_CTG)returns(Empty);
+  rpc EditOrderSeqCustomers(EditOrderSeqCustomersReq)returns(Empty);
+  rpc GetAllMoqaysaLookups(Empty)returns(ArrALL_LU_FEE_CODES);
+  rpc GetCustomerTownships(CustkeyRq)returns(ArrTOWNSHIP_DTL);
+  rpc GetTownshipsByStation(StationNo)returns(ArrTOWNSHIP_DTL);
+  rpc GetAllAgreemTypes(Empty)returns(ArrCST_AGREEM_TYPES);
+  rpc GetAllCreditTransactions(Empty)returns(ArrAllTransactionTypes);
+  rpc GetAllCDebitTransactions(Empty)returns(ArrAllTransactionTypes);
+  rpc GetCleanAmtLookup(Empty)returns(ArrCLEAN_AMT_VALUES);
+  rpc GetCustomerNewUnits(CustkeyRq)returns(EditNoUnitsRq);
+  // lookups
+  rpc GetLuCtype(Empty)returns(DATA_SOURCSES_VALUES);
+  rpc GetLuMsize(Empty)returns(DATA_SOURCSES_VALUES);
+  // fields
+  rpc GetAllFieldsByActivityID(ActivityIDRq)returns(BBM_RS);
+  rpc GetAllLuFields(Empty)returns(ArrLU_FIELDS);
+  rpc GetActivityFields(ActivityIDRq)returns(ArrCS_ACTIVITY_FIELDS);
+  // rpc SaveFields(LU_FIELDS)returns(MessageResp);
+  // rpc AttachFieldToActivity(AttachFieldsReq)returns(MessageResp);
+  rpc GetAllDataTypes(Empty)returns(AllDataTypes);
+    // Create Customer
+  rpc CreateNewCustomer(OpenNewAccountRq)returns(CUSTOMER_DATA);
+  // rpc CreateNewProperty(CreateNewPropertyRq) returns (MessageResp);
+  rpc CreateWaterPreview(CreateWaterPreviewRq)returns(MessageResp);
+  rpc GetLastCustomerInWalk(GetLasCustomerInWalkRq)returns(CustkeyRq);
+  rpc CreateWaterConnection(PROVIDING_WATER_CONNECTION_RQ)returns(CUSTOMER_DATA);
+  rpc CreateNewMeter(PROVIDING_NEW_METER_RQ)returns(CUSTOMER_DATA);
+
+  // fees
+  rpc CalculateActivityFees(CalculateActivityFeesRq)returns(APP_FEES);
+  rpc FillHelperTable(Empty)returns(MessageResp);
+  rpc GetAppAllowedInstallFeesByCustkeyAppID(AllowedFeeInstallRq)returns(BBM_RS);
+  rpc GetAppAutomaticInstallmetnByCustkeyAppID(AllowedFeeInstallRq)returns(AutomaticInstallmentRs);
+  rpc GetFeesSetup(Empty)returns(ArrFeeSetup);
+  rpc PostFeesSetup(ArrFeeSetup)returns(MessageResp);
+  rpc UpsertEquations(CS_ACTIVITY_FEES )returns(MessageResp);
+  rpc GetAllEquations(Empty)returns (ArrCS_ACTIVITY_FEES);
+  
+  // reports
+  rpc GetPaidFeesGroupReports(PeriodFilter)returns(AllFeesPaidPeriod);
+  rpc GetCountMoqaysaPaidPeriod(PeriodFilter)returns(AllMoqaysaPaidPeriod);
+  rpc GetCountActivitiesPeriod(PeriodFilter)returns(AllCountActPeriod);
+
+ // exports cs apps
+  rpc ExportAllCsData(Empty)returns(MessageResp);
+// system
+  // rpc CloneActivity(ActivityID)returns(MessageResp);
+
+
+  //BILLING
+  rpc GetCheqBank(CustkeyRq)returns(BANK_CHECK_COLLECTS){}
+  rpc GetAllActiveAgreem(CustkeyRq)returns(ArrAllAgreemRs);
+  rpc GetAllCustomerInvoicedReadings(CustkeyRq)returns(BBM_RS);
+  rpc GetCustomerActiveAgreems(CustkeyRq)returns(BBM_RS);
+  rpc GetCustomerActiveAgreemsForPayment(CustkeyRq)returns(BBM_RS);
+  rpc GetUnbilledTransactions(CustkeyRq)returns(BBM_RS);
+  rpc GetAllTransactionTypes(Empty)returns(ArrTransactionTypes);
+  rpc GetAllCustomerDebt(CustkeyRq)returns(CustomerDebt);
+  rpc GetAllDescripancynoAccess(Empty)returns(ArrDESCREPANCIES_NOACCESS);
+  rpc GetMetersStatusZero(Meter_Filter)returns(METERS){}
+    // Adjust Agrem
+  rpc GetAllUnCollectedCustInvoices(CustkeyRq) returns (CustDataAndArrINVOICES);
+  rpc CreateInvoiceAgreem(InvoiceAgreemReq) returns (Empty);
+  rpc GetBillGroupsStatus(GetBillGroupsStatusReq) returns (BillingGroupStatusResponse);
+  rpc SaveCustomer_OldKey(SaveCustomer_OldKeyReq)returns(SaveCustomer_OldKeyRes){}
+
+
+
+  rpc RefreshCash(Empty)returns(Empty);
+  rpc GetLuCtgs(Empty)returns(LU_CTGS);
+  rpc GetLuCtgsByCustkey(CustkeyRq)returns(LU_CTGS);
+  rpc GetLuCtgGroups(Empty)returns(LU_CTGS);
+  rpc GetUnpaidBillsByCustkey(CustkeyRq)returns(BBM_RS);
+  rpc BillInquiry(CustkeyRq)returns(BBM_RS);
+  rpc GetLastPrRead(CustkeyRq)returns(PROVIDING_NEW_READING);
+  rpc GetAllMeterConditions(Empty)returns(ArrLU_METER_CONDITIONS);
+  // whatsapp 
+  // rpc CheckWhatsappClientConnection(Empty)returns(CLIENT_CONNECTION);
+  // rpc SendMsg(WhatsappMessage)returns(MessageResp);
+  rpc GetAllCountryCodes(Empty)returns(ArrCounteryCode);
+  rpc ConvertSchemaToFieldName(Empty)returns(MessageResp);
+  rpc GetTaf2it(NUMBER)returns(MessageResp);
+  // payment 
+  rpc GetExPaymentDetail (PaymentReq) returns (repeteed_PAYMENT_REQUEST);
+  rpc Payment (QUEUE_RESPONSE) returns (MessageResponse);
+  rpc SetCustomerConnectionsAndMeter(ArrCustomerMeterConnnections)returns(Empty);
+  // rpc RegisterModule (PAY_EXTERNAL_MODULE) returns (MessageResponse);
+  // rpc GetAllModules (Empty) returns (PAY_EXTERNAL_MODULES);
+  // rpc GetModule (MODULE_NAME) returns (PAY_EXTERNAL_MODULE);
+  // rpc GetModuleBId (MODULE_ID_REQ) returns (PAY_EXTERNAL_MODULE);
+rpc GetLastReading(CustkeyRq)returns(meterReading);
+  // test
+  rpc TestDb(Empty)returns(Empty);
+  
+  // BI 
+  rpc GetAllFeesTypes(Empty)returns(ALL_FEES_TYPES);
+  rpc UpdateFeesTypes(FEES_TYPES)returns(MessageResp);
+  rpc SetFeesType(ArrEXTERNAL_FEES)returns(SET_FEE_TYPE_RS);
+  rpc GetCountPostedActivitiesPerPeriod(Period)returns(ArrCountActPosted);
+  rpc GetCountPostedActivitiesPerStation(Period)returns(ArrCountActPostedPerStation);
+  rpc GetStatisticActivityReport(Period)returns(ALL_ACTIVITY_STATISTICS);
+  rpc GetExpectedCustomerCtype(AllCustkeys)returns(AllCUSTOMER_C_TYPE);
+  rpc GetChangeOwnershipInPeriod(Period)returns(AllCHANGE_OWNERSHIPS);
+  rpc GetCsFeesDetails(ArrEXTERNAL_FEES)returns(ArrCS_FEES);
+  rpc GetCUSTOMER_DTLS(GroupBy3Req)returns(ArrCUSTOMER_DTLS);
+  rpc GetCUSTOMER_DTLSVIEW(GroupBy3Req)returns(ArrCUSTOMER_DTLS_VIEW);
+
+  // query
+  rpc SearchCustomer(Query)returns(PkgQueries.SearchCustomerRs){}
+  // rpc GetCustomerMainDataByCustkey(PkgQueries.CustkeyRq)returns(PkgQueries.CUSTOMER_MAIN_DATA){}
+  // rpc GetCustomerTransactions(PkgQueries.CustkeyRq)returns(PkgQueries.ArrTRANSACTIONS){}
+  // rpc GetCustomerStatements(PkgQueries.CustkeyRq)returns(PkgQueries.ArrSTATMENT){}
+  // rpc GetCustomerAgreements(PkgQueries.CustkeyRq)returns(PkgQueries.ArrCustAgreem){}
+  // rpc GetCustomerReadings(PkgQueries.CustkeyRq)returns(PkgQueries.ArrREADINGS){}
+  rpc GetTenantListByCustKey(EndTenatContract) returns(TenantLst){}
+  rpc GetCurrentTenantListByCustKey(EndTenatContract) returns(TenantLst){}
+
+  // Charity List
+  rpc GetAllCharity(Empty) returns(CST_CHARITY_LIST){}
+  rpc GetAllTenantsCharity(CHARITY_ID) returns(CST_TENANT_CHARITY_LIST){}
+  rpc GetAllTenantsCharityForApp(CHARITY_ID) returns(CST_TENANT_CHARITY_LIST){}
+  rpc GetAllTenantsCharityForPay(CHARITY_ID) returns(CST_TENANT_CHARITY_LIST){}
+  rpc GetAllCreditsCharity(CHARITY_ID) returns(CST_CREDIT_CHARITY_LIST){}
+  rpc GetAllCreditsCharityAvailable(CHARITY_ID) returns(CST_CREDIT_CHARITY_LIST){}
+  rpc GetTenantsCharityByNid(CHARITY_TENANT_NID) returns(CST_TENANT_CHARITY){}
+  rpc GetTenantsCharityByNidCharity(CHARITY_TENANT_NID) returns(CST_TENANT_CHARITY){}
+  rpc CheckCharityTenantBalanceCoverage(CheckCharityTenant) returns(MessageResponse){}
+  rpc CheckCharityTenantBalanceCoverageByBpm(CheckCharityTenant_BPM) returns(CST_CREDIT_CHARITY){}
+  rpc GetCharityCredits(CHARITY_ID) returns (REDIT_CHARITY_RESPONSE){}
+  rpc GetTenantCharityByCustkey(CustkeyRq) returns(CST_TENANT_CHARITY){}
+  rpc GetCharityCreditsByCharityNo(CHARITY_TENANT_NID) returns (CST_CREDIT_CHARITY_LIST){}
+  rpc GetCharityRealCredits(CHARITY_ID) returns (CST_CREDIT_CHARITY_LIST){}
+  rpc GetCharityFakeCredits(CHARITY_ID) returns (CST_CREDIT_CHARITY_LIST){}
+  rpc GetCharitiesNonReconciliated(CHARITY_ID) returns (CST_CREDIT_CHARITY_LIST) {}
+  rpc GetCharityReconciliated (CHARITY_NO_RECONCILIATION_Rq) returns (CHARITY_NO_RECONCILIATION_Res_LIST){}
+
+
+  // SMS
+
+  rpc GetFilteredCustomersForSMS    (CustomerBillsFilter)   returns   (ArrCustomersBills) {}
+  rpc SendCustomersSMS              (ArrCustomersBills)     returns   (MessageResponse)   {}
+  rpc GetALLSMS_TEMPLATE            (SMS_TYPE_REQ)          returns   (ArrSMS_TEMPLATE)   {}
+  rpc GetSMS_ACTIVE_TEMPLATES       (Empty)                 returns   (ArrSMS_TEMPLATE)   {}
+  rpc GetSMS_DEFAULT_TEMPLATE       (Empty)                 returns   (SMS_TEMPLATE)      {}
+  rpc GetSMS_TEMPLATE_BY_ID         (SMS_TEMPLATE_ID)       returns   (SMS_TEMPLATE)      {}
+  rpc CreateSMS_TEMPLATE            (SMS_TEMPLATE)          returns   (MessageResponse)   {}
+  rpc UpdateSMS_TEMPLATE            (SMS_TEMPLATE)          returns   (MessageResponse)   {}
+  rpc DeleteSMS_TEMPLATE            (SMS_TEMPLATE)          returns   (MessageResponse)   {}
+  rpc GetSmsHistoryByCustkey        (CustkeyRq)             returns   (ArrSMS_SENT_DATA)  {}
+  rpc GetFilteredCustomersForCrmSMS (CustomerCrmFilter)     returns   (ArrCustomersCrmBills) {}
+  rpc SendCustomersCrmSMS           (ArrCustomersCrmBills)  returns   (MessageResponse)   {}
+}
+message EditOrderSeqCustomersReq {
+  repeated EditOrderSeqCustomersReqItem Items = 1;
+}
+
+message  GetBillGroupsStatusReq {
+   required string CUSTKEY = 1;
+}
+
+message BillingGroupStatusResponse {
+	optional bool Status = 1;
+}
+
+message SaveCustomer_OldKeyReq{
+    optional  string CUSTKEY = 1; 
+    optional  int32 STATION_NO = 2; 
+    optional  string GROUP_ID = 3; 
+    optional  string AREA_CODE = 4;    
+    optional  string FILE_NUMBER = 5; 
+    optional  string BUILDING_NUMBER = 6;   
+} 
+
+message SaveCustomer_OldKeyRes{
+    optional  string BILLGROUP = 1;   
+    optional  string SURNAME = 2;
+    optional  int32  STATION_NO = 3; 
+    optional  string BOOK_NO = 4;
+    optional  string UA_ADDRESS = 5;
+    optional  int32  NO_UNITS = 6;
+    optional  string METER_CONDITION = 7;
+    optional  string C_TYPE = 8;
+    optional  string METER_TYPE = 9;
+} 
+
+message EditOrderSeqCustomersReqItem {
+  required string CUSTKEY = 1;
+  required int64 ORDER_SEQ = 2;
+}
+message CustomersByBillGroupBookWalkReq {
+  required string BILLGROUP = 1;
+  required string BOOK_NO = 2;
+  required int32 WALK_NO = 3;
+}
+message CUSTOMERS_ARR {
+  repeated CUSTOMER_RESPONSE CUSTOMERS = 1;
+}
+message CUSTOMER_RESPONSE {
+  required string CUSTKEY = 1;
+  optional string ADDRESS = 2;
+  optional string FULL_NAME = 3;
+  required int64 ORDER_SEQ = 4;
+}
+message ReportCustomersSitesResponse {
+  map<int32,int64> Items = 1;
+}
+message STATIONS_NOS {
+  repeated int32 Stations = 1;
+}
+message GetCountCustomerByStationNoResponse {
+  optional int64 CustomersCount = 1;
+}
+message ImportAllDataFromBillingREQ {
+  optional bool FROM_IMPORTER = 1;
+  required int64 GENERATED_ID = 2;
+  required int32 CITY_CODE = 3;
+}
+message MessageCustResp {
+  required string Msg=1;
+  repeated CST_CUSTOMERS CUSTOMERS = 2;
+  optional bool WITH_CUSTOMER = 3;
+}
+
+message Exists {
+  required bool Found =1;
+}
+message ServiceName {
+  required string ServiceName=1;
+}
+
+message SurNameRq {
+  required string SURNAME =1;
+}
+message MessageResp {
+  required string Msg=1;
+}
+message Version {
+  required string Version =1;
+ } 
+message Empty {
+}
+
+// CUSTOMERS TABLE 
+message CST_CUSTOMERS {
+  required int32 STATION_NO =1; // @gotags: gorm:"primaryKey;autoIncrement:false;size:10;not null"
+  required string CUSTKEY =2;  // @gotags: gorm:"primaryKey;autoIncrement:false;size:15;not null"
+  required string BILLGROUP =3;  // @gotags: gorm:"not null;size:10"
+  required string BOOK_NO =4;  // @gotags: gorm:"not null;size:20" 
+  required int32 WALK_NO =5;  // @gotags: gorm:"not null"
+  required string SURNAME =6;  // @gotags: gorm:"not null;size:255"
+  required string UA_ADDRESS =7;  // @gotags: gorm:"not null;size:255"
+  optional string NATIONAL_ID =8;  // @gotags: gorm:"size:30"
+  optional string OLD_KEY=9;    // @gotags: gorm:"size:50"
+  optional string E_MAIL=10;     // @gotags: gorm:"size:50"
+  required int64 SEQ_NO=11;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=12; // @gotags: gorm:"size:50"
+  optional central.types.MasDateTime STAMP_DATE =13;
+  optional string STATION_NAME=14;   // @gotags: gorm:"-"
+  optional string CUSTOMER_FLAG=15;  // @gotags: gorm:"size:10"
+  optional string PREV_CUSTKEY =16; // @gotags: gorm:"size:20"
+  optional string PASSPORT_ID =17;  // @gotags: gorm:"size:30"
+  optional string MOBILE_NO =18;   // @gotags: gorm:"size:50"
+  optional string TAX_NO =19;      // @gotags: gorm:"size:30"
+  optional string PARENT_CUSTKEY =20; // @gotags: gorm:"size:15"
+  optional bool IS_PREPAID =21;
+  optional string FIRST_NAME =22;
+  optional string SECOND_NAME =23;
+  optional string THIRD_NAME =24;
+  optional string FOURTH_NAME =25;
+  optional string FULL_NAME =26;
+  optional string GOV_ADDRESS=27;
+  optional string CITY_ADDRESS=28;
+  optional string DISTRIC_ADDRESS=29;
+  optional string AREA_ADDRESS=30;
+  optional string STREET_ADDRESS=31;
+  optional string BUILDING_ADDRESS=32;
+  optional string FLOOR_ADDRESS=33;
+  optional string FLAT_ADDRESS=34;
+  optional string FINAL_ADDRESS=35;
+  optional central.types.MasDateTime DATE_OFBIRTH=36;
+  optional bool HAS_WATER =37; // @gotags: gorm:"-" 
+  optional bool HAS_SEWER =38; // @gotags: gorm:"-" 
+  optional string UA_ADRESS5  = 39;
+  optional string SERIAL_NO = 40; // @gotags: gorm:"size:50"
+  optional string METER_TAG_NO = 41; // @gotags: gorm:"size:50"
+  optional string CUSTKEY_IMPORT = 42;
+  optional int32 STATION_NO_IMPORT = 43;
+  optional string BILLGROUP_IMPORT = 44;
+  optional string BOOK_NO_IMPORT = 45;
+  optional string PREV_CUSTKEY_IMPORT = 46;
+  optional string OLD_KEY_IMPORT = 47;
+  optional string CR_NO = 48;        // رقم السجل التجاري
+}
+message CST_CUSTOMERS_SEARCH {
+  required int32 STATION_NO =1; // @gotags: gorm:"primaryKey;autoIncrement:false;size:10;not null"
+  required string CUSTKEY =2;  // @gotags: gorm:"primaryKey;autoIncrement:false;size:15;not null"
+  required string BILLGROUP =3;  // @gotags: gorm:"not null;size:10"
+  required string BOOK_NO =4;  // @gotags: gorm:"not null;size:20" 
+  required int32 WALK_NO =5;  // @gotags: gorm:"not null"
+  required string SURNAME =6;  // @gotags: gorm:"not null;size:255"
+  required string UA_ADDRESS =7;  // @gotags: gorm:"not null;size:255"
+  optional string NATIONAL_ID =8;  // @gotags: gorm:"size:30"
+  optional string OLD_KEY=9;    // @gotags: gorm:"size:50"
+  optional string E_MAIL=10;     // @gotags: gorm:"size:50"
+  required int64 SEQ_NO=11;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=12; // @gotags: gorm:"size:50"
+  optional central.types.MasDateTime STAMP_DATE =13;
+  optional string CUSTOMER_FLAG=15;  // @gotags: gorm:"size:10"
+  optional string PREV_CUSTKEY =16; // @gotags: gorm:"size:20"
+  optional string PASSPORT_ID =17;  // @gotags: gorm:"size:30"
+  optional string MOBILE_NO =18;   // @gotags: gorm:"size:50"
+  optional string TAX_NO =19;      // @gotags: gorm:"size:30"
+  optional string PARENT_CUSTKEY =20; // @gotags: gorm:"size:15"
+  optional bool IS_PREPAID =21;
+  optional string FIRST_NAME =22;
+  optional string SECOND_NAME =23;
+  optional string THIRD_NAME =24;
+  optional string FOURTH_NAME =25;
+  optional string FULL_NAME =26;
+  optional string GOV_ADDRESS=27;
+  optional string CITY_ADDRESS=28;
+  optional string DISTRIC_ADDRESS=29;
+  optional string AREA_ADDRESS=30;
+  optional string STREET_ADDRESS=31;
+  optional string BUILDING_ADDRESS=32;
+  optional string FLOOR_ADDRESS=33;
+  optional string FLAT_ADDRESS=34;
+  optional string FINAL_ADDRESS=35;
+  optional central.types.MasDateTime DATE_OFBIRTH=36;
+  optional string UA_ADRESS5  = 39;
+  optional string SERIAL_NO = 40; // @gotags: gorm:"size:50"
+  optional string METER_TAG_NO = 41; // @gotags: gorm:"size:50"
+  optional string CUSTKEY_IMPORT = 42;
+  optional int32 STATION_NO_IMPORT = 43;
+  optional string BILLGROUP_IMPORT = 44;
+  optional string BOOK_NO_IMPORT = 45;
+  optional string PREV_CUSTKEY_IMPORT = 46;
+  optional string OLD_KEY_IMPORT = 47;
+  optional int64 PROPERTY_ID = 48;
+  optional int64 METER_ID = 49;
+  optional string METER_REF = 50;
+  optional string CR_NO = 51;        // رقم السجل التجاري
+}
+message CST_CUSTOMERS_MAS {
+  required int32 STATION_NO =1; // @gotags: gorm:"primaryKey;autoIncrement:false;size:10;not null"
+  required int64 CUSTKEY =2;  // @gotags: gorm:"primaryKey;autoIncrement:false;size:15;not null"
+  required string BILLGROUP =3;  // @gotags: gorm:"not null;size:10"
+  required string BOOK_NO =4;  // @gotags: gorm:"not null;size:20" 
+  required int32 WALK_NO =5;  // @gotags: gorm:"not null"
+  required string SURNAME =6;  // @gotags: gorm:"not null;size:255"
+  required string UA_ADDRESS =7;  // @gotags: gorm:"not null;size:255"
+  optional string NATIONAL_ID =8;  // @gotags: gorm:"size:30"
+  optional string OLD_KEY=9;    // @gotags: gorm:"size:50"
+  optional string E_MAIL=10;     // @gotags: gorm:"size:50"
+  required int64 SEQ_NO=11;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=12; // @gotags: gorm:"size:50"
+  optional central.types.MasDateTime STAMP_DATE =13;
+  optional string STATION_NAME=14;   // @gotags: gorm:"-"
+  optional string CUSTOMER_FLAG=15;  // @gotags: gorm:"size:10"
+  optional string PREV_CUSTKEY =16; // @gotags: gorm:"size:20"
+  optional string PASSPORT_ID =17;  // @gotags: gorm:"size:30"
+  optional string MOBILE_NO =18;   // @gotags: gorm:"size:50"
+  optional string TAX_NO =19;      // @gotags: gorm:"size:30"
+  optional string PARENT_CUSTKEY =20; // @gotags: gorm:"size:15"
+  optional bool IS_PREPAID =21;
+  optional string FIRST_NAME =22;
+  optional string SECOND_NAME =23;
+  optional string THIRD_NAME =24;
+  optional string FOURTH_NAME =25;
+  optional string FULL_NAME =26;
+  optional string GOV_ADDRESS=27;
+  optional string CITY_ADDRESS=28;
+  optional string DISTRIC_ADDRESS=29;
+  optional string AREA_ADDRESS=30;
+  optional string STREET_ADDRESS=31;
+  optional string BUILDING_ADDRESS=32;
+  optional string FLOOR_ADDRESS=33;
+  optional string FLAT_ADDRESS=34;
+  optional string FINAL_ADDRESS=35;
+}
+
+// PROPERITY TABLE 
+message CST_PROPERTY {
+  required string CUSTKEY =1;  
+  optional string PROP_REF =2;  
+  optional int64 PROPERTY_ID =3;
+  optional string STAMP_USER=4; 
+  required string C_TYPE=5;  
+  optional central.types.MasDateTime STAMP_DATE =6;
+  optional string C_TYPE_DESC =7; // @gotags: gorm:"-" 
+  optional int64 AREA_ID =8;  
+  optional int64 DISTRIC_ID =9;  
+  optional int64 CITY_ID =10;  
+  optional int64 GOV_ID =11;  
+  optional int64 PROPERTY_TYPE_ID =12;
+}
+message CST_PROPERTY_EDAMS4 {
+  required string CUSTKEY =1;  // @gotags: gorm:"not null;size:15"
+  required string PROP_REF =2;  // @gotags: gorm:"primaryKey;size:50"
+  optional string STAMP_USER=3; // @gotags: gorm:"size:100"
+  required string C_TYPE=4;   // @gotags: gorm:"not null;size:20"
+  optional central.types.MasDateTime STAMP_DATE =5;
+  required int64 PROPERTY_TYPE_ID=6;  
+}
+message CST_PROPERTY_EDAMS5 {
+  required string CUSTKEY =1;  // @gotags: gorm:"not null;size:15;index;"
+  optional string PROP_REF =2;  // @gotags: gorm:"size:50"
+  required int64 PROPERTY_ID =3;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string STAMP_USER=4; // @gotags: gorm:"size:100"
+  required string C_TYPE=5;   // @gotags: gorm:"not null;size:20"
+  optional central.types.MasDateTime STAMP_DATE =6;
+  optional int64 AREA_ID =7;  
+  optional int64 DISTRIC_ID =8;  
+  optional int64 CITY_ID =9;  
+  optional int64 GOV_ID =10;  
+}
+message CST_PROPERTY_MAS {
+  required string CUSTKEY =1;  // @gotags: gorm:"not null;size:15;index;"
+  required int64 PROPERTY_ID =3;  // @gotags: gorm:"primaryKey;autoIncrement:true"
+  optional string STAMP_USER=4; // @gotags: gorm:"size:100"
+  required string C_TYPE=5;   // @gotags: gorm:"not null;size:20"
+  optional central.types.MasDateTime STAMP_DATE =6;
+  optional int64 AREA_ID =7;  
+  optional int64 DISTRIC_ID =8;  
+  optional int64 CITY_ID =9;  
+  optional int64 GOV_ID =10;  
+  optional int64 PROPERTY_TYPE_ID =11;
+}
+message CST_PROPERTY_MAS_IMPORT {
+  required string CUSTKEY =1;  // @gotags: gorm:"not null;size:15;index;"
+  required int64 PROPERTY_ID =3;  // @gotags: gorm:"primaryKey;"
+  optional string STAMP_USER=4; // @gotags: gorm:"size:100"
+  required string C_TYPE=5;   // @gotags: gorm:"not null;size:20"
+  optional central.types.MasDateTime STAMP_DATE =6;
+  optional int64 AREA_ID =7;  
+  optional int64 DISTRIC_ID =8;  
+  optional int64 CITY_ID =9;  
+  optional int64 GOV_ID =10;  
+  optional int64 PROPERTY_TYPE_ID =11;
+  optional string C_TYPE_IMPORT=12;  
+  optional string CUSTKEY_IMPORT=13;  
+  optional string PROP_REF =14;
+  optional string PROP_REF_IMPORT =15;
+}
+message CST_MULTI_CTG {
+  optional string PROP_REF =1;
+  optional int64 CONNECTION_ID=2;
+  required string C_TYPE=3;
+  optional string C_TYPE_DESC = 4;
+  required double ALLOC_PERC =5;
+  required double ALLOC_PERC_SEWER = 6;
+  required int32 NO_UNITS =7;
+  required double ESTIM_CONS_PU =8;
+}
+message ArrCST_MULTI_CTG {
+  repeated CST_MULTI_CTG CST_MULTI_CTG=1;
+}
+message CST_MULTI_CTG_EDAMS4 {
+  required string PROP_REF =1;     // @gotags: gorm:"primaryKey;autoIncrement:false;not null;size:50"
+  required string C_TYPE=2;       // @gotags: gorm:"primaryKey;autoIncrement:false;not null;size:50"
+  required double ALLOC_PERC =4;
+  required double ALLOC_PERC_SEWER = 5;
+  required int32 NO_UNITS =6;
+  required double ESTIM_CONS_PU =7;
+}
+message CST_MULTI_CTG_EDAMS5 {
+  required int64 CONNECTION_ID=1; // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string C_TYPE=2;       // @gotags: gorm:"primaryKey;autoIncrement:false;not null;size:50"
+  required double ALLOC_PERC =4;
+  required double ALLOC_PERC_SEWER = 5;
+  required int32 NO_UNITS =6;
+  required double ESTIM_CONS_PU =7;
+  optional string C_TYPE_IMPORT=8;
+  optional string PROP_REF_IMPORT =9;
+  optional string PROP_REF =10;
+}
+// CONNECTION TABLE
+message CST_CONNECTION {
+  optional string PROP_REF =1;  
+  optional int64 CONN_NO =2;
+  optional int64 CONNECTION_ID =3;
+  required CONN_STATUS CON_STATUS = 4; 
+  optional double ESTM_CONS=5;
+  required int64 SEQ_NO=6;        
+  optional string METER_TYPE =7;   
+  optional string METER_REF =8;   
+  optional int64 METER_ID =9;
+  required int32 NO_UNITS =10;     
+  optional string STAMP_USER=11;   
+  optional int64 PROPERTY_ID=12;
+  optional central.types.MasDateTime STAMP_DATE =13;
+  optional central.types.MasDateTime CONN_DATE = 14;
+  optional CST_METER METER = 15;                        // @gotags: gorm:"-"
+  optional int64 PREV_CONNECTION_ID =16;
+  optional int32 IS_MANUAL_ESTIM =17;
+  optional int32 CONN_DIAMETER =18; // @gotags: gorm:"size:10"
+} 
+message CST_CONNECTION_EDAMS4 {
+  required string PROP_REF =1;  // @gotags: gorm:"primaryKey;size:50"
+  required int64 CONN_NO =2;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required CONN_STATUS CON_STATUS = 3; // @gotags: gorm:"not null"
+  optional double ESTM_CONS=4;
+  required int64 SEQ_NO=5;        // @gotags: gorm:"not null"
+  optional string METER_TYPE =6;  // @gotags: gorm:"size:10"
+  optional string METER_REF =7;   // @gotags: gorm:"size:25"
+  required int32 NO_UNITS =9;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=10;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =11;
+  optional central.types.MasDateTime CONN_DATE = 12;
+  optional int32 IS_MANUAL_ESTIM  = 13;
+  optional int32 CONN_DIAMETER =14; // @gotags: gorm:"size:10"
+}
+message CST_CONNECTION_EDAMS5 {
+  required int64 CONNECTION_ID =1;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required CONN_STATUS CON_STATUS = 2; // @gotags: gorm:"not null"
+  required int64 PROPERTY_ID=3;       // @gotags: gorm:"not null;index"
+  optional double ESTM_CONS=4;
+  required int64 SEQ_NO=5;        // @gotags: gorm:"not null"
+  optional int64 METER_ID =6;     // @gotags: gorm:"index"
+  required int32 NO_UNITS =7;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=8;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =9;
+  optional central.types.MasDateTime CONN_DATE = 10;
+  optional int32 IS_MANUAL_ESTIM  = 11;
+  optional int32 CONN_DIAMETER =12; // @gotags: gorm:"size:10"
+}
+message CST_CONNECTION_MAS {
+  required int64 CONNECTION_ID =1;    // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required CONN_STATUS CON_STATUS = 2; // @gotags: gorm:"not null"
+  required int64 PROPERTY_ID=3;       // @gotags: gorm:"not null;index"
+  optional double ESTM_CONS=4;
+  required int64 SEQ_NO=5;        // @gotags: gorm:"not null"
+  optional int64 METER_ID =6;     // @gotags: gorm:"index"
+  required int32 NO_UNITS =7;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=8;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =9;
+  optional central.types.MasDateTime CONN_DATE = 10;
+  optional int64 PREV_CONNECTION_ID =11; // @gotags: gorm:"index"
+}
+message CST_CONNECTION_MAS_IMPORT {
+  required int64 CONNECTION_ID =1;    // @gotags: gorm:"primaryKey;"
+  required CONN_STATUS CON_STATUS = 2; // @gotags: gorm:"not null"
+  required int64 PROPERTY_ID=3;       // @gotags: gorm:"not null;index"
+  optional double ESTM_CONS=4;
+  required int64 SEQ_NO=5;        // @gotags: gorm:"not null"
+  optional int64 METER_ID =6;     // @gotags: gorm:"index"
+  required int32 NO_UNITS =7;     // @gotags: gorm:"not null"
+  optional string STAMP_USER=8;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =9;
+  optional central.types.MasDateTime CONN_DATE = 10;
+  optional int64 PREV_CONNECTION_ID =11; // @gotags: gorm:"index"
+  optional int32 CONN_DIAMETER =12; // @gotags: gorm:"size:10"
+
+}
+
+message LU_CONNECTION_SIZES {
+  required int32 ID =1;       // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string BILLING_ID=2;
+  required string DESCRIPTION =3; // @gotags: gorm:"not null"
+  optional int32 SIZE_IN_MM=4;
+}
+message ArrLU_CONNECTION_SIZES {
+  repeated LU_CONNECTION_SIZES LU_CONNECTION_SIZES=1;
+}
+// Services Table
+message CST_SERVICES {
+  optional string PROP_REF =1; 
+  optional int64 PROPERTY_ID =2;
+  required SERVICE_TYPE SERVICE_TYPE =3;    
+}
+message CST_SERVICES_EDAMS4 {
+  required string PROP_REF =1; // @gotags: gorm:"primaryKey;size:50"
+  required SERVICE_TYPE SERVICE_TYPE =2;    // @gotags: gorm:"primaryKey"
+}
+message CST_SERVICES_EDAMS5 {
+  required int64 PROPERTY_ID =1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required SERVICE_TYPE SERVICE_TYPE =2;    // @gotags: gorm:"primaryKey"
+}
+
+// Meter Table
+message CST_METER{
+  optional string PROP_REF =1;  // @gotags: gorm:"primaryKey;size:50"
+  optional string METER_TYPE =2; // @gotags: gorm:"size:10"
+  optional string METER_REF =3;  // @gotags: gorm:"size:25"
+  optional int64 METER_ID =4; 
+  required string METER_CONDITION=5;  // @gotags: gorm:"not null;size:10"
+  required MeterOperationStatus OP_STATUS=6;   // @gotags: gorm:"not null"
+  required int32 METER_SIZE =7;   // @gotags: gorm:"not null"
+  required bool IS_PREPAID =8;    // @gotags: gorm:"not null"
+  optional string STAMP_USER=9;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =10;
+  optional string METER_SIZE_DESC =11; // @gotags: gorm:"-"
+  // optional bool IS_PARENT_METER = 12;
+  optional string PARENT_METER_REF =13;
+  optional string PARENT_METER_TYPE =14;
+  optional int64 PARENT_METER_ID=15;
+  optional central.types.MasDateTime INSTALL_DATE = 16;
+  optional double LAST_INVOICED_READ =17;    // @gotags: gorm:"-"
+  optional central.types.MasDateTime LAST_INVOICED_READ_DATE =18;  // @gotags: gorm:"-"
+  optional central.types.MasDateTime LAST_CUR_READ_DATE =21;  // @gotags: gorm:"-"
+  optional int64 NO_DIALS =19;
+  optional central.types.MasDateTime REMOVAL_DATE = 20;
+  optional string METER_MAKE =22;
+  optional string SERIAL_NO = 23;
+  optional string METER_TAG_NO = 24;
+  optional bool IS_PARENT_METER = 25; // @gotags: gorm:"-"
+  optional string CHILD_METER_TYPE=26; // @gotags: gorm:"-"
+  optional string CHILD_METER_REF = 27; // @gotags: gorm:"-"
+  optional int64 CHILD_METER_ID=28; // @gotags: gorm:"-"
+}
+message CST_METER_EDAMS4{
+  required string PROP_REF =1;  // @gotags: gorm:"size:50;index"
+  required string METER_TYPE =2; // @gotags: gorm:"primaryKey;size:10"
+  required string METER_REF =3;  // @gotags: gorm:"primaryKey;size:25"
+  required string METER_CONDITION=5;  // @gotags: gorm:"not null;size:10"
+  required MeterOperationStatus OP_STATUS=6;   // @gotags: gorm:"not null"
+  required int32 METER_SIZE =7;   // @gotags: gorm:"not null"
+  required bool IS_PREPAID =8;    // @gotags: gorm:"not null"
+  optional string STAMP_USER=9;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =10;
+  // optional bool IS_PARENT_METER = 11;
+  // optional string CHILD_METER_TYPE=12;
+  // optional string CHILD_METER_REF = 13;
+  optional central.types.MasDateTime INSTALL_DATE = 14;
+  optional int64 NO_DIALS =15;
+  optional string PARENT_METER_REF =16;
+  optional string PARENT_METER_TYPE =17;
+  optional string SERIAL_NO = 18;
+  optional string METER_SIZE_DESC = 19; // @gotags: gorm:"-"
+  optional string METER_TAG_NO = 20;
+ }
+message CST_METER_EDAMS5{
+  required int64 METER_ID =1;   // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string METER_CONDITION=2;  // @gotags: gorm:"not null;size:10"
+  required MeterOperationStatus OP_STATUS=3;   // @gotags: gorm:"not null"
+  required int32 METER_SIZE =4;   // @gotags: gorm:"not null"
+  required bool IS_PREPAID =5;    // @gotags: gorm:"not null"
+  optional string STAMP_USER=6;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =7;
+  optional int64 CHILD_METER_ID=8;
+  optional central.types.MasDateTime INSTALL_DATE = 9;
+  optional string METER_TYPE =10; // @gotags: gorm:"size:10"
+  optional string METER_REF =11;  // @gotags: gorm:"size:25"
+  optional int64 NO_DIALS =12;
+  optional string SERIAL_NO = 13;
+  optional string METER_SIZE_DESC = 14; // @gotags: gorm:"-"
+  optional string METER_TAG_NO = 15;
+}
+message CST_METER_MAS{
+  required int64 METER_ID =1;   // @gotags: gorm:"primaryKey;autoIncrement:true;not null"
+  required string METER_CONDITION=2;  // @gotags: gorm:"not null;size:10"
+  required MeterOperationStatus OP_STATUS=3;   // @gotags: gorm:"not null"
+  required int32 METER_SIZE =4;   // @gotags: gorm:"not null"
+  required bool IS_PREPAID =5;    // @gotags: gorm:"not null"
+  optional string STAMP_USER=6;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =7;
+  optional int64 PARENT_METER_ID=8;
+  optional central.types.MasDateTime INSTALL_DATE = 9;
+  optional central.types.MasDateTime REMOVAL_DATE = 11;
+  optional int64 NO_DIALS =12;
+  optional string METER_TYPE =13; // @gotags: gorm:"size:10"
+  optional string METER_REF =14;  // @gotags: gorm:"size:25"
+  optional string METER_SIZE_DESC = 15; // @gotags: gorm:"-"
+  optional string SERIAL_NO = 16;
+  optional string METER_TAG_NO = 17;
+}
+message CST_METER_MAS_IMPORT{
+  required int64 METER_ID =1;   // @gotags: gorm:"primaryKey;"
+  required string METER_CONDITION=2;  // @gotags: gorm:"not null;size:10"
+  required MeterOperationStatus OP_STATUS=3;   // @gotags: gorm:"not null"
+  required int32 METER_SIZE =4;   // @gotags: gorm:"not null"
+  required bool IS_PREPAID =5;    // @gotags: gorm:"not null"
+  optional string STAMP_USER=6;  // @gotags: gorm:"size:100"
+  optional central.types.MasDateTime STAMP_DATE =7;
+  optional int64 PARENT_METER_ID=8;
+  optional central.types.MasDateTime INSTALL_DATE = 9;
+  optional central.types.MasDateTime REMOVAL_DATE = 11;
+  optional int64 NO_DIALS =12;
+  optional string METER_TYPE =13; // @gotags: gorm:"size:10"
+  optional string METER_REF =14;  // @gotags: gorm:"size:25"
+  optional string METER_SIZE_DESC = 15; // @gotags: gorm:"-"
+  optional string SERIAL_NO = 16;
+  optional string METER_TAG_NO = 17;
+  optional int32 METER_SIZE_IMPORT =18;
+  optional string METER_CONDITION_IMORT=19;
+  optional MeterOperationStatus OP_STATUS_IMPORT=20;
+  optional string METER_TYPE_IMPORT=21;
+  optional string METER_REF_IMPORT=22;
+}
+message LU_METER_SIZES {
+  required int32 ID =1;       // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string BILLING_ID=2;
+  required string DESCRIPTION =3; // @gotags: gorm:"not null"
+  optional int32 SIZE_IN_MM=4;
+}
+message ArrLU_METER_SIZES {
+  repeated LU_METER_SIZES LU_METER_SIZES=1;
+}
+// cs tables 
+message CS_CUSTKEYS_RANGE{
+  required int32 STATION_NO =1;   // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required int64 ACCNO_MIN =2; // @gotags: gorm:"not null"
+  required int64 ACCNO_MAX =3; // @gotags: gorm:"not null"
+
+}
+
+// Login CS
+message CS_USERS {
+  // required int32 STATION_NO =1;  // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string USERNAME = 2;   // @gotags: gorm:"size:50;not null"
+  required string PASSWORD = 3;   // @gotags: gorm:"not null;size:100"
+  required string IP =4;           // @gotags: gorm:"not null;size:15"
+  required int32 PORT = 5;        // @gotags: gorm:"not null;size:5"
+  required bool HTTPS =6;            // @gotags: gorm:"not null"
+}
+
+message BLOCKED_CUSTOMERS {
+  required string CUSTKEY =1;     // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required bool IS_BLOCKED =2;
+  required string STAMP_USER =3;
+  required central.types.MasDateTime STAMP_DATE =4;
+  required int64 STAMP_DATE_UNIX =5;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required bool IS_FINAL =6;         // @gotags: gorm:"not null;index"
+  required string REASON =7;          // @gotags: gorm:"not null;type:nvarchar(max)"
+}
+
+// Connection Status
+enum CONN_STATUS {
+  CONNECTED_WITHOUT_METER =0;
+  CONNECTED_WITH_METER=1;
+  DISCONNECTED_WITH_METER=2;
+  DISCONNECTED_WITHOUT_METER=3;
+}
+
+// type of service
+enum SERVICE_TYPE {
+  WATER =0;
+  SEWER=1;
+  ELECTRICITY=2;
+  GAS=3;
+  HYDRANT=4;
+  FIRE=5;
+}
+
+// Meter Operation Status
+enum MeterOperationStatus{
+  WORKING=0;
+  NOT_WORKING=1;
+}
+
+message CreateWaterPreviewRq {
+  required string CUSTKEY = 1;
+  optional string UA_ADDRESS=2;
+  optional int64 APP_ID =3;
+  optional string C_TYPE_GROUP=4;
+  optional bool HAS_FILE =5;
+}
+
+message BillGroupBookNoRq {
+  required int32 STATION_NO=1;
+  required string BILLGROUP=2;
+  optional string BOOK_NO=3;
+}
+
+
+message AllCustomerData {
+  repeated CST_CUSTOMERS CST_CUSTOMERS=1;
+  repeated CST_PROPERTY CST_PROPERTY = 2;
+  repeated CST_CONNECTION CST_CONNECTION = 3;
+  repeated CST_SERVICES CST_SERVICES = 4;
+  repeated CST_METER CST_METER = 5;
+  repeated CST_MULTI_CTG CST_MULTI_CTG=6;
+}
+message CUSTOMER_MAIN_DATA {
+  required int32 STATION_NO =1; // @gotags: gorm:"primaryKey;autoIncrement:false;size:10;not null"
+  required string CUSTKEY =2;  // @gotags: gorm:"primaryKey;autoIncrement:false;size:15;not null"
+  required string BILLGROUP =3;  // @gotags: gorm:"not null;size:10"
+  required string BOOK_NO =4;  // @gotags: gorm:"not null;size:20"
+  required int32 WALK_NO =5;  // @gotags: gorm:"not null"
+  required string SURNAME =6;  // @gotags: gorm:"not null;size:255"
+  required string UA_ADDRESS =7;  // @gotags: gorm:"not null;size:255"
+  optional string NATIONAL_ID =8;  // @gotags: gorm:"size:30"
+  optional string C_TYPE_ID = 9;
+  optional string C_TYPE_ID_DESC = 10;
+  optional string BILLGROUP_DESC =21;
+  optional string BOOK_NO_DESC =22;
+  optional string OLD_KEY =23;
+  optional string PROP_REF = 24;
+  optional string STATION_NAME =25;
+  optional string CTYPE_GROUP_ID =26;
+  optional string CTYPE_GROUP_ID_DESC =27;
+  optional int64 METER_ID =28;
+  repeated CST_MULTI_CTG CST_MULTI_CTG = 29; // @gotags: gorm:"-"
+  repeated CST_TENANT TENANTS =30; // @gotags: gorm:"-"
+  repeated CustWallet CustWallet = 31; // @gotags: gorm:"-"
+  optional string MOBILE_NO =32;
+  optional string CR_NO = 33;
+}
+message ALL_CUSTOMER_MAIN_DATA {
+  map<string,CUSTOMER_MAIN_DATA> CUSTOMER =1;
+}
+message CUSTOMER_DATA {
+  required CST_CUSTOMERS CST_CUSTOMERS=1;
+  repeated CST_PROPERTY CST_PROPERTY = 2;
+  repeated CST_CONNECTION CST_CONNECTION = 3;
+  repeated CST_SERVICES CST_SERVICES = 4;
+  repeated CST_METER CST_METER = 5;
+  repeated CST_MULTI_CTG CST_MULTI_CTG=6;
+  optional bool IS_MULTI_CTG =7;
+  repeated CST_TENANT TENANTS =8; // @gotags: gorm:"-"
+  optional bool IS_CHARITY =9; // @gotags: gorm:"-"
+  optional bool IS_CHARITY_SEWER =10; // @gotags: gorm:"-"
+}
+
+message ArrCUSTOMER_DATA {
+  repeated CUSTOMER_DATA CUSTOMER_DATA=1;
+}
+
+message StationNoCustkeyRq {
+  required int32 STATION_NO =1;
+  required string CUSTKEY=2;
+}
+message StationNoBillGroupRq {
+  required int32 STATION_NO =1;
+  required string BILLGROUP=2;
+  optional bool NO_FILTER_CONN_STATUS = 3;
+}
+
+message CreateNewPropertyRq {
+  required string C_TYPE=1;
+  optional string STAMP_USER=2; 
+  optional central.types.MasDateTime STAMP_DATE =3;
+}
+
+message OpenNewAccountRq {
+  required int32  STATION_NO =1;
+  required string BILLGROUP =2;
+  required string BOOK_NO =3;
+  required string SURNAME =4;
+  required string UA_ADDRESS =5;
+  optional string E_MAIL =6;
+  optional string NID =7;
+  optional string PASSPORT_ID =8;
+  optional string PREV_CUSTKEY=9;
+  optional string MOBILE_NO=10;
+  required int32 WALK_NO=11;
+  optional int64 APP_ID =12;
+  optional string BBM_FORM =13;
+  optional string TAX_NO =14;
+  optional string OLD_KEY = 15;
+  optional string FIRST_NAME =16;
+  optional string SECOND_NAME =17;
+  optional string THIRD_NAME =18;
+  optional string FOURTH_NAME =19;
+  optional string FULL_NAME =20;
+  optional string GOV_ADDRESS=21;
+  optional string CITY_ADDRESS=22;
+  optional string DISTRIC_ADDRESS=23;
+  optional string AREA_ADDRESS=24;
+  optional string STREET_ADDRESS=25;
+  optional string BUILDING_ADDRESS=26;
+  optional string FLOOR_ADDRESS=27;
+  optional string FLAT_ADDRESS=28;
+  optional string FINAL_ADDRESS=29;
+  optional string settingCreate=30;
+}
+
+message CS_ACTIVITIES {
+  required int32 ID =1;   // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string ACT_NAME=2;  // @gotags: gorm:"size:255;not null;uniqueIndex"
+  optional string DESCRIPTION =3; // @gotags: gorm:"size:255"
+  optional string DESCRIPTION_EN = 4;
+  required bool WITH_FEES=5;  // @gotags: gorm:"not null"
+  optional bool CAN_MAKE_MORE_APP=6;
+  repeated LU_FIELDS LU_FIELDS = 7;   // @gotags: gorm:"-"
+  optional int32 CLONE_ID =8;
+}
+message ArrCS_ACTIVITIES {
+  repeated CS_ACTIVITIES CS_ACTIVITIES=1;
+}
+
+message CS_FEES {
+  optional int64 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:true;uniqueIndex:IX_CS_FEES_1"
+  required int32 OBJ_FEE_ID =2;       // @gotags: gorm:"not null;index"
+  required int64 APP_ID=3;        // @gotags: gorm:"not null;uniqueIndex:IX_CS_FEES_1"
+  required string DESCRIPTION =4; // @gotags: gorm:"size:255;not null"
+  required double AMOUNT=5;       // @gotags: gorm:"not null"
+  required int32 TRANS_TYPE=6;    // @gotags: gorm:"not null"
+  required int32 TRANS_STYPE=7;   // @gotags: gorm:"not null"
+  required string CUSTKEY = 8;    // @gotags: gorm:"not null;Index"
+  optional central.types.MasDateTime STAMP_DATE = 9;
+  optional double ORG_AMOUNT =10;
+  optional double VAT =11;
+  optional double ADMIN =12;
+  optional double ADMIN_VAT =13;
+  required bool IS_CANCELLED =14;         // @gotags: gorm:"not null"
+  required int32 PAYMENT_TRANS_TYPE=15;   // @gotags: gorm:"not null"
+  required int32 PAYMENT_TRANS_STYPE=16;  // @gotags: gorm:"not null"
+  required int32 FEE_PARENT_ID =17;       // @gotags: gorm:"not null"
+  optional int64 RELATED_FEE_ID =18;
+  optional double FEES_BEFORE_INSTALLMENT = 19; 
+  optional double INSTALLMENT_AMOUNT =20; 
+  optional double POST_PAID_AMOUNT = 21;
+  optional bool NOT_CHARGE =22;           // @gotags: gorm:"-"
+  optional double STORE_INSTALL_FEES=23;
+  optional double STORE_FEES_AMT=25;
+  optional int64 FEES_TRANS_NO =26;
+  optional string NOTES = 27;    // @gotags: gorm:"-"
+  optional string OBJ_NAME = 28;    // @gotags: gorm:"-"
+  optional bool IS_CROSS = 29;           // @gotags: gorm:"-"
+}
+
+message LU_FEES_DESCRIPTIONS {
+  required int32 ID=1;      // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string DESCRIBE=2;  // @gotags: gorm:"size:255;not null;uniqueIndex"
+  required string DESCRIBE_EN=3;  // @gotags: gorm:"size:255;not null;uniqueIndex"
+}
+
+message APP_FEES {
+  repeated CS_FEES CS_FEES =1;
+  optional APP_TRACER TRACE =2;
+}
+
+message CS_ACTIVITY_FEES {
+  required int32 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required int32 ACTIVITY_ID =2; 
+  required string OBJ_NAME =3;    // @gotags: gorm:"size:255;not null;uniqueIndex:IX_ACTIVITY_FEES_1"
+  required string DESCRIPTION =4;
+  optional int64 VALUE_FIELD_ID =5;
+  optional string VALUE_OBJ =6;    // @gotags: `gorm:"type:nvarchar(max)"`
+  optional double VALUE_CONST =7;
+  optional int32 VALUE_FEE_OBJ_ID =8;
+  required bool IS_ACTIVE =9;     // @gotags: gorm:"not null"
+  optional bool PER_PARAMETER=10;       
+  required bool IS_MAIN=11;       // @gotags: gorm:"not null"
+  optional int32 TRANS_TYPE=12;
+  optional int32 TRANS_STYPE=13;
+  required string ENABLE_CASE =14;  // @gotags: gorm:"not null"
+  optional double VAT =15;
+  optional double ADMIN_FEES =16;
+  optional double ADMIN_VAT =17;
+  optional int64 PARAMTER_FIELD_ID = 18;
+  optional int32 PAYMENT_TRANS_TYPE=19;   
+  optional int32 PAYMENT_TRANS_STYPE=20;  
+  optional int32 FEE_PARENT_ID =21;
+  optional bool ALLOW_INSTALLMENTS =22;
+  optional string VALUE_FIELD_NAME =23;    // @gotags: gorm:"-"
+  optional string PARAMTER_FIELD_NAME =24;    // @gotags: gorm:"-"
+  optional string VALUE_FEE_OBJ_NAME =25;    // @gotags: gorm:"-"
+  optional int32 INSTALLMENT_TRANS_TYPE = 26;
+  optional int32 INSTALLMENT_TRANS_STYPE = 27;
+  optional string PRODUCT_CODE = 28;      // @gotags: gorm:"size:30"
+  optional string TAX_CODE =29;           // @gotags: gorm:"size:5"
+  optional bool NOT_CHARGE =30;
+  optional int32 REV_AGREEM_TRNS_TYPE=31;
+  optional int32 REV_AGREEM_TRNS_STYPE=32;
+  optional bool ALLOW_POST = 33;
+  optional int64 FEE_TYPE_ID = 34;
+}
+
+message CS_APPLICATIONS {
+  required int64 ID =1;                             // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required int32 ACT_ID =2;                         // @gotags: gorm:"not null"
+  required string STAMP_USER=3;                     // @gotags: gorm:"not null"
+  required central.types.MasDateTime STAMP_DATE =4; // @gotags: gorm:"not null"
+  required string CUSTKEY =5;                       // @gotags: gorm:"not null"
+  required bool IS_POSTED =6;                      // @gotags: gorm:"not null"
+  required bool IS_CANCELLED = 7;                  // @gotags: gorm:"not null"
+  optional string BBM_FORM =8;                     // @gotags: gorm:"not null"
+  optional TAX_STATE TAX_STATE=9;
+}
+enum TAX_STATE {
+  NOT_SEND =0;
+  SENT =1;
+}
+message CS_RECIEPT{
+  required string CUSTKEY=1;                    // @gotags: gorm:"size:20;not null;Index"
+  required int64 FEE_ID =2;                     // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required double AMOUNT=3;                     // @gotags: gorm:"not null"
+  required string STAMP_USER=4;                // @gotags: gorm:"not null"
+  required central.types.MasDateTime STAMP_DATE = 5;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required bool IS_CANCELLED =6;              // @gotags: gorm:"not null"
+  optional string CANCELLED_USER= 7;         
+  optional central.types.MasDateTime CANCELLED_DATE= 8;   
+  optional int64 REC_TRANS_NO =9;      
+}
+
+message LU_FIELDS {
+  required int64 ID =1;                           // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string NAME =2;                       // @gotags: gorm:"size:255;not null;uniqueIndex"
+  required DATATYPE DATA_TYPE=3;                // @gotags: gorm:"not null"
+  required string DESCRIPTION=4;
+  optional string DESCRIPTION_EN=5;          
+  optional string PARENT_NAME=6;                 // @gotags: gorm:"size:255"
+  optional bool IS_SYSTEM =7;
+}
+message ArrLU_FIELDS {
+  repeated LU_FIELDS LU_FIELDS =1;
+}
+message SaveFieldsReq {
+  required int64 ID =1;                           // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string NAME =2;                       // @gotags: gorm:"size:255;not null;uniqueIndex"
+  required int32 DATA_TYPE=3;                // @gotags: gorm:"not null"
+  required string DESCRIPTION=4;
+  optional string DESCRIPTION_EN=5; 
+}
+message SetActFieldsReq {
+  required int64 ACT_ID =1;                          
+  repeated TBL_ACTIVITY_FIELDS TBL_ACTIVITY_FIELDS = 2;    
+}
+
+message TBL_ACTIVITY_FIELDS {
+  required int64 FIELD_ID=1;          // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required bool IS_REQUIRED =2;       // @gotags: gorm:"not null"
+}
+message ArrCS_ACTIVITY_FIELDS {
+  repeated CS_ACTIVITY_FIELDS CS_ACTIVITY_FIELDS=1;
+}
+
+message CS_FIELDS {
+  required int64 FIELD_ID =1;                           // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required int64 APP_ID=2;                              // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional double AS_NUMBER = 3; 
+  optional string AS_STRING = 4;                        // @gotags: gorm:"size:255"
+  optional central.types.MasDateTime AS_DATE = 5; 
+  optional bool AS_BOOLEAN = 6; 
+  optional string AS_BASE64 = 7; 
+  optional int64 AS_TABLE =8;
+  optional ALL_TABLE_VALUES TABLE_VALUES =9; // @gotags: gorm:"-"
+}
+message CS_TABLE_VALUES {
+  required int64 TABLE_ID =1;     // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 FIELD_ID =2;     // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 ROW_NUMBER=3;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double AS_NUMBER = 4; 
+  optional string AS_STRING = 5; 
+  optional central.types.MasDateTime AS_DATE = 6; 
+  optional bool AS_BOOLEAN = 7; 
+  optional int64 AS_TABLE=8;
+}
+
+message CS_ACTIVITY_FIELDS {
+  required int64 ACT_ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required int64 FIELD_ID=2;          // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required bool IS_REQUIRED =3;       // @gotags: gorm:"not null"
+  optional string FIELD_NAME=4;       // @gotags: gorm:"-"
+  optional bool IS_SYSTEM =5;
+}
+
+message LU_DATA_TYPE {
+  required int32 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string DESCRIPTION =2; // @gotags: gorm:"not null"
+}
+
+// enum ALL_ACTIVITES {
+//   OPEN_ACCOUNT =1;
+//   LOCATION_PREVIEW_FOR_WATER=2;
+//   LOCATION_PREVIEW_FOR_SEWER=3;
+//   CALCULATE_CONNECTION_FEES_FOR_WATER=4;
+//   CALCULATE_CONNECTION_FEES_FOR_SEWER=5;
+//   CREATE_NEW_AGREEM=6;
+//   EDIT_AGREEM=7;
+//   EDIT_NO_UNITS=8;
+//   EDIT_CUSTOMER_NAME=9;
+//   EDIT_CUSTOMER_ADDRESS=10;
+//   EDIT_CUSTOMER_C_TYPE=11;
+//   EDIT_CUSTOMER_METER_SIZE=12;
+//   EDIT_MUTLI_C_TYPE=13;
+//   SEND_WHATSAPP_MESSAGE=14;
+//   PROVIDING_WATER_CONNECTION=15;
+//   PROVIDING_NEW_METER=16;
+//   CANCEL_ACTIVITY=17;
+//   INSTALLMENT_ACTIVITY =18;
+//   CALC_BILLGROUP_IN_MAS =19;
+//   REVERCE_CALC_BILLGROUP_IN_MAS =20;
+//   CHOOSE_BILLS_TO_CANCEL =21;
+//   RECALC_SINGLE_BILL=22;
+//   MAIN_CUSTOMER_DATA =23;
+//   WATER_SAVING_ITEMS=24;
+//   SCAVENGE_WATER=25;
+//   EXCHANGE_WATER=26;
+//   DISINFECTION_OF_WATER_TANKS=27;
+//   BUY_NEW_WATER_CARD =28;
+//   GROUND_WATER_DRAINAGE =29;
+//   SEWER_RECEPTION_FROM_CLINET =30;
+//   DRAINAGE_BUILDING_WATER=31;
+//   DRAINAGE_OTHERS_WATER=32;
+//   REQUEST_CERTIFICATION_DATA=33;
+//   PROVIDING_SEWER_CONNECTION=34;
+//   CALCULATE_SUB_ASSAY_FEES=35;
+//   REVERSE_SINGLE_BILL=36;
+//   EDIT_NAME_FOR_NEW_CUSTOMERS=37;
+//   CHECK_WATER_METER =38;
+//   EDIT_ADDRESS_FOR_NEW_CUSTOMERS=39;
+//   BILL_COLLECTIONS =40;
+//   CHOOSE_BILLS_TO_COLLECT =41;
+//   ADD_CUSTOMERS_SEWER_HOME_CONNECTIONS =42;
+//   EDIT_CUSTOMERS_SEWER_HOME_CONNECTIONS =43;
+//   ADD_METER_READING =44;
+//   // PROVIDING_MISSED_WATER_CONNECTION=45;
+//   CHANGE_CUSTOMER_BILLGROUP = 46;
+//   // QUANTATY_DIFF=47;
+//   // INSTALLMENT_FEES=48;
+//   CANCEL_SEWER=49;
+//   CANCEL_CONNECTION=50;
+//   CONNECTION_EXCHANGE=51;
+//   METER_CHANGE=52;
+//   PREPAID_METER_CHARGE=53;
+//   DEBIT_ACTIVITY =54;
+//   CREDIT_ACTIVITY =55;
+//   // SEWER_EXCHANGE = 56;
+//   RECONNECT_WATER_CONNECTION=57;
+//   CANCEL_INVOICED_READINGS=58;
+//   CHOOSE_READINGS_TO_CANCEL=59;
+//   ADD_NEW_AGREEM=60;
+//   WATER_PREVIEW_DIFF=61;
+//   METER_CHECK_DIFF=62;
+//   CALC_RANDOM_AMOUNT=63;
+//   PAY_CUSTOMER_DEBT=64;
+//   STOP_CONNECTION_FOR_PERIOD =65;
+//   CANCEL_AGREEMS =66;
+//   CANCEL_FINANCE_TRANSACTION=67;
+//   RELOCATION_PREVIEW_FOR_WATER=68;
+//   RELOCATION_PREVIEW_FOR_SEWER=69;
+//   CHANGE_OWNERSHIP=70;
+//   REMOVE_METER=71;
+//   ASSAY_WATER_DIFF=72;
+//   ASSAY_SEWER_DIFF=73;
+//   WATER_ASSAY_FOR_ASSOCIATIONS=74;
+//   SEWER_ASSAY_FOR_ASSOCIATIONS=75;
+//   POST_FEES_TO_BILLING=76;
+//   CHOOSE_FEES_TO_POST=77;
+//   SELECT_STATIONS=78;
+//   AUTOMATIC_INTSLLMENTS=79;
+//   SELF_ASSAY =80;
+//   FIX_METER_CALCULATIONS=81;
+//   METER_INSTALL_CALCULATIONS=82;
+//   EDIT_CUSTOMER_TAX_NO =83;
+//   ADD_FIELDS =84;
+//   SET_CS_ACTIVITY_FIELDS=85;
+//   WATER_ASSAY_DATA_INPUT=86;
+//   SEWER_ASSAY_DATA_INPUT=87;
+//   SEWER_INDUSTRIAL=88;
+//   PAY_GOV_CUSTOMER_DEBT=89;
+//   PAY_INSTRUCTION_CUSTOMER_DEBT=90;
+//   SEWER_SELF_ASSAY=91;
+//   FINAL_DISCONNECT_FEES=92;
+//   PENALTY_CUSTOMER_DEBIT=93;
+//   LEGAL_AFFAIL_DEBIT=94;
+//   REMOVE_METER_IF_FOUND =95;
+//   CALCULATE_METER_FEES=96;
+//   FOUNTAIN_WATER=97;
+//   BUY_SAVING_WATER_FROM_STORE=98;
+//   POST_AND_CALC_METER_CONSUMPTION =99;
+//   EXCHANGE_WATER_BY_CUSTOMER = 100;
+//   BUILDING_WATER_ASSAY=101;
+//   CONVERT_TO_PREPAID =102;
+// }
+enum DATATYPE {
+  INT=0;
+  FLOAT=1;
+  STRING=2;
+  BOOL=3;
+  DATE=4;
+  DATETIME=5;
+  BASE64=6;//USED for byte arrays as images
+  LIST=7;
+  OUT_LIST=8;
+  PDF=9;
+  TABLE=10;
+}
+message CRM_MODULE {
+  required int64 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string MODULE_DESC =2;
+  optional double VERSION_NO =3;
+  optional bool IN_CHAN =4;
+}
+message AllModules {
+  repeated CRM_MODULE cRM_MODULE = 1;
+}
+message CalculateActivityFeesRq {
+  required int32 ACTIVITY_ID =1;
+  required int64 APP_ID=2;    
+}
+message DUMMY {
+  required int32 ID =1;
+}
+
+message ExecuteActivityRq {
+  required int32 ACTIVITY_ID =1;
+  repeated CS_FIELDS CS_FIELDS=2;
+}
+
+// bpm messages 
+
+message EXTERNAL_FEES {
+  required int64 CODE = 1;
+  required string FEES_NAME = 2;
+  required double FEES_AMOUNT = 3;
+  optional int64 STAMP_DATE_UNX = 4;
+  optional central.types.MasDateTime STAMP_DATE = 5;
+  required double FEES_ORIGINAL_AMOUNT = 6;
+  optional double FEES_VAT_AMOUNT = 7;
+  optional double FEES_ADMIN_AMOUNT = 8;
+  optional double FEES_ADMIN_VAT_AMOUNT = 9;
+  optional bool IS_CANCELLED = 10;
+  optional int32 ACTION_ID = 11;
+  optional string PARENT_FEE_NAME = 12;
+  optional string PARENT_FEE_NAME_EN = 13;
+  optional double FEES_BEFORE_INSTALLMENT = 14; 
+  optional double INSTALLMENT_AMOUNT =15;
+  optional double POST_PAID_AMOUNT =16;
+  optional int64 FEE_TYPE_ID = 17;
+  optional int32 ACTIVITY_ID = 18;
+  optional string ACTIVITY_NAME=19;
+  optional bool IS_CHARITY = 40;
+  optional string BPM_FORM = 41;
+  optional bool IS_CHARITY_SEWER = 42;
+  optional bool IS_CROSS = 43;
+  optional string CUSTKEY = 44;
+}
+message APP_EXTERNAL_ACTIVITY {
+  required int32 BPM_ID = 1;
+  required string ACTIVITY_NAME = 2;
+  required int32 BPM_EXTERNAL_MODULE_ID = 3;
+  required string IP = 4;
+  required int32 PORT = 5;
+  repeated APP_EXTERNAL_FIELD REQUEST = 6;
+  repeated APP_EXTERNAL_FIELD RESPONSE = 7;
+  repeated EXTERNAL_FEES FEES = 8;
+  optional bool WITH_FORM = 9;
+  optional string FORM_CONFIG = 10;
+  required bool IS_PAYMENT = 11;
+  required string PACKAGE_NAME = 12;
+  required string SERVICE_NAME = 13;
+  optional string DESCRIPTION = 14;
+  optional bool IS_DUMMY = 15;
+  optional string DESCRIPTION_EN = 16;
+  optional string BPM_FORM = 17;
+  optional bool IS_ASYNC = 18;
+  map<string,string> ACT_OPTIONS = 19;
+  optional string FORM_NAME = 20; // @gotags: gorm:"-" 
+  optional int64 TRANSACTION_ID = 21;
+  repeated string PAGES_NAMES = 22; // @gotags: gorm:"-" 
+  optional bool WITH_REFRESH = 23; // @gotags: gorm:"-" 
+  optional string URL = 24; // @gotags: gorm:"-"
+  optional bool FROM_ACTIVITY = 25; // @gotags: gorm:"-"
+  optional int32 ACTION_ID = 26; // @gotags: gorm:"-"
+  optional APP_TRACER TRACE = 27; // @gotags: gorm:"-"
+}
+message APP_EXTERNAL_FIELD {
+  required int32 BPM_ID = 1;
+  required string NAME = 2;
+  required string TITLE = 3;
+  required DATATYPE DATA_TYPE = 4;
+  optional FIELDKIND KIND = 5;
+  required int32 EXTERNAL_MODULE_ID = 6;
+  required bool IS_REQUIRED = 7;
+  repeated FIELD_VALUE FIELD_VALUES = 8;
+  optional int32 EXTERNAL_PARENT_FIELDID = 9;
+  optional string EXTERNAL_PARENT_FIELD_NAME = 10;
+  optional bool IS_SYSTEM = 11;
+  optional string SYSTEM_COLUMN = 12; 
+  optional int32 MAP_FIELD_ID = 13; // @gotags: gorm:"-"
+  optional bool MAP_IS_EXTERNAL = 14; // @gotags: gorm:"-"
+  optional int32 MAP_MODULE_ID = 15; // @gotags: gorm:"-"
+  map<int32,bool> COLUMN_FIELDS = 16; // @gotags: gorm:"-"
+  repeated APP_EXTERNAL_FIELD COLUMN_FIELDS_NAMES = 17; // @gotags: gorm:"-"
+  optional string TITLE_EN = 18;
+  optional string TITLE_LANG = 19; // @gotags: gorm:"-"
+}
+enum FIELDKIND {
+  TEL=0;
+  EMAIL=2;
+  ID=3;
+  ADDRESS=4;
+  CHECK_LIST=5;
+  LABEL=6;
+  PARAGRAPH=7;
+}
+message FIELD_VALUE {
+  optional double AS_NUMBER = 1; // @gotags: gorm:"-"
+  optional string AS_STRING = 2; // @gotags: gorm:"-"
+  optional central.types.MasDateTime AS_DATE = 3; // @gotags: gorm:"-"
+  optional bool AS_BOOLEAN = 4; // @gotags: gorm:"-"
+  optional ALL_TABLE_VALUES AS_TABLE =5; // @gotags: gorm:"-"
+}
+message TABLE_ROW_VALUE {
+  map<int32, FIELD_VALUE> TABLE_ROW = 1;
+}
+message ALL_TABLE_VALUES {
+  required int64 TABLE_ID=1;
+  repeated TABLE_ROW_VALUE TABLE_ROW_VALUE = 2;
+}
+message ArrEXTERNAL_FEES {
+  repeated EXTERNAL_FEES EXTERNAL_FEES=1;
+  optional APP_TRACER TRACE = 2;
+}
+
+
+// mas system messages 
+message StationList {
+  repeated STATIONS Stations = 1;
+}
+message STATIONS {
+  required int32 STATION_NO       =1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+	required string STATION_NAME    =2; // @gotags: gorm:"notnull"
+	optional string DESCRIPTION     =3; // @gotags: gorm:"notnull"
+	optional int64 ISCURRENT        =4;
+	optional int64 DB_STANDALONE    =5;
+	optional int64 DB_ACCESS        =6;
+	optional bool IS_HEADQUARTERS  =7;
+	optional bool IS_MAINTSITE     =8;
+	optional bool IS_MRREADING     =9;
+	optional bool IS_CSERVICES     =10;
+	optional bool IS_RECEIPTING    =11;
+	optional string TEL_WORK        =12;
+	optional string TEL_FAX         =13;   
+	optional string TEL_EMAIL       =14;
+	optional string TEL_AHOURS      =15;
+	optional string TEL_COMPL       =16;
+	optional string LN_ADDRESS1     =17;
+	optional string LN_ADDRESS2     =18;
+	optional string LN_ADDRESS3     =19;
+	optional string LN_CITY         =20;
+	optional string LN_POSTAL       =21;
+	optional int64 WORKING_MON      =22;
+	optional int64 WORKING_TUE      =23;
+	optional int64 WORKING_WED      =24;
+	optional int64 WORKING_THU      =25;
+	optional int64 WORKING_FRI      =26;
+	optional int64 WORKING_SAT      =27;
+	optional int64 WORKING_SUN      =28;
+	optional int64 OVERTIME_MON     =29;
+	optional int64 OVERTIME_TUE     =30;
+	optional int64 OVERTIME_WED     =31;
+	optional int64 OVERTIME_THU     =32;
+	optional int64 OVERTIME_FRI     =33;
+	optional int64 OVERTIME_SAT     =34;
+	optional int64 OVERTIME_SUN     =35;
+	optional string SITE_MEMO       =36;
+	optional central.types.MasDateTime STAMP_DATE =37;
+	optional string STAMP_USER      =38;
+	optional int64 MAINTSITE_CODE   =39;
+	optional int64 DEFAULTWAREHOUSE =40;
+	optional int64 DEFAULTDEPOT     =41;
+	optional int64 WAREHOUSESETTING =42;
+	optional int64 DEPOTDSETTING    =43;
+	optional string IP_ADDRESS      =44;
+	optional int64 PORT_NO          =45;
+	optional int64 SECTOR_CODE      =46;
+	optional string SECTOR_NAME     =47;
+  optional bool IS_DELETED        =48;
+  optional int32 SITE_CODE = 49;
+}
+message ActivityPaidRq {
+  required string CUSTKEY = 1;
+  required ArrEXTERNAL_FEES ArrEXTERNAL_FEES=2;
+}
+message CREATE_NEW_AGREEM_Rq {
+  required string CUSTKEY=1;
+  required double AMOUNT=2;
+  optional int32 NO_MONTHS =3;
+  optional double QEST_AMT =4;
+  required int64 TRANS_TYPE =5;
+  required int64 TRANS_STYPE=6;
+  optional central.types.MasDateTime START_DATE = 7;
+  optional double INTEREST =8;
+  optional int32 REV_AGREEM_TRNS_TYPE=31;
+  optional int32 REV_AGREEM_TRNS_STYPE=32;
+  optional bool NO_VALIDATIONS=33;
+  required int64 ID =34;
+  optional int32 AGREEM_FROM_TYPE =35; // @gotags: gorm:"-"
+}
+message ArrCREATE_NEW_AGREEM_Rq {
+  repeated CREATE_NEW_AGREEM_Rq CREATE_NEW_AGREEM_Rq=1;
+  optional APP_TRACER TRACE = 2;
+}
+message EditAgreemRq {
+  required string CUSTKEY=1;
+  required double AMOUNT=2;
+  required int64 AGREEM_NO=3;
+  optional int32 NO_MONTHS =4;
+  optional double QEST_AMT =5;
+}
+
+message GetNoUnitsRs {
+  required string CUSTKEY =1;
+  required int32 OLD_NO_UNITS=2;
+}
+
+message GetEstimConsumpRs {
+  required string CUSTKEY =1;
+  optional double CUSTOMER_NEW_ESTIM_CONS=2;
+  optional int32 IS_MANUAL_ESTIM = 3;
+}
+message TasweyaCustomersRq {
+  optional string FROM_CUSTKEY =1;
+  optional string TO_CUSTKEY =2;
+  optional double AMOUNT =3;
+  optional central.types.MasDateTime EFFECT_DATE =4;
+  optional string NOTES = 5;
+}
+message AddCheqBankRq {
+  required string CUSTKEY =1;
+  optional string OLD_KEY =2;
+  optional string SURNAME=3;
+  optional string BILL_GROUP =4;
+  repeated TBL_BANK_CHECKS TBL_BANK_CHECKS=5; 
+}
+message TBL_BANK_CHECKS {
+  required central.types.MasDateTime DEPOSIT_DATE=1;
+  required string BANK_CHECK_NO=2;
+  required double BANK_CHECK_AMOUNT=3;
+  required string BANK_CHECK_NAME=4;
+  optional string RECEIPT_NO=5;
+  optional string DEPOSIT_BANK=6;
+  optional central.types.MasDateTime RECEIVAL_DATE=7;
+  optional central.types.MasDateTime DUE_DATE=8;
+  optional string NOTES=9;
+  optional string SIGNATURE=10;
+  optional bool INSERTED_IN_F_TRANS=11;
+}
+message CustDebitTableRq {
+  repeated CUSTOMER_DEBITS_TABLE CUSTOMER_DEBITS_TABLE=1; 
+}
+message CUSTOMER_DEBITS_TABLE {
+  required string CUSTKEY =1;
+  required double AMOUNT =2;
+  required string MEMO_FIELD=3;
+  required central.types.MasDateTime EFFECT_DATE=4;
+  optional int64 TRANSACTION_TYPES=5;
+  optional int64 MAIN_TRANSACTION_TYPES=6;
+}
+message POST_AMOUT_TO_BILLING_RQS {
+  repeated POST_AMOUT_TO_BILLING_RQ Items = 1;
+  optional APP_TRACER TRACE = 2;
+}
+message EditNoUnitsRq {
+  required string CUSTKEY =1;
+  required int32 NEW_NO_UNITS =2;
+  optional int32 OLD_NO_UNITS=3;
+}
+message AddRemoveUnitsReq {
+  required string CUSTKEY =1;
+  required int32 NO_UNITS =2;
+  optional bool ADD=3;
+}
+message GetSurnameRs {
+  required string CUSTKEY =1;
+  required string OLD_SURNAME=2;
+}
+
+message EditSurnameRq {
+  required string CUSTKEY =1;
+  required string NEW_SURNAME =2;
+  optional string OLD_SURNAME=3;
+}
+message GetAddressRs {
+  required string CUSTKEY =1;
+  required string OLD_ADDRESS=2;
+}
+
+message EditAddressRq {
+  required string CUSTKEY =1;
+  required string NEW_ADDRESS =2;
+  optional string OLD_ADDRESS=3;
+}
+message EditCtypeRq {
+  required string CUSTKEY =1;
+  required string NEW_C_TYPE =2;
+  optional string OLD_C_TYPE=3;
+}
+message GetCtypeRs {
+  required string CUSTKEY =1;
+  required string OLD_C_TYPE=2;
+}
+message EditMeterSizeRq {
+  required string CUSTKEY =1;
+  required int32 NEW_METER_SIZE =2;
+  optional string OLD_METER_SIZE=3;
+  optional string NEW_SERIAL_NO =4;
+  optional string OLD_SERIAL_NO=5;
+  optional string METER_TAG_NO=6;
+  required string NEW_METER_SIZE_BILING =7;
+  optional central.types.MasDateTime INSTALL_DATE=8;
+}
+message EditKhelsaCustomerRq {
+  required string CUSTKEY =1;
+  required double MONTHLY_CONSUMP_AMOUNT=2;
+  optional bool DISABLE_KHELSA=3;
+  optional int64 PENALTY_CODE =4;
+}
+message EditKhelsaCustomerRs {
+  required string CUSTKEY =1;
+  required double OLD_MONTHLY_CONSUMP_AMOUNT=2;
+  optional bool DISABLE_KHELSA=3;
+  optional int64 PENALTY_CODE =4;
+}
+message GetCMeterSizeRs {
+  required string CUSTKEY =1;
+  optional string OLD_METER_SIZE=2;
+  optional string OLD_SERIAL_NO=3;
+  optional string METER_TAG_NO=4;
+  optional int32 OLD_METER_SIZE_CODE=5;
+}
+
+
+// BILLING
+message CustkeyRq {
+  required string CUSTKEY =1;
+}
+message ArrCustkeyRq {
+  repeated string CUSTKEY =1;
+  optional bool With_Meter_Reading=2;
+}
+message AllAgreemRs {
+  required string CUSTKEY =1;
+  required int64 AGREEM_NO=2;
+  required double TOTAL_AGREEM_AMT=3;
+  required double REMAINING_AGREEM_AMT=4;
+  required int32 REMAINING_NO_MONTHS=5;
+  required double QEST_VAL=6;
+  optional double PENALTY=7;
+}
+message ArrAllAgreemRs {
+  repeated AllAgreemRs AllAgreemRs =1;
+}
+
+message TransactionTypes {
+  required int64 TRANS_TYPE=1;
+  required int64 TRANS_STYPE=2;
+  required string DESCRIPTION =3;
+}
+message ArrTransactionTypes {
+  repeated TransactionTypes TransactionTypes=1;
+}
+
+
+// Datasource msgs
+
+
+message LookupValues {
+  required int32 BPM_EXTERNAL_MODULE_ID = 1;
+  required int32 APP_TYPE_ID =2;
+  repeated LookupVals LookupVals=3;
+}
+message LookupVals {
+  required int32 FIELD_ID =1;
+  required string CODE =2;
+  optional string Description=3;
+}
+
+message LookupDatasource {
+  required int32 BPM_EXTERNAL_MODULE_ID = 1;
+  repeated DATA_SOURCSES_VALUES DATA_SOURCSES_VALUES=2;
+}
+
+
+message ACTIVITY_DATASOURCES {
+  required int32 BPM_ID = 1;
+  required string ACTIVITY_NAME = 2;
+  required int32 BPM_EXTERNAL_MODULE_ID = 3;
+  repeated DATA_SOURCSES_VALUES DATA_SOURCSES_VALUES=4;
+}
+message DATA_SOURCSES_VALUES {
+  required int32 FIELD_ID =1;
+  repeated FieldDatasource FieldDatasource=2;
+}
+message FieldDatasource {
+  required string CODE =2;
+  required FIELD_VALUE FIELD_VALUE=3; 
+}
+
+message CUSTOMER_MULTI_CTGS {
+  required string CUSTKEY = 1;
+  repeated CST_MULTI_CTG CST_MULTI_CTG=2;
+}
+message LU_CTG {
+  required string CODE =1;
+  required string DESCRIPTION =2;
+  optional double WIEGHT =3;
+}
+message LU_CTGS {
+  repeated LU_CTG LU_CTG =1;
+}
+
+message LU_FEE_CODES{
+  required int64 ID =1;         //@gotags: gorm:"autoIncrement:false;notnull;uniqueIndex"
+  required string VALUE=2;      // @gotags: gorm:"primaryKey"
+  required int64 FIELD_ID=3;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 ACTIVITY_ID=4; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string CODE=5;
+  optional int32 SEQ_NO =6;  
+  optional string FIELD_NAME =7;  // @gotags: gorm:"-"
+}
+message ArrALL_LU_FEE_CODES {
+  repeated ALL_LU_FEE_CODES ALL_LU_FEE_CODES=1;
+}
+message ALL_LU_FEE_CODES {
+  required string FIELD_NAME=1;
+  repeated LU_FEE_CODES LU_FEE_CODES=2;
+}
+
+message EDIT_MULTI_C_TYPES {
+  required string CUSTKEY=1;
+  repeated NEW_C_TYPES NEW_C_TYPES=2;
+  repeated OLD_C_TYPES OLD_C_TYPES=3;
+  optional int32 CUSTOMER_ESTIM_CONS=4;
+  required bool IS_207=5;
+}
+
+
+message NEW_C_TYPES {
+  required string NEW_C_TYPE=1;
+  optional double NEW_PREC=2;
+  required int32 NEW_NO_UNITS =3;
+  optional int32 NEW_ESTIM =4;
+  optional bool SELECT_MAIN_CTYPE =5;
+}
+message OLD_C_TYPES {
+  required string OLD_C_TYPE=1;
+  optional double OLD_PREC=2;
+  required int32 OLD_NO_UNITS =3;
+  optional int32 OLD_ESTIM =4;
+}
+message BBM_RS {
+  repeated ALL_FIELDS ALL_FIELDS=1;
+  repeated LU_CTG LU_CTGS = 2;
+  optional CST_CUSTOMERS CST_CUSTOMERS = 3;
+  optional string C_TYPE = 4;
+  optional string C_TYPE_DESC = 5;
+}
+
+message ALL_FIELDS {
+  required int32 TABLE_FIELD_ID =1;
+  optional string TABLEDESCRIPTION =2;
+  repeated BPM_TABLE_RAW FIELD_VALUE=3;
+}
+
+message BPM_TABLE_RAW {
+  map<int32,string> VALUES=1;
+  map<string,string> FIELD_VALUE =2;
+}
+
+message WATER_CONNECTION_REQ {
+  required string CUSTKEY=1;
+  required int32 MAIN_CONN_C_TYPE_LIST=2;
+  required int32 METER_TYPE_LIST =3;
+  required int32 METER_DIAM_LIST=4;
+  required int32 CONN_DIAM_LIST=5;
+  required bool WITH_STANDING=6;
+  required bool METER_MANPULATION =7;
+  required double BUILDING_AREA=8;
+  optional double SPACE_AREA=9;
+  optional double PIPE_LENGTH=10;
+  optional double SWIMMING_POOL_AREA=11;
+  optional int32 ILLEGAL_CONN_LIST=12;
+  optional int32 ILLEGAL_NO_MONTH=13;
+  optional int32 ILLEGAL_CONN_DIAM_LIST=14;
+  optional bool HAS_SEWER=15;
+  optional double ILLEGAL_WATER_AMT=16;
+  optional bool HAS_CONSTRUCT_WATER=17;
+  optional int32 CONSTRUCT_NO_FLOOR =18;
+  optional double CONSTRUCT_NET_BUILDING_AREA=19;
+  optional double CONSTRUCT_BADROOM_AREA=20;
+  optional double CONSTRUCT_ROOF_ROOM_AREA=21;
+  optional double CONSTRUCT_WATER_AMT=22;
+  optional int32 NO_QTY_SAVE = 23;
+  repeated DIGGING DIGGING=24;
+  repeated UNITS UNITS = 25;
+  repeated TOOLS TOOLS=26;
+}
+message DIGGING {
+  required double DIGGING_LEN =1;
+  required int32 SOIL_TYPE=2;
+  required int32 DIGGING_DEPTH =3;
+  optional bool BY_CUSTOMER =4;
+}
+message UNITS {
+  required int32 NO_UNITS=1;
+  required int32 CONN_C_TYPE=2;
+  required int32 UNIT_CONN_DIAM_LIST=3;
+  required double UNIT_AREA=4;
+  required int32 FLOOR_NO_LIST=5;
+  required int32 UNIT_ILLEGAL_CONN_LIST=6;
+  optional bool HAS_WATER =7;
+  optional bool TERMS_VOILENT =8;
+}
+
+message TOOLS {
+  required int32 SELECTED_TOOL =1;
+  required int32 QUANTATY =2;
+  required bool BY_CUSTOMER =3;
+}
+
+message CLIENT_CONNECTION {
+  required bool IS_LOGIN=1;
+  optional bytes QR_CODE=2;
+  // optional string BASE64_QR=3;
+  
+}
+
+message WhatsappMessage {
+  required int64 RECIEVER =1;
+  required string MESSAGE =2;
+}
+
+message CounteryCode {
+  required string Name =1;
+  required int32 DialCode =2;
+}
+
+message ArrCounteryCode {
+  repeated CounteryCode CounteryCode=1;
+}
+
+message PROVIDING_WATER_CONNECTION_RQ {
+  required string CUSTKEY =1;
+  repeated NEW_C_TYPES NEW_C_TYPES=2;
+  required string TOWNSHIP_NO=4;
+  optional bool IS_SUB_CONNECTION =5;
+  optional string MAIN_CUSTKEY =6;
+  optional int32 TOT_NO_UNITS =7;
+  optional string DIRECTION_1=8;
+  optional string DIRECTION_2=9;
+  optional string DIRECTION_3=10;
+  optional string DIRECTION_4=11;
+}
+message PROVIDING_SEWER_CONNECTION_RQ {
+  required string CUSTKEY =1;
+}
+message PROVIDING_NEW_METER_RQ {
+  required string CUSTKEY=1;
+  required bool HAS_METER=2; 
+  optional string METER_REF=3;
+  optional int32 NEW_METER_SIZE=4;
+  optional string BILLIMG_METER_SIZE=5;
+  optional string METER_MAKE =6;
+  required int32 METER_INSTALL_READ =7;
+  required int32 NO_DIALS = 8;
+  required central.types.MasDateTime INSTALL_DATE =9;
+  optional string SERIAL_NO =10;
+  required int32 CONV_FCTR =11;
+  required string NEW_METER_TYPE=12;
+  optional string METER_TAG_NO=13;
+  optional bool IS_PREPAIED=14;
+}
+
+message CS_STORES {
+  required int64 LU_ID =1;          // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string DESCRIPTION =2;
+  required double FEE=3;
+  optional double INSTALL_AMT=4;
+  optional int32 VAT=5;
+  optional int32 ADMIN_FEES=6;
+  optional int32 ADMIN_VAT= 7;
+  required int32 TRANS_TYPE=8;   // @gotags: gorm:"not null"
+  required int32 TRANS_STYPE=9;  // @gotags: gorm:"not null"
+  required int32 PAYMENT_TRANS_TYPE=10;   // @gotags: gorm:"not null"
+  required int32 PAYMENT_TRANS_STYPE=11;  // @gotags: gorm:"not null"
+  required int32 FEE_PARENT_ID =12;   
+  optional int32 STORE_TYPE =13;
+}
+
+message CANCEL_CS_APP {
+  required string CANCEL_REASON =1;
+  required string CANCEL_USER =2;
+  required int64 APP_ID =3; 
+  required string CUSTKEY =4;
+}
+
+message CST_SETTINGS {
+  required string KEY =1;       // @gotags: gorm:"primaryKey"
+  required string VAL =2;       // @gotags: gorm:"not null"
+  optional string NOTE=3;
+}
+
+message AllowedFeeInstallRq {
+  required string CUSTKEY=1;
+  required int64 APP_ID=2;
+}
+message INSTALLMENTS_TABLE {
+  required int64 FEE_ID = 1;
+  required string FEE_NAME=2;
+  required double FEE_AMOUNT=3;
+  required double MIN_CHARGE=4;
+  required double INTERST=5;
+  required int32 NO_MONTHS=6;
+  required bool ALLOW_INSTALLMENT = 7;
+  required double ADVANCED_PAYMENT =8;
+}
+message TBL_POST_FEES {
+  required int64 FEE_ID = 1;
+  required string FEE_NAME=2;
+  required double FEE_AMOUNT=3;
+  required bool POST_FEE = 7;
+  required double ADVANCED_PAYMENT =8;
+}
+
+message AllowedFeeInstallRs {
+ repeated INSTALLMENTS_TABLE INSTALLMENTS_TABLE=1;
+}
+
+message INSTALLMENT_OF_ACT_REQ {  
+  required string CUSTKEY=1;
+  required int64 APP_ID=2;
+  optional bool START_INSTALLMENT_NOW=3;
+  optional bool INPUT_FIRST_INSTALL_DATE =4;
+  optional bool START_WITH_CONNECTION =5;
+  optional central.types.MasDateTime FIRST_INSTALLMENT_DATE = 6;
+  repeated INSTALLMENTS_TABLE INSTALLMENTS_TABLE =7;
+}
+message POST_FEE_REQ {  
+  required string CUSTKEY=1;
+  required int64 APP_ID=2;
+  repeated TBL_POST_FEES TBL_POST_FEES =3;
+}
+
+message CALC_BILLGROUP_RQ{
+  required int32 STATION_NO=1;
+  required string BILLGROUP=2;
+  required int64 CYCLE_LEN =3;
+  required central.types.MasDateTime BILNG_DATE = 4;
+  required bool IMPORT_FROM_BILNG=5;
+}
+
+message REVERSE_CALC_REQ {
+  required int32 STATION_NO =1;
+  required string BILLGROUP =2;
+  required central.types.MasDateTime BILNG_DATE =3;
+}
+
+message BILL_DETAILS {
+  required string CUSTKEY =1;
+  required int64 CYCLE_ID =2;
+  required central.types.MasDateTime BILNG_DATE=3;
+  optional double PR_READ =4;
+  optional double CR_READ =5;
+  required double CONSUMP =6;
+  // optional READING_TYPE READING_TYPE =7;
+  required int64 NO_UNITS =8;
+  required double CL_BLNCE =9;
+  optional int32 METER_SIZE =10;
+}
+message ALL_BILLS {
+  repeated BILL_DETAILS BILL_DETAILS =1;
+}
+
+message INDV_RECALC {
+  required string CUSTKEY=1;
+  repeated TBL_SELECTED_BILL_TO_CANCEL TBL_SELECTED_BILL_TO_CANCEL =2;
+}
+message COLLECTION_REQUEST {
+  required string CUSTKEY=1;
+  repeated TBL_CHOOSING_BILLS_TO_COLLECT TBL_CHOOSING_BILLS_TO_COLLECT =2;
+}
+message COLLECT_BILL {
+  required string CUSTKEY=1;
+  repeated TBL_COLLECTED_BIILS TBL_COLLECTED_BIILS =2;
+}
+
+message TBL_SELECTED_BILL_TO_CANCEL {
+    required string CUSTKEY =1;
+    required int64 CYCLE_ID =2;
+    required central.types.MasDateTime BILNG_DATE=3;
+    optional double PR_READ =4;
+    optional double CR_READ =5;
+    required double CONSUMP =6;
+    // optional READING_TYPE READING_TYPE =7;
+    required int64 NO_UNITS =8;
+    required double CL_BLNCE =9;
+    required bool IS_CANCELLED =10;
+    optional int32 METER_DIAM_LIST =11;
+}
+message TBL_CHOOSING_BILLS_TO_COLLECT {
+    required string CUSTKEY =1;
+    required central.types.MasDateTime BILNG_DATE=2;
+    optional string SURNAME =3;
+    required int32 COLLECTION_TYPE =4;
+    required bool COLLECT_BILL =5;
+    required string COLLECTION_ID =6;
+    required double CL_BLNCE =7;
+    required double COLLECTION_AMOUNT =8;
+    optional string BANK_NAME =9;
+    optional central.types.MasDateTime COLLECTION_DATE =10;
+}
+message TBL_COLLECTED_BIILS {
+    required string CUSTKEY =1;
+    required central.types.MasDateTime BILNG_DATE=2;
+    optional string SURNAME =3;
+    required int32 COLLECTION_TYPE =4;
+    required bool COLLECT_BILL =5;
+    required string COLLECTION_ID =6;
+    required double CL_BLNCE =7;
+    required double COLLECTION_AMOUNT =8;
+    optional string BANK_NAME =9;
+   optional central.types.MasDateTime COLLECTION_DATE =10;
+}
+message TBL_NEW_BILLS_AMOUNTS {
+  required string CUSTKEY =1;
+  required int64 CYCLE_ID =2;
+}
+
+message CancelPaymentActivity {
+  optional APP_EXTERNAL_ACTIVITY Activity = 1;
+  required string Cancel_Reason = 2;
+}
+
+message CUSTOMER_DATA_FIELDS {
+  required string CUSTKEY =1;
+  required string UA_ADDRESS=2;
+  required string NEW_ADDRESS =3;
+  required string OLD_ADDRESS =4;
+  required string SURNAME =5;
+  required string NEW_SURNAME =6;
+  required string OLD_SURNAME =7;
+  required int64 NO_UNITS =8;
+  required int64 NEW_NO_UNITS =9;
+  required int64 OLD_NO_UNITS =10;
+  required string C_TYPE =11;
+  required string NEW_C_TYPE =12;
+  required string OLD_C_TYPE =13;
+  required string C_TYPE_GROUP=14;
+  required string PROP_REF =15;
+  required string METER_REF =16;
+  required int64 CONN_NO =17;
+  required string PREV_PROP_REF = 18;
+  required string BILLGROUP =19;
+  required string BOOK_NO =20;
+  optional string NID =21;
+  required int32 WALK_NO=22;
+  optional int32 CONN_STATUS = 23;
+  optional int32 METER_SIZE=24;
+  optional central.types.MasDateTime CONN_DATE = 25;
+  optional central.types.MasDateTime INSTALL_DATE = 26;
+  optional string METER_TYPE_LIST =27;
+  optional string METER_TYPE =28;
+  optional string NEW_METER_TYPE =29;
+  optional double LAST_INVOICED_READ =30;
+  optional central.types.MasDateTime LAST_INVOICED_READ_DATE =31;
+  optional central.types.MasDateTime LAST_CUR_READ_DATE =36;
+  optional string METER_TYPE_DESC =32;
+  optional string METER_CONDITION =33;
+  optional string OLD_OLD_KEY =34;
+  optional string NEW_OLD_KEY =35;
+  optional string METER_MAKE_DESC =38;
+}
+message LU_METERMAKES {
+  required string CODE =1;
+  required string DESCRIPTION=2;
+}
+
+message ArrLU_METERMAKES {
+  repeated LU_METERMAKES LU_METERMAKES=1;
+  repeated LU_METERMAKES LU_METERTYPE = 2;
+}
+message PeriodFilter {
+  optional central.types.MasDateTime From = 1;
+  optional central.types.MasDateTime To = 2;
+}
+message AllFeesPaidPeriod {
+  repeated FeesPaidPeriod FeesPaidPeriod=1;
+}
+message FeesPaidPeriod {
+  required string DESCRIPTION=1;
+  required double ORG_AMOUNT=2;
+  required double VAT=3;
+  required double ADMIN=4;
+  required double ADMIN_VAT=5;
+  required double AMOUNT=6;
+}
+message AllMoqaysaPaidPeriod {
+  repeated MoqaysaPaidPeriod MoqaysaPaidPeriod=1;
+}
+message MoqaysaPaidPeriod {
+  required string DESCRIPTION=1;
+  required int64 COUNT_APPS=2;
+  required double AMOUNT=3;
+  required string C_TYPE =4;
+}
+message AllCountActPeriod {
+  repeated CountActPeriod CountActPeriod=1;
+}
+message CountActPeriod {
+  required string DESCRIPTION=1;
+  required int64 COUNT_POSTED=2;
+  required int64 COUNT_NOT_POSTED =3;
+}
+
+message CS_AGREEMS {
+  required int64 ID =1;                   // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string CUSTKEY =2;             // @gotags: gorm:"notnull;uniqueIndex:ix_custkey_feeID"
+  required int64 FEE_ID =3;               // @gotags: gorm:"notnull;uniqueIndex:ix_custkey_feeID;autoIncrement:false"
+  required double FEE_AMOUNT=4;           // @gotags: gorm:"not null"
+  required double PAID_AMOUT=5;           // @gotags: gorm:"not null"
+  required double AGRM_AMOUNT=6;          // @gotags: gorm:"not null"
+  required int32 NO_MONTHS=7;             // @gotags: gorm:"not null"
+  required double INTERST =8;             // @gotags: gorm:"not null"
+  required bool IS_POSTED =9;             // @gotags: gorm:"not null"
+  required bool IS_CANCELLED =10;         // @gotags: gorm:"not null"
+  required int32 AGREEM_TRANS_TYPE = 11;  // @gotags: gorm:"not null"
+  required int32 AGREEM_TRANS_STYPE=12;   // @gotags: gorm:"not null"
+  required int64 APP_ID =13;              // @gotags: gorm:"not null;index"
+  optional int32 REV_AGREEM_TRNS_TYPE=14;
+  optional int32 REV_AGREEM_TRNS_STYPE=15;
+}
+message OLD_CS_AGREEMS {
+  required string CUSTKEY =1;             // @gotags: gorm:"primaryKey"
+  required int64 FEE_ID =2;               // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required double FEE_AMOUNT=3;           // @gotags: gorm:"not null"
+  required double PAID_AMOUT=4;           // @gotags: gorm:"not null"
+  required double AGRM_AMOUNT=5;          // @gotags: gorm:"not null"
+  required int32 NO_MONTHS=6;             // @gotags: gorm:"not null"
+  required double INTERST =7;             // @gotags: gorm:"not null"
+  required bool IS_POSTED =8;             // @gotags: gorm:"not null"
+  required bool IS_CANCELLED =9;          // @gotags: gorm:"not null"
+  required int32 AGREEM_TRANS_TYPE = 10;  // @gotags: gorm:"not null"
+  required int32 AGREEM_TRANS_STYPE=11;   // @gotags: gorm:"not null"
+  required int64 APP_ID =12;              // @gotags: gorm:"not null;index"
+  optional int32 REV_AGREEM_TRNS_TYPE=13;
+  optional int32 REV_AGREEM_TRNS_STYPE=14;
+}
+
+message TOWNSHIP_DTL {
+  required string TOWNSHIP_NO =1;
+  optional int32 STATION_NO=2;
+  optional string REF=3;
+}
+message ArrTOWNSHIP_DTL {
+  repeated TOWNSHIP_DTL TOWNSHIP_DTL=1;
+}
+message GetCustomerByFlag {
+  required string CUSTKEY =1;
+  optional string TBL_NAME=2;
+  optional string COL_NAME=3;
+  optional string CUSTKEY_COL_NAME=4;
+}
+message GetAllByFlag {
+  optional string TBL_NAME=1;
+  optional string COL_NAME=2;
+  optional string CUSTKEY_COL_NAME=3;
+}
+message GetBillgroupByFlag {
+  required int32 STATION_NO=1;
+  required string BILLGROUP=2;
+  optional string BOOK_NO=3;
+  optional string TBL_NAME=4;
+  optional string COL_NAME=5;
+  optional string CUSTKEY_COL_NAME=6;
+}
+message EXTRA_CHARGE {
+  required string FLAG =1;     // @gotags: gorm:"primaryKey"
+  required double CHARGE =2;   // @gotags: gorm:"not null"
+}
+message GetLasCustomerInWalkRq {
+  optional int32  STATION_NO =1;
+  optional string BILLGROUP =2;
+  optional string BOOK_NO =3;
+  optional int32 WALK_NO=4;
+}
+
+message NUMBER {
+  required double NUMBER=1;
+}
+
+message CHECK_METER_RQ {
+  required string CUSTKEY =1;
+  required int64 CHECKED_METER_DIAM=2;
+}
+message FEE_SETUP {
+  required int32 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required int32 ACTIVITY_ID =2; 
+  required string ACTIVITY_DESCRIPTION =3;
+  required string FEE_DESCRIPTION =4;
+  required bool IS_ACTIVE =9;     // @gotags: gorm:"not null"
+  required int32 TRANS_TYPE=12;
+  required int32 TRANS_STYPE=13;
+  optional double VAT_PRECENTAGE =15;
+  optional double ADMIN_FEES_PRECENTAGE =16;
+  optional double ADMIN_VAT_PRECENTAGE =17;
+  required int32 PAYMENT_TRANS_TYPE=19;   
+  required int32 PAYMENT_TRANS_STYPE=20;  
+  optional bool ALLOW_INSTALLMENTS =22;
+  optional int32 INSTALLMENT_TRANS_TYPE = 26;
+  optional int32 INSTALLMENT_TRANS_STYPE = 27;
+}
+message ArrFeeSetup {
+  repeated FEE_SETUP FEE_SETUP=1;
+}
+
+message ArrCS_ACTIVITY_FEES {
+  repeated CS_ACTIVITY_FEES CS_ACTIVITY_FEES = 1;
+}
+message PROVIDING_NEW_READING {
+  required string CUSTKEY =1;
+  required int32 PR_READ =2;
+  required int32 CR_READ=3;
+  required bool ALLOW_DEVIDE =4;
+  optional string C_TYPE=5;
+  optional int32 NO_UNITS=6;
+  optional bool IS_TARAKOM=7;
+  optional int32 READING_LENGTH=8;
+  optional  central.types.MasDateTime BILNG_DATE = 9;
+
+}
+
+
+message repeteed_PAYMENT_REQUEST {
+  repeated PAYMENT_REQUEST PAYMENT_REQUEST=1;
+}
+message PaymentReq {
+  required string S_KEY = 1;
+  required int64 S_KEY_TYPE = 2;
+}
+message QUEUE_RESPONSE {
+  optional int64 ID  = 1;
+  optional string RequestId = 2;
+  optional PAYMENT_REQUEST PAYMENT_REQUEST = 3;
+  optional QUEUE_STATUS Status = 4;
+ }
+
+ /*************************** System *************************************/
+ message StationNo {
+  required int32 STATION_NO =1;
+}
+message BILLING_GROUPS {
+  required int32 STATION_NO =1;     // @gotags: gorm:"notnull"
+  required string GROUP_ID =2;      // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string DESCRIPTION = 3;  // @gotags: gorm:"notnull"
+}
+message ArrBILLING_GROUPS {
+  repeated BILLING_GROUPS bILLING_GROUPS = 1;
+}
+
+message CUSTOMER_BOOKS {
+  required int32 STATION_NO = 1;
+  required string BILLGROUP = 2;   
+  required string CODE = 3;
+  optional string DESCRIBE = 4;
+  optional int32 NO_WALKS = 5;
+  optional string ASSIGNED_TO = 6;
+  optional int64 ASSIGNED_TO_HH = 7;
+  optional string HANDHELD_ID = 8;
+}
+message METER_BOOKS {
+  required int32 STATION_NO = 1;
+  required string BILLGROUP = 2;   
+  required string CODE = 3;
+  optional string DESCRIBE = 4;
+  optional int32 NO_WALKS = 5;
+  optional string ASSIGNED_TO = 6;
+  optional int64 ASSIGNED_TO_HH = 7;
+  optional string HANDHELD_ID = 8;
+}
+
+message ArrCUSTOMER_Books {
+  repeated CUSTOMER_BOOKS CUSTOMER_BOOKS = 1;
+}
+message StationNoBillgroupBookNoRq {
+  required int32 STATION_NO = 1;
+  required string BILLGROUP = 2;
+  required string BOOK_NO = 3;
+  optional bool NO_FILTER_CONN_STATUS =4;
+}
+message StationNoBillgroupBookNoRqWalkNo {
+  required int32 STATION_NO = 1;
+  required string BILLGROUP = 2;
+  optional string BOOK_NO = 3;
+  optional int32 WALK_NO =4;
+  optional bool NO_FILTER_CONN_STATUS =5;
+}
+message CUSTOMER_WALKS {
+  required int32 STATION_NO =1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string BILLGROUP =2;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string BOOK_NO =3;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string WALK_NO =4;    // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional string DESCRIBE = 5;
+  optional int64 ASSIGNED_TO_HH = 6;
+  optional bool UNUSED = 7;
+  optional int32 MARKETING = 8;
+  optional bool IS_HH_PRINTING = 9;
+  optional string EMP_NAME = 10;  // @gotags: gorm:"-"
+  // optional int32 ID = 11;
+}
+
+message ArrCUSTOMER_WALKS {
+  repeated CUSTOMER_WALKS CUSTOMER_WALKS = 1;
+}
+
+ /*************************** Payment ************************************/
+message PAYMENT_REQUEST {
+  optional int64 ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required double AMOUNT = 2;
+  optional string ACCOUNT_NUMBER = 3;    //@gotags: gorm:"size:100"
+  required string CUSTOMER_NAME = 4;     //@gotags: gorm:"size:255"
+  optional string CUSTOMER_ADDRESS = 5;  //@gotags: gorm:"size:255"
+  optional string PAYMENT_DETAILS = 6; //@gotags: gorm:"size:4001"
+  required string DESCRIPTION = 7;  //@gotags: gorm:"size:255"
+  optional string TRANS_TYPE = 8;   //@gotags: gorm:"size:255"
+  optional string MODEL_TYPE = 9;   //@gotags: gorm:"size:255"
+  optional central.types.MasDateTime REQUEST_DATE = 10;
+  required string REQUEST_USER = 11;  //@gotags: gorm:"size:100"
+  required central.types.MasDateTime EXPIRE_DATE = 12;
+  optional bool CONFERMED = 13;
+  required string REQUEST_NUMBER = 14;  //@gotags: gorm:"size:255"
+  required int64 SITE_CODE = 15;
+  optional int64 STATION_NO = 16;
+  optional QUEUE_STATUS STATE = 17;
+  optional string COLLECTION_METHOD = 18;  //@gotags: gorm:"size:255"
+  optional string CANCELLED_REASON = 19;   //@gotags: gorm:"size:255"
+  optional string CANCELLED_BY = 20;       //@gotags: gorm:"size:255"
+  optional central.types.MasDateTime CANCELLED_DATE = 21;
+  optional string COLLECTION_TRANSACTION_ID = 22;  //@gotags: gorm:"size:255"
+  required CUSTOMER_TYPE CUSTOMER_TYPE = 23;
+  optional central.types.MasDateTime COLLECTION_DATE = 24;
+  optional string HASH = 25; //@gotags: gorm:"size:4001"
+  optional string REC_NO = 26;
+  optional string CUREENCY = 27;
+  optional double TAX_AMOUNT = 28;
+  optional double ADMIN_AMOUNT = 29;
+  optional string APP_TYPE_NAME = 30;
+  optional string FORM_NO =31;
+  optional string E_CODE = 32;
+  required int32 MODEL_ID =33;
+}
+enum QUEUE_STATUS {
+  OPEN     = 0;
+	CLOSE    = 1;
+	CANCEL   = 2;
+	EXPIRED  = 3;
+}
+enum CUSTOMER_TYPE {
+  CUSTOMER = 0;
+  COLLABORATOR = 1;
+  EMPLOYEE = 2;
+  ORGANIZATION = 3;
+  ALL = 4;
+ // OTHER =5;
+}
+message MessageResponse {
+  optional string Message = 1;
+  optional bool Done = 2;
+  optional int64 ID = 3;
+}
+message PAY_EXTERNAL_MODULE {
+  required int32 ID = 1; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string NAME = 2; // @gotags: `gorm:"not null"`
+  optional string DESCRIPTION = 3;
+  optional double VERSION = 4;
+  optional string DESCRIPTION_EN = 5;
+  required string PACKAGE_NAME = 6; // @gotags: `gorm:"not null"`
+  required string SERVICE_NAME = 7; // @gotags: `gorm:"not null"`
+  optional string IP = 8; // @gotags: `gorm:"not null"`
+  optional int32 PORT = 9; // @gotags: `gorm:"not null"`
+  repeated PAY_InquiryTYPE PAY_InquiryTYPE =10; //@gotags: gorm:"-"
+}
+message PAY_InquiryTYPE {
+  required int64 KEY_ID =1;
+  required string NAME =2;
+  required string DESCRIPTION = 3;
+  required string DESCRIPTION_EN = 4;
+  
+  }
+  message MODULE_NAME {
+    required string Name = 1;
+  }
+  message MODULE_ID_REQ {
+    required int32 ID =1;
+  }
+  message PAY_EXTERNAL_MODULES {
+    repeated PAY_EXTERNAL_MODULE PAY_EXTERNAL_MODULE=1;
+  }
+  message POST_AMOUT_TO_BILLING_RQ {
+    required string CUSTKEY =1;
+    required double AMOUNT =2;
+    required int32 TRANS_TYPE=3;
+    required int32 TRANS_STYPE=4;
+    required string MEMO_FIELD=5;
+    required central.types.MasDateTime EFFECT_DATE=6;
+    optional int64 TRANSACTION_TYPES=7;
+    optional double NO_UNITS =8;
+    optional int64 FEE_ID =9;
+    optional bool FOR_DEBIT =10;
+    optional int64 MAIN_TRANSACTION_TYPES=11;
+  }
+
+  message READING_RQ {
+    required string CUSTKEY =1;
+    repeated TBL_INVOICED_READINGS TBL_INVOICED_READINGS=2; 
+  }
+
+  message TBL_INVOICED_READINGS {
+    required bool SELECTED_READ =1;
+    required int64 ARCHIVED =2;
+    optional int64 METER_ID =3;
+    required string METER_REF =4;
+    required string METER_TYPE =5;
+    required int64 READING_NO =6;
+    required double CR_READ =7;
+  }
+  message TBL_SELECTED_INVOICED_READINGS {
+    required bool SELECTED_READ =1;
+    required int64 ARCHIVED =2;
+    optional int64 METER_ID =3;
+    required string METER_REF =4;
+    required string METER_TYPE =5;
+    required int64 READING_NO =6;
+    required double CR_READ =7;
+  }
+  message ArrTBL_INVOICED_READINGS {
+    repeated TBL_INVOICED_READINGS TBL_INVOICED_READINGS =1;
+  }
+  message CANCEL_INVOICED_READING_RQ {
+    repeated TBL_SELECTED_INVOICED_READINGS TBL_SELECTED_INVOICED_READINGS =1;
+    required int32 WATER_TRANS_TYPE =2;
+    required int32 WATER_TRANS_STYPE =3;
+    required int32 REV_WATER_TRANS_TYPE =4;
+    required int32 REV_WATER_TRANS_STYPE =5;
+    required int32 SEWER_TRANS_TYPE =6;
+    required int32 SEWER_TRANS_STYPE =7;
+    required int32 REV_SEWER_TRANS_TYPE =8;
+    required int32 REV_SEWER_TRANS_STYPE =9;
+    optional int32 BASIC_TRANS_TYPE =10;
+    optional int32 BASIC_TRANS_STYPE =11;
+    required int32 REV_BASIC_TRANS_TYPE =12;
+    required int32 REV_BASIC_TRANS_STYPE =13;
+    required int32 TANZEEM_TRANS_TYPE =14;
+    required int32 TANZEEM_TRANS_STYPE =15;
+    required int32 REV_TANZEEM_TRANS_TYPE =16;
+    required int32 REV_TANZEEM_TRANS_STYPE =17;
+    required string CUSTKEY =18;
+  }
+  message CST_AGREEM_TYPES {    
+    required int64 ID =1;                  // @gotags: gorm:"primaryKey"
+    required string AGREEM_DESCRIPTION =2; // @gotags: gorm:"notnull"
+    required int64 AGRM_TRANS_TYPE=3;      // @gotags: gorm:"notnull"
+    required int64 AGRM_TRANS_STYPE=4;      // @gotags: gorm:"notnull"
+    required int32 REV_TRANS_TYPE=5;        // @gotags: gorm:"not null"
+    required int32 REV_TRANS_STYPE=6;       // @gotags: gorm:"not null"
+  }
+  message ArrCST_AGREEM_TYPES {
+    repeated CST_AGREEM_TYPES CST_AGREEM_TYPES=1;
+  }
+  message InstallAmountReq {
+    required string CUSTKEY =1;
+    required double AMOUNT =2;
+    required double INTERST=3;
+    required int32 NO_MONTHS=4;
+    required int32 AGREEM_TYPE=5;
+    required bool INPUT_FIRST_INSTALL_DATE =6;
+    optional central.types.MasDateTime FIRST_INSTALLMENT_DATE =7;
+  }
+  message ExpPayments {
+    required CST_CUSTOMERS CST_CUSTOMERS = 1;
+    required int32 MODULE_ID=2;
+    required string MODULE_NAME=3;
+  }
+  message AllTransactionTypes {
+    required int64 TRANS_TYPE =1;
+    required int64 TRANS_STYPE =2;
+    required string DESCRIPTION =3;
+    optional int32 ALLOW_CREDIT = 5;
+    optional int32 ALLOW_DEBIT = 6;
+
+  }
+  message ArrAllTransactionTypes {
+    repeated AllTransactionTypes AllTransactionTypes=1;
+  }
+
+  message CustomerDebt {
+    required double UN_BILLED_AMOUNT =1;
+    required double BILLED_AMOUNT =2;
+    required double REMAINING_INSTALLMENTS =3;
+    required double TOT_AMOUNT=4;
+    optional bool HAS_UN_POSTED_REC =5;
+    optional double UN_POSTED_AMOUNT=6;
+    optional bool HAS_UN_COMMITED_COLLECTIONS =7;
+    optional double UN_COMMITED_COLLECTIONS_AMT=8;
+  }
+  message CutConnectionForPeriod {
+    required string CUSTKEY =1;                               // @gotags: gorm:"primaryKey"
+    required central.types.MasDateTime START_DATE=2;          // @gotags: gorm:"primaryKey"
+    required central.types.MasDateTime END_DATE=3;            // @gotags: gorm:"notnull"
+    required int32 NO_MONTHS =4;                              // @gotags: gorm:"notnull"
+    required int32 RECONNECTED =5;                            // @gotags: gorm:"notnull"
+    optional double AMOUNT =6;
+  }
+  message CustomerAgreems {
+    optional string CUSTKEY = 1;
+    optional string OLD_KEY = 2;
+    optional string SURNAME = 3;
+    optional string ADDRESS = 4;
+    repeated CustAgreem AGREEMS = 5;
+    repeated CustInstalls INSTALLS = 6;
+  }
+  message CustInstalls {
+    required int64 AGRM_NO = 1;
+    required string CUSTKEY = 2;
+    required double AMOUNT = 3;
+    optional central.types.MasDateTime CHARGE_DATE = 4;
+    optional int64 INSTALLMENT_NO = 5;
+  }
+  message CustAgreem {
+    required int64 AGRM_NO = 1;
+    required string CUSTKEY = 2;
+    optional string AGRM_REF = 3;
+    optional central.types.MasDateTime EFF_DATE = 4;
+    optional central.types.MasDateTime COMPLETION_DATE = 5;
+    optional double AGRM_VALUE = 6;
+    optional double AGRM_IMMPAY = 7;
+    optional string IMMPAY_RCPTNO = 8;
+    optional int64 NO_INSTALMENTS = 9;
+    optional int64 REMINDER_NO_INSTALMENTS = 10;
+    optional double REMINDER_AMOUNT = 11;
+    optional double INSTLM_AMOUNT = 12;
+    optional double AGRM_TYPE = 13;
+    optional double AGRM_STATUS = 14;
+    optional double TRNS_TYPE = 15;
+    optional double TRNS_STYPE = 16;
+    optional string AGREM_NAME = 18;
+  }
+  message TBL_CUST_AGREEM {
+    required string CUSTKEY =1;
+    required int64 AGREEM_NO =2;
+    optional string AGREEM_NAME =3;
+    required double REMINDER_AMOUNT =4;
+    required int32 REMINDER_NO_QESTS =5;
+    required string MEMO_FIELD =6;
+    required bool SELECTED_AGREEM =7;
+  }
+  message CancelAgreemsReq {
+    required string CUSTKEY = 1 ;
+    repeated TBL_CUST_AGREEM TBL_CUST_AGREEM=2;
+    optional APP_TRACER TRACE = 3;
+  }
+  message TBL_FINANCE_TRANS {
+    required string CUSTKEY =1;
+    required int64 TRANS_NO=2;
+    required string TRANS_NAME=3;
+    required double AMOUNT=4;
+    required bool SELECTED_TRANSACTION =5 ; 
+  }
+  message CANCEL_FINANCE_TRANS {
+    required string CUSTKEY =1;
+    required string SURNAME=2;
+    required string UA_ADDRESS=3;
+    repeated TBL_FINANCE_TRANS TBL_FINANCE_TRANS =4;
+  }
+  message CHANGE_OWNERSHIP_RQ {
+    required string OLD_CUSTKEY = 1;
+    required string OLD_SURNAME =2;
+    required string SURNAME=3;
+    required string UA_ADDRESS=4;
+    required string CUSTKEY = 5;
+    required string NID =6;
+    required string MOBILE_NO =7;
+    optional bool TERMS_VOILENT=8;
+    optional double CONSUMPTION_INSURANCE=9;
+    optional double NETWORK_CONNECTIVITY_VALUE=10;
+    optional double INSURANCE_DIFF=11;
+    optional double BUILDING_WATER_VALUE=12;
+    optional bool MUST_CHECK=13;
+    optional bool IS_PREPAIED=14;
+  }
+  message CHANGE_OWNERSHIP_NO_NEW_ACCOUNT {
+    required string CUSTKEY = 1;
+    required string OLD_SURNAME =2;
+    required string SURNAME=3;
+    required string UA_ADDRESS=4;
+    required string NID =6;
+    required string MOBILE_NO =7;
+    optional bool TERMS_VOILENT=8;
+    optional double CONSUMPTION_INSURANCE=9;
+    optional double NETWORK_CONNECTIVITY_VALUE=10;
+    optional double INSURANCE_DIFF=11;
+    optional double BUILDING_WATER_VALUE=12;
+    optional string OLD_NID =13;
+    optional string OLD_MOBILE_NO =14;
+  }
+
+  message ValidateChangeOwnership {
+    required bool HAS_AGREEM=1;
+    required bool HAS_DEBIT =2;
+    required bool HAS_CREDIT =3;
+    optional double AMOUNT = 4;
+  }
+  message AutomaticInstallmentRs {
+    required double MIN_CHARGE  = 1;
+    optional double NON_INSTALLMENT_AMOUNT =2;
+    optional double TOTAL_FEES = 3;
+  }
+  message AutomaticInstallment_Req {
+    required string CUSTKEY=1;
+    required int64 APP_ID=2;
+    optional bool START_INSTALLMENT_NOW=3;
+    optional bool INPUT_FIRST_INSTALL_DATE =4;
+    optional bool START_WITH_CONNECTION =5;
+    optional central.types.MasDateTime FIRST_INSTALLMENT_DATE = 6;
+    required double MIN_CHARGE =7;
+    required double INTERST =8;
+    required double ADVANCED_PAYMENT =9;
+    required int32 NO_MONTHS =10;
+  }
+
+
+  // BI
+
+  message FEES_TYPES {
+    required int64 ID =1;           // @gotags: gorm:"primaryKey"
+    required string FEE_NAME =2;    // @gotags: gorm:"size:255;notnull;uniqueIndex"
+    required string FEE_NAME_EN =3; // @gotags: gorm:"size:255;notnull"
+  }
+  message ALL_FEES_TYPES {
+    repeated FEES_TYPES FEES_TYPES=1;
+  }
+
+  message SET_FEE_TYPE_RS {
+    repeated EXTERNAL_FEES EXTERNAL_FEES=1;
+    repeated FEES_TYPES ALL_FEES_TYPES=2;
+  }
+
+  message Period {
+    optional central.types.MasDateTime FROM = 1;
+    optional central.types.MasDateTime TO = 2;
+    optional int32 STATION_NO =3;
+  }
+
+  message CountActPosted {
+    required string DESCRIPTION=1;
+    required string DESCRIPTION_EN=2;
+    required int64 COUNT_POSTED=3;
+    required central.types.MasDateTime DATE =4;
+    required int32 ACTIVITY_ID = 5;
+  }
+  message ArrCountActPosted {
+    repeated CountActPosted CountActPosted=1;
+  }
+  message CountActPostedPerStation {
+    required string DESCRIPTION=1;
+    required string DESCRIPTION_EN=2;
+    required int64 COUNT_POSTED=3;
+    required int32 STATION_NO =4;
+    required int32 ACTIVITY_ID = 5;
+    required string STATION_NAME = 6;
+  }
+  message ArrCountActPostedPerStation {
+    repeated CountActPostedPerStation CountActPostedPerStation=1;
+  }
+
+  
+message CS_APPLICATIONS_STATION {
+  required int64 ID =1;                             // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required int32 ACT_ID =2;                 // @gotags: gorm:"not null"
+  required string STAMP_USER=3;                     // @gotags: gorm:"not null"
+  required central.types.MasDateTime STAMP_DATE =4; // @gotags: gorm:"not null"
+  required string CUSTKEY =5;                       // @gotags: gorm:"not null"
+  required bool IS_POSTED =6;                      // @gotags: gorm:"not null"
+  required bool IS_CANCELLED = 7;                  // @gotags: gorm:"not null"
+  optional string BBM_FORM =8;                     // @gotags: gorm:"not null"
+  required int32 STATION_NO =9;
+}
+message ACTIVITY_STATISTICS {
+  required int64 APP_ID =1;
+  required int32 ACT_ID =2;
+  required string ACTIVITY_DESC =3;
+  required int32 STATION_NO =4;
+  required string BILLGROUP =5;
+  required string BOOK_NO =6;
+  required int32 WALK_NO =7;
+  required string CUSTKEY =8;
+  required string SURNAME =9;
+  required string UA_ADDRESS =10;
+  optional string C_TYPE =11;
+  optional string C_TYPE_DESC =12;
+  optional central.types.MasDateTime CREATE_DATE =13;
+  optional central.types.MasDateTime PAYMENT_DATE =14;
+  optional double PAID_AMOUNT =15;
+  optional double UNPAID_AMOUNT =16;
+  optional double POSTED_INSTALLS =17;
+  optional double UNPOSTED_INSTALLS =18;
+}
+message ALL_ACTIVITY_STATISTICS {
+  repeated ACTIVITY_STATISTICS ACTIVITY_STATISTICS=1;
+}
+// message CS_FEE_TYPE_GROUPS {
+//   required int64 ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:true"
+//   required int64 CS_FEE_TYPE_ID =2;
+//   required string NAME =3;        // @gotags: gorm:"not null"
+//   required string NAME_EN =4;     // @gotags: gorm:"not null"
+// }
+
+message CUSTOMER_TAX_RQ {
+  required string CUSTKEY =1;
+  required string TAX_NO =2;
+}
+message ActivityIDRq {
+  required int32 ACTIVITY_ID =1;
+}
+message AttachFieldsReq {
+  repeated int32 ACTIVITY_ID =1;
+  required LU_FIELDS LU_FIELDS = 2;
+}
+message DataTypes {
+  required int32 CODE = 1;
+  required string DESCRIPTION =2 ;
+}
+message Lookup {
+  required int32 CODE = 1;
+  required string DESCRIPTION =2 ;
+}
+message AllDataTypes{
+  repeated DataTypes DataTypes =1;
+}
+message AllLookup{
+  repeated Lookup Lookup =1;
+}
+message UpdateCustomerType {
+  required string CUSTKEY =1;
+  required int64 CUSTOMER_TYPE=2;
+}
+message ActivityID {
+  required int32 ACT_ID=1;
+  required string ACT_DESC=2;
+  required string ACT_DESC_EN =3;
+}
+message INDUSTERIAL_SEWER {
+  required string NAME =1;              // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int32 TRANS_TYPE =2;         // @gotags: gorm:"not null"
+  required int32 TRANS_STYPE =3;        // @gotags: gorm:"not null"
+}
+message INDUSTRIAL_REQ {
+  required string CUSTKEY =1;
+  required double PH =2;
+  required double TSS =3;
+  required double BOD =4;
+  required double COD =5;
+  required double OIL =6;
+  required double TRANSFER =7;
+  required double ANALYSIS =8;
+  required double ADMIN =9;
+  required double SAMPLE =10;
+  required double VAT =11;
+  required double INSURANCE_DIFF =13;
+  required central.types.MasDateTime EFFECT_DATE =12;
+}
+
+message SEND_TO_TAX_REQ {
+  required string CUSTKEY=1;
+  required int32 CUSTOMER_TYPE=2;
+  optional string CUST_TYPE=3;
+  optional string NID =4;
+  optional string TAX_NO=5;
+  repeated TBL_APPLICATIONS TBL_APPLICATIONS=6;
+}
+message TBL_APPLICATIONS {
+  required bool SEND_TO_TAX=1;
+  required int64 APP_ID=2;
+  required int32 ACT_ID=3;
+  optional bool WITH_POST=4;
+}
+message TBL_AGREEM_PAYMENT {
+  required string CUSTKEY =1;
+  required int64 AGREEM_NO =2;
+  optional string AGREEM_NAME =3;
+  required double REMINDER_AMOUNT =4;
+  required int32 REMINDER_NO_QESTS =5;
+  optional string MEMO_FIELD =6;
+  required bool SELECTED_AGREEM =7;
+  required double AMOUNT=8;
+}
+message TBL_INSTALLMENT_PAYMENT {
+  required string INST_CUSTKEY =1;
+  required int64 INST_AGREEM_NO =2;
+  required double INST_AMOUNT=3;
+  optional int64 INST_NO=4;
+  optional bool INST_SELECTED=5;
+  optional string INST_CHARGE_DATE = 6;
+}
+message PayAgreemRq {
+  required string CUSTKEY =1;
+  repeated TBL_AGREEM_PAYMENT TBL_AGREEM_PAYMENT=2;
+  optional APP_TRACER TRACE = 3;
+  repeated TBL_INSTALLMENT_PAYMENT TBL_INSTALLMENT_PAYMENT=4;
+}
+
+message CST_HISTORY {
+  required int64 ID =1;                              // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string NOTES =2;                          // @gotags: gorm:"notnull;type:nvarchar(max)"
+  required string BPM_FORM=3;                        // @gotags: gorm:"notnull"
+  required central.types.MasDateTime STAMP_DATE = 4; // @gotags: gorm:"notnull"
+  required string STAMP_USER=5;                      // @gotags: gorm:"notnull"
+  required string CUSTKEY =6;                        // @gotags: gorm:"notnull;index"
+  required int64 APP_ID =7;                          // @gotags: gorm:"notnull"
+  required bool IS_CANCELLED =9;                     // @gotags: gorm:"notnull"
+}
+message ArrCST_HISTORY {
+  repeated CST_HISTORY CST_HISTORY=1;
+}
+message OpenSawatAccountRq {
+  required int32  STATION_NO =1;
+  required string BILLGROUP =2;
+  required string BOOK_NO =3;
+  required string SURNAME =4;
+  required string UA_ADDRESS =5;
+  optional string E_MAIL =6;
+  optional string NID =7;
+  optional string PASSPORT_ID =8;
+  optional string PREV_CUSTKEY=9;
+  optional string MOBILE_NO=10;
+  required int32 WALK_NO=11;
+  optional int64 APP_ID =12;
+  optional string BBM_FORM =13;
+  optional string TAX_NO =14;
+  optional string OLD_KEY = 15;
+  repeated NEW_C_TYPES NEW_C_TYPES=16;
+  required string TOWNSHIP_NO=17;
+  optional bool HAS_SEWER =18;
+  // required string CUSTKEY=19;
+  required bool HAS_METER=20; 
+  optional string METER_REF=21;
+  optional int32 NEW_METER_SIZE=22;
+  optional string BILLIMG_METER_SIZE=23;
+  optional string METER_MAKE =24;
+  optional int32 METER_INSTALL_READ =25;
+  optional int32 NO_DIALS = 26;
+  optional string SERIAL_NO =27;
+  optional int32 CONV_FCTR =28;
+  optional string NEW_METER_TYPE=29;
+  optional central.types.MasDateTime INSTALL_DATE =30;
+  optional string SettingCreate = 31;
+}
+message AllCustkeys {
+  repeated string CUSTKEYS =1;
+}
+message CUSTOMER_C_TYPE {
+  required string CUSTKEY =1;
+  required string C_TYPE_DESC =2;
+  optional central.types.MasDateTime OPEN_ACCOUNT_DATE =3;
+}
+message AllCUSTOMER_C_TYPE {
+  repeated CUSTOMER_C_TYPE CUSTOMER_C_TYPE=1;
+}
+
+
+message CHANGE_OWNERSHIPS {
+  required string OLD_CUSTKEY = 1;
+  required string OLD_SURNAME =2;
+  required string SURNAME=3;
+  required string CUSTKEY = 4;
+  required central.types.MasDateTime CHANGE_DATE=5;
+  required double REMAIN_AMOUNT =6;
+}
+message AllCHANGE_OWNERSHIPS {
+  repeated CHANGE_OWNERSHIPS CHANGE_OWNERSHIPS=1;
+}
+
+message PostFeesToBilling {
+  required APP_FEES ActivityPaid = 1;
+  optional APP_FEES ActivityFees = 2;
+  optional APP_TRACER TRACE = 3;
+}
+message CHANGE_BILLGROUP_REQ {
+  required int64 STATION_NO=1;
+  required string CUSTKEY=2;
+  required string BILLGROUP=3;
+  required string BOOK_NO=4;
+  required int64 WALK_NO=5;
+  required string PREV_CUSTKEY=6;
+  required string OLD_BILLGROUP=7;
+  required string OLD_BOOK_NO=8;
+  required int64 OLD_WALK_NO=9;
+}
+message ArrCS_FEES {
+  repeated CS_FEES CS_FEES = 1;
+}
+message PostFeesToBillingResp {
+  repeated CS_FEES CS_FEES =1;
+  repeated CS_FEES CS_RECIEPT =2;
+}
+message CS_LOCKED_FORMS {
+  required int64 ID =1;                 // @gotags: gorm:"primaryKey;autoIncrement:true;not null"
+  required string FORM_NO =2;           // @gotags: gorm:"not null"
+  required int64 APP_ID =3;             // @gotags: gorm:"not null"
+  optional string ERROR_MESSAGE =4;     // @gotags: gorm:"not null;type:nvarchar(max)"
+  required bool IS_FINISHED =5;         // @gotags: gorm:"not null;index"
+}
+message ExtendWaterCut {
+  required string CUSTKEY = 1;
+  required int64 NO_MONTHS =2;
+}
+message MeterIdReq {
+  required int64 METER_ID =1;
+}
+message ArrMeterIdsReq {
+  repeated MeterIdReq MeterIdReq =1;
+}
+message ArrConnections {
+  map<int64,CST_CONNECTION> Connections=1;
+}
+message LU_METER_CONDITIONS {
+  required string CODE =1;   // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required MeterOperationStatus OP_STATUS = 2;  // @gotags: gorm:"not null"
+  required string DESCRIPTION =3;  // @gotags: gorm:"not null"
+  optional int64 ACCESS_CODE =4;
+}
+message ArrLU_METER_CONDITIONS {
+  repeated LU_METER_CONDITIONS LU_METER_CONDITIONS=1;
+}
+message LU_METER_TYPE {
+  required string CODE =1;   // @gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  required string DESCRIPTION =2; // @gotags: gorm:"not null"
+}
+
+message Query {
+  required string QUERY =1;
+}
+message ArrCST_METER {
+  repeated CST_METER CST_METER=1;
+}
+
+message ArrCST_METER_MAS {
+  repeated CST_METER_MAS CST_METER=1;
+}
+
+message ChangeOldKey {
+  required string CUSTKEY=1;
+  required string OLD_OLD_KEY=2;
+  required string NEW_OLD_KEY=3;
+}
+message ReverseBillRq {
+  required string CUSTKEY=1;
+  required central.types.MasDateTime BILNG_DATE = 2;
+}
+message EditBillReads {
+  required string CUSTKEY =1;
+  optional double PR_READ=2; 
+  optional double CR_READ=3; 
+  optional double OLD_ESTIM=4; 
+  optional double NEW_ESTIM=5; 
+  optional string METER_CONDITION=6;
+  optional bool IS_TARAKOM =7;
+  optional central.types.MasDateTime BILLING_DATE =8;
+  optional central.types.MasDateTime ACC_DATE =9;
+}
+message DESCREPANCIES_NOACCESS {
+  required int64	CODE     =1;   
+  optional string	DESCRIBE          =2;
+  optional int64	ACTION            =3;
+  optional string	ACTION_MSG        =4;
+  optional int64	ACTIVITY          =5;
+  optional int64	METER_OP_STATUS   =6;
+  optional string	F_METER_CONDITION =7;
+  }
+  message ArrDESCREPANCIES_NOACCESS {
+    repeated DESCREPANCIES_NOACCESS DESCREPANCIES_NOACCESS=1;
+  }
+
+  message HELPER_OBJECTS_VALS {
+    required int64 APP_ID =1;           // @gotags: gorm:"primaryKey;autoIncrement:false;notnull"
+    required string OBJECT_NAME =2;     // @gotags: gorm:"primaryKey;notnull;index;index:ix_cancelled_objName"
+    required string OBJECT_EQUATION =3; // @gotags: gorm:"notnull;type:nvarchar(max)"
+    required double OBJECT_VALUE=4;     // @gotags: gorm:"notnull"
+    required int64 ROW_NUM =5;          // @gotags: gorm:"primaryKey;not null"
+    required bool CANCELLED_APP =6;     // @gotags: gorm:"notnull;index:ix_cancelled_objName"
+    required bool IS_POSTED =7;         // @gotags: gorm:"notnull;index:ix_cancelled_objName"
+    required bool IS_ENABLLED =8;       // @gotags: gorm:"notnull;index:ix_cancelled_objName"
+    optional double VAT = 9;
+    optional double ADMIN = 10;
+    optional double ADMIN_VAT = 11;
+    optional bool IS_MAIN =12;
+    optional string ORIGINAL_EQUATION =13; // @gotags: gorm:"type:nvarchar(max)"
+  }
+
+  message HELPER_ERROR {
+    required int64 APP_ID =1;// @gotags: gorm:"primaryKey;autoIncrement:false;notnull"
+    required string Error =2; // @gotags: gorm:"not null"
+  }
+
+  message ArrCustomerMeterConnnections {
+    repeated CST_CONNECTION CST_CONNECTION = 1;
+    repeated CST_METER CST_METER = 2;
+  }
+  message CLEAN_AMT_VALUES {
+    required int64 ID =1;            // @gotags: gorm:"primaryKey;autoIncrement:false;notnull"
+    required string DESCRIPTON =2;   // @gotags: gorm:"not null"
+  }
+  message ArrCLEAN_AMT_VALUES {
+    repeated CLEAN_AMT_VALUES CLEAN_AMT_VALUES = 1;
+  }
+  message CUSTOMER_DTLS {
+    optional int32 STATION_NO = 1; 
+    optional string STATION_NAME = 2; 
+    optional string BILLGROUP = 3; 
+    optional string BILLGROUP_NAME = 4; 
+    optional string BOOK_NO = 5; 
+    optional string BOOK_NAME = 6; 
+    optional string WALK_NO = 7; 
+    optional int64 SEQ_NO = 8; 
+    optional string CUSTKEY = 9; 
+    optional string SURNAME = 10; 
+    optional string UA_ADRESS1 = 11; 
+    optional string UA_ADRESS2 = 12; 
+    optional string UA_ADRESS3 = 13; 
+    optional string UA_ADRESS4 = 14; 
+    optional string OLD_KEY = 15; 
+    optional int64 NO_UNITS =16;
+    optional int64 NO_CUSOMER = 17;
+    optional string CTYPEGRP_ID =18;
+    optional string CTYPE_GROUP_DESCRIPTION =19;
+    optional string C_TYPE =20;
+    optional string CTYPE_DESCRIPTION =21;
+    optional string METER_CONDITION =22;
+    optional string METER_CONDITION_DESCRIBE =23;
+    optional string METER_SIZE =24;
+    optional string METER_SIZE_DESCRIBE =25;
+    optional int32 VIRTUAL_STATION_NO =26;
+    optional string SARV_TYPE =27;
+    optional string CON_STATUS =28;
+  }
+  message ArrCUSTOMER_DTLS {
+    repeated CUSTOMER_DTLS CUSTOMER_DTLS =1;
+  } 
+  message ArrCUSTOMER_DTLS_VIEW {
+    repeated CUSTOMER_DTLS_VIEW CUSTOMER_DTLS =1;
+  }
+  message GroupBy3Req{
+    optional int64 STATION_NO =2;
+    optional bool PER_C_TYPE =5;
+    optional bool PER_STATION =6;
+    optional bool PER_BILNG_DATE =7;
+    optional bool PER_CUSTKEY =8;
+    optional bool PER_METER_SIZE =9;
+    optional bool PER_SEWER_STATUS =10;
+    optional bool PER_METER_CONDITION =11;
+    optional bool PER_BILLGROUP =12;
+    optional bool PER_METER_MAKE =14;
+    optional bool PER_C_TYPE_GROUP =15;  
+    optional bool PER_READ_TYPE =16;
+    optional bool PER_CON_STATUS =17;
+    optional string FILTER =18;
+    optional string HAVING =19;
+    optional int32 HAS_METER=20; 
+    optional int32 IS_CODY =21;
+    optional int32 IS_GOV = 22;
+    optional string BILLGROUP =23;
+    optional int32 WALK_NO=24; 
+    optional string BOOK_NO = 25;
+    optional string C_TYPE = 26;
+  }
+  message CUSTOMER_DTLS_VIEW {
+    optional int32 STATION_NO = 1; 
+    optional string STATION_NAME = 2; 
+    optional string BILLGROUP = 3; 
+    optional string BILLGROUP_NAME = 4; 
+    optional string BOOK_NO = 5; 
+    optional string BOOK_NAME = 6; 
+    optional string WALK_NO = 7; 
+    optional int64 SEQ_NO = 8; 
+    optional string CUSTKEY = 9; 
+    optional string SURNAME = 10; 
+    optional string UA_ADRESS1 = 11; 
+    optional string UA_ADRESS2 = 12; 
+    optional string UA_ADRESS3 = 13; 
+    optional string UA_ADRESS4 = 14; 
+    optional string OLD_KEY = 15; 
+    optional int64 NO_UNITS =16;
+    optional int64 NO_CUSOMER = 17;
+    optional string CTYPEGRP_ID =18;
+    optional string CTYPE_GROUP_DESCRIPTION =19;
+    optional string C_TYPE =20;
+    optional string CTYPE_DESCRIPTION =21;
+    optional string METER_CONDITION =22;
+    optional string METER_CONDITION_DESCRIBE =23;
+    optional string METER_SIZE =24;
+    optional string METER_SIZE_DESCRIBE =25;
+    optional int32 VIRTUAL_STATION_NO =26;
+    optional string SARV_TYPE =27;
+    optional string CON_STATUS =28;
+    optional string VIRTUAL_STATION_NAME =29;
+    optional string BG_GROUP_ID =30;
+    optional string BG_GROUP_NAME =31;
+    optional string CASHIER_ID = 32;
+    optional string CASHIER_NAME = 33;
+    optional string OLD_GROUP = 34;
+    optional string OLD_GROUP_NAME = 35;
+    optional string FILE_NO = 36;
+    optional string BILDING_NO = 37;
+    optional string CUST_REGSITER_NO = 38;
+    optional string CUST_SEQ = 39;
+    optional string ID_NO = 40;
+    optional string TAX_NO = 41;                     // NVARCHAR2(20)
+    optional string TEL_NO = 42;                     // NVARCHAR2(20)
+    optional string PROP_REF = 43;                   // NVARCHAR2(20), NOT NULL
+    optional string PROP_NO = 44;                    // NVARCHAR2(10)
+    optional int64 SRV1_ALCTO = 45;                  // NUMBER
+    optional int64 SEWER_TYPE = 46;                  // NUMBER
+    optional int64 SRV2_ALCTO = 47;                  // NUMBER
+    optional int64 W_ASSESSED_CONS = 48;            // NUMBER
+    optional string WTARIFF_ID = 49;                // NVARCHAR2(5)
+    optional string STARIFF_ID = 50;                // NVARCHAR2(5)
+    optional string CTYPEGRP_CODE = 51;             // NVARCHAR2(50)
+    optional int32 CONN_NO = 52;                    // NUMBER(5), NOT NULL
+    optional int64 F_SEQUNCE = 53;                  // NUMBER(10)
+    optional int32 READ_SEQ = 54;                   // NUMBER(5)
+    optional double ESTIM_CONS = 55;                // NUMBER(20,8)
+    optional string CON_STATUS_DESCRIPTION = 56;    // NVARCHAR2(100)
+    optional string METER_TYPE = 57;                // NVARCHAR2(5)
+    optional string METER_REF = 58;                 // NVARCHAR2(12)
+    optional int32 IS_PREPAID = 59;                 // NUMBER
+    optional int64 NO_DIALS = 60;                   // NUMBER(10)
+    optional string KEY_CODE = 61;                  // VARCHAR2(50 BYTE)
+    optional string MAKE = 62;                      // NVARCHAR2(5)
+    optional string METR_MAKE = 63;                 // NVARCHAR2(100)
+    optional central.types.MasDateTime CONN_DATE = 64;                 // DATE (use string or Google Protobuf Timestamp)
+    optional string DISCONN_REASON_ID = 65;         // NVARCHAR2(60)
+    optional string CONSUMER_TYPE = 66;             // NVARCHAR2(10)
+    optional int64 PROP_TYPE = 67;                  // NUMBER(10), NOT NULL
+    optional int64 MTR_STATUS = 68;                 // NUMBER(10)
+    optional int64 MTR_OP_STATUS = 69;              // NUMBER(10)
+    optional int32 IS_DELETED = 70;                 // NUMBER
+  }
+  message EditCustomerReadingRq {
+    required int64 METER_ID = 1;                            
+    optional central.types.MasDateTime READING_DATE = 2;    
+    required double READING_VALUE = 3;                      
+    optional string NOTES = 4;
+    optional string CUSTKEY = 5;
+  }
+  message CreditBilingRq {
+    required string CUSTKEY = 1;  
+    optional string BILL_GROUP = 2;                        
+    required central.types.MasDateTime EFFECT_DATE = 3;    
+    required double AMOUNT = 4;                      
+    optional string NOTES = 5;
+    optional int64 TRANSACTION_TYPE_ID = 6;
+    required string DOCUMENT_NO = 7;
+  }
+  message BANK_CHECK_COLLECTS {
+    repeated BANK_CHECK_COLLECT BANK_CHECK_COLLECTS =1;
+    required bool FOR_UPDATE = 2;
+  }
+  message BANK_CHECK_COLLECT {
+    required string CUSTKEY =1; // @gotags: gorm:"primaryKey"
+    optional string OLD_KEY =2;
+    optional string SURNAME=3;
+    optional string BILL_GROUP =4;
+    optional central.types.MasDateTime DEPOSIT_DATE=5;
+    optional string BANK_CHECK_NO=6; // @gotags: gorm:"primaryKey"
+    required double BANK_CHECK_AMOUNT=7;
+    optional string BANK_CHECK_NAME=8;
+    optional string RECEIPT_NO=9;
+    optional string DEPOSIT_BANK=10;
+    optional central.types.MasDateTime RECEIVAL_DATE=11;
+    optional central.types.MasDateTime DUE_DATE=12;
+    optional string NOTES=13;
+    optional string SIGNATURE=14;
+    optional int32 INSERTED_IN_F_TRANS=15;
+  }
+  message ConsumpAmount {
+    optional double WATER_AMT = 1;
+    optional double SEWER_AMT = 2;
+    optional string C_TYPE = 3;
+    optional int32 NO_UNITS = 4;
+    optional bool IS_TARAKOM = 5;
+    optional int64 SEWER_CONSUMP=6;
+  }
+  message PostFeesToBilling_ConsumpRemainRemoveMeter {
+    required APP_FEES ActivityPaid = 1;
+    optional APP_FEES ActivityFees = 2;
+    optional PROVIDING_NEW_READING ReadingConsump = 3;
+    optional APP_TRACER TRACE = 4;
+  }
+  message METER {
+    optional string METER_TYPE = 2;  
+    optional string METER_REF = 3;                         
+    optional string CONDITION = 4;   
+    optional string SERIAL_NO = 5;
+    optional double LAST_READ=6;
+    optional central.types.MasDateTime REMOVAL_DATE=7;              
+    optional central.types.MasDateTime READ_DATE=8;    
+    optional int64 METER_ID=9;          
+  }
+  message METERS {
+    repeated METER METERS =1;
+  }
+  message Meter_Filter {
+    optional string MessageFilter = 1;
+  }
+  message METER_INFO {
+    optional string METER_TYPE = 1;  
+    optional string METER_REF = 2;                         
+    optional int64 METER_ID=3;          
+    required string CUSTKEY = 4;
+  }
+  message ChangeOwndershipNoAccount {
+    optional string CUSTKEY = 1;
+    optional string FROM_CUSTKEY = 2;
+    optional string NOTES = 3;
+  }
+
+    message CST_TENANT {
+    optional int64 TENANT_ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:true"
+    required string CUSTKEY = 2;
+    required string NAME = 3;
+    optional string MOBILE_NO = 4;
+    required string NID = 5;
+    required central.types.MasDateTime START_DATE = 6;
+    optional central.types.MasDateTime END_DATE = 7;
+  }
+
+  message APP_TRACER {
+    required int64 FORM_NO = 1; // @gotags: gorm:"primaryKey"
+    required int32 APPLICATION_TYPE_ID = 2; // @gotags: gorm:"primaryKey"
+    required int32 COMPANY_ID = 3; // @gotags: gorm:"primaryKey"
+    required int64 ACTIVITY_ID = 4; // @gotags: gorm:"primaryKey"
+    required bool ACTIVITY_PAID = 5; // @gotags: gorm:"primaryKey"
+    required int32 ACTION_ID = 6; // @gotags: gorm:"primaryKey"
+    required int64 ACTION_STAMP_DATE_UNX = 7; // @gotags: gorm:"primaryKey"
+    required int64 REFRENCE_PAY = 8; // @gotags: gorm:"primaryKey"
+    required REQUEST_MESSAGE_TYPE REQUEST_TYPE = 9; // @gotags: gorm:"not null"
+    optional double AMOUNT = 10;
+    optional bytes REQUEST_RESPONSE = 11;  // @gotags: gorm:"-"
+    optional int32 COUNT_REPEATED = 12;
+    optional central.types.MasDateTime FIRST_TIME = 13; 
+    optional central.types.MasDateTime LAST_TIME = 14; 
+    optional bytes THIS_REQUEST = 15;  // @gotags: gorm:"-"
+    optional int32 BILING_ACT = 16;  // @gotags: gorm:"-"
+  }
+
+  // message APP_TRACER {
+  //   required int64 FORM_NO = 1; // @gotags: gorm:"primaryKey"
+  //   required int32 APPLICATION_TYPE_ID = 2; // @gotags: gorm:"primaryKey"
+  //   required int32 COMPANY_ID = 3; // @gotags: gorm:"primaryKey"
+  //   required int64 ACTIVITY_ID = 4; // @gotags: gorm:"primaryKey"
+  //   required bool ACTIVITY_PAID = 5; // @gotags: gorm:"primaryKey"
+  //   required int32 ACTION_ID = 6; // @gotags: gorm:"primaryKey"
+  //   required int64 ACTION_STAMP_DATE_UNX = 7; // @gotags: gorm:"primaryKey"
+  //   required int64 REFRENCE_PAY = 8; // @gotags: gorm:"primaryKey"
+  //   optional REQUEST_MESSAGE_TYPE REQUEST_TYPE = 9; // @gotags: gorm:"not null"
+  //   optional double AMOUNT = 10;
+  //   optional string REQUEST_RESPONSE = 11; // @gotags: `gorm:"type:nvarchar(max)"`
+  // }
+  enum REQUEST_MESSAGE_TYPE{
+    INITAL =0;
+    SUCCESS=1;
+    ERROR=2;
+  }
+
+  message APP_TRACER_REQUEST_RESPONSE {
+    required int64 FORM_NO = 1; // @gotags: gorm:"primaryKey"
+    required int32 APPLICATION_TYPE_ID = 2; // @gotags: gorm:"primaryKey"
+    required int32 COMPANY_ID = 3; // @gotags: gorm:"primaryKey"
+    required int64 ACTIVITY_ID = 4; // @gotags: gorm:"primaryKey"
+    required bool ACTIVITY_PAID = 5; // @gotags: gorm:"primaryKey"
+    required int32 ACTION_ID = 6; // @gotags: gorm:"primaryKey"
+    required int64 ACTION_STAMP_DATE_UNX = 7; // @gotags: gorm:"primaryKey"
+    required int64 REFRENCE_PAY = 8; // @gotags: gorm:"primaryKey"
+    optional bytes TRACE_REQUSET = 9;  // @gotags: `gorm:"type:varbinary(max)"`
+    optional bytes TRACE_RESPONSE = 10;  // @gotags: `gorm:"type:varbinary(max)"`
+  }
+  
+  message EndTenatContract{
+    required string CUSTKEY = 1;
+    optional central.types.MasDateTime END_DATE = 2;
+    optional int64 TENANT_ID = 3;
+  } 
+
+  message TenantLst {
+    repeated CST_TENANT CST_TENANT = 1;
+  }
+
+  message UpdateConnDate {
+    required string CUSTKEY = 1;
+    required central.types.MasDateTime CONN_DATE = 2;
+  }
+
+  message UpdateActivityDesc {
+    required string CUSTKEY = 1;
+    required string UA_ADDRESS5 = 2;
+  }
+
+  message ChangeNID {
+    required string CUSTKEY = 1;
+    required string NID = 2;
+  }
+  
+message CST_CHARITY_LIST {
+  repeated CST_CHARITY CHARITIES = 1;
+}
+
+message CST_TENANT_CHARITY_LIST {
+  repeated CST_TENANT_CHARITY TENANTS = 1;
+}
+
+message CST_CREDIT_CHARITY_LIST {
+  repeated CST_CREDIT_CHARITY CREDITS = 1;
+}
+
+message CHARITY_ID {
+  required int64 ID = 1;
+}
+
+message CHARITY_TENANT_NID {
+  optional string NID = 1;
+  optional string CHARITY_NO = 2;
+}
+
+message CST_CHARITY {
+  optional int64 ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string CHARITY_NAME = 2; // @gotags: gorm:"not null"
+  optional string MOBILE_NO = 4;
+  optional string E_MAIL = 5;
+  optional string ADDRESS = 6;
+  optional string NOTES = 7;
+  required string CHARITY_NO = 8; // @gotags: gorm:"not null"
+  required central.types.MasDateTime CHARITY_START_DATE = 9; // @gotags: gorm:"not null"
+  optional string POLICE_IMAGE = 10; //@gotags: gorm:"-"
+  optional string ORDER_IMAGE = 11; //@gotags: gorm:"-"
+  repeated CST_CHARITY_ATTACHMENT ATTACHMENT = 12; //@gotags: gorm:"-"
+}
+
+message CST_CHARITY_ATTACHMENT {
+  required int64 ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required int64 CHARITY_ID = 2;  // @gotags: gorm:"index"
+  required string NAME = 3; // @gotags: gorm:"not null"
+  optional string FILE = 4; // @gotags: gorm:"type:nvarchar(max)"
+}
+
+message CST_TENANT_CHARITY {
+  optional int64 ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required string SURNAME = 2; // @gotags: gorm:"not null"
+  optional string MOBILE_NO = 4;
+  optional string E_MAIL = 5;
+  optional string UA_ADDRESS = 6;
+  optional string NOTES = 7;
+  optional int64 CHARITY_ID = 8;  // @gotags: gorm:"index"
+  optional int32 STATION_NO = 9; //@gotags: gorm:"-"
+  optional string BILLGROUP = 10; //@gotags: gorm:"-"
+  optional string BOOK_NO = 11; //@gotags: gorm:"-"
+  optional string WALK_NO = 12; //@gotags: gorm:"-"
+  optional string NID = 13;
+  optional string PREV_CUSTKEY = 14; //@gotags: gorm:"-"
+  optional string CUSTKEY = 15;
+  optional string BPM_FORM = 16;
+  optional bool IS_PREVIEW = 17;
+  optional bool IS_MOQAYSA = 18;
+  optional double PREVIEW_AMOUNT = 19;
+  optional double MOQAYSA_AMOUNT = 20;
+  optional int32 IS_STATUS = 21;
+  optional double FINAL_AMOUNT_CHARGE = 22;
+  optional string CHARITY_NO = 23; //@gotags: gorm:"-"
+  optional string CHARITY_CREDIT_NO = 24;
+  optional int32 BENEFIT_STATUS = 25;
+  optional bool IS_PREVIEW_SEWER = 26;
+  optional bool IS_MOQAYSA_SEWER  = 27;
+  optional double PREVIEW_AMOUNT_SEWER  = 28;
+  optional double MOQAYSA_AMOUNT_SEWER  = 29;
+  optional int32 IS_STATUS_SEWER = 30;
+  optional string BPM_FORM_SEWER = 31;
+  optional bool IS_PREVIEW_PAID = 32;
+  optional bool IS_PREVIEW_SEWER_PAID = 33;
+  optional string CHARITY_CREDIT_NO_SEWER = 34;
+
+}
+
+message CST_CREDIT_CHARITY {
+  optional int64 ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:false"
+  required double CREDIT_AMOUNT = 2; // @gotags: gorm:"not null"
+  optional double CREDIT_AVAILABLE = 3; // @gotags: gorm:"not null"
+  optional double CREDIT_PENDING = 4; // @gotags: gorm:"not null"
+  optional double CREDIT_USED = 5; // @gotags: gorm:"not null"
+  required string CHARITY_CREDIT_NO = 6; // @gotags: gorm:"not null"
+  required central.types.MasDateTime CHARITY_CREDIT_DATE = 7; // @gotags: gorm:"not null"
+  optional string NOTES = 8;
+  optional int64 CHARITY_ID = 9;  // @gotags: gorm:"index"
+  optional string CHARITY_NO = 10; //@gotags: gorm:"-"
+  optional string CHEQ_NO = 11;
+  optional string CHEQ_BANK = 12;
+  optional central.types.MasDateTime CHEQ_DATE = 13;
+  optional string CHARITY_NAME = 14; //@gotags: gorm:"-"
+  optional double DEPORTED_AMOUNT = 15;
+  optional bool IS_FAKE = 16;
+}
+message CST_FAKE_CREDIT_RESOURCE {
+  required int64 CREDIT_CHARITY_ID = 1; // @gotags: gorm:"not null"
+  required double CREDIT_AMOUNT = 2;
+  required int32 STAMP_USER=3; // @gotags: gorm:"size:50"
+  required central.types.MasDateTime STAMP_DATE =4;
+  optional int32 STAMP_MODEIFY_USER=5; // @gotags: gorm:"size:50"
+  optional central.types.MasDateTime STAMP_MODEIFY_DATE =6;
+  optional bool IS_DELETED = 7;
+  optional int64 ID = 8; // @gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int64 CHARITY_ID = 9; // @gotags: gorm:"not null"
+  optional string GENERATED_CREDIT_NO = 10; 
+
+}
+
+
+message ACCEPT_OR_REJECT_CHARITY_TENANT {
+  required string CHARITY_CREDIT_NO = 1;
+  required string CHARITY_NO = 2;
+  repeated CHARITY_TENANT_REQUESTS CHARITY_TENANT_REQUESTS = 3;
+  optional string CUSTKEY = 4;
+}
+
+message CHARITY_TENANT_REQUESTS {
+ required string CUSTKEY = 1;
+ optional bool CHARITY_STATUS = 2;
+ optional double PREVIEW_AMOUNT = 3;
+ optional double MOQAYSA_AMOUNT = 4;
+ required string NID = 5;
+ optional string CHARITY_NO = 6;
+ optional double PREVIEW_AMOUNT_SEWER  = 7;
+ optional double MOQAYSA_AMOUNT_SEWER  = 8;
+ optional bool CHARITY_STATUS_SEWER = 9;
+}
+
+message CheckCharityTenant {
+  required string CUSTKEY = 1;
+  required string NID = 2;
+  required double FINAL_AMOUNT_CHARGE = 3;
+}
+message CheckCharityTenant_BPM {
+  required string CUSTKEY = 1;
+  required string BPM_FORM = 2;
+  required double FINAL_AMOUNT_CHARGE = 3;
+  optional string NID = 4;
+  optional int32 CHARITY_FEES_TYPE = 5;
+
+}
+
+message REDIT_CHARITY_RESPONSE{
+repeated CST_CREDIT_CHARITY CREDIT_CHARITY = 1;
+}
+
+message GENERATED_CHARITY_CREDIT {
+required int64 CHARITY_ID = 1;
+required string GENERATED_CREDIT_NO = 2;
+repeated CHARITY_CREADIT_LIST CHARITY_CREADIT_LIST = 3;
+}
+message CHARITY_CREADIT_LIST {
+  required int64 CREDIT_CHARITY_ID = 1;
+  required string CHARITY_CREDIT_NO = 2;
+  required double DEPORTED_AMOUNT = 3;
+  required int64 CHARITY_ID = 4;
+
+}
+
+message CANCEL_FAKE_CHARITY_CREDIT {
+  required int64 CHARITY_ID = 1;
+  required string GENERATED_CREDIT_NO = 2;
+}
+
+message PAY_CONSUMPTION_REQUEST {
+  required string CUSTKEY = 1;
+  required double AMOUNT =4;
+
+}
+
+message changeCustomerStationRq {
+  required string CUSTKEY = 1;
+  required int32 STATION_NO = 2;
+  required string BILLGROUP = 3;
+  required string BOOK_NO = 4;
+  required int64 WALK_NO = 5;
+}
+
+message extendAgreemRq {
+  required int32 NO_MONTHS = 1;
+  required string CUSTKEY = 2;
+  required int64 AGREEM_NO = 3;
+}
+
+message meterReading {
+  optional int64 METER_ID = 1;
+  optional string METER_REF = 2;
+  required double READING_VALUE = 3;
+  optional central.types.MasDateTime READING_DATE = 4;
+}
+
+message changeCustomerPhoneRq {
+  required string CUSTKEY = 1;
+  required string MOBILE_NO = 2;
+}
+
+message changeCustomerCrNoRq {
+  required string CUSTKEY = 1;
+  required string CR_NO = 2;
+}
+
+message CleanFeesRq {
+  required string CUSTKEY = 1;
+  required int64 PROPTYPE_ID = 2;
+}
+
+message CustWallet {
+  required string CUSTKEY = 1;
+  required double BALANCE   = 2; 
+
+}
+
+message WalletDetailsRq  {
+  required string CUSTKEY = 1;
+}
+message WalletDetailsRs {
+    optional string CUSTKEY = 1;
+    optional int64 TRANS_NO = 2;
+    optional int64 TRNS_TYPE = 3;
+    optional int64 TRNS_STYPE = 4;
+    optional central.types.MasDateTime BILNG_DATE = 5;
+    optional double AMOUNT = 6;
+    optional string DOCUMNT_NO = 7;
+    optional string NOTES = 8;
+    optional int32 IS_BLNCE = 9;
+    optional int64 ACTUAL_TRANS_NO = 10;
+}
+
+message EditCustomerMainData {
+required string CUSTKEY = 1;
+required string NID = 2;
+required string SURNAME = 3; 
+required string UA_ADDRESS = 4; 
+required string SERIAL_NO = 5;
+}
+
+message EditCustomerDirections{
+required string CUSTKEY = 1;
+optional string DIRECTION_1=2;
+optional string DIRECTION_2=3;
+optional string DIRECTION_3=4;
+optional string DIRECTION_4=5;
+}
+
+message RegisterFieldsForTableRq {
+required int64 Table_ID =1;                            
+required int32 ACT_ID =2;  
+repeated TBL_ACTIVITY_FIELDS  TBL_ACTIVITY_FIELDS  = 3 ;                           
+}
+
+// Message for a collection of bill summaries (if needed for response wrapper)
+message CustDataAndArrINVOICES {
+ optional  string CUSTKEY =1;
+ optional string SURNAME =2;
+ optional string STATION_DESCRIBE =3;
+ optional string BILLGROUP_DESCRIBE =4;
+ optional  string CTYPES_DESCRIBE =5;
+ optional  int32 NO_UNITS =6;  
+ repeated INVOICES INVOICES=7;
+}
+
+message InvoiceAgreemReq {
+  optional string CUSTKEY =1;
+  optional int64 CYCLE_ID = 2;                     
+  optional int64 NO_MONTHS = 3;                                 
+  optional double PENALTY_PERCENTAGE = 4;   
+  optional bool IS_ACTIVITY =5;       
+  required int32 TRANS_TYPE_F_TRANS = 6;
+  required int32 TRANS_STYPE_F_TRANS = 7;        
+  required int64 TRANS_TYPE_CUST_AGREEM = 8;
+  required int64 TRANS_STYPE_CUST_AGREEM = 9;            
+}
+
+
+// message BillingGroupStatusReq {
+// 	BILLGROUP     *string               
+// 	Day           *int32           
+// }     
+
+message INVOICES {
+  // Customer Information
+  optional  central.types.MasDateTime INVOICE_DATE = 1;    
+  optional  int64 CYCLE_ID = 2;                             
+  optional  string CUSTKEY = 3;     
+  optional  double WATER_AMT = 4;                           
+  optional  double SEWER_AMT = 5;                           
+  optional  double TANZEEM_AMT = 6;                          
+  optional  double BASIC_AMT = 7;                          
+  optional  double TAX_AMT = 8;                            
+  optional  double ROUND_AMT = 9;  
+  optional  double OTHER_AMT = 10;    
+  optional  double INSTALL_AMT = 11;   
+  optional  double DUE_AMOUNT =12;  
+  optional  double CONSUMP = 13;                       
+  optional  string C_TYPE = 14;                            
+  optional  int64 NO_UNITS = 15;                        
+  optional  string BILLGROUP =16;        
+  optional  double CONTRACT_AMT =17;                   
+}
+
+message ArrSMS_TEMPLATE {
+  repeated SMS_TEMPLATE SMS_TEMPLATE = 1;
+}
+
+message SMS_TEMPLATE {
+  optional int64  TEMPLATE_ID   = 1;  // @gotags: gorm:"primaryKey;autoIncrement"
+  required string TEMPLATE      = 2;  // @gotags: gorm:"type:text"
+  required string TEMPLATE_DESC = 3;  // @gotags: gorm:"unique;type:varchar(255)"
+  optional bool   IS_ACTIVE     = 4;  // @gotags: gorm:"default:true"
+  optional bool   IS_DEFAULT    = 5;  // @gotags: gorm:"default:false"
+  optional bool   IS_SYSTEM     = 6;  // @gotags: gorm:"default:false"
+  required int32  SMS_TYPE      = 7;  // @gotags: gorm:"default:0"
+  optional int32  EXPIRY_DAYS   = 8;
+}
+
+message SMS_TEMPLATE_ID {
+  optional int64 TEMPLATE_ID = 1;
+}
+
+enum SMS_TEMPLATE_FIELDS {  // the enum which the template will choose from 
+  CUSTKEY               = 1;
+  SURNAME               = 2;
+  TOTAL_AMOUNT          = 3;
+  TOTAL_COUNT           = 4;
+  LAST_BIL_DATE         = 5;
+  LAST_COL_DATE         = 6;
+  LAST_NOTIFY_DATE      = 7;
+  BILLGROUP_DESCRIBE    = 8;
+  BOOK_NO_DESCRIBE      = 9;
+  CTYPE_DESCRIBE        = 10;
+  MOBILE_NO             = 11;
+  SITE_DESCRIBE         = 12;
+  STATION_DESCRIBE      = 13;
+  PAYMENT_ORDER_NO      = 14;
+  ELECTRONIC_PAYMENT_NO = 15; // رقم الدفع الالكترونى
+}
+
+message SMS_SENT_DATA {
+  optional int64                      SMS_ID    = 1;
+  optional string                     CUSTKEY   = 2;
+  optional string                     MOBILE_NO = 3;  
+  optional string                     SMS_TEXT  = 4;
+  optional central.types.MasDateTime  SMS_DATE  = 5;
+}
+
+message ArrSMS_SENT_DATA {
+  repeated SMS_SENT_DATA SMS_SENT_DATA = 1;
+}
+
+message CustomersBill {
+  optional string                     CUSTKEY               = 1 ;
+  optional string                     SURNAME               = 2 ;
+  optional string                     CTYPE                 = 3 ;
+  optional string                     BILLGROUP             = 4 ;
+  optional string                     BOOK_NO               = 5 ;
+  optional double                     TOTAL_AMOUNT          = 6 ;
+  optional int64                      TOTAL_COUNT           = 7 ;
+  optional central.types.MasDateTime  LAST_NOTIFY_DATE      = 8 ;
+  optional central.types.MasDateTime  LAST_COLLECTION_DATE  = 9 ;
+  optional central.types.MasDateTime  LAST_BILL_DATE        = 10;
+  optional string                     MobileNo              = 11;
+  optional bool                       Has_MobileNo          = 13; // a flag to check if the customer has mobile number
+}
+
+message ArrCustomersBills {
+  repeated CustomersBill             Items            = 1 ;
+  optional int64                     SMS_TEMPLATE_ID  = 2 ;
+  required SMS_TYPE                  sms_type         = 3 ;
+  optional int32                     EXPIRE_DATE      = 4 ;
+
+}
+
+message CustomerBillsFilter {
+  optional string                     CUSTKEY               = 1 ;
+  optional string                     CTYPE                 = 2 ;
+  optional string                     BILLGROUP             = 4 ;
+  optional string                     BOOK_NO               = 6 ;
+  optional AmountOperators            OPERATOR              = 8 ; 
+  optional double                     AMOUNT                = 9 ;
+  optional central.types.MasDateTime  LAST_COLLECTION_DATE  = 10;
+  optional central.types.MasDateTime  LAST_NOTIFY_DATE      = 11;
+  optional central.types.MasDateTime  LAST_BILL_DATE        = 12;
+  optional bool                       IS_METER_CONNECTED    = 13;
+}
+
+message CustomerCrmFilter {
+  optional string                     CUSTKEY                   = 1 ;
+  optional string                     BILLGROUP                 = 2 ;
+  optional string                     BOOK_NO                   = 3 ;
+  repeated int64                      STATION_NOS               = 4 ;
+  repeated int64                      SITE_CODES                = 5 ;
+  optional central.types.MasDateTime  LAST_NOTIFY_DATE          = 6 ;
+  optional central.types.MasDateTime  FROM_DATE                 = 7 ;
+  optional central.types.MasDateTime  TO_DATE                   = 8 ;
+  optional int32                      PAYMENT_DUE_DAYS          = 9 ;
+}
+
+message CustomersCrmBill {
+  optional string                     CUSTKEY               = 1 ;
+  optional string                     SURNAME               = 2 ;
+  optional string                     BILLGROUP             = 3 ;
+  optional string                     BOOK_NO               = 4 ;
+  optional string                     PAYMENT_ORDER_NO      = 5 ;
+  optional double                     AMOUNT                = 6 ;
+  optional central.types.MasDateTime  LAST_NOTIFY_DATE      = 8 ;
+  optional string                     MobileNo              = 9 ;
+  optional bool                       Has_MobileNo          = 10; // a flag to check if the customer has mobile number
+}
+
+message ArrCustomersCrmBills {
+  repeated CustomersCrmBill          Items           = 1 ;
+  optional int64                     SMS_TEMPLATE_ID = 2 ;
+  required SMS_TYPE                  sms_type        = 3 ;
+  optional int32                     EXPIRE_DATE     = 4 ;
+} 
+
+enum AmountOperators {
+  EQUAL                   = 0;
+  GREATER_THAN_OR_EQUAL   = 1;
+  LESS_THAN_OR_EQUAL      = 2;
+}
+
+message CHARITY_RECONCILIATION {
+  optional int64                      ID                  = 1;  // @gotags: gorm:"column:ID;primaryKey;autoIncrement:true;not null"
+  required int64                      CHARITY_ID          = 2;  // @gotags: gorm:"column:CHARITY_ID;not null;index"
+  optional string                     CHARITY_CREDIT_NO   = 3;  // @gotags: gorm:"column:CHARITY_CREDIT_NO;type:varchar(255)"
+  required central.types.MasDateTime  RECONCILIATION_DATE = 5;  // @gotags: gorm:"column:RECONCILIATION_DATE;not null;type:datetime"
+  optional string                     DESCRIPTION         = 6;  // @gotags: gorm:"column:DESCRIPTION;type:nvarchar(4000)"
+  required central.types.MasDateTime  STAMP_DATE          = 7;  // @gotags: gorm:"column:STAMP_DATE;not null;type:datetime"
+  required string                     STAMP_USER          = 8;  // @gotags: gorm:"column:STAMP_USER;not null;type:varchar(255)"
+}
+
+message CHARITY_RECONCILIATION_Rq {
+  required CST_CREDIT_CHARITY         CST_CREDIT_CHARITY  = 1;
+}
+
+message CHARITY_RECONCILIATION_Rq_LIST {
+  optional string                     CHARITY_CREDIT_NO         = 1;
+  required string                     DESCRIPTION               = 2;
+  required central.types.MasDateTime  RECONCILIATION_DATE       = 3;
+}
+
+message CHARITY_NO_RECONCILIATION_Rq {
+  optional string                     CST_CHARITIS_ID           = 1;
+  optional central.types.MasDateTime  RECONCILIATION_DATE_FROM  = 2;
+  optional central.types.MasDateTime  RECONCILIATION_DATE_TO    = 3;
+}
+
+message CHARITY_NO_RECONCILIATION_Res {
+  required CST_CREDIT_CHARITY         CST_CREDIT_CHARITY        = 1;
+  required central.types.MasDateTime  RECONCILIATION_DATE       = 2;
+}
+
+message CHARITY_NO_RECONCILIATION_Res_LIST {
+  repeated CHARITY_NO_RECONCILIATION_Res CHARITY_NO_RECONCILIATION_Res = 1;
+}
+
+enum SMS_STATUS {
+  SMS_PENDING = 0;
+  SMS_SENT    = 1;
+  SMS_FAILED  = 2;
+}
+
+enum SMS_TYPE {
+  SMS_TYPE_UNSPECIFIED  = 0;  
+  SMS_TYPE_GENERAL      = 1;  // اخطارات عامة
+  SMS_TYPE_MADYONYA     = 2;  // اخطارات مديونية 
+  SMS_TYPE_CRM          = 3;  // اخطارات خدمة العملاء
+}
+
+message SMS_TYPE_REQ {
+  required SMS_TYPE sms_type = 1;
+}

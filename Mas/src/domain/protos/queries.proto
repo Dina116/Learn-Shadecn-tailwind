@@ -1,0 +1,532 @@
+syntax = "proto2";
+// option go_package = "github.com/mas-soft/mas-customers/qpb";
+option go_package = "../qpb;qpb";
+package PkgQueries;
+import "date.proto";
+// import "date.proto";
+service QueryService {
+  rpc SearchCustomer(SearchCustomerRq)returns(SearchCustomerRs){}
+  rpc GetAllBillgroups(Empty) returns (ArrBILLING_GROUPS) {}
+  rpc GetCustomerBooksByBillgroup(BillgroupRq) returns (ArrCUSTOMER_Books) {}
+  rpc GetCustomerMainDataByCustkey(CustkeyRq)returns(CUSTOMER_MAIN_DATA){}
+  rpc GetCustomerTransactions(CustkeyRq)returns(ArrTRANSACTIONS){}
+  rpc GetCustomerStatements(CustkeyRq)returns(ArrSTATMENT){}
+  rpc GetCustomerAgreements(CustkeyRq)returns(ArrCustAgreem){}
+  rpc GetCustomerReadings(CustkeyRq)returns(ArrREADINGS){}
+  rpc GetBillPrintCust(CustkeyRq)returns(ArrBILL_PRINT);
+  rpc GetAllCustomerHistory(CustkeyRq)returns(ArrCST_HISTORY){}
+  rpc TestRpc(TEST)returns (JSON_TEST){}
+  rpc GetCustWalletDetails(WalletDetailsRq)returns(ArrWalletDetails);
+  rpc GetCustomermetersReadings(CustkeyRq)returns(ArrCustREADINGS){}
+
+}
+
+message Empty {
+}
+message BillgroupRq {
+   required string BILLGROUP =1;
+}
+message BILLING_GROUPS {
+  required  int32 STATION_NO =1; 
+  required string GROUP_ID =2;  
+    optional string DESCRIPTION = 3;
+  }
+message ArrBILLING_GROUPS {
+repeated BILLING_GROUPS bILLING_GROUPS = 1;
+}
+message CUSTOMER_BOOKS {
+  required int32 STATION_NO = 1;
+  required string BILLGROUP = 2;
+  required string CODE = 3;
+optional string DESCRIBE = 4;
+}
+
+message ArrCUSTOMER_Books {
+repeated CUSTOMER_BOOKS CUSTOMER_BOOKS = 1;
+}
+message SearchCustomerRq {
+    repeated Filters Filters=1;
+}
+message SearchCustomerRs {
+    repeated BasicCustomerDetails BasicCustomerDetails =1;
+}
+message BasicCustomerDetails {
+  required  string CUSTKEY =1;
+    optional string SURNAME =2;
+    optional string BILLGROUP =3;
+    optional string BOOK_NO =4;
+    optional string UA_ADDRESS=5;
+    optional string OLD_KEY =6;
+    optional central.types.MasDateTime Open_Date =7;
+    optional string WALK_NO = 8;
+    optional string METER_REF = 9;
+    optional int64 PROPERTY_ID  = 10;
+    optional int32 STATION_NO = 11;
+    optional string STATION_NAME = 12;
+    optional int64 METER_ID  = 13;
+}
+message Filters {
+  required  string Value=1;
+  required   FilterCondition FilterCondition =2;
+  required  SearchFilters SearchFilters=3;
+}
+
+enum FilterCondition{
+    undifiendFilterCondition =0;
+    Equals =1;
+    Contains =2;
+    StartWith=3;
+    EndWith =4;
+    InContain =5;
+}
+enum SearchFilters{
+    undifiendSearchFilters =0;
+    CUSTKEY = 1;
+    BILLGROUP =2;
+    BOOK_NO =3;
+    SURNAME=4;
+    OLD_KEY=5;
+    PROP_REF =6;
+    METER_REF =7;
+    METER_TYPE= 8;
+    UA_ADDRESS=9;
+    NATIONAL_ID =10;
+    TEL_NO = 11;
+    TAX_NO = 12;
+    WALK_NO = 13;
+    PROPERTY_ID = 14;
+
+}
+message CUSTOMER_MAIN_DATA {
+  required string CUSTKEY =1;
+  optional string SURNAME =2;
+  optional string BILLGROUP =3;
+  optional string BOOK_NO =4;
+  optional string UA_ADDRESS=5;
+  optional string OLD_KEY =6;
+  optional string PROP_REF =7;
+  optional string METER_REF =8;
+  optional string PREV_CUSTKEY=9;
+  optional string PREV_PROP_REF=10;
+  optional int32 NO_UNITS=11;
+  optional string METER_DIAM=12;
+  optional string METER_STATUS = 13;
+  optional string CONN_STATUS=14;
+  optional string NID =15;
+  optional string TAX_NO =16;
+  optional bool HAS_WATER=17;
+  optional bool HAS_SEWER=18;
+  optional central.types.MasDateTime INSTALL_DATE=19;
+  optional central.types.MasDateTime REMOVAL_DATE=20;
+  optional string C_TYPE_DESCRIPTION =21;
+  optional string METER_TYPE=22;
+  optional string METER_TYPE_DESC=30;
+  optional string METER_MAKE=23;
+  optional string METER_MAKE_DESC=31;
+  optional central.types.MasDateTime CONN_DATE=24;
+  optional string MOBILE_NO =25;
+  optional int64 METER_NO_DIGITS =26;
+  optional double LAST_READING =27;
+  optional bool IS_MASTER_CONNECTION =28;
+  optional int64 NO_SUB_CONNECTIONS =29;
+  optional string C_TYPE =32;
+  optional bool IS_PREPAID =33;
+  optional int64 STATION_NO = 34;
+  optional string STATION_NAME = 35;
+  optional bool HAS_METER = 36;
+  optional int64 METER_ID =37;
+  repeated CST_MULTI_CTG CST_MULTI_CTG = 38;
+  optional string BOOK_NAME =39;
+  optional central.types.MasDateTime Open_date =40;
+  repeated CST_TENANT TENANTS =41; // @gotags: gorm:"-"
+  optional string UA_ADRESS5 = 42;
+  optional string SERIAL_NO = 43;
+  optional string METER_TAG_NO = 44;
+  optional double WalletAmount = 45; // @gotags: gorm:"-"
+  optional double AgreemsAmount = 46; // @gotags: gorm:"-"
+  optional double UnbilledAmount = 47; // @gotags: gorm:"-"
+  optional double Cl_balance = 48; // @gotags: gorm:"-"
+  repeated CustWallet CustWallet = 49; // @gotags: gorm:"-"
+  optional string DIRECTION_1 = 50;
+  optional string DIRECTION_2 = 51;
+  optional string DIRECTION_3 = 52;
+  optional string DIRECTION_4 = 53;
+  optional string WALK_NO = 54;
+}
+message CST_TENANT {
+  optional int64 TENANT_ID = 1;  // @gotags: gorm:"primaryKey;autoIncrement:true"
+  required string CUSTKEY = 2;
+  required string NAME = 3;
+  optional string MOBILE_NO = 4;
+  required string NID = 5;
+  required central.types.MasDateTime START_DATE = 6;
+  optional central.types.MasDateTime END_DATE = 7;
+}
+message CST_MULTI_CTG {
+  optional string PROP_REF =1;
+  optional int64 CONNECTION_ID=2;
+  required string C_TYPE=3;
+  optional string C_TYPE_DESC = 4;
+  required double ALLOC_PERC =5;
+  required double ALLOC_PERC_SEWER = 6;
+  required int32 NO_UNITS =7;
+  required double ESTIM_CONS_PU =8;
+}
+  message CustkeyRq {
+    required  string CUSTKEY =1;
+  }
+  message ArrTRANSACTIONS {
+    repeated TRANSACTIONS TRANSACTIONS=1;
+  }
+  message TRANSACTIONS {
+    required int64 TRANS_NO = 1;
+    required double AMOUNT = 2;
+    optional string DESCRIPTION = 3;
+    optional string DOCUMENT_NO = 4;
+    optional central.types.MasDateTime EFFECT_DTE = 5;
+    optional central.types.MasDateTime BILNG_DATE = 6;
+    optional string MEMO_FLD = 7;
+    optional int64 STATM_NO = 8;
+    optional int64 TRNS_TYPE = 9;
+    optional int64 TRNS_STYPE = 10;
+    optional double CR_READING = 11;
+    optional double PR_READING = 12;
+    optional double CONSUMP = 13;
+    optional int64 READ_TYPE = 14;
+    optional double RUNNING_BLANCE = 15;
+  }
+  message ArrSTATMENT {
+    repeated STATMENT STATMENT=1;
+  }
+  message STATMENT {
+    optional string PAYMENT_NO = 1;
+    required  int64 STATM_NO = 2;
+    optional double CL_BLNCE = 3;
+    optional double CUR_CHARGES = 4;
+    optional double OP_BLNCE = 5;
+    required  central.types.MasDateTime BILNG_DATE = 6;
+    required int32 DELIVERY_ST = 7;
+    repeated TRANSACTIONS TRANSACTIONS=8;
+  }
+  message ArrCustAgreem {
+    repeated CustAgreem CustAgreem=1;
+  }
+  message CustAgreem {
+    optional int64 AGRM_NO = 1;
+    optional string CUSTKEY = 2;
+    optional string AGRM_REF = 3;
+    optional central.types.MasDateTime EFF_DATE = 4;
+    optional central.types.MasDateTime COMPLETION_DATE = 5;
+    optional double AGRM_VALUE = 6;
+    optional double AGRM_IMMPAY = 7;
+    optional string IMMPAY_RCPTNO = 8;
+    optional int64 NO_INSTALMENTS = 9;
+    optional int64 REMINDER_NO_INSTALMENTS = 10;
+    optional double REMINDER_AMOUNT = 11;
+    optional double INSTLM_AMOUNT = 12;
+    optional double AGRM_TYPE = 13;
+    optional double AGRM_STATUS = 14;
+    optional double TRNS_TYPE = 15;
+    optional double TRNS_STYPE = 16;
+    repeated AgremInstalment Instalments = 17;
+    optional string AGREM_NAME = 18;
+    optional double PENALTY_VALUE =19; // @gotags: gorm:"_" 
+    optional int32 PENALTY_TYPE =20; // @gotags: gorm:"_" 
+    optional string PENALTY_TYPE_NAME =21; // @gotags: gorm:"_" 
+  }
+  message AgremInstalment {
+    required  int64 INSTALMENT_NO = 1;
+    optional int64 TRANS_NO = 2;
+    optional double AMOUNT = 3;
+    optional central.types.MasDateTime INVOICE_DATE = 4;
+    optional central.types.MasDateTime CHARGE_DATE = 5;
+  }
+  message READINGS {
+    required int64 READING_NO =1;
+    required  double B_READINGS =2;
+    required double CONSUMP =3;
+    required  bool IS_CANCELLED =4;
+    required bool IS_INVOICED =5;
+    optional central.types.MasDateTime INVOICE_DATE=6;
+    optional central.types.MasDateTime READING_DATE=7;
+    optional int32 MAS_READ_METHOD = 8;
+    optional string MAS_READ_BY = 9;
+  }
+  message ArrREADINGS {
+    repeated READINGS READINGS=1;
+  }
+  message CST_HISTORY {
+    required int64 ID =1;                              // @gotags: gorm:"primaryKey;autoIncrement:true"
+    required string NOTES =2;                          // @gotags: gorm:"notnull;type:nvarchar(max)"
+    required string BPM_FORM=3;                        // @gotags: gorm:"notnull"
+    required central.types.MasDateTime STAMP_DATE = 4; // @gotags: gorm:"notnull"
+    required string STAMP_USER=5;                      // @gotags: gorm:"notnull"
+    required string CUSTKEY =6;                        // @gotags: gorm:"notnull;index"
+    required int64 APP_ID =7;                          // @gotags: gorm:"notnull"
+    required bool IS_CANCELLED =9;                     // @gotags: gorm:"notnull"
+  }
+  message ArrCST_HISTORY {
+    repeated CST_HISTORY CST_HISTORY=1;
+  }
+
+  message TEST {
+    required int32 NUMBER_R =1;
+    optional int32 NUMBER_O =2;
+    required string STRING_R=3;
+    optional string STRING_O=4;
+  }
+  message JSON_TEST {
+    required string TEST=1;
+  }
+  message ArrBILL_PRINT {
+    repeated BILL_PRINT BILL_PRINT = 1;
+  }
+  message BILL_PRINT {
+    optional int32 STATION_NO = 1; // @gotags: gorm:"column:STATION_NO;type:number"
+    optional string STATION_NAME = 2; // @gotags: gorm:"column:STATION_NAME;type:nvarchar2(100)"
+    optional string BILLGROUP = 3; // @gotags: gorm:"column:BILLGROUP;type:nvarchar2(10)"
+    optional string BILLGROUP_NAME = 4; // @gotags: gorm:"column:BILLGROUP_NAME;type:nvarchar2(100)"
+    optional string BOOK_NO = 5; // @gotags: gorm:"column:BOOK_NO;type:nvarchar2(15)"
+    optional string BOOK_NAME = 6; // @gotags: gorm:"column:BOOK_NAME;type:nvarchar2(25)"
+    optional string WALK_NO = 7; // @gotags: gorm:"column:WALK_NO;type:nvarchar2(10)"
+    optional int64 SEQ_NO = 8; // @gotags: gorm:"column:SEQ_NO;type:number"
+    optional string CUSTKEY = 9; // @gotags: gorm:"column:CUSTKEY;type:nvarchar2(30)"
+    optional string SURNAME = 10; // @gotags: gorm:"column:SURNAME;type:nvarchar2(255)"
+    optional string UA_ADRESS1 = 11; // @gotags: gorm:"column:UA_ADRESS1;type:nvarchar2(255)"
+    optional string UA_ADRESS2 = 12; // @gotags: gorm:"column:UA_ADRESS2;type:nvarchar2(100)"
+    optional string UA_ADRESS3 = 13; // @gotags: gorm:"column:UA_ADRESS3;type:nvarchar2(100)"
+    optional string UA_ADRESS4 = 14; // @gotags: gorm:"column:UA_ADRESS4;type:nvarchar2(100)"
+    optional string OLD_KEY = 15; // @gotags: gorm:"column:OLD_KEY;type:nvarchar2(50)"
+    optional string TAX_NO = 16; // @gotags: gorm:"column:TAX_NO;type:nvarchar2(20)"
+    optional string TEL_NO = 17; // @gotags: gorm:"column:TEL_NO;type:nvarchar2(20)"
+    optional string ID_NO = 18; // @gotags: gorm:"column:ID_NO;type:nvarchar2(20)"
+    optional string PROP_REF = 19; // @gotags: gorm:"column:PROP_REF;type:nvarchar2(30)"
+    optional string METER_TYPE = 20; // @gotags: gorm:"column:METER_TYPE;type:nvarchar2(10)"
+    optional string METER_REF = 21; // @gotags: gorm:"column:METER_REF;type:nvarchar2(30)"
+    optional string C_TYPE = 22; // @gotags: gorm:"column:C_TYPE;type:nvarchar2(10)"
+    optional string CTYPEGRP_ID = 23; // @gotags: gorm:"column:CTYPEGRP_ID;type:nvarchar2(10)"
+    optional int32 IS_MAIN_CTYPE = 24; // @gotags: gorm:"column:IS_MAIN_CTYPE;type:number"
+    optional string MAIN_C_TYPE = 25; // @gotags: gorm:"column:MAIN_C_TYPE;type:nvarchar2(30)"
+    optional int32 HAS_SEWER = 26; // @gotags: gorm:"column:HAS_SEWER;type:number"
+    optional int64 SEWER_TYPE = 27; // @gotags: gorm:"column:SEWER_TYPE;type:number(20)"
+    optional int32 NO_UNITS = 28; // @gotags: gorm:"column:NO_UNITS;type:number"
+    optional string METER_CONDITION_CODE = 29; // @gotags: gorm:"column:METER_CONDITION_CODE;type:nvarchar2(10)"
+    optional string METER_SIZE_CODE = 30; // @gotags: gorm:"column:METER_SIZE_CODE;type:nvarchar2(10)"
+    optional string ISSUE_ST = 31; // @gotags: gorm:"column:ISSUE_ST;type:nvarchar2(30)"
+    optional int32 IS_TARAKOM = 32; // @gotags: gorm:"column:IS_TARAKOM;type:number"
+    optional int32 DELIVERY_ST = 33; // @gotags: gorm:"column:DELIVERY_ST;type:number"
+    optional int32 CYCLE_ID = 34; // @gotags: gorm:"column:CYCLE_ID;type:number"
+    optional central.types.MasDateTime BILNG_DATE = 35; // @gotags: gorm:"column:BILNG_DATE;type:date"
+    optional int32 STATM_NO = 36; // @gotags: gorm:"column:STATM_NO;type:number"
+    optional string PAYMENT_NO = 37; // @gotags: gorm:"column:PAYMENT_NO;type:nvarchar2(15)"
+    optional string GARD_PAYMENT_NO = 38; // @gotags: gorm:"column:GARD_PAYMENT_NO;type:nvarchar2(15)"
+    optional int32 MARKETING = 39; // @gotags: gorm:"column:MARKETING;type:number"
+    optional double OP_BLNCE = 40; // @gotags: gorm:"column:OP_BLNCE;type:number(20,4)"
+    optional double CL_BLNCE = 41; // @gotags: gorm:"column:CL_BLNCE;type:number(20,4)"
+    optional double INSTALMENT = 42; // @gotags: gorm:"column:INSTALMENT;type:number(20,4)"
+    optional double CUR_CHARGES = 43; // @gotags: gorm:"column:CUR_CHARGES;type:number(20,4)"
+    optional double CUR_PAYMNTS = 44; // @gotags: gorm:"column:CUR_PAYMNTS;type:number(20,4)"
+    optional double COLLECTION_AMT = 45; // @gotags: gorm:"column:COLLECTION_AMT;type:number(20,4)"
+    optional double PARTIAL_CUR_AMT = 46; // @gotags: gorm:"column:PARTIAL_CUR_AMT;type:number(20,4)"
+    optional double DUE_AMOUNT = 47; // @gotags: gorm:"column:DUE_AMOUNT;type:number(20,4)"
+    optional double NET_DUE_AMOUNT = 48; // @gotags: gorm:"column:NET_DUE_AMOUNT;type:number(20,4)"
+    optional double WATER_AMT = 49; // @gotags: gorm:"column:WATER_AMT;type:number(20,4)"
+    optional double SEWER_AMT = 50; // @gotags: gorm:"column:SEWER_AMT;type:number(20,4)"
+    optional double TANZEEM_AMT = 51; // @gotags: gorm:"column:TANZEEM_AMT;type:number(20,4)"
+    optional double BASIC_AMT = 52; // @gotags: gorm:"column:BASIC_AMT;type:number(20,4)"
+    optional double CONTRACT_AMT = 53; // @gotags: gorm:"column:CONTRACT_AMT;type:number(20,4)"
+    optional double TAX_AMT = 54; // @gotags: gorm:"column:TAX_AMT;type:number(20,4)"
+    optional double ROUND_AMT = 55; // @gotags: gorm:"column:ROUND_AMT;type:number(20,4)"
+    optional double INSTALLS_AMT = 56; // @gotags: gorm:"column:INSTALLS_AMT;type:number(20,4)"
+    optional double INSTALLS_PAST_CYCLE_AMT = 57; // @gotags: gorm:"column:INSTALLS_PAST_CYCLE_AMT;type:number(20,4)"
+    optional double INSTALLS_TAWSELA_AMT = 58; // @gotags: gorm:"column:INSTALLS_TAWSELA_AMT;type:number(20,4)"
+    optional double INSTALLS_TARAKOM_AMT = 59; // @gotags: gorm:"column:INSTALLS_TARAKOM_AMT;type:number(20,4)"
+    optional double INSTALLS_METER_FIX_AMT = 60; // @gotags: gorm:"column:INSTALLS_METER_FIX_AMT;type:number(20,4)"
+    optional double INSTALLS_HIGH_CONSUMP_AMT = 61; // @gotags: gorm:"column:INSTALLS_HIGH_CONSUMP_AMT;type:number(20,4)"
+    optional double AGREEM_PENALTY_AMT = 62; // @gotags: gorm:"column:AGREEM_PENALTY_AMT;type:number(20,4)"
+    optional double TAKAFUL_AMT = 63; // @gotags: gorm:"column:TAKAFUL_AMT;type:number(20,4)"
+    optional double METER_AMT = 64; // @gotags: gorm:"column:METER_AMT;type:number(20,4)"
+    optional double CONN_AMT = 65; // @gotags: gorm:"column:CONN_AMT;type:number(20,4)"
+    optional double VIRTUAL_ADJ = 66; // @gotags: gorm:"column:VIRTUAL_ADJ;type:number(20,4)"
+    optional double METER_MAN_AMT = 67; // @gotags: gorm:"column:METER_MAN_AMT;type:number(20,4)"
+    optional double KHASM_TASWYA = 68; // @gotags: gorm:"column:KHASM_TASWYA;type:number(20,4)"
+    optional double KEST_TSWYA = 69; // @gotags: gorm:"column:KEST_TSWYA;type:number(20,4)"
+    optional double PAST_CYC_AGREEM_AMT = 70; // @gotags: gorm:"column:PAST_CYC_AGREEM_AMT;type:number(20,4)"
+    optional double WATER_TARAKOM_DISCOUNT_AMT = 71; // @gotags: gorm:"column:WATER_TARAKOM_DISCOUNT_AMT;type:number(20,4)"
+    optional double SEWER_TARAKOM_DISCOUNT_AMT = 72; // @gotags: gorm:"column:SEWER_TARAKOM_DISCOUNT_AMT;type:number(20,4)"
+    optional double TARAKOM_AGREEM_AMT = 73; // @gotags: gorm:"column:TARAKOM_AGREEM_AMT;type:number(20,4)"
+    optional double AGREEM_AMT = 74; // @gotags: gorm:"column:AGREEM_AMT;type:number(20,4)"
+    optional double DBT_AMT = 75; // @gotags: gorm:"column:DBT_AMT;type:number(20,4)"
+    optional double CRDT_AMT = 76; // @gotags: gorm:"column:CRDT_AMT;type:number(20,4)"
+    optional double OTHER_AMT = 77; // @gotags: gorm:"column:OTHER_AMT;type:number(20,4)"
+    optional double OTHER_AMT1 = 78; // @gotags: gorm:"column:OTHER_AMT1;type:number(20,4)"
+    optional double OTHER_AMT2 = 79; // @gotags: gorm:"column:OTHER_AMT2;type:number(20,4)"
+    optional double OTHER_AMT3 = 80; // @gotags: gorm:"column:OTHER_AMT3;type:number(20,4)"
+    optional double OTHER_AMT4 = 81; // @gotags: gorm:"column:OTHER_AMT4;type:number(20,4)"
+    optional double CS_FEES_AMT = 82; // @gotags: gorm:"column:CS_FEES_AMT;type:number(20,4)"
+    optional double CS_PAYMENT_AMT = 83; // @gotags: gorm:"column:CS_PAYMENT_AMT;type:number(20,4)"
+    optional double CS_AGREEM_AMT = 84; // @gotags: gorm:"column:CS_AGREEM_AMT;type:number(20,4)"
+    optional double CS_AGREEM_INSTALL_AMT = 85; // @gotags: gorm:"column:CS_AGREEM_INSTALL_AMT;type:number(20,4)"
+    optional double READ_TYPE = 86; // @gotags: gorm:"column:READ_TYPE;type:number"
+    optional string WTARIFF_ID = 87; // @gotags: gorm:"column:WTARIFF_ID;type:nvarchar2(10)"
+    optional string STARIFF_ID = 88; // @gotags: gorm:"column:STARIFF_ID;type:nvarchar2(10)"
+    optional double PR_READING = 89; // @gotags: gorm:"column:PR_READING;type:number"
+    optional double CR_READING = 90; // @gotags: gorm:"column:CR_READING;type:number"
+    optional double CONSUMP = 91; // @gotags: gorm:"column:CONSUMP;type:number(20,4)"
+    optional int32 CUST_BAND = 92; // @gotags: gorm:"column:CUST_BAND;type:number"
+    optional int32 NO_BANDS = 93; // @gotags: gorm:"column:NO_BANDS;type:number"
+    optional int32 WATER_BND1_FROM = 94; // @gotags: gorm:"column:WATER_BND1_FROM;type:number"
+    optional int32 WATER_BND1_TO = 95; // @gotags: gorm:"column:WATER_BND1_TO;type:number"
+    optional double WATER_PRICE_B1 = 96; // @gotags: gorm:"column:WATER_PRICE_B1;type:number(10,4)"
+    optional int32 WATER_BND2_FROM = 97; // @gotags: gorm:"column:WATER_BND2_FROM;type:number"
+    optional int32 WATER_BND2_TO = 98; // @gotags: gorm:"column:WATER_BND2_TO;type:number"
+    optional double WATER_PRICE_B2 = 99; // @gotags: gorm:"column:WATER_PRICE_B2;type:number(10,4)"
+    optional int32 WATER_BND3_FROM = 100; // @gotags: gorm:"column:WATER_BND3_FROM;type:number"
+    optional int32 WATER_BND3_TO = 101; // @gotags: gorm:"column:WATER_BND3_TO;type:number"
+    optional double WATER_PRICE_B3 = 102; // @gotags: gorm:"column:WATER_PRICE_B3;type:number(10,4)"
+    optional int32 WATER_BND4_FROM = 103; // @gotags: gorm:"column:WATER_BND4_FROM;type:number"
+    optional int32 WATER_BND4_TO = 104; // @gotags: gorm:"column:WATER_BND4_TO;type:number"
+    optional double WATER_PRICE_B4 = 105; // @gotags: gorm:"column:WATER_PRICE_B4;type:number(10,4)"
+    optional int32 WATER_BND5_FROM = 106; // @gotags: gorm:"column:WATER_BND5_FROM;type:number"
+    optional int32 WATER_BND5_TO = 107; // @gotags: gorm:"column:WATER_BND5_TO;type:number"
+    optional double WATER_PRICE_B5 = 108; // @gotags: gorm:"column:WATER_PRICE_B5;type:number(10,4)"
+    optional double CONS_B1 = 109; // @gotags: gorm:"column:CONS_B1;type:number(19,5)"
+    optional double CONS_B2 = 110; // @gotags: gorm:"column:CONS_B2;type:number(19,5)"
+    optional double CONS_B3 = 111; // @gotags: gorm:"column:CONS_B3;type:number(19,5)"
+    optional double CONS_B4 = 112; // @gotags: gorm:"column:CONS_B4;type:number(19,5)"
+    optional double CONS_B5 = 113; // @gotags: gorm:"column:CONS_B5;type:number(19,5)"
+    optional double WATER_AMOUNT_B1 = 114; // @gotags: gorm:"column:WATER_AMOUNT_B1;type:number(10,4)"
+    optional double WATER_AMOUNT_B2 = 115; // @gotags: gorm:"column:WATER_AMOUNT_B2;type:number(10,4)"
+    optional double WATER_AMOUNT_B3 = 116; // @gotags: gorm:"column:WATER_AMOUNT_B3;type:number(10,4)"
+    optional double WATER_AMOUNT_B4 = 117; // @gotags: gorm:"column:WATER_AMOUNT_B4;type:number(10,4)"
+    optional double WATER_AMOUNT_B5 = 118; // @gotags: gorm:"column:WATER_AMOUNT_B5;type:number(10,4)"
+    optional double SEWER_CONSUMP = 119; // @gotags: gorm:"column:SEWER_CONSUMP;type:number(20,4)"
+    optional double SEWER_CUST_BAND = 120; // @gotags: gorm:"column:SEWER_CUST_BAND;type:number(20,4)"
+    optional int32 SEWER_BND1_FROM = 121; // @gotags: gorm:"column:SEWER_BND1_FROM;type:number"
+    optional int32 SEWER_BND1_TO = 122; // @gotags: gorm:"column:SEWER_BND1_TO;type:number"
+    optional double SEWER_PRICE_B1 = 123; // @gotags: gorm:"column:SEWER_PRICE_B1;type:number(10,4)"
+    optional int32 SEWER_BND2_FROM = 124; // @gotags: gorm:"column:SEWER_BND2_FROM;type:number"
+    optional int32 SEWER_BND2_TO = 125; // @gotags: gorm:"column:SEWER_BND2_TO;type:number"
+    optional double SEWER_PRICE_B2 = 126; // @gotags: gorm:"column:SEWER_PRICE_B2;type:number(10,4)"
+    optional int32 SEWER_BND3_FROM = 127; // @gotags: gorm:"column:SEWER_BND3_FROM;type:number"
+    optional int32 SEWER_BND3_TO = 128; // @gotags: gorm:"column:SEWER_BND3_TO;type:number"
+    optional double SEWER_PRICE_B3 = 129; // @gotags: gorm:"column:SEWER_PRICE_B3;type:number(10,4)"
+    optional int32 SEWER_BND4_FROM = 130; // @gotags: gorm:"column:SEWER_BND4_FROM;type:number"
+    optional int32 SEWER_BND4_TO = 131; // @gotags: gorm:"column:SEWER_BND4_TO;type:number"
+    optional double SEWER_PRICE_B4 = 132; // @gotags: gorm:"column:SEWER_PRICE_B4;type:number(10,4)"
+    optional int32 SEWER_BND5_FROM = 133; // @gotags: gorm:"column:SEWER_BND5_FROM;type:number"
+    optional int32 SEWER_BND5_TO = 134; // @gotags: gorm:"column:SEWER_BND5_TO;type:number"
+    optional double SEWER_PRICE_B5 = 135; // @gotags: gorm:"column:SEWER_PRICE_B5;type:number(10,4)"
+    optional double SCONS_B1 = 136; // @gotags: gorm:"column:SCONS_B1;type:number(19,5)"
+    optional double SCONS_B2 = 137; // @gotags: gorm:"column:SCONS_B2;type:number(19,5)"
+    optional double SCONS_B3 = 138; // @gotags: gorm:"column:SCONS_B3;type:number(19,5)"
+    optional double SCONS_B4 = 139; // @gotags: gorm:"column:SCONS_B4;type:number(19,5)"
+    optional double SCONS_B5 = 140; // @gotags: gorm:"column:SCONS_B5;type:number(19,5)"
+    optional double SEWER_AMOUNT_B1 = 141; // @gotags: gorm:"column:SEWER_AMOUNT_B1;type:number(10,4)"
+    optional double SEWER_AMOUNT_B2 = 142; // @gotags: gorm:"column:SEWER_AMOUNT_B2;type:number(10,4)"
+    optional double SEWER_AMOUNT_B3 = 143; // @gotags: gorm:"column:SEWER_AMOUNT_B3;type:number(10,4)"
+    optional double SEWER_AMOUNT_B4 = 144; // @gotags: gorm:"column:SEWER_AMOUNT_B4;type:number(10,4)"
+    optional double SEWER_AMOUNT_B5 = 145; // @gotags: gorm:"column:SEWER_AMOUNT_B5;type:number(10,4)"
+    optional int32 IS_MODIFIED = 146; // @gotags: gorm:"column:IS_MODIFIED;type:number(3);default:0"
+    optional double ERROR_AMT = 147; // @gotags: gorm:"column:ERROR_AMT;type:number(20,4)"
+    optional int32 HAS_ERROR = 148; // @gotags: gorm:"column:HAS_ERROR;type:number(5)"
+    optional string ERROR_MSG = 149; // @gotags: gorm:"column:ERROR_MSG;type:nvarchar2(200)"
+    optional double ACCURACY_VALUE = 150; // @gotags: gorm:"column:ACCURACY_VALUE;type:number(19,2)"
+    optional int32 VIRTUAL_STATION_NO = 151; // @gotags: gorm:"column:VIRTUAL_STATION_NO;type:number(10)"
+    optional string VIRTUAL_STATION_DESCRIBE = 152; // @gotags: gorm:"column:VIRTUAL_STATION_DESCRIBE;type:nvarchar2(100)"
+    optional string CTYPEGRP_CODE = 153; // @gotags: gorm:"column:CTYPEGRP_CODE;type:nvarchar2(50)"
+    optional string CTYPE_DESCRIPTION = 154; // @gotags: gorm:"column:CTYPE_DESCRIPTION;type:nvarchar2(50)"
+    optional string CTYPE_GROUP_DESCRIPTION = 155; // @gotags: gorm:"column:CTYPE_GROUP_DESCRIPTION;type:nvarchar2(50)"
+    optional string METER_SIZE = 156; // @gotags: gorm:"column:METER_SIZE;type:nvarchar2(50)"
+    optional string METER_CONDITION = 157; // @gotags: gorm:"column:METER_CONDITION;type:nvarchar2(50)"
+    optional int64 NO_BILLS = 158; // @gotags: gorm:"_" 
+    optional string CYCLE_DESCR = 159;// @gotags: gorm:"_" 
+    optional string ADJUSTMENT_TYPE = 160;// @gotags: gorm:"_" 
+    optional double BILL_AMOUNT = 161;// @gotags: gorm:"_" 
+    optional double ADVANCE_PAYMENT = 162;// @gotags: gorm:"_" 
+    optional double ADVANCE_ADJUSTMENT = 163;// @gotags: gorm:"_" 
+    optional string CONSUMP_DESCRIBE = 164;// @gotags: gorm:"_" 
+    optional double CONSUMP_SEQUENCE = 165;// @gotags: gorm:"_" 
+    optional double HIGH_CONSUMP_AGRM_AMT = 166;// @gotags: gorm:"_" 
+    optional double PAY_BILL_AGRM_AMT = 167;// @gotags: gorm:"_" 
+    optional double PAY_CS_AGRM_AMT = 168;// @gotags: gorm:"_" 
+    optional int32 IS_PRINTED =169;// @gotags: gorm:"_" 
+    optional int32 IS_CODY =170;// @gotags: gorm:"_" 
+    optional int32 HAS_METER = 171; // @gotags: gorm:"_" 
+    optional int32 IS_GOV = 172; // @gotags: gorm:"_" 
+    optional int32 ESTDAMA_BAND = 173;  // @gotags: gorm:"_" 
+    optional int32 SEWER_NOUNITS = 174;  // @gotags: gorm:"_"
+    optional int32 READING_NO = 175;  // @gotags: gorm:"_"
+    optional string ESTDAMA_CALC_METHOD = 176;  // @gotags: gorm:"_"
+    optional string IS_GOV_DESCRIBE = 177;  // @gotags: gorm:"_"
+    optional string HAS_METER_DESCRIBE = 178;  // @gotags: gorm:"_"
+    optional string IS_CODY_DESCRIBE = 179;  // @gotags: gorm:"_"
+    optional double WATER_DEBIT_AMT = 180;// @gotags: gorm:"_" 
+    optional double SEWER_DEBIT_AMT = 181;// @gotags: gorm:"_" 
+    optional double BASIC_DEBIT_AMT = 182;// @gotags: gorm:"_" 
+    optional double TANZEEM_DEBIT_AMT = 183;// @gotags: gorm:"_" 
+    optional double TAX_DEBIT_AMT = 184;// @gotags: gorm:"_" 
+    optional double CONTRACT_DEBIT_AMT = 185;// @gotags: gorm:"_" 
+    optional double GENERAL_DEBIT_AMT = 186;// @gotags: gorm:"_" 
+    optional double INSTALLS_WTR_INSURANCE_AMT = 187;// @gotags: gorm:"_" 
+    optional double INSTALLS_SWR_INSURANCE_AMT = 188;// @gotags: gorm:"_" 
+    optional double ROOM_AGREEM_AMT = 189;// @gotags: gorm:"_" 
+    optional double MOSHARKA_AGREEM_AMT = 190;// @gotags: gorm:"_" 
+    optional double MOQ_AGREEM_AMT = 191;// @gotags: gorm:"_" 
+    optional double METER_FIX_AGREEM_AMT = 192;// @gotags: gorm:"_" 
+    optional double MOQ_DEF_AGREEM_AMT = 193;// @gotags: gorm:"_" 
+    optional double INSTALLS_MOQ_DEF_AMT = 194;// @gotags: gorm:"_" 
+    optional double INSTALLS_ROOM_AMT = 195;// @gotags: gorm:"_" 
+    optional double INSTALLS_MOSHARKA_AMT = 196;// @gotags: gorm:"_" 
+    optional double INSTALLS_MOQ_AMT = 197;// @gotags: gorm:"_" 
+  }
+
+
+  message Amount {
+    required double AMOUNT=1;
+  }
+
+
+  message CustWallet {
+    required string CUSTKEY = 1;
+    required double BALANCE   = 2; 
+  
+  }
+
+  message WalletDetailsRq  {
+    required string CUSTKEY = 1;
+  }
+
+  message ArrWalletDetails{
+    repeated WalletDetailsRs WalletDetailsRs = 1;
+  }
+  message WalletDetailsRs {
+      optional string CUSTKEY = 1;
+      optional int64 TRANS_NO = 2;
+      optional int64 TRNS_TYPE = 3;
+      optional int64 TRNS_STYPE = 4;
+      optional central.types.MasDateTime BILNG_DATE = 5;
+      optional double AMOUNT = 6;
+      optional string DOCUMNT_NO = 7;
+      optional string NOTES = 8;
+      optional int32 IS_BLNCE = 9;
+      optional int64 ACTUAL_TRANS_NO = 10;
+  }
+  
+  message ArrCustREADINGS {
+    repeated READING_DETAILS READINGS = 1;
+  }
+  
+  message READING_DETAILS {
+    optional string CONNECTION_ID = 1;
+    optional string METER_ID = 2;
+    optional string READING = 3;
+    optional central.types.MasDateTime READING_DATE = 4;
+    optional central.types.MasDateTime INVOICED_DATE = 5;
+    optional double CONSUMP =6;
+    optional  bool IS_CANCELLED =7;
+    optional bool IS_INVOICED =8;
+    optional string READING_NO =9;
+    optional int32 MAS_READ_METHOD = 10;
+    optional string MAS_READ_BY = 11;
+  }

@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
+import type { AUTH_ALL_PERMISSIONS, BILLER_PERMISSIONS, CASHBOX_PERMISSIONS, GOV_PERMISSIONS, MAS_PERMISSIONS } from "../domain/entities/_gen/GoAuth_pb";
 
 export interface Columns<T> {
   key: keyof T | (string & {});
@@ -45,3 +46,39 @@ export type CellRenderResult =
       content: React.ReactNode;
       cellStyle?: React.CSSProperties;
     };
+
+export const IcardGroupEnum = {
+  docFiles: 1,
+  collection: 2,
+  reports: 3,
+  lockups: 4,
+  central: 5,
+  other: 6,
+} as const;
+
+export type IcardGroupEnum =
+  (typeof IcardGroupEnum)[keyof typeof IcardGroupEnum];
+
+export type CardList = {
+  title: string;
+  subTitle?: string;
+  icon: JSX.Element;
+  onCardClick?: () => void;
+  // oldpermission?: PerEnum;
+  permission?:
+    | keyof MAS_PERMISSIONS
+    | keyof BILLER_PERMISSIONS
+    | keyof GOV_PERMISSIONS
+    | keyof CASHBOX_PERMISSIONS;
+  permissionParent?: keyof AUTH_ALL_PERMISSIONS;
+  cardGroup?: IcardGroupEnum;
+  visitNumber?: number;
+};
+export const KeySearchEnum = {
+  groupBy_Browsing: 1,
+  groupBy_Alph: 2,
+  groupBy_Group: 3,
+} as const;
+
+export type KeySearchEnum =
+  (typeof KeySearchEnum)[keyof typeof KeySearchEnum];

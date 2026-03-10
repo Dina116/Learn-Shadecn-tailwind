@@ -1,0 +1,14 @@
+
+syntax = "proto3";
+
+option go_package = "github.com/mas-soft/micro/pb;pb";
+
+package micromas;
+
+message Empty{
+
+}
+
+message VersionResponse {
+    string version = 1;
+}

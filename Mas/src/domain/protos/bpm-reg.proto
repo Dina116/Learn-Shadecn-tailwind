@@ -1,0 +1,315 @@
+syntax = "proto3";
+option go_package = "../pb;pb";
+package govcollector;
+import "date.proto";
+
+message GOV_ACTIVITIES {
+  optional int32 ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional string ACT_NAME = 2; //@gotags: gorm:"size:255;not null;uniqueIndex"
+  optional string DESCRIPTION = 3; //@gotags: gorm:"size:255"
+  optional string DESCRIPTION_EN = 4;
+  optional bool WITH_FEES = 5; //@gotags: gorm:"not null"
+  optional bool CAN_MAKE_MORE_APP = 6;
+  repeated GOV_LU_FIELDS GOV_LU_FIELDS = 7; //@gotags: gorm:"-"
+  optional int32 CLONE_ID = 8;
+}
+message ArrGOV_ACTIVITIES { repeated GOV_ACTIVITIES GOV_ACTIVITIES = 1; }
+
+message GOV_LU_FIELDS {
+  optional int64 ID = 1;    //@gotags: gorm:"primaryKey;autoIncrement:true"
+  optional string NAME = 2; //@gotags: gorm:"size:255;not null;uniqueIndex"
+  optional DATATYPE DATA_TYPE = 3; //@gotags: gorm:"not null"
+  optional string DESCRIPTION = 4;
+  optional string DESCRIPTION_EN = 5;
+  optional string PARENT_NAME = 6; //@gotags: gorm:"size:255"
+  optional bool IS_SYSTEM = 7;
+}
+
+message GOV_FIELDS {
+  optional int64 FIELD_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional int64 APP_ID =2; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional double AS_NUMBER = 3;
+  optional string AS_STRING = 4; //@gotags: gorm:"size:255"
+  optional central.types.MasDateTime AS_DATE = 5;
+  optional bool AS_BOOLEAN = 6;
+  optional string AS_BASE64 = 7;
+  optional int64 AS_TABLE = 8;
+  optional ALL_TABLE_VALUES TABLE_VALUES = 9; //@gotags: gorm:"-"
+}
+message GOV_TABLE_VALUES {
+  optional int64 TABLE_ID = 1; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int32 FIELD_ID = 2; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional int32 ROW_NUMBER =3; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double AS_NUMBER = 4;
+  optional string AS_STRING = 5;
+  optional central.types.MasDateTime AS_DATE = 6;
+  optional bool AS_BOOLEAN = 7;
+  optional int64 AS_TABLE = 8;
+}
+
+message GOV_ACTIVITY_FIELDS {
+  optional int64 ACT_ID =1; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional int64 FIELD_ID =2; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  optional bool IS_REQUIRED = 3;  //@gotags: gorm:"not null"
+  optional string FIELD_NAME = 4; //@gotags: gorm:"-"
+}
+
+message FIELD_VALUE {
+  optional double AS_NUMBER = 1;                  //@gotags: gorm:"-"
+  optional string AS_STRING = 2;                  //@gotags: gorm:"-"
+  optional central.types.MasDateTime AS_DATE = 3; //@gotags: gorm:"-"
+  optional bool AS_BOOLEAN = 4;                   //@gotags: gorm:"-"
+  optional ALL_TABLE_VALUES AS_TABLE = 5;         //@gotags: gorm:"-"
+}
+
+message DataTypes {
+  optional int32 CODE = 1;
+  optional string DESCRIPTION =2 ;
+}
+
+message AllDataTypes{
+  repeated DataTypes DataTypes =1;
+}
+message TABLE_ROW_VALUE { map<int32, FIELD_VALUE> TABLE_ROW = 1; }
+message ALL_TABLE_VALUES {
+  optional int64 TABLE_ID = 1;
+  repeated TABLE_ROW_VALUE TABLE_ROW_VALUE = 2;
+}
+
+message Lookup {
+  optional int32 CODE = 1;
+  optional string DESCRIPTION =2 ;
+}
+message AllLookup{
+  repeated Lookup Lookup =1;
+}
+
+enum DATATYPE {
+  INT = 0;
+  FLOAT = 1;
+  STRING = 2;
+  BOOL = 3;
+  DATE = 4;
+  DATETIME = 5;
+  BASE64 = 6; // USED for byte arrays as images
+  LIST = 7;
+  OUT_LIST = 8;
+  PDF = 9;
+  TABLE = 10;
+}
+message GOV_LU_DATA_TYPE {
+  int32 ID = 1; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  string DESCRIPTION = 2; //@gotags: gorm:"not null"
+}
+
+message MessageResp { string Msg = 1; }
+
+message GOV_MODULE {
+  int64 ID = 1; //@gotags: gorm:"primaryKey;autoIncrement:false;not null"
+  string MODULE_DESC = 2;
+}
+message AllModules { repeated GOV_MODULE GOV_MODULE = 1; }
+
+message APP_EXTERNAL_ACTIVITY {
+  optional int32 BPM_ID = 1;
+  optional string ACTIVITY_NAME = 2;
+  optional int32 BPM_EXTERNAL_MODULE_ID = 3;
+  optional string IP = 4;
+  optional int32 PORT = 5;
+  repeated APP_EXTERNAL_FIELD REQUEST = 6;
+  repeated APP_EXTERNAL_FIELD RESPONSE = 7;
+  repeated EXTERNAL_FEES FEES = 8;
+  optional bool WITH_FORM = 9;
+  optional string FORM_CONFIG = 10;
+  optional bool IS_PAYMENT = 11;
+  optional string PACKAGE_NAME = 12;
+  optional string SERVICE_NAME = 13;
+  optional string DESCRIPTION = 14;
+  optional bool IS_DUMMY = 15;
+  optional string DESCRIPTION_EN = 16;
+  optional string BPM_FORM = 17;
+  optional bool IS_ASYNC = 18;
+  map<string, string> ACT_OPTIONS = 19;
+  optional string FORM_NAME = 20; //@gotags: gorm:"-"
+  optional int64 TRANSACTION_ID = 21;
+  repeated string PAGES_NAMES = 22; //@gotags: gorm:"-"
+  optional bool WITH_REFRESH = 23;  //@gotags: gorm:"-"
+  optional string URL = 24;         //@gotags: gorm:"-"
+  optional bool FROM_ACTIVITY = 25; //@gotags: gorm:"-"
+  optional int32 ACTION_ID = 26;    //@gotags: gorm:"-"
+  optional APP_TRACER TRACE = 27;   //@gotags: gorm:"-"
+}
+message APP_EXTERNAL_FIELD {
+  optional int32 BPM_ID = 1;
+  optional string NAME = 2;
+  optional string TITLE = 3;
+  optional DATATYPE DATA_TYPE = 4;
+  optional FIELDKIND KIND = 5;
+  optional int32 EXTERNAL_MODULE_ID = 6;
+  optional bool IS_REQUIRED = 7;
+  repeated FIELD_VALUE FIELD_VALUES = 8;
+  optional int32 EXTERNAL_PARENT_FIELDID = 9;
+  optional string EXTERNAL_PARENT_FIELD_NAME = 10;
+  optional bool IS_SYSTEM = 11;
+  optional string SYSTEM_COLUMN = 12;
+  optional int32 MAP_FIELD_ID = 13;                     //@gotags: gorm:"-"
+  optional bool MAP_IS_EXTERNAL = 14;                   //@gotags: gorm:"-"
+  optional int32 MAP_MODULE_ID = 15;                    //@gotags: gorm:"-"
+  map<int32, bool> COLUMN_FIELDS = 16; //@gotags: gorm:"-"
+  repeated APP_EXTERNAL_FIELD COLUMN_FIELDS_NAMES = 17; //@gotags: gorm:"-"
+  optional string TITLE_EN = 18;
+  optional string TITLE_LANG = 19; //@gotags: gorm:"-"
+}
+
+enum FIELDKIND {
+  TEL = 0;
+  EMAIL = 2;
+  ID = 3;
+  ADDRESS = 4;
+  CHECK_LIST = 5;
+  LABEL = 6;
+  PARAGRAPH = 7;
+}
+
+message EXTERNAL_FEES {
+  optional int64 CODE = 1;
+  optional string FEES_NAME = 2;
+  optional double FEES_AMOUNT = 3;
+  optional int64 STAMP_DATE_UNX = 4;
+  optional central.types.MasDateTime STAMP_DATE = 5;
+  optional double FEES_ORIGINAL_AMOUNT = 6;
+  optional double FEES_VAT_AMOUNT = 7;
+  optional double FEES_ADMIN_AMOUNT = 8;
+  optional double FEES_ADMIN_VAT_AMOUNT = 9;
+  optional bool IS_CANCELLED = 10;
+  optional int32 ACTION_ID = 11;
+  optional string PARENT_FEE_NAME = 12;
+  optional string PARENT_FEE_NAME_EN = 13;
+  optional double FEES_BEFORE_INSTALLMENT = 14;
+  optional double INSTALLMENT_AMOUNT = 15;
+  optional double POST_PAID_AMOUNT = 16;
+  optional int64 FEE_TYPE_ID = 17;
+  optional int32 ACTIVITY_ID = 18;
+  optional string ACTIVITY_NAME = 19;
+  optional double QUANTITY_UNIT = 33;
+  optional string UNIT = 34;
+  optional string EXT_DOCUMENT_NO = 35;
+  optional central.types.MasDateTime ORDER_DATE = 36;
+  optional string META_A = 37;
+  optional string META_B = 38;
+  optional string FEE_TYPE_NAME = 39;
+}
+
+message GOV_APPLICATIONS {
+  int64 ID = 1; //@gotags: gorm:"primaryKey;autoIncrement:true"
+  int32 ACT_ID = 2; //@gotags: gorm:"not null"
+  string STAMP_USER = 3; //@gotags: gorm:"not null"
+  central.types.MasDateTime STAMP_DATE = 4; //@gotags: gorm:"not null"
+  optional string CUSTKEY = 5;
+  bool IS_POSTED = 6; //@gotags: gorm:"not null"
+  bool IS_CANCELLED = 7; //@gotags: gorm:"not null"
+  optional string BBM_FORM = 8; //@gotags: gorm:"not null"
+  optional int64 CYCLE_ID = 9;
+}
+
+message ArrEXTERNAL_FEES {
+  repeated EXTERNAL_FEES EXTERNAL_FEES = 1;
+  optional APP_TRACER TRACE = 2;
+}
+message APP_TRACER {
+  optional int64 FORM_NO = 1;                     //@gotags: gorm:"primaryKey"
+  optional int32 APPLICATION_TYPE_ID = 2;         //@gotags: gorm:"primaryKey"
+  optional int32 COMPANY_ID = 3;                  //@gotags: gorm:"primaryKey"
+  optional int64 ACTIVITY_ID = 4;                 //@gotags: gorm:"primaryKey"
+  optional bool ACTIVITY_PAID = 5;                //@gotags: gorm:"primaryKey"
+  optional int32 ACTION_ID = 6;                   //@gotags: gorm:"primaryKey"
+  optional int64 ACTION_STAMP_DATE_UNX = 7;       //@gotags: gorm:"primaryKey"
+  optional int64 REFRENCE_PAY = 8;                //@gotags: gorm:"primaryKey"
+  optional REQUEST_MESSAGE_TYPE REQUEST_TYPE = 9; //@gotags: gorm:"not null"
+  optional double AMOUNT = 10;
+  optional bytes REQUEST_RESPONSE = 11; //@gotags: gorm:"-"
+  optional int32 COUNT_REPEATED = 12;
+  optional central.types.MasDateTime FIRST_TIME = 13;
+  optional central.types.MasDateTime LAST_TIME = 14;
+  optional bytes THIS_REQUEST = 15; //@gotags: gorm:"-"
+}
+message GOV_RECIEPT {
+  optional int64 FEE_ID = 2;  //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional double AMOUNT = 3; //@gotags: gorm:"not null"
+  optional string STAMP_USER = 4; //@gotags: gorm:"not null"
+  optional central.types.MasDateTime STAMP_DATE =5; //@gotags: gorm:"primaryKey;autoIncrement:false"
+  optional bool IS_CANCELLED = 6; //@gotags: gorm:"not null"
+  optional string CANCELLED_USER = 7;
+  optional central.types.MasDateTime CANCELLED_DATE = 8;
+  optional int64 APP_ID = 9; //@gotags: gorm:"primaryKey;autoIncrement:false"
+
+}
+
+message GOV_FEES {
+  optional string PAYMENT_NO =1; //@gotags: gorm:"primaryKey;autoIncrement:false;uniqueIndex:IX_CS_FEES_1"
+  optional int64 APP_ID =2; //@gotags: gorm:"primaryKey;autoIncrement:false;uniqueIndex:IX_CS_FEES_1"
+  optional double AMOUNT = 3;      //@gotags: gorm:"not null"
+  optional central.types.MasDateTime STAMP_DATE = 4; //@gotags: gorm:"not null"
+  optional bool IS_CANCELLED = 5; //@gotags: gorm:"not null"
+  optional int64 STAMP_DATE_UNX = 6; //@gotags: gorm:"primaryKey;autoIncrement:false"
+}
+
+message CancelPaymentActivity {
+  optional APP_EXTERNAL_ACTIVITY Activity = 1;
+  optional string Cancel_Reason = 2;
+}
+
+message CANCEL_GOV_APP {
+  optional string CANCEL_REASON =1;
+  optional string CANCEL_USER =2;
+  optional int64 APP_ID =3; 
+}
+
+message LookupValues {
+  optional int32 BPM_EXTERNAL_MODULE_ID = 1;
+  optional int32 APP_TYPE_ID =2;
+  repeated LookupVals LookupVals=3;
+}
+message LookupVals {
+  optional int32 FIELD_ID =1;
+  optional string CODE =2;
+  optional string Description=3;
+}
+
+message LookupDatasource {
+  optional int32 BPM_EXTERNAL_MODULE_ID = 1;
+  repeated DATA_SOURCSES_VALUES DATA_SOURCSES_VALUES=2;
+}
+
+message DATA_SOURCSES_VALUES {
+  optional int32 FIELD_ID =1;
+  repeated FieldDatasource FieldDatasource=2;
+  optional int32 PARENT_FIELD_ID =3;
+}
+
+message FieldDatasource {
+  optional string CODE =2;
+  optional FIELD_VALUE FIELD_VALUE=3; 
+  optional string PARENT_CODE = 4;
+  optional int32 PARENT_FIELD_ID =5;
+}
+message APP_FEES { repeated GOV_FEES GOV_FEES = 1; }
+
+message APP_TRACER_REQUEST_RESPONSE {
+  optional int64 FORM_NO = 1;               //@gotags: gorm:"primaryKey"
+  optional int32 APPLICATION_TYPE_ID = 2;   //@gotags: gorm:"primaryKey"
+  optional int32 COMPANY_ID = 3;            //@gotags: gorm:"primaryKey"
+  optional int64 ACTIVITY_ID = 4;           //@gotags: gorm:"primaryKey"
+  optional bool ACTIVITY_PAID = 5;          //@gotags: gorm:"primaryKey"
+  optional int32 ACTION_ID = 6;             //@gotags: gorm:"primaryKey"
+  optional int64 ACTION_STAMP_DATE_UNX = 7; //@gotags: gorm:"primaryKey"
+  optional int64 REFRENCE_PAY = 8;          //@gotags: gorm:"primaryKey"
+  optional bytes TRACE_REQUSET = 9;   //@gotags: `gorm:"type:varbinary(max)"`
+  optional bytes TRACE_RESPONSE = 10; //@gotags: `gorm:"type:varbinary(max)"`
+}
+
+enum REQUEST_MESSAGE_TYPE {
+  INITAL = 0;
+  SUCCESS = 1;
+  ERROR = 2;
+}

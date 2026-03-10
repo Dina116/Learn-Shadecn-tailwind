@@ -2,3 +2,88 @@
 .css-vgmby-MuiToolbar-root {
   padding: 0;
 }
+
+.bg-primary-darker {
+  background-color: #004c7b;
+}
+
+.bg-primary-main {
+  background-color: #007bff;
+}
+
+.bg-secondary-main {
+  background-color: #f37711;
+}
+
+.bg-yellow-400 {
+  background-color: #facc15;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-dinbold {
+  font-weight: bold;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.dx-datagrid-headers {
+  background-color: #004c7b !important;
+}
+.dx-datagrid-headers .dx-header-row td {
+  color: white !important;
+  text-align: center;
+  width: auto !important;
+}
+
+.dx-datagrid-headers .dx-header-row .dx-datagrid-text-content {
+  color: white !important;
+}
+
+.dx-datagrid .dx-row.dx-group-row {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.dx-datagrid .dx-row.dx-footer-row,
+.dx-datagrid .dx-row.dx-group-footer-row {
+  font-weight: bold;
+  color: #000 !important;
+}
+.dx-datagrid .dx-row.dx-footer-row *,
+.dx-datagrid .dx-row.dx-group-footer-row * {
+  color: #000 !important;
+}
+
+.dx-datagrid .dx-row.dx-group-row > td,
+.dx-datagrid .dx-row.dx-footer-row > td,
+.dx-datagrid .dx-row.dx-group-footer-row > td {
+  color: white;
+}
+
+.dx-datagrid-headers .dx-datagrid-filter-row .dx-texteditor {
+  background-color: white !important;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dx-datagrid-headers .dx-datagrid-filter-row .dx-texteditor-input {
+  color: #000;
+}
+
+.dx-datagrid-headers .dx-datagrid-filter-row .dx-searchbox-icon {
+  color: #004c7b;
+}

@@ -1,0 +1,108 @@
+import { BILL } from './bill';
+
+export interface BOOKCYCLE extends Other {
+  STATION_NO: number;
+  BILLGROUP: string;
+  BOOK_NO: string;
+  WALK_NO: string;
+  CYCLE_ID: number;
+  CYCLE_IDS: number[];
+  IS_COLLECTION: boolean;
+  IS_READING: boolean;
+  UNUSED: boolean | null;
+  ASSIGNED_TO_HH: number | null;
+  BILNG_DATE: string | null;
+  BDB_CDB_C: number | null;
+  BDB_CDB_DATE_C: string | null;
+  BDB_CDB_USER_C: string;
+  BDB_CDB_R: number | null;
+  BDB_CDB_DATE_R: string | null;
+  BDB_CDB_USER_R: string;
+  CDB_HH_C: number | null;
+  CDB_HH_DATE_C: string | null;
+  CDB_HH_USER_C: string;
+  CDB_HH_R: number | null;
+  CDB_HH_DATE_R: string | null;
+  CDB_HH_USER_R: string;
+  HH_CDB_C: number | null;
+  HH_CDB_DATE_C: string | null;
+  HH_CDB_USER_C: string;
+  HH_CDB_R: number | null;
+  HH_CDB_DATE_R: string | null;
+  HH_CDB_USER_R: string;
+  CDB_BDB_C: number | null;
+  CDB_BDB_DATE_C: string | null;
+  CDB_BDB_USER_C: string;
+  CDB_BDB_R: number | null;
+  CDB_BDB_DATE_R: string | null;
+  CDB_BDB_USER_R: string;
+  ISCYCLE_COMPLETED_C: number | null;
+  CLOSE_DATE_C: string | null;
+  CLOSE_BY_C: string;
+  ISCYCLE_COMPLETED_R: number | null;
+  CLOSE_DATE_R: string | null;
+  CLOSE_BY_R: string;
+  DEVICEID_R: string;
+  DEVICEID_C: string;
+  WALK_DESCRIPTION: string;
+  BILNG_DESCRIPTION: string;
+  IS_ALLOWED_C: boolean | null;
+  IS_ALLOWED_R: boolean | null;
+  IS_READY_C: boolean | null;
+  IS_READY_R: boolean | null;
+  COUNT_C: number | null;
+  COUNT_R: number | null;
+  EMPID_C: number | null;
+  EMPID_R: number | null;
+  COLLECTED_AMOUNT: number | null;
+  ISSUED_AMOUNT: number | null;
+  ISSUED_COUNT: number | null;
+  COLLECTED_COUNT: number | null;
+  READED_COUNT: number | null;
+  REACHED_C: number | null;
+  REACHED_R: number | null;
+  IS_METER_BOOK: boolean | null;
+  IS_CUSTOMER_BOOK: boolean | null;
+  IS_REVIRSE_C: boolean | null;
+  IS_REVIRSE_R: boolean | null;
+  ISCLOSED_INDEVICE_C: boolean | null;
+  ISCLOSED_INDEVICE_R: boolean | null;
+  GARD_OK: boolean | null;
+  ALLOW_FAWRY: boolean | null;
+  MARKETING: number | null;
+  BILLS: Array<BILL>;
+  READER: string;
+  COLLECTOR: string;
+  WALK_DELIVERY_ID: number | null;
+  OWNERS: string[];
+  SKIP: boolean | null;
+  selected?: boolean;
+  guid?: number;
+  ALLOW_TAX_PORTAL?:number;
+  COUNT_CYCLES?: number;
+  ALL_BILL_DATE?: boolean;
+  Cycles?: BOOKCYCLE[];
+  IS_ALLOWED_R_FRONT?: boolean;
+  IS_ALLOWED_C_FRONT?: boolean;
+}
+export interface Other {
+  status?: string | null;
+  count?: number;
+  uniqueID?: string;
+  isChanged?:boolean;
+  isError?:boolean;
+  changed?:boolean;
+  rowIndex?:number;
+  isComplete?:boolean;
+  SusccsedWalks?:number
+  FailedWalks?:number
+}
+export interface ReqAllow extends BOOKCYCLE {
+  isChanged?: boolean;
+  isRunning?: boolean;
+  isError?: boolean;
+  status?: string | null;
+  mess?: string | null;
+  isComplete?: boolean;
+  AllBilingDate?:boolean;
+}

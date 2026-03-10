@@ -1,0 +1,89 @@
+syntax = "proto3";
+option go_package = "../pb;pb";
+package mashh;
+
+
+
+service mashh_bi {
+    rpc GetGovGard(GardRequest) returns (GardResponse) {}
+}
+
+
+enum GARD_GROUP_BY {
+  NO_GROUP_BY=0;
+  GROUP_BY_GOV_SUB_GEHA=1;
+  GROUP_BY_GOV_GEHA=2;
+  GROUP_BY_STATION=3;
+}
+
+message GardRequest {
+  optional int32 GEHA=1;
+  optional int32 SUB_GEHA=2;
+  optional bool BASED_ON_HISTORY=5;
+  optional FISCAL_YEAR FISCAL_YEAR=6;
+  optional FISCAL_MONTH FISCAL_MONTH=7;
+  optional int32 STATION_NO=8;
+  optional GARD_GROUP_BY GROUP_BY=9;
+}
+
+message GardResponse {
+  optional string DESCRIPTION=1;
+  optional GardItem SUMMARY=2;
+  optional string PERIOD_END_DATE=3;
+  optional string ITEMS_KEY_TITLE=4;
+  optional string ITEMS_DESCRIPTION_TITLE=5;
+  optional string START_DATE=6;
+  optional string END_DATE=7;
+  repeated GardItem Items=10;
+  optional string SUB_DESCRIPTION=11;
+}
+
+message GardItem {
+  optional string KEY=1;
+  optional string DESCRIPTION=2;
+  optional string SUB_DESCRIPTION=3;
+  double OPEN_BALANCE=4;
+  double OPEN_BALANCE_ADJUSTMENT_DBT=5;
+  double OPEN_BALANCE_ADJUSTMENT_CRDT=6;
+  double PERIOD_ISSUE=7;
+  double PERIOD_ISSUE_ADJUSTMENT_DBT=8;
+  double PERIOD_ISSUE_ADJUSTMENT_CRDT=9;
+  double PERIOD_COLLECTION=10;
+  double ARREARS_COLLECTION=11;
+  optional int64 SUB_GROUP_ID=12;
+  double CLOSE_BALANCE=20;
+  optional int32 COUNT=21;
+  optional int32 GROUP_ID=22;
+  optional int32 STATION_NO=23;
+}
+
+
+enum FISCAL_YEAR {
+  YEAR_NOT_SELECTED=0;
+  FY_2024=1;
+  FY_2025=2;
+  FY_2026=3;
+  FY_2027=4;
+  FY_2028=5;
+  FY_2029=6;
+  FY_2030=7;
+  FY_2031=8;
+  FY_2032=9;
+  FY_2033=10;
+}
+
+enum FISCAL_MONTH {
+  MONTH_NOT_SELECTED=0;
+  MONTH_1=1;
+  MONTH_2=2;
+  MONTH_3=3;
+  MONTH_4=4;
+  MONTH_5=5;
+  MONTH_6=6;
+  MONTH_7=7;
+  MONTH_8=8;
+  MONTH_9=9;
+  MONTH_10=10;
+  MONTH_11=11;
+  MONTH_12=12;
+}

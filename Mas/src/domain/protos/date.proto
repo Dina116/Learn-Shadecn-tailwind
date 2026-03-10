@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+package central.types;
+
+option go_package = "github.com/mas-soft/central/types;types";
+
+message MasDate {
+  // Represents seconds of UTC time since Unix epoch
+  // 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
+  // 9999-12-31T23:59:59Z inclusive.
+  //RFC3339     = "2006-01-02T15:04:05Z07:00"
+  required string datetime = 1; //RFC3339
+}
+
+
+message MasDateTime {
+  // Represents seconds of UTC time since Unix epoch
+  // 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to
+  // 9999-12-31T23:59:59Z inclusive.
+  //RFC3339     = "2006-01-02T15:04:05Z07:00"
+  required string datetime = 1; //RFC3339
+}

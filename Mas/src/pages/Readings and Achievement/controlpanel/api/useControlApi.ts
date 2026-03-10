@@ -22,11 +22,27 @@ import {
   collectionMas2Billing,
   customerWalkCycle,
   executeBilling2Mas,
+  getAllCollectors,
   getAllStations,
   getBillGroups,
+  getCurrentStations,
   getCustomerWalkCycle,
+  GetDeposits,
+  getHistory,
+  getIsHeadQuarter,
   getMeterWalkCycle,
+  GetNewReceptNo,
+  GetPosted,
+  getSettingValue,
+  getSiteLogo,
+  getTemplate,
+  GetUnPosted,
+  GetUnPostedDetails,
   GetUnPostedStatmDeposits,
+  GetUnPostedSummary,
+  Getuserprofilee,
+  // Getuserprofilee,
+  Post,
   readingPostingMas2Billing,
   readingsBilling2Mas,
   readingsMeterWalkCycle,
@@ -36,6 +52,25 @@ import {
 import toast from "react-hot-toast";
 // import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns";
 import type { StatusType } from "../status";
+import type {
+  HistoryReply,
+  HistoryRequest,
+} from "../operations/pulledHistory/types";
+import type {
+  CollectionDestributionItm,
+  COLLECTIONPOSTEDSHAREDREQ,
+  PostReq,
+} from "../moneyTransfeer/types";
+import type {
+  EMPS,
+  GetSettingValueRq,
+  GetUserProfileResponse,
+  // GetUserProfileResponse,
+  SETTINGS,
+  SiteCode,
+  SITES,
+  UNPOSTEDREQ,
+} from "../../../../componenet/shared/dataGrid/types";
 
 const options = {
   cacheTime: 60 * 60 * 24, // 24 hours
@@ -362,6 +397,201 @@ export const useGetAllStationsApi = () => {
     queryFn: () => getAllStations(),
     enabled: user?.isSuccess as boolean,
     ...options,
+  });
+  return query;
+};
+export const useGetHistory = (req: HistoryRequest) => {
+  console.log("Api REq", req);
+  const isQueryEnabled = !!req.Custkey && !!req.StartDate && !!req.EndDate;
+  console.log(" Checking 'enabled' condition:", {
+    isQueryEnabled,
+    hasCustkey: !!req.Custkey,
+    hasStartDate: !!req.StartDate,
+    hasEndDate: !!req.EndDate,
+  });
+  const query = useQuery<HistoryReply, Error>({
+    queryKey: ["getHistory", req],
+    queryFn: () => getHistory(req),
+    enabled: isQueryEnabled,
+    cacheTime: 0,
+    staleTime: 0,
+  });
+  return query;
+};
+///////////////////////////////////////
+export const useGetCurrentStationsApi = () => {
+  const { user } = useLoginStore();
+  const query = useQuery<STATIONS, Error>({
+    queryKey: ["getCurrentStationKey"],
+    queryFn: () => getCurrentStations(),
+    // (import.meta.env.VITE_IS_GOV_BASIC
+    //   ? stations.getCurrentStations()
+    //   : ({} as STATIONS)),
+    enabled: user?.isSuccess as boolean,
+    //  && !!import.meta.env.VITE_IS_GOV_BASIC,
+    ...options,
+  });
+  return query;
+};
+
+export const useGetUnPostedApi = (req: UNPOSTEDREQ) => {
+  const query = useQuery<CollectionDestributionItm[], Error>({
+    queryKey: ["unPostKey", req],
+    queryFn: () => GetUnPosted(req),
+    enabled: Object.keys(req).length > 0 && req.empid !== 0,
+  });
+  return query;
+};
+
+type PostProps = {
+  onSuccess?: (res: CollectionDestributionItm[]) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onError?: (err: any) => void;
+};
+export const usePostApi = ({ onSuccess, onError }: PostProps) => {
+  const mutation = useMutation({
+    mutationFn: (req: PostReq) => Post(req),
+    onSuccess,
+    onError,
+  });
+  return mutation;
+};
+
+type GetNewReceptNoProps = {
+  onSuccess?: (res: number) => void;
+  onError?: (err: Error) => void;
+};
+export const useGetNewReceiptNoApi = ({
+  onSuccess,
+  onError,
+}: GetNewReceptNoProps) => {
+  const mutation = useMutation({
+    mutationFn: () => GetNewReceptNo(),
+    onSuccess,
+    onError,
+  });
+  return mutation;
+};
+
+export interface IunPostedDetailsReq {
+  empid: number | undefined;
+  depositId?: number | undefined;
+  custkey?: string;
+}
+export const useGetUnPostedDetails = (req: IunPostedDetailsReq) => {
+  const query = useQuery<CollectionDestributionItm[], Error>({
+    queryKey: ["GetUnPostedDetails", req],
+    queryFn: () => GetUnPostedDetails(req),
+    enabled:
+      Object.keys(req).length > 0 && req?.empid !== 0 && req.custkey !== "",
+  });
+  return query;
+};
+
+export const useGetSiteLogoProvider = (req: SiteCode) => {
+  const query = useQuery<SITES, Error>({
+    queryKey: ["useGetSiteLogoProviderKey", req],
+    queryFn: () => getSiteLogo(req),
+    cacheTime: 24 * 60 * 60 * 10000,
+    staleTime: 23 * 60 * 60 * 10000,
+    enabled: Object.keys(req).length > 0 && !!req?.code,
+    // enabled: true,
+    retryOnMount: false,
+  });
+  return query;
+};
+
+export const useGetMasProviderSettings = (req: GetSettingValueRq) => {
+  const query = useQuery<SETTINGS, Error>({
+    queryKey: ["useGetMasProviderSettings", req],
+    queryFn: () => getSettingValue(req),
+    enabled: Object.keys(req || {}).length > 0 && req.SITE_CODE !== undefined,
+    retryOnMount: false,
+  });
+  return query;
+};
+
+export const useGetUserProfileApi = () => {
+  const { user } = useLoginStore();
+  const query = useQuery<GetUserProfileResponse, Error>({
+    queryKey: ["getUserProfile"],
+    queryFn: () => Getuserprofilee(),
+    retry: 0,
+    enabled: user?.isSuccess,
+  });
+  return query;
+};
+
+export const useGetUnPostedSummaryApi = () => {
+  const query = useQuery<CollectionDestributionItm[], Error>({
+    queryKey: ["unPostSummary"],
+    queryFn: () => GetUnPostedSummary(),
+    enabled: true,
+  });
+  return query;
+};
+
+export const useGetIsHeadQuarterApi = () => {
+  const { user } = useLoginStore();
+  const query = useQuery<boolean, AxiosError>({
+    queryKey: ["getIsHeadQuarterApi"],
+    queryFn: () => getIsHeadQuarter(),
+    enabled: user?.isSuccess as boolean,
+    ...options,
+  });
+  return query;
+};
+
+export const useGetHafzaTemplate = (enable: boolean) => {
+  const query = useQuery({
+    queryKey: ["hafzaTemplate"],
+    queryFn: () => getTemplate(),
+    enabled: enable,
+    cacheTime: 24 * 1000,
+    staleTime: 23 * 1000,
+  });
+  return query;
+};
+
+export const useGetAllCollectorsApi = (select?: (data: EMPS[]) => EMPS[]) => {
+  const { data: userProfile } = useGetUserProfileApi();
+  const query = useQuery<EMPS[], Error>({
+    queryKey: ["getAllCollectors"],
+    queryFn: () => getAllCollectors(),
+    retry: 0,
+    enabled: true,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    cacheTime: 60000, // 60sec
+    staleTime: 50000, // 50sec
+    select: (collectors) => {
+      // console.log(collectors, userProfile?.USER?.STATION_NO, "ER");
+      // Apply the filter if select is not provided
+      const filteredData = collectors.filter(
+        (collector) => collector.branchId === userProfile?.USER?.STATION_NO,
+      );
+      return select ? select(filteredData) : filteredData;
+    },
+  });
+  return query;
+};
+
+export const useGetDepositApi = (empId: number) => {
+  const query = useQuery<STATMDEPOSIT[], Error>({
+    queryKey: ["useGetDeposit", empId],
+    queryFn: () => GetDeposits(empId),
+    enabled: !!empId && empId !== 0,
+  });
+  return query;
+};
+
+export const useGetPostedApi = (req: COLLECTIONPOSTEDSHAREDREQ) => {
+  const query = useQuery<CollectionDestributionItm[], Error>({
+    queryKey: ["postKey", req],
+    queryFn: () => GetPosted(req),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: Object.keys(req || {}).length > 0 && req?.empid !== 0,
   });
   return query;
 };

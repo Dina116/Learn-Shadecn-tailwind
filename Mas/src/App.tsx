@@ -38,9 +38,12 @@ import ReadingsPosting from "./pages/Readings and Achievement/controlpanel/opera
 import CloseRWalk from "./pages/Readings and Achievement/controlpanel/operations/closeRWalk";
 import CloseCWalk from "./pages/Readings and Achievement/controlpanel/operations/closeCWalk";
 import PulledHistory from "./pages/Readings and Achievement/controlpanel/operations/pulledHistory";
+import MoneyTransfeer from "./pages/Readings and Achievement/controlpanel/moneyTransfeer";
+import PendingPosts from "./pages/Readings and Achievement/controlpanel/moneyTransfeer/pendingPosts/PendingPosts";
 
 const queryClient = new QueryClient();
 function App() {
+  console.log(import.meta.env);
   return (
     <>
       <Toaster position="top-center" />
@@ -136,7 +139,18 @@ function App() {
               path="/readings/controlpanel/closeCWalk"
               element={<CloseCWalk />}
             />
-            <Route path="/readings/controlpanel/pulledHistory" element={<PulledHistory/>}/>
+            <Route
+              path="/readings/controlpanel/pulledHistory"
+              element={<PulledHistory />}
+            />
+            <Route
+              path="/readings/controlpanel/moneyTransfeer"
+              element={<MoneyTransfeer />}
+            />
+            <Route
+              path="/readings/controlpanel/moneyTransfeer/pendingPosts"
+              element={<PendingPosts />}
+            />
           </Route>
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />

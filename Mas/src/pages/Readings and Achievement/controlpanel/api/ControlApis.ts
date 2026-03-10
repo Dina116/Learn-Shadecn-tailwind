@@ -1,5 +1,7 @@
 import axios from "axios";
-import axiosClient from "../../../../api/apiservices/axiosClient";
+import axiosClient, {
+  axiosClient_two,
+} from "../../../../api/apiservices/axiosClient";
 import type {
   // BOOKCYCLE,
   FilterValues,
@@ -10,6 +12,25 @@ import type {
 } from "../types";
 import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns";
 import type { BOOKCYCLEWithStatus } from "./useControlApi";
+import type { HistoryRequest } from "../operations/pulledHistory/types";
+import {
+  oldAuthTempUserProfile,
+  // oldAuthTempUserProfile,
+  type GetSettingValueRq,
+  type SETTINGS,
+  type SiteCode,
+  type SITES,
+  type UNPOSTEDDETAILSREQ,
+  type UNPOSTEDREQ,
+} from "../../../../componenet/shared/dataGrid/types";
+import type {
+  CollectionDestributionItm,
+  COLLECTIONPOSTEDSHAREDREQ,
+  PostReq,
+} from "../moneyTransfeer/types";
+import type { USERS } from "../moneyTransfeer/users";
+import { goAuthClient } from "../../../../services";
+// import type { USERS } from "../moneyTransfeer/users";
 
 export const getBillGroups = async () => {
   try {
@@ -533,6 +554,7 @@ export const closeCollectionWalkRoute = async (
 export const getAllStations = async () => {
   try {
     const res = await axiosClient.get("/Stations/Get");
+    console.log("stations", res.data);
     return res.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
@@ -541,8 +563,194 @@ export const getAllStations = async () => {
     throw new Error("فشل جلب الفروع");
   }
 };
+export const getHistory = async (req: HistoryRequest) => {
+  console.log("Api REq", req);
+  try {
+    const res = await axiosClient_two.post(
+      "/micromas.StatementsService/GetHistory",
+      req,
+    );
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
 
 ///////////////users//////////////////
-export const Getuserprofilee=async()=>{
-  
+export const Getuserprofilee = async () => {
+  const basicUserObject: USERS = localStorage.getItem("userLoged")
+    ? JSON.parse(localStorage.getItem("userLoged") || "")
+    : undefined;
+
+  if (import.meta.env.VITE_IS_GOV_BASIC) {
+    return oldAuthTempUserProfile(basicUserObject?.allowGovCollection || false);
+  }
+  const data = await goAuthClient.getUserProfile({});
+  // eslint-disable-next-line max-len
+  return data.response;
+};
+///////////////////////////////////////////////////
+export const getCurrentStations = async () => {
+  try {
+    const res = await axiosClient.get("/Stations/Current");
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const GetUnPosted = async (
+  req: UNPOSTEDREQ,
+): Promise<CollectionDestributionItm[]> => {
+  try {
+    const res = await axiosClient.get(
+      `/Collection/GetUnPosted?empid=${req.empid}`,
+    );
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const Post = async (
+  req: PostReq,
+): Promise<CollectionDestributionItm[]> => {
+  try {
+    const res = await axiosClient.get(
+      `/Collection/Post?Count=${req.Count}&Amount=${req.Amount}&ReciptNo=${req.ReciptNo}&postToBilling=${req.postToBilling}&empid=${req.empid}`,
+    );
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const GetNewReceptNo = async (): Promise<number> => {
+  try {
+    const res = await axiosClient.get(`/Collection/GetNewReceptNo`);
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const GetUnPostedDetails = async (
+  req: UNPOSTEDDETAILSREQ,
+): Promise<CollectionDestributionItm[]> => {
+  try {
+    const res = await axiosClient.get(
+      `/Collection/GetUnPostedDetails?empid=${req.empid}`,
+    );
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export interface MyResponeData<I extends object, O extends object> {
+  response: O;
+  headers: I;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MyResponse<T extends object> = Promise<MyResponeData<any, T>>;
+
+export const getSiteLogo = async (req: SiteCode): Promise<SITES> => {
+  const res = await axiosClient.post(
+    "/MasProvider.MasProvider/GetSiteLogo",
+    req,
+  );
+  return res.data.response;
+};
+
+export const getSettingValue = async (
+  req: GetSettingValueRq,
+): Promise<SETTINGS> => {
+  const res = await axiosClient.post(
+    "/MasProvider.MasProvider/GetSettingValue",
+    req,
+  );
+  return res.data.response;
+};
+
+export const GetUnPostedSummary = async () => {
+  try {
+    const res = await axiosClient.get("/Collection/GetUnPostedSummary");
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+export const getIsHeadQuarter = async () => {
+  try {
+    const res = await axiosClient.get("/System/IS_HEAD_QUARTER");
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const getTemplate = async () => {
+  const res = await axios.get(
+    `${
+      import.meta.env.BASE_URL === "/"
+        ? "/htmlTemplates/hafza.html"
+        : `${import.meta.env.BASE_URL}/htmlTemplates/hafza.html?t=${Date.now()}`
+    }`,
+  );
+  return res.data;
+};
+
+export const getAllCollectors = async () => {
+  try {
+    const res = await axiosClient.get("/Emp/GetCollectors");
+    console.log("Api Response from getAllCollectors:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed from getAllCollectors:", error);
+    throw error;
+  }
+};
+
+export const GetDeposits = async (empId: number): Promise<STATMDEPOSIT[]> => {
+  try {
+    const res = await axiosClient.get(`/Collection/GetDeposits?id=${empId}`);
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};
+
+export const GetPosted = async (
+  req: COLLECTIONPOSTEDSHAREDREQ,
+): Promise<CollectionDestributionItm[]> => {
+  try {
+    const res = await axiosClient.post(
+      `/Collection/GetPosted?empid=${req.empid}&depositId=${req.depositId}`,
+      req,
+    );
+    console.log("Api Response:", res.data);
+    return res.data;
+  } catch (error) {
+    console.error("API Call Failed:", error);
+    throw error;
+  }
+};

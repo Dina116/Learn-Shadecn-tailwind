@@ -13,13 +13,13 @@ import {
   LocalizationProvider,
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import type { FormFilterType } from "./types";
+import type { HistoryRequest } from "./types";
 import { useGetAllStationsApi } from "../../api/useControlApi";
 import dayjs from "dayjs";
 
 interface Props {
-  onSubmit: (data: FormFilterType) => void;
-  stationNo?: number;
+  getFilterdData: (data: HistoryRequest) => void;
+  stationNo?: number | null;
 }
 const compactFieldStyles = {
   "& .MuiOutlinedInput-root": {
@@ -31,9 +31,13 @@ const compactFieldStyles = {
   },
 };
 
-export default function FilterForm({ onSubmit, stationNo }: Props) {
+export default function FilterForm({ getFilterdData, stationNo }: Props) {
   const { data: stations } = useGetAllStationsApi();
-  const { handleSubmit, control } = useForm<FormFilterType>();
+  const onSubmit = (data: HistoryRequest) => {
+    console.log(data, "DataFormFilter");
+    getFilterdData(data);
+  };
+  const { handleSubmit, control } = useForm<HistoryRequest>();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -54,13 +58,19 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                 الفرع
               </InputLabel>
               <Autocomplete
+                // multiple
+                limitTags={2}
                 options={stations || []}
                 defaultValue={
-                  stations?.find((s) => s.stationNo === stationNo) || null
+                  stations?.find((s) => s.STATION_NO === stationNo) || null
                 }
                 fullWidth
                 sx={{
                   // width: 550,
+                  "& .MuiAutocomplete-option": {
+                    backgroundColor: "#fff",
+                    color: "#000 !important",
+                  },
                   "& .MuiAutocomplete-endAdornment": {
                     right: "auto !important",
                     left: "9px",
@@ -78,11 +88,17 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                     sx: { direction: "rtl" },
                   },
                   paper: {
-                    sx: { textAlign: "right" },
+                    sx: {
+                      textAlign: "right",
+                      "& .MuiAutocomplete-option": {
+                        color: "#000 !important",
+                        fontSize: "0.85rem",
+                      },
+                    },
                   },
                 }}
-                getOptionLabel={(option) => option.description || ""}
-                onChange={(_, value) => onChange(value?.stationNo)}
+                getOptionLabel={(option) => option.DESCRIPTION || ""}
+                onChange={(_, value) => onChange(value?.STATION_NO)}
                 renderInput={(params: AutocompleteRenderInputParams) => (
                   <TextField
                     {...params}
@@ -141,11 +157,16 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                   تاريخ بداية مدة السحب
                 </InputLabel>
                 <DatePicker
-                  format="YYYY-MM-DD"
+                  views={["year", "month", "day"]}
+                  format="DD/MM/YYYY"
                   className="w-full"
-                  value={field.value ? dayjs(field.value) : null}
+                  value={field.value ? dayjs(field.value.datetime) : null}
                   onChange={(newValue) => {
-                    field.onChange(newValue);
+                    field.onChange(
+                      newValue
+                        ? { datetime: newValue.toISOString() }
+                        : undefined,
+                    );
                   }}
                   slots={{
                     openPickerIcon: CalendarIcon,
@@ -158,27 +179,23 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                         "& .MuiOutlinedInput-root": {
                           height: 28,
                           minHeight: 28,
+                          alignItems: "flex-start",
+                          justifyContent: "flex-start",
                         },
                         "& .MuiInputBase-input": {
                           padding: "2px 6px",
                           fontSize: "0.75rem",
+                          textAlign: "right",
+                          direction: "ltr",
                         },
-                        // "& .MuiOutlinedInput-root": {
-                        //   height: 32,
-                        //   minHeight: 32,
-                        // },
-                        // "& .MuiInputBase-input": {
-                        //   padding: "4px 8px",
-                        //   fontSize: "0.8rem",
-                        //   display: "flex",
-                        //   alignItems: "center",
-                        //   justifyContent: "flex-start",
-                        //   direction: "ltr",
-                        // },
+                        "& input::placeholder": {
+                          textAlign: "right",
+                        },
                       },
                       inputProps: {
                         style: {
                           padding: "8.5px 14px",
+                          fontSize: "0.75rem",
                         },
                       },
                     },
@@ -186,19 +203,6 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                       position: "start",
                       sx: {
                         marginRight: "8px",
-                      },
-                    },
-                  }}
-                  sx={{
-                    ...compactFieldStyles,
-                    "& .MuiInputBase-root": {
-                      width: 250,
-                      "& .MuiInputBase-root": {
-                        direction: "ltr",
-                        textAlign: "right",
-                        "& .MuiInputAdornment-root": {
-                          marginRight: "8px",
-                        },
                       },
                     },
                   }}
@@ -220,52 +224,35 @@ export default function FilterForm({ onSubmit, stationNo }: Props) {
                     color: "black",
                     fontSize: "0.75rem",
                     fontWeight: "bold",
+                    textAlign: "right",
                   }}
                 >
                   تاريخ نهاية مدة السحب
                 </InputLabel>
                 <DatePicker
-                  format="YYYY-MM-DD"
+                  format="DD/MM/YYYY"
                   className="w-full"
-                  value={field.value ? dayjs(field.value) : null}
+                  value={field.value ? dayjs(field.value.datetime) : null}
                   onChange={(newValue) => {
-                    field.onChange(newValue);
+                    field.onChange(
+                      newValue
+                        ? { datetime: newValue.toISOString() }
+                        : undefined,
+                    );
                   }}
                   slots={{
                     openPickerIcon: CalendarIcon,
                   }}
                   slotProps={{
                     textField: {
+                      placeholder: "DD/MM/YYYY",
                       size: "small",
-                      sx: {
-                        //   width: 550,
-                        textAlign: "right",
-                        //   "& .MuiInputBase-input": {
-                        //     display: "flex",
-                        //     alignItems: "center",
-                        //     justifyContent: "flex-start",
-                        //     direction: "ltr",
-                        //   },
-                      },
-                    },
-                    inputAdornment: {
-                      position: "end",
-                      sx: {
-                        marginRight: "8px",
-                      },
                     },
                   }}
                   sx={{
-                    ...compactFieldStyles,
-                    "& .MuiInputBase-root": {
-                      width: 250,
-                      "& .MuiInputBase-root": {
-                        direction: "ltr",
-                        textAlign: "center",
-                        "& .MuiInputAdornment-root": {
-                          marginRight: "8px",
-                        },
-                      },
+                    direction: "ltr",
+                    "& .MuiInputBase-input": {
+                      textAlign: "right",
                     },
                   }}
                 />

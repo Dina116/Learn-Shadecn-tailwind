@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   InputAdornment,
   Paper,
   TextField,
@@ -7,28 +8,38 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./Validation";
-import type { InputFormData, LoginFormProps } from "./types";
+// import type { LoginFormProps } from "./types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginViewModel } from "./useLogin";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-export default function LoginForm({ onSubmit }: LoginFormProps) {
-  const navigation = useNavigate();
+export default function LoginForm() {
+  const {
+    onChangeInputHandler,
+    onClickSubmitHandler,
+    inputs,
+    isLoading,
+    showPassword,
+    setShowPassword,
+  } = useLoginViewModel();
+  // const navigation = useNavigate();
   const {
     control,
-    handleSubmit,
+    // handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: { username: "", password: "" },
     resolver: zodResolver(LoginSchema),
   });
-  const handleSubmition = (data: InputFormData) => {
-    console.log("submitting....");
-    onSubmit(data);
-    navigation("/home");
-    console.log("submit successfully ....");
-  };
+  // const handleSubmition = (data: InputFormData) => {
+  //   console.log("submitting....");
+  //   onSubmit(data);
+  //   navigation("/home");
+  //   console.log("submit successfully ....");
+  // };
   return (
     <Paper
       elevation={6}
@@ -41,22 +52,24 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         تسجيل الدخول
       </Typography>
 
-      <form className="space-y-4" onSubmit={handleSubmit(handleSubmition)}>
+      <form className="space-y-4" onSubmit={onClickSubmitHandler}>
         <div className="space-y-1">
           <Typography className="text-[#005a8e] text-right text-xs font-bold text-sky-900">
             الاسم
           </Typography>
           <Controller
             control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onBlur } }) => (
               <TextField
+                id="Username"
                 fullWidth
                 variant="standard"
+                required
                 placeholder="اسم الدخول"
                 size="small"
                 onBlur={onBlur}
-                onChange={onChange}
-                value={value}
+                onChange={onChangeInputHandler}
+                value={inputs.username}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -90,21 +103,30 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
           </Typography>
           <Controller
             control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({ field: { onBlur } }) => (
               <TextField
+                id="Password"
                 fullWidth
-                type="password"
+                type={showPassword ? "text" : "password"}
                 variant="standard"
-                placeholder="........"
+                placeholder="••••••••"
+                required
                 size="small"
                 onBlur={onBlur}
-                onChange={onChange}
-                value={value}
+                onChange={onChangeInputHandler}
+                value={inputs.password}
                 slotProps={{
                   input: {
                     startAdornment: (
-                      <InputAdornment position="start">
-                        <VisibilityOffIcon className="text-gray-400 !text-xl" />
+                      <InputAdornment
+                        position="start"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
                       </InputAdornment>
                     ),
                   },
@@ -129,7 +151,20 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
         <div className="flex flex-row justify-center">
           <Button
             type="submit"
+            disabled={isLoading}
             variant="contained"
+            endIcon={
+              isLoading ? (
+                <CircularProgress
+                  thickness={5}
+                  size="30px"
+                  color="primary"
+                  sx={{
+                    marginRight: 3,
+                  }}
+                />
+              ) : null
+            }
             className="text-center bg-[#007bbd] hover:bg-[#005a8e] py-1.5 text-base font-bold capitalize shadow-md"
           >
             تسجيل الدخول
