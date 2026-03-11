@@ -8,27 +8,23 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-// import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./Validation";
-// import type { LoginFormProps } from "./types";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginViewModel } from "./useLogin";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import useLogin from "./useLogin";
 
 export default function LoginForm() {
   const {
-    onChangeInputHandler,
-    onClickSubmitHandler,
+    onChangeInput,
+    onClickSubmit,
     inputs,
     isLoading,
     showPassword,
     setShowPassword,
-  } = useLoginViewModel();
-  // const navigation = useNavigate();
+  } = useLogin();
   const {
     control,
-    // handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: { username: "", password: "" },
@@ -52,7 +48,7 @@ export default function LoginForm() {
         تسجيل الدخول
       </Typography>
 
-      <form className="space-y-4" onSubmit={onClickSubmitHandler}>
+      <form className="space-y-4" onSubmit={onClickSubmit}>
         <div className="space-y-1">
           <Typography className="text-[#005a8e] text-right text-xs font-bold text-sky-900">
             الاسم
@@ -68,7 +64,7 @@ export default function LoginForm() {
                 placeholder="اسم الدخول"
                 size="small"
                 onBlur={onBlur}
-                onChange={onChangeInputHandler}
+                onChange={onChangeInput}
                 value={inputs.username}
                 slotProps={{
                   input: {
@@ -113,7 +109,7 @@ export default function LoginForm() {
                 required
                 size="small"
                 onBlur={onBlur}
-                onChange={onChangeInputHandler}
+                onChange={onChangeInput}
                 value={inputs.password}
                 slotProps={{
                   input: {

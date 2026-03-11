@@ -40,8 +40,7 @@ import {
   GetUnPostedDetails,
   GetUnPostedStatmDeposits,
   GetUnPostedSummary,
-  Getuserprofilee,
-  // Getuserprofilee,
+  Getuserprofile,
   Post,
   readingPostingMas2Billing,
   readingsBilling2Mas,
@@ -64,13 +63,14 @@ import type {
 import type {
   EMPS,
   GetSettingValueRq,
-  GetUserProfileResponse,
+  // GetUserProfileResponse,
   // GetUserProfileResponse,
   SETTINGS,
   SiteCode,
   SITES,
   UNPOSTEDREQ,
 } from "../../../../componenet/shared/dataGrid/types";
+import type { GetUserProfileResponse } from "../../../../../src/grpc-web-client-gen/GoAuth_pb";
 
 const options = {
   cacheTime: 60 * 60 * 24, // 24 hours
@@ -513,13 +513,12 @@ export const useGetMasProviderSettings = (req: GetSettingValueRq) => {
 
 export const useGetUserProfileApi = () => {
   const { user } = useLoginStore();
-  const query = useQuery<GetUserProfileResponse, Error>({
+  return useQuery<GetUserProfileResponse.AsObject, Error>({
     queryKey: ["getUserProfile"],
-    queryFn: () => Getuserprofilee(),
+    queryFn: Getuserprofile,
     retry: 0,
-    enabled: user?.isSuccess,
+    enabled: !!user?.isSuccess,
   });
-  return query;
 };
 
 export const useGetUnPostedSummaryApi = () => {
@@ -565,10 +564,8 @@ export const useGetAllCollectorsApi = (select?: (data: EMPS[]) => EMPS[]) => {
     cacheTime: 60000, // 60sec
     staleTime: 50000, // 50sec
     select: (collectors) => {
-      // console.log(collectors, userProfile?.USER?.STATION_NO, "ER");
-      // Apply the filter if select is not provided
       const filteredData = collectors.filter(
-        (collector) => collector.branchId === userProfile?.USER?.STATION_NO,
+        (collector) => collector.branchId === userProfile?.user?.stationNo,
       );
       return select ? select(filteredData) : filteredData;
     },

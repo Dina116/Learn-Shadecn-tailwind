@@ -1,16 +1,16 @@
 import { getCookie } from "../../../utils/cookies";
 
-
 export const RequestMeta = (timeout?: number) => {
-  const token = getCookie('token');
-  const intialMeta = {
-    timeout: timeout || 30000, // 30 seconds
-    authorization: '',
+  const token = getCookie("token");
+  const metadata = {
+    timeout: timeout ?? 30000,
   };
-  if (token !== null || token !== '') {
-    const auth = `bearer ${token}`;
-    intialMeta.authorization = auth;
-    return intialMeta;
+
+  if (token) {
+    return {
+      ...metadata,
+      authorization: `bearer ${token}`,
+    };
   }
-  return intialMeta;
+  return metadata;
 };

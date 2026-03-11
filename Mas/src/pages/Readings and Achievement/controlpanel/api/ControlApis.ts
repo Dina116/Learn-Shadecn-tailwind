@@ -3,10 +3,8 @@ import axiosClient, {
   axiosClient_two,
 } from "../../../../api/apiservices/axiosClient";
 import type {
-  // BOOKCYCLE,
   FilterValues,
   Mas2BillingPayload,
-  // ReadingWalkData,
   STATMDEPOSIT,
   WalkData,
 } from "../types";
@@ -14,8 +12,6 @@ import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns
 import type { BOOKCYCLEWithStatus } from "./useControlApi";
 import type { HistoryRequest } from "../operations/pulledHistory/types";
 import {
-  oldAuthTempUserProfile,
-  // oldAuthTempUserProfile,
   type GetSettingValueRq,
   type SETTINGS,
   type SiteCode,
@@ -28,9 +24,16 @@ import type {
   COLLECTIONPOSTEDSHAREDREQ,
   PostReq,
 } from "../moneyTransfeer/types";
-import type { USERS } from "../moneyTransfeer/users";
-import { goAuthClient } from "../../../../services";
-// import type { USERS } from "../moneyTransfeer/users";
+// import { GoAuthClient } from "grpc-web-client-gen/GoAuthServiceClientPb";
+import { makeBaseUrl } from "../../../../app/services";
+// import { GetUserProfileResponse } from "../../../../../src/grpc-web-client-gen/GoAuth_pb";
+// import * as GoAuth_pb from "../../../../../src/generated/GoAuth_pb";
+import * as GoAuth_pb from "../../../../../src/grpc-web-client-gen/GoAuth_pb";
+import { GoAuthClient } from "../../../../../src/grpc-web-client-gen/GoAuthServiceClientPb";
+
+const client = new GoAuthClient(
+  `${makeBaseUrl()}:${import.meta.env.VITE_grpcPort}`,
+);
 
 export const getBillGroups = async () => {
   try {
@@ -579,18 +582,17 @@ export const getHistory = async (req: HistoryRequest) => {
 };
 
 ///////////////users//////////////////
-export const Getuserprofilee = async () => {
-  const basicUserObject: USERS = localStorage.getItem("userLoged")
-    ? JSON.parse(localStorage.getItem("userLoged") || "")
-    : undefined;
-
-  if (import.meta.env.VITE_IS_GOV_BASIC) {
-    return oldAuthTempUserProfile(basicUserObject?.allowGovCollection || false);
-  }
-  const data = await goAuthClient.getUserProfile({});
-  // eslint-disable-next-line max-len
-  return data.response;
-};
+export const Getuserprofile =
+  async (): Promise<GoAuth_pb.GetUserProfileResponse.AsObject> => {
+    try {
+      const req = new GoAuth_pb.Emptymessage();
+      const res = await client.getUserProfile(req);
+      return res.toObject();
+    } catch (error) {
+      console.error("API call failed in Getuserprofilee:", error);
+      throw error;
+    }
+  };
 ///////////////////////////////////////////////////
 export const getCurrentStations = async () => {
   try {

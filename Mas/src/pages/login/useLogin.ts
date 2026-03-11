@@ -1,93 +1,61 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { useLoginStore } from "../../hooks/login/useLoginStore";
-import type { USERS } from "../../domain/entities/systemMangement/users";
-import type { UserToken } from "../../domain/entities/common";
+import { useNavigate } from "react-router-dom";
+
 import { setCookie } from "../../utils/cookies";
-import { useLoginOldAuthApi } from "../../hooks/apis/auth";
-import { useLoginApi } from "../../hooks/apis/loginClient";
+import type { UserToken } from "./types";
+import { jwtDecode } from "jwt-decode";
+import { useLoginApi } from "../../api/login/loginClient";
+import toast from "react-hot-toast";
 import type {
   LoginRequest,
   LoginResponse,
-} from "grpc-web-client-gen/GoAuth_pb";
-// import type { LoginRequest, LoginResponse } from "../../domain/entities/_gen/GoAuth_pb";
+} from "../../domain/entities/_gen/GoAuth_pb";
 
-const useLogin = () => {
-
+export default function useLogin() {
+  const navigate = useNavigate();
   const { updateLogin } = useLoginStore();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const [inputs, setInputs] = useState<LoginRequest.AsObject>({
-    username: "",
-    password: "",
-    isportal: false,
+  const [inputs, setInputs] = useState<LoginRequest>({
+    Username: "",
+    Password: "",
+    ISPORTAL: false,
   });
-
-  const convert = (username: string, password: string) => {
-    const x: string = `${username}:${password}`;
-    const b64 = btoa(x);
-    return b64;
-  };
-
   console.log("BASE", import.meta.env.VITE_BASE_URL_DEV);
   console.log("GRPC", import.meta.env.VITE_grpcPort);
 
-  const { mutate: mutateOldAuth } = useLoginOldAuthApi({
-    onSuccess(data: USERS) {
-      const authheader: string = convert(inputs.username, inputs.password);
-      setCookie("token", authheader);
-      localStorage.setItem("userLoged", JSON.stringify(data));
-      const userToken: USERS = data; // jwt_decode(authheader);
-      console.log(data, "res");
-      updateLogin({ ...userToken, isSuccess: true } as UserToken);
-      navigate("/home");
-      // window.location.reload();
-    },
-    onError(err) {
-      toast.error(window.decodeURIComponent(err ? err?.response?.data : ""));
-    },
-  });
   const { mutate, isSuccess, isError, isLoading, error } = useLoginApi({
-    onSuccess(res: LoginResponse.AsObject) {
-      setCookie("token", res?.token);
+    onSuccess(res: LoginResponse) {
+      setCookie("token", res?.Token);
       console.log("jwt login");
-      const userToken: UserToken = jwtDecode(res.token!); // jwt_decode(authheader);
+      const userToken: UserToken = jwtDecode(res.Token!);
       updateLogin({ ...userToken, isSuccess: true });
-      navigate("/");
-      // window.location.reload();
+      navigate("/home");
     },
     onError(err) {
       toast.error(window.decodeURIComponent(err ? err?.message : ""));
     },
   });
 
-  const onChangeInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputs((prevState: LoginRequest.AsObject) => ({
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputs((prevState: LoginRequest) => ({
       ...prevState,
       [event.target.id]: event.target.value,
     }));
   };
 
-  const onClickSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const onClickSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("submit clicked", inputs);
-    if (import.meta.env.VITE_IS_GOV_BASIC) {
-      mutateOldAuth({ username: inputs.username, password: inputs.password });
-      return;
-    }
     mutate({
-      username: inputs.username,
-      password: inputs.password,
-
-      isportal: false,
+      Username: inputs.Username,
+      Password: inputs.Password,
+      ISPORTAL: inputs.ISPORTAL,
     });
   };
-
   return {
-    onChangeInputHandler,
-    onClickSubmitHandler,
+    onChangeInput,
+    onClickSubmit,
     setShowPassword,
     inputs,
     isSuccess,
@@ -96,6 +64,4 @@ const useLogin = () => {
     error,
     showPassword,
   };
-};
-
-export const useLoginViewModel = useLogin;
+}
