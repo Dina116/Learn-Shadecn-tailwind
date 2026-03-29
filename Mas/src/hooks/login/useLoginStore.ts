@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import create from "zustand";
 import type { LoginState, UserToken } from "../../pages/login/types";
-// import type { USERS } from "../../pages/Readings and Achievement/controlpanel/moneyTransfeer/users";
 import { checkTokenCookie, getCookie, setCookie } from "../../utils/cookies";
 import { jwtDecode } from "jwt-decode";
 

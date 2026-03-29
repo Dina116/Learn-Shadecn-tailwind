@@ -8,7 +8,7 @@ import { loginClient as LoginClient } from "../../domain/entities/_gen/GoAuth_pb
 import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
 
 const transport = new GrpcWebFetchTransport({
-  baseUrl: "http://mas3:7000",
+  baseUrl: "http://192.168.100.7:7000",
   format: "binary",
 });
 

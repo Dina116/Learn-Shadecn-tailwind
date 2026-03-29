@@ -110,7 +110,7 @@ function MultiLevelHeaderTable<T extends Identifiable>({
       component={Paper}
       sx={{ border: "1px solid #e0e0e0", direction: "rtl" }}
     >
-      <Table sx={{ minWidth: 900 }} aria-label="reusable table">
+      <Table sx={{ minWidth: 900 }} aria-label="reusable table" size="small">
         <TableHead>{renderHeader()}</TableHead>
         <TableBody>
           {data?.length === 0 ? (

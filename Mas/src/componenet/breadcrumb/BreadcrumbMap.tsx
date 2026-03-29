@@ -36,6 +36,8 @@ const BreadcrumbMap: Record<string, string> = {
   pulledHistory: "سجل تحديث بيانات الفواتير",
   moneyTransfeer: "التوريدات",
   pendingPosts: "التوريدات المعلقة",
+  postHistory: "سجل التوريدات",
+  hhPrepear: "تجهيز البيانات",
 };
 
 export default function Breadcrumb() {

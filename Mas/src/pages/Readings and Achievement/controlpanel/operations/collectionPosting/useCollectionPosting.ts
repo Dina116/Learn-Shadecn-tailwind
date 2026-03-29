@@ -3,7 +3,7 @@ import {
   getCollectionsPostingColumns,
   type STATMDEPOSITWithStatus,
 } from "./columns";
-import type { BILLGROUPS, FilterValues } from "../../types";
+import type { BILLGROUPS, FilterValues, STATMDEPOSIT } from "../../types";
 import {
   useCollectionMas2BillingApi,
   useGetBillGroupsApi,
@@ -12,6 +12,9 @@ import {
 } from "../../api/useControlApi";
 import toast from "react-hot-toast";
 
+export function GetKey(walk: STATMDEPOSIT) {
+  return `${walk.DEPOSIT_ID}${walk.EMP_ID}${walk.STATION_NO}`;
+}
 export default function useCollectionPosting() {
   const [counters, setCounters] = useState({
     success: 0,
@@ -42,10 +45,10 @@ export default function useCollectionPosting() {
   const { execute: executeBilling, isLoading: isExecuting } =
     useCollectionMas2BillingApi(
       (depositId: number) => {
-        setCounters((prev) => ({
+       setCounters((prev) => ({
           ...prev,
-          success: prev.success + 1,
-          pending: prev.pending - 1,
+          success: prev.success ,
+          pending: prev.pending ,
         }));
 
         setRowStatuses((prev) => ({
@@ -135,16 +138,19 @@ export default function useCollectionPosting() {
     ],
   );
   const handleExecuteAction = async () => {
-    const rowsToExecute = selectableRows.filter((row) =>
-      selectedRowKeys.includes(row.DEPOSIT_ID),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row) => selectedRowKeys.includes(row.DEPOSIT_ID))
+      .map((row) => ({ ...row, KEY: GetKey(row) }));
 
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
 
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
+    setCounters((prev) => ({
+      ...prev,
+      pending: prev.pending + rowsToExecute.length,
+    }));
     setExecutionErrors([]);
 
     for (const row of rowsToExecute) {
@@ -152,8 +158,34 @@ export default function useCollectionPosting() {
 
       try {
         await executeBilling(row);
-      } catch {
-        //
+        setCounters((prev) => ({
+          ...prev,
+          success: prev.success + 1,
+          pending: prev.pending - 1,
+        }));
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "completed" },
+        }));
+      } catch (error) {
+        setCounters((prev) => ({
+          ...prev,
+          failed: prev.failed + 1,
+          pending: prev.pending - 1,
+        }));
+
+        setExecutionErrors((prev) => [
+          ...prev,
+          {
+            DEPOSIT_ID: row.DEPOSIT_ID,
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+        ]);
+
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "failed" },
+        }));
       }
     }
 

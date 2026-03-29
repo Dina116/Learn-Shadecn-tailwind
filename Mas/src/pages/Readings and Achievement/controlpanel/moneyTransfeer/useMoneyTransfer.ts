@@ -5,12 +5,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { CollectionDestributionItm, PostReq } from "./types";
 import type { STATIONS } from "../types";
 import type { EMPS } from "../../../../componenet/shared/dataGrid/types";
-import {
-  useGetCurrentStationsApi,
-  useGetNewReceiptNoApi,
-  useGetUnPostedApi,
-  usePostApi,
-} from "../api/useControlApi";
+import { useGetCurrentStationsApi, useGetNewReceiptNoApi, useGetUnPostedApi, usePostApi } from "./useMoneyTransfeerApi";
+
 
 export interface IreqProp {
   empid: number;
@@ -47,6 +43,7 @@ export default function useMoneyTransfer() {
     {} as STATIONS,
   );
   const [openModal, setOpenModal] = useState<boolean>(false);
+  // const [modalType, setModalType] = useState<"with" | "without">("with");
   const [finalReq, setFinalReq] = useState<IreqProp>({} as IreqProp);
   const modalType = useRef<"without" | "with">("without");
 
@@ -67,11 +64,15 @@ export default function useMoneyTransfer() {
     onSuccess: async () => {
       await queryClient.invalidateQueries(["unPostKey", finalReq]);
       setOpenModal(false);
-      toast.success("تم توريد الفواتير ");
+      toast.success("تم توريد الفواتير ", {
+        position: "bottom-center",
+      });
     },
     onError: (err) => {
       setOpenModal(true);
-      toast.error(err?.response?.data?.ExceptionMessage);
+      toast.error(err?.response?.data?.ExceptionMessage, {
+        position: "bottom-center",
+      });
     },
   });
   const { mutate: getNewReceiptNoMutate, data: newRecNumber } =
@@ -94,11 +95,14 @@ export default function useMoneyTransfer() {
         data?.ReciptNo === undefined
           ? newRecNumber?.toString() || ""
           : data?.ReciptNo || "",
-      empid: selectedEmp?.id,
+      empid: selectedEmp?.ID,
     });
   };
   const handleSetShowDetails = (st: boolean) => {
     setShowDetails(st);
+  };
+  const handleCloseDialog = () => {
+    setOpenModal(false);
   };
   useMemo(() => {
     setSumTotals({});
@@ -205,60 +209,6 @@ export default function useMoneyTransfer() {
         }));
       }
     });
-
-    // get Totals For Not Cash List
-    // unPostedinvoicesList
-    //   ?.filter((invoice) => invoice.PAYMENT_METHOD !== 'CASH')
-    //   .forEach((item) => {
-    //     setSumTotalsNotNaqdy((prev) => ({
-    //       COLLECTED_COUNT:
-    //         (prev?.COLLECTED_COUNT || 0) + (item?.COLLECTED_COUNT || 0),
-    //       COLLECTED_AMOUNT:
-    //         (prev?.COLLECTED_AMOUNT || 0) + (item?.COLLECTED_AMOUNT || 0),
-    //       WATER_AMT: (prev?.WATER_AMT || 0) + (item?.WATER_AMT || 0),
-    //       SEWER_AMT: (prev?.SEWER_AMT || 0) + (item?.SEWER_AMT || 0),
-    //       BASIC_AMT: (prev?.BASIC_AMT || 0) + (item?.BASIC_AMT || 0),
-    //       INSTALLS_AMT: (prev?.INSTALLS_AMT || 0) + (item?.INSTALLS_AMT || 0),
-    //       ROUND_AMT: (prev?.ROUND_AMT || 0) + (item?.ROUND_AMT || 0),
-    //       OTHER_AMT1: (prev?.OTHER_AMT1 || 0) + (item?.OTHER_AMT1 || 0),
-    //       TANZEEM_AMT: (prev?.TANZEEM_AMT || 0) + (item?.TANZEEM_AMT || 0),
-    //       CONN_INSTALLS_AMT:
-    //         (prev?.CONN_INSTALLS_AMT || 0) + (item?.CONN_INSTALLS_AMT || 0),
-    //       METER_INSTALLS_AMT:
-    //         (prev?.METER_INSTALLS_AMT || 0) + (item?.METER_INSTALLS_AMT || 0),
-    //       METER_MAN_AMT:
-    //         (prev?.METER_MAN_AMT || 0) + (item?.METER_MAN_AMT || 0),
-    //       CONTRACT_AMT: (prev?.CONTRACT_AMT || 0) + (item?.CONTRACT_AMT || 0),
-    //       TAX_AMT: (prev?.TAX_AMT || 0) + (item?.TAX_AMT || 0),
-    //       CUR_PAYMNTS: (prev?.CUR_PAYMNTS || 0) + (item?.CUR_PAYMNTS || 0),
-    //       DBT_AMT: (prev?.DBT_AMT || 0) + (item?.DBT_AMT || 0),
-    //       CRDT_AMT: (prev?.CRDT_AMT || 0) + (item?.CRDT_AMT || 0),
-    //       AGREEM_AMT: (prev?.AGREEM_AMT || 0) + (item?.AGREEM_AMT || 0),
-    //       OTHER_AMT: (prev?.OTHER_AMT || 0) + (item?.OTHER_AMT || 0),
-    //       OTHER_AMT2: (prev?.OTHER_AMT2 || 0) + (item?.OTHER_AMT2 || 0),
-    //       OTHER_AMT3: (prev?.OTHER_AMT3 || 0) + (item?.OTHER_AMT3 || 0),
-    //       OTHER_AMT4: (prev?.OTHER_AMT4 || 0) + (item?.OTHER_AMT4 || 0),
-    //       OTHER_AMT5: (prev?.OTHER_AMT5 || 0) + (item?.OTHER_AMT5 || 0),
-    //       GOV_AMT: (prev?.GOV_AMT || 0) + (item?.GOV_AMT || 0),
-    //       UNI_AMT: (prev?.UNI_AMT || 0) + (item?.UNI_AMT || 0),
-    //       CONN_AMT: (prev?.CONN_AMT || 0) + (item?.CONN_AMT || 0),
-    //       COMPUTER_AMT: (prev?.COMPUTER_AMT || 0) + (item?.COMPUTER_AMT || 0),
-    //       TAKAFUL_AMT: (prev?.TAKAFUL_AMT || 0) + (item?.TAKAFUL_AMT || 0),
-    //       CLEAN_AMT: (prev?.CLEAN_AMT || 0) + (item?.CLEAN_AMT || 0),
-    //       OP_BLNCE: (prev?.OP_BLNCE || 0) + (item?.OP_BLNCE || 0),
-    //       DISCOUNT: (prev?.DISCOUNT || 0) + (item?.DISCOUNT || 0),
-    //       RECEIPT_CHARGE1:
-    //         (prev?.RECEIPT_CHARGE1 || 0) + (item?.RECEIPT_CHARGE1 || 0),
-    //       RECEIPT_CHARGE2:
-    //         (prev?.RECEIPT_CHARGE2 || 0) + (item?.RECEIPT_CHARGE2 || 0),
-    //       RECEIPT_CHARGE3:
-    //         (prev?.RECEIPT_CHARGE3 || 0) + (item?.RECEIPT_CHARGE3 || 0),
-    //       underBalance:
-    //         item.COLLECTION_TYPE === 'PARTIAL'
-    //           ? (prev.underBalance || 0) + (item.COLLECTED_AMOUNT || 0)
-    //           : prev.underBalance || 0,
-    //     }));
-    //   });
     setSumTotals((prev) => ({
       ...prev,
       balanceTotal:
@@ -531,5 +481,6 @@ export default function useMoneyTransfer() {
     arrSumTotalSummaryAll,
     disableReceiptNo,
     postLoading,
+    handleCloseDialog,
   };
 }

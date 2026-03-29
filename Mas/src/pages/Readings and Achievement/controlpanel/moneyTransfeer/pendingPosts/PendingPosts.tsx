@@ -6,14 +6,16 @@ import type { STATIONS } from "../../types";
 import MasDataGrid from "../../../../../componenet/shared/dataGrid";
 import usePendingPosts from "./usePendingPosts";
 import {
-  useGetAllStationsApi,
   useGetCurrentStationsApi,
   useGetIsHeadQuarterApi,
   useGetUnPostedSummaryApi,
-} from "../../api/useControlApi";
+} from "../useMoneyTransfeerApi";
+
+import usePulledHistory from "../../operations/pulledHistory/usePulledHistory";
 
 export default function PendingPosts() {
   const { setSelectedStation, selectedStation } = usePendingPosts();
+  const { useGetAllStationsApi } = usePulledHistory();
   const { data: AllStations } = useGetAllStationsApi();
   const { data: AllUnPostedBills } = useGetUnPostedSummaryApi();
   const { data: Station } = useGetCurrentStationsApi();

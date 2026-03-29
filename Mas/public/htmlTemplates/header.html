@@ -1,0 +1,31 @@
+<style>
+  .print-only {
+    display: none;
+  }
+  .small-date {
+    font-size: 9px;
+    text-align: right;
+  }
+  .company-name {
+    display: flex;
+  }
+  @media print {
+    .print-only {
+      display: block;
+      margin-bottom: 2px;
+    }
+  }
+</style>
+
+<div class="print-only">
+  <div style="position: relative">
+    <img
+      style="width: 80px; position: absolute; left: 10px; top: 0"
+      src="{{getLogo}}"
+    />
+  </div>
+  <div class="small-date"><span>توقيت الطباعة: </span>{{loud curDate}}</div>
+  <p style="font-size: 10px; font-weight: bold">
+    {{loud companyName}} <span> - {{loud stationName}} </span>
+  </p>
+</div>

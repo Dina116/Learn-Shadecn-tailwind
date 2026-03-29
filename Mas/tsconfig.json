@@ -7,7 +7,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "grpc-web-client-gen/*": ["src/grpc-web-client-gen/*"]
+      "@/*": ["src/*"],
+      "grpc-web-client-gen": ["src/grpc-web-client-gen"]
     }
   }
 }

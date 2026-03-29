@@ -65,7 +65,7 @@ export default function LoginForm() {
                 size="small"
                 onBlur={onBlur}
                 onChange={onChangeInput}
-                value={inputs.username}
+                value={inputs.Username}
                 slotProps={{
                   input: {
                     startAdornment: (
@@ -110,7 +110,7 @@ export default function LoginForm() {
                 size="small"
                 onBlur={onBlur}
                 onChange={onChangeInput}
-                value={inputs.password}
+                value={inputs.Password}
                 slotProps={{
                   input: {
                     startAdornment: (

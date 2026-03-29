@@ -45,8 +45,7 @@ import { useLoginStore } from "../../../hooks/login/useLoginStore";
 import {
   useGetMasProviderSettings,
   useGetSiteLogoProvider,
-  // useGetUserProfileApi,
-} from "../../../pages/Readings and Achievement/controlpanel/api/useControlApi";
+} from "@/pages/Readings and Achievement/controlpanel/moneyTransfeer/useMoneyTransfeerApi";
 
 // eslint-disable-next-line max-lines-per-function
 const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
@@ -245,9 +244,9 @@ const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
       // console.log(gridCell?.groupIndex, 'Group Index');
       const mpdfCell = pdfCell!;
       if (gridCell?.rowType === "header") {
-        mpdfCell.backgroundColor = "#9bcee6";
+        mpdfCell.backgroundColor = "#ffffff";
         mpdfCell.font = { size: props.headersFontSize || 12 };
-        mpdfCell.textColor = "#111111";
+        mpdfCell.textColor = "#030202";
         mpdfCell.wordWrapEnabled = true;
         mpdfCell.horizontalAlign = "center";
         mpdfCell.verticalAlign = "middle";
@@ -263,32 +262,26 @@ const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
         mpdfCell.font = { size: 8, name: "Arial" };
       }
       if (gridCell?.rowType === "group" && gridCell?.groupIndex === 0) {
-        mpdfCell.backgroundColor = "#9ed7f4";
+        mpdfCell.backgroundColor = "#000000";
         mpdfCell.font = { name: "Arial", size: 12 };
         mpdfCell.textColor = "#000";
       } else if (gridCell?.rowType === "group" && gridCell?.groupIndex === 1) {
-        mpdfCell.backgroundColor = "#c3c1c1";
+        mpdfCell.backgroundColor = "#000000";
         mpdfCell.font = { name: "Arial", size: 12 };
       } else if (gridCell?.rowType === "group" && gridCell?.groupIndex === 2) {
         // console.log(mpdfCell.text, 'Text');
-        mpdfCell.backgroundColor = "#8f8f8f";
+        mpdfCell.backgroundColor = "#fefefe";
         mpdfCell.font = { name: "Arial", size: 12 };
       } else if (
         gridCell?.rowType === "groupFooter" ||
         gridCell?.rowType === "totalFooter"
       ) {
-        // mpdfCell.text = '';
-        // mpdfCell.font = { size: 0.01 }; // Nearly invisible
-        // mpdfCell.textColor = '#FFFFFF'; // Match background
-        // mpdfCell.borderWidth = 0;
-        // mpdfCell.backgroundColor = undefined;
-        // console.log(gridCell, 'gridCell');
         mpdfCell.font = {
           name: "Arial",
           size: 10,
         };
         mpdfCell.backgroundColor = "#005782";
-        mpdfCell.textColor = "#fff";
+        mpdfCell.textColor = "#040303";
         mpdfCell.wordWrapEnabled = true;
       }
     },
@@ -524,16 +517,6 @@ const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
     dataGridRef.current.instance.state(null);
   }, []);
 
-  // const logInvisibleColumns = () => {
-  //   const { instance } = dataGridRef.current;
-  //   const cols = instance?.getVisibleColumns();
-  //   // const allColumns = instance?.getAllColumns();
-  //   // const invisibleColumns = allColumns.filter((column) => !column.visible);
-
-  //   console.log('visible Columns:', cols);
-  //   // console.log('visible count:', instance.hideColumnChooser());
-  // };
-
   const isColumnHidden = useCallback((count?: number): boolean => {
     if (count) {
       // eslint-disable-next-line no-plusplus
@@ -561,6 +544,17 @@ const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
       )}
       {props.customLoading && <LinearProgress />}
       <DataGrid
+        onRowPrepared={(e) => {
+          if (e.rowType === "group") {
+            e.rowElement.style.fontWeight = "bold";
+            e.rowElement.style.color = "black";
+            const cells = e.rowElement.querySelectorAll("td");
+            cells.forEach((cell: any) => {
+              cell.style.fontWeight = "bold";
+              cell.style.color = "black";
+            });
+          }
+        }}
         disabled={props.customLoading}
         onOptionChanged={(e) => {
           if (
@@ -654,52 +648,6 @@ const MasDataGrid = React.memo(function MasDataGrid(props: DataGridProps) {
           showInfo
           {...props.pager}
         />
-
-        {/*
-  {columns?.map((col, index) => {
-    if (col.hasChildren) {
-      return (
-        <Column alignment="center" key={index} caption={col.caption}>
-          {(col?.child || []).map((child, idx) => (
-            <Column
-              {...child}
-              dataType={child?.dataType || 'string'}
-              alignment="center"
-              fixedPosition="left"
-              key={`${child.dataField} ${idx}`}
-            >
-              <HeaderFilter allowSelectAll>
-                <Search enabled />
-              </HeaderFilter>
-            </Column>
-          ))}
-        </Column>
-      );
-    }
-    return (
-      <Column
-        {...col}
-        dataType={col.dataType || 'string'}
-        alignment="center"
-        fixedPosition="left"
-        key={`${col.dataField} ${index}`}
-        calculateCellValue={
-          col.dataType === 'number'
-            ? (data) =>
-                ConvertFloatNumbers(
-                  data[col?.dataField as any],
-                  col.digitNumAfterZero,
-                ) || data[col?.dataField as any]
-            : col.calculateCellValue
-        }
-      >
-        <HeaderFilter allowSelectAll>
-          <Search enabled />
-        </HeaderFilter>
-      </Column>
-    );
-  })}
-*/}
 
         {columns?.map((col, index) => renderColumn(col, `root-${index}-`))}
 

@@ -22,7 +22,7 @@ export type SelectOption = {
 export type billGroupsTypes = {
   GROUP_ID: string;
   DESCRIPTION: string;
-  STATION_NO: number;
+  STATION_NO: number
   UNUSED: boolean;
   READING_CYCLE_LEN: number;
 };

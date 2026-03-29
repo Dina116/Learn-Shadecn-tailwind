@@ -5,7 +5,7 @@ import {
   type WalkDataWithStatus,
 } from "./CollectionsPulledColumns";
 import { useCallback, useMemo, useState } from "react";
-import type { BILLGROUPS, FilterValues } from "../../types";
+import type { BILLGROUPS, FilterValues, WalkData } from "../../types";
 import {
   useExecuteBillingApi,
   useGetBillGroupsApi,
@@ -14,6 +14,9 @@ import {
 } from "../../api/useControlApi";
 import { useQueryClient } from "@tanstack/react-query";
 
+export function GetWalkKey(walk: WalkData) {
+  return `${walk.BOOK_NO}${walk.WALK_NO}${walk.BILLGROUP}`;
+}
 export default function useCollectedPulledPerGroup() {
   const queryClient = useQueryClient();
   const [counters, setCounters] = useState({
@@ -52,8 +55,8 @@ export default function useCollectedPulledPerGroup() {
       (bookNo: string) => {
         setCounters((prev) => ({
           ...prev,
-          success: prev.success + 1,
-          pending: prev.pending - 1,
+          success: prev.success,
+          pending: prev.pending ,
         }));
         setRowStatuses((prev) => ({
           ...prev,
@@ -62,6 +65,7 @@ export default function useCollectedPulledPerGroup() {
       },
       (error) => {
         setExecutionErrors((prev) => [...prev, error]);
+
         setCounters((prev) => ({
           ...prev,
           failed: prev.failed + 1,
@@ -131,28 +135,58 @@ export default function useCollectedPulledPerGroup() {
   );
 
   const handleExecuteAction = async () => {
-
-    const rowsToExecute = selectableRows.filter((row) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row) => selectedRowKeys.includes(row.BOOK_NO))
+      .map((row) => ({ ...row, KEY: GetWalkKey(row) }));
 
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length }); //// updata with prev state with book , walk, group as key 
+    setCounters((prev) => ({
+      ...prev,
+      pending: prev.pending + rowsToExecute.length,
+    }));
     setExecutionErrors([]);
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);
-
       const payload: ExecuteBillingPayload = {
         ...row,
         bilngDate: filters?.billingDate || "",
       };
+
       try {
         await executeBilling(payload);
-      } catch {
-        //
+        setCounters((prev) => ({
+          ...prev,
+          success: prev.success + 1,
+          pending: prev.pending - 1,
+        }));
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: "completed",
+        }));
+      } catch (error) {
+        setCounters((prev) => ({
+          ...prev,
+          failed: prev.failed + 1,
+          pending: prev.pending - 1,
+        }));
+
+        setExecutionErrors((prev) => [
+          ...prev,
+          {
+            BOOK_NO: row.BOOK_NO,
+            BILLGROUP: row.BILLGROUP,
+            WALK_NO: row.WALK_NO,
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+        ]);
+
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: "failed",
+        }));
       }
     }
     setUpdatingRowKey(null);

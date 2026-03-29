@@ -1,6 +1,7 @@
-import * as jspb from "google-protobuf";
+import * as jspb from 'google-protobuf'
 
-import * as date_pb from "./date_pb"; // proto import: "date.proto"
+import * as date_pb from './date_pb'; // proto import: "date.proto"
+
 
 export class LoginRequest extends jspb.Message {
   getUsername(): string;
@@ -25,19 +26,10 @@ export class LoginRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: LoginRequest,
-  ): LoginRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: LoginRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: LoginRequest): LoginRequest.AsObject;
+  static serializeBinaryToWriter(message: LoginRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginRequest;
-  static deserializeBinaryFromReader(
-    message: LoginRequest,
-    reader: jspb.BinaryReader,
-  ): LoginRequest;
+  static deserializeBinaryFromReader(message: LoginRequest, reader: jspb.BinaryReader): LoginRequest;
 }
 
 export namespace LoginRequest {
@@ -97,19 +89,10 @@ export class LoginResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): LoginResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: LoginResponse,
-  ): LoginResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: LoginResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: LoginResponse): LoginResponse.AsObject;
+  static serializeBinaryToWriter(message: LoginResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): LoginResponse;
-  static deserializeBinaryFromReader(
-    message: LoginResponse,
-    reader: jspb.BinaryReader,
-  ): LoginResponse;
+  static deserializeBinaryFromReader(message: LoginResponse, reader: jspb.BinaryReader): LoginResponse;
 }
 
 export namespace LoginResponse {
@@ -164,19 +147,10 @@ export class SignInResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SignInResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: SignInResponse,
-  ): SignInResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: SignInResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: SignInResponse): SignInResponse.AsObject;
+  static serializeBinaryToWriter(message: SignInResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): SignInResponse;
-  static deserializeBinaryFromReader(
-    message: SignInResponse,
-    reader: jspb.BinaryReader,
-  ): SignInResponse;
+  static deserializeBinaryFromReader(message: SignInResponse, reader: jspb.BinaryReader): SignInResponse;
 }
 
 export namespace SignInResponse {
@@ -209,19 +183,10 @@ export class RegisterResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RegisterResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: RegisterResponse,
-  ): RegisterResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: RegisterResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: RegisterResponse): RegisterResponse.AsObject;
+  static serializeBinaryToWriter(message: RegisterResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RegisterResponse;
-  static deserializeBinaryFromReader(
-    message: RegisterResponse,
-    reader: jspb.BinaryReader,
-  ): RegisterResponse;
+  static deserializeBinaryFromReader(message: RegisterResponse, reader: jspb.BinaryReader): RegisterResponse;
 }
 
 export namespace RegisterResponse {
@@ -260,19 +225,10 @@ export class SignInWithRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SignInWithRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: SignInWithRequest,
-  ): SignInWithRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: SignInWithRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: SignInWithRequest): SignInWithRequest.AsObject;
+  static serializeBinaryToWriter(message: SignInWithRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): SignInWithRequest;
-  static deserializeBinaryFromReader(
-    message: SignInWithRequest,
-    reader: jspb.BinaryReader,
-  ): SignInWithRequest;
+  static deserializeBinaryFromReader(message: SignInWithRequest, reader: jspb.BinaryReader): SignInWithRequest;
 }
 
 export namespace SignInWithRequest {
@@ -343,19 +299,10 @@ export class RegisterRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RegisterRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: RegisterRequest,
-  ): RegisterRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: RegisterRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: RegisterRequest): RegisterRequest.AsObject;
+  static serializeBinaryToWriter(message: RegisterRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RegisterRequest;
-  static deserializeBinaryFromReader(
-    message: RegisterRequest,
-    reader: jspb.BinaryReader,
-  ): RegisterRequest;
+  static deserializeBinaryFromReader(message: RegisterRequest, reader: jspb.BinaryReader): RegisterRequest;
 }
 
 export namespace RegisterRequest {
@@ -397,19 +344,10 @@ export class ForgetRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ForgetRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ForgetRequest,
-  ): ForgetRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: ForgetRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ForgetRequest): ForgetRequest.AsObject;
+  static serializeBinaryToWriter(message: ForgetRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ForgetRequest;
-  static deserializeBinaryFromReader(
-    message: ForgetRequest,
-    reader: jspb.BinaryReader,
-  ): ForgetRequest;
+  static deserializeBinaryFromReader(message: ForgetRequest, reader: jspb.BinaryReader): ForgetRequest;
 }
 
 export namespace ForgetRequest {
@@ -444,19 +382,10 @@ export class ValRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ValRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ValRequest,
-  ): ValRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: ValRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ValRequest): ValRequest.AsObject;
+  static serializeBinaryToWriter(message: ValRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ValRequest;
-  static deserializeBinaryFromReader(
-    message: ValRequest,
-    reader: jspb.BinaryReader,
-  ): ValRequest;
+  static deserializeBinaryFromReader(message: ValRequest, reader: jspb.BinaryReader): ValRequest;
 }
 
 export namespace ValRequest {
@@ -486,19 +415,10 @@ export class Emptymessage extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Emptymessage.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: Emptymessage,
-  ): Emptymessage.AsObject;
-  static serializeBinaryToWriter(
-    message: Emptymessage,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: Emptymessage): Emptymessage.AsObject;
+  static serializeBinaryToWriter(message: Emptymessage, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): Emptymessage;
-  static deserializeBinaryFromReader(
-    message: Emptymessage,
-    reader: jspb.BinaryReader,
-  ): Emptymessage;
+  static deserializeBinaryFromReader(message: Emptymessage, reader: jspb.BinaryReader): Emptymessage;
 }
 
 export namespace Emptymessage {
@@ -527,19 +447,10 @@ export class AdminSignInRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminSignInRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AdminSignInRequest,
-  ): AdminSignInRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: AdminSignInRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AdminSignInRequest): AdminSignInRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminSignInRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AdminSignInRequest;
-  static deserializeBinaryFromReader(
-    message: AdminSignInRequest,
-    reader: jspb.BinaryReader,
-  ): AdminSignInRequest;
+  static deserializeBinaryFromReader(message: AdminSignInRequest, reader: jspb.BinaryReader): AdminSignInRequest;
 }
 
 export namespace AdminSignInRequest {
@@ -558,19 +469,10 @@ export class GetAllSitesResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetAllSitesResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetAllSitesResponse,
-  ): GetAllSitesResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetAllSitesResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetAllSitesResponse): GetAllSitesResponse.AsObject;
+  static serializeBinaryToWriter(message: GetAllSitesResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetAllSitesResponse;
-  static deserializeBinaryFromReader(
-    message: GetAllSitesResponse,
-    reader: jspb.BinaryReader,
-  ): GetAllSitesResponse;
+  static deserializeBinaryFromReader(message: GetAllSitesResponse, reader: jspb.BinaryReader): GetAllSitesResponse;
 }
 
 export namespace GetAllSitesResponse {
@@ -633,15 +535,9 @@ export class SITES extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): SITES.AsObject;
   static toObject(includeInstance: boolean, msg: SITES): SITES.AsObject;
-  static serializeBinaryToWriter(
-    message: SITES,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: SITES, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): SITES;
-  static deserializeBinaryFromReader(
-    message: SITES,
-    reader: jspb.BinaryReader,
-  ): SITES;
+  static deserializeBinaryFromReader(message: SITES, reader: jspb.BinaryReader): SITES;
 }
 
 export namespace SITES {
@@ -667,19 +563,10 @@ export class licenceResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): licenceResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: licenceResponse,
-  ): licenceResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: licenceResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: licenceResponse): licenceResponse.AsObject;
+  static serializeBinaryToWriter(message: licenceResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): licenceResponse;
-  static deserializeBinaryFromReader(
-    message: licenceResponse,
-    reader: jspb.BinaryReader,
-  ): licenceResponse;
+  static deserializeBinaryFromReader(message: licenceResponse, reader: jspb.BinaryReader): licenceResponse;
 }
 
 export namespace licenceResponse {
@@ -696,19 +583,10 @@ export class access_contraint_response extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): access_contraint_response.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: access_contraint_response,
-  ): access_contraint_response.AsObject;
-  static serializeBinaryToWriter(
-    message: access_contraint_response,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: access_contraint_response): access_contraint_response.AsObject;
+  static serializeBinaryToWriter(message: access_contraint_response, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): access_contraint_response;
-  static deserializeBinaryFromReader(
-    message: access_contraint_response,
-    reader: jspb.BinaryReader,
-  ): access_contraint_response;
+  static deserializeBinaryFromReader(message: access_contraint_response, reader: jspb.BinaryReader): access_contraint_response;
 }
 
 export namespace access_contraint_response {
@@ -725,19 +603,10 @@ export class CashierRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CashierRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CashierRequest,
-  ): CashierRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: CashierRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CashierRequest): CashierRequest.AsObject;
+  static serializeBinaryToWriter(message: CashierRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CashierRequest;
-  static deserializeBinaryFromReader(
-    message: CashierRequest,
-    reader: jspb.BinaryReader,
-  ): CashierRequest;
+  static deserializeBinaryFromReader(message: CashierRequest, reader: jspb.BinaryReader): CashierRequest;
 }
 
 export namespace CashierRequest {
@@ -774,19 +643,10 @@ export class GetlientSCountsResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetlientSCountsResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetlientSCountsResponse,
-  ): GetlientSCountsResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetlientSCountsResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetlientSCountsResponse): GetlientSCountsResponse.AsObject;
+  static serializeBinaryToWriter(message: GetlientSCountsResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetlientSCountsResponse;
-  static deserializeBinaryFromReader(
-    message: GetlientSCountsResponse,
-    reader: jspb.BinaryReader,
-  ): GetlientSCountsResponse;
+  static deserializeBinaryFromReader(message: GetlientSCountsResponse, reader: jspb.BinaryReader): GetlientSCountsResponse;
 }
 
 export namespace GetlientSCountsResponse {
@@ -817,19 +677,10 @@ export class ProfileResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ProfileResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ProfileResponse,
-  ): ProfileResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: ProfileResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ProfileResponse): ProfileResponse.AsObject;
+  static serializeBinaryToWriter(message: ProfileResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ProfileResponse;
-  static deserializeBinaryFromReader(
-    message: ProfileResponse,
-    reader: jspb.BinaryReader,
-  ): ProfileResponse;
+  static deserializeBinaryFromReader(message: ProfileResponse, reader: jspb.BinaryReader): ProfileResponse;
 }
 
 export namespace ProfileResponse {
@@ -858,19 +709,10 @@ export class MessageResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): MessageResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: MessageResponse,
-  ): MessageResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: MessageResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: MessageResponse): MessageResponse.AsObject;
+  static serializeBinaryToWriter(message: MessageResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): MessageResponse;
-  static deserializeBinaryFromReader(
-    message: MessageResponse,
-    reader: jspb.BinaryReader,
-  ): MessageResponse;
+  static deserializeBinaryFromReader(message: MessageResponse, reader: jspb.BinaryReader): MessageResponse;
 }
 
 export namespace MessageResponse {
@@ -894,19 +736,10 @@ export class CustRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CustRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CustRequest,
-  ): CustRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: CustRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CustRequest): CustRequest.AsObject;
+  static serializeBinaryToWriter(message: CustRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CustRequest;
-  static deserializeBinaryFromReader(
-    message: CustRequest,
-    reader: jspb.BinaryReader,
-  ): CustRequest;
+  static deserializeBinaryFromReader(message: CustRequest, reader: jspb.BinaryReader): CustRequest;
 }
 
 export namespace CustRequest {
@@ -959,19 +792,10 @@ export class AddRelatedCustkeyRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AddRelatedCustkeyRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AddRelatedCustkeyRequest,
-  ): AddRelatedCustkeyRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: AddRelatedCustkeyRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AddRelatedCustkeyRequest): AddRelatedCustkeyRequest.AsObject;
+  static serializeBinaryToWriter(message: AddRelatedCustkeyRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AddRelatedCustkeyRequest;
-  static deserializeBinaryFromReader(
-    message: AddRelatedCustkeyRequest,
-    reader: jspb.BinaryReader,
-  ): AddRelatedCustkeyRequest;
+  static deserializeBinaryFromReader(message: AddRelatedCustkeyRequest, reader: jspb.BinaryReader): AddRelatedCustkeyRequest;
 }
 
 export namespace AddRelatedCustkeyRequest {
@@ -995,19 +819,10 @@ export class GetCountsRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetCountsRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetCountsRequest,
-  ): GetCountsRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: GetCountsRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetCountsRequest): GetCountsRequest.AsObject;
+  static serializeBinaryToWriter(message: GetCountsRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetCountsRequest;
-  static deserializeBinaryFromReader(
-    message: GetCountsRequest,
-    reader: jspb.BinaryReader,
-  ): GetCountsRequest;
+  static deserializeBinaryFromReader(message: GetCountsRequest, reader: jspb.BinaryReader): GetCountsRequest;
 }
 
 export namespace GetCountsRequest {
@@ -1034,19 +849,10 @@ export class GetCountsResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetCountsResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetCountsResponse,
-  ): GetCountsResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetCountsResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetCountsResponse): GetCountsResponse.AsObject;
+  static serializeBinaryToWriter(message: GetCountsResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetCountsResponse;
-  static deserializeBinaryFromReader(
-    message: GetCountsResponse,
-    reader: jspb.BinaryReader,
-  ): GetCountsResponse;
+  static deserializeBinaryFromReader(message: GetCountsResponse, reader: jspb.BinaryReader): GetCountsResponse;
 }
 
 export namespace GetCountsResponse {
@@ -1145,19 +951,10 @@ export class AdminRegisterRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AdminRegisterRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AdminRegisterRequest,
-  ): AdminRegisterRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: AdminRegisterRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AdminRegisterRequest): AdminRegisterRequest.AsObject;
+  static serializeBinaryToWriter(message: AdminRegisterRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AdminRegisterRequest;
-  static deserializeBinaryFromReader(
-    message: AdminRegisterRequest,
-    reader: jspb.BinaryReader,
-  ): AdminRegisterRequest;
+  static deserializeBinaryFromReader(message: AdminRegisterRequest, reader: jspb.BinaryReader): AdminRegisterRequest;
 }
 
 export namespace AdminRegisterRequest {
@@ -1190,19 +987,10 @@ export class GetAllADMINSResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetAllADMINSResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetAllADMINSResponse,
-  ): GetAllADMINSResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetAllADMINSResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetAllADMINSResponse): GetAllADMINSResponse.AsObject;
+  static serializeBinaryToWriter(message: GetAllADMINSResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetAllADMINSResponse;
-  static deserializeBinaryFromReader(
-    message: GetAllADMINSResponse,
-    reader: jspb.BinaryReader,
-  ): GetAllADMINSResponse;
+  static deserializeBinaryFromReader(message: GetAllADMINSResponse, reader: jspb.BinaryReader): GetAllADMINSResponse;
 }
 
 export namespace GetAllADMINSResponse {
@@ -1294,19 +1082,10 @@ export class UpdateProfileRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateProfileRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: UpdateProfileRequest,
-  ): UpdateProfileRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: UpdateProfileRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: UpdateProfileRequest): UpdateProfileRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdateProfileRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): UpdateProfileRequest;
-  static deserializeBinaryFromReader(
-    message: UpdateProfileRequest,
-    reader: jspb.BinaryReader,
-  ): UpdateProfileRequest;
+  static deserializeBinaryFromReader(message: UpdateProfileRequest, reader: jspb.BinaryReader): UpdateProfileRequest;
 }
 
 export namespace UpdateProfileRequest {
@@ -1338,19 +1117,10 @@ export class ResetAdminPassRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ResetAdminPassRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ResetAdminPassRequest,
-  ): ResetAdminPassRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: ResetAdminPassRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ResetAdminPassRequest): ResetAdminPassRequest.AsObject;
+  static serializeBinaryToWriter(message: ResetAdminPassRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ResetAdminPassRequest;
-  static deserializeBinaryFromReader(
-    message: ResetAdminPassRequest,
-    reader: jspb.BinaryReader,
-  ): ResetAdminPassRequest;
+  static deserializeBinaryFromReader(message: ResetAdminPassRequest, reader: jspb.BinaryReader): ResetAdminPassRequest;
 }
 
 export namespace ResetAdminPassRequest {
@@ -1372,19 +1142,10 @@ export class ResetPassRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ResetPassRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ResetPassRequest,
-  ): ResetPassRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: ResetPassRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ResetPassRequest): ResetPassRequest.AsObject;
+  static serializeBinaryToWriter(message: ResetPassRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ResetPassRequest;
-  static deserializeBinaryFromReader(
-    message: ResetPassRequest,
-    reader: jspb.BinaryReader,
-  ): ResetPassRequest;
+  static deserializeBinaryFromReader(message: ResetPassRequest, reader: jspb.BinaryReader): ResetPassRequest;
 }
 
 export namespace ResetPassRequest {
@@ -1402,19 +1163,10 @@ export class GetAdminRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetAdminRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetAdminRequest,
-  ): GetAdminRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: GetAdminRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetAdminRequest): GetAdminRequest.AsObject;
+  static serializeBinaryToWriter(message: GetAdminRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetAdminRequest;
-  static deserializeBinaryFromReader(
-    message: GetAdminRequest,
-    reader: jspb.BinaryReader,
-  ): GetAdminRequest;
+  static deserializeBinaryFromReader(message: GetAdminRequest, reader: jspb.BinaryReader): GetAdminRequest;
 }
 
 export namespace GetAdminRequest {
@@ -1431,19 +1183,10 @@ export class GetAllUserResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetAllUserResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetAllUserResponse,
-  ): GetAllUserResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetAllUserResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetAllUserResponse): GetAllUserResponse.AsObject;
+  static serializeBinaryToWriter(message: GetAllUserResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetAllUserResponse;
-  static deserializeBinaryFromReader(
-    message: GetAllUserResponse,
-    reader: jspb.BinaryReader,
-  ): GetAllUserResponse;
+  static deserializeBinaryFromReader(message: GetAllUserResponse, reader: jspb.BinaryReader): GetAllUserResponse;
 }
 
 export namespace GetAllUserResponse {
@@ -1536,15 +1279,9 @@ export class MUSERS extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): MUSERS.AsObject;
   static toObject(includeInstance: boolean, msg: MUSERS): MUSERS.AsObject;
-  static serializeBinaryToWriter(
-    message: MUSERS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: MUSERS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): MUSERS;
-  static deserializeBinaryFromReader(
-    message: MUSERS,
-    reader: jspb.BinaryReader,
-  ): MUSERS;
+  static deserializeBinaryFromReader(message: MUSERS, reader: jspb.BinaryReader): MUSERS;
 }
 
 export namespace MUSERS {
@@ -1581,19 +1318,10 @@ export class MicroUpdateRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): MicroUpdateRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: MicroUpdateRequest,
-  ): MicroUpdateRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: MicroUpdateRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: MicroUpdateRequest): MicroUpdateRequest.AsObject;
+  static serializeBinaryToWriter(message: MicroUpdateRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): MicroUpdateRequest;
-  static deserializeBinaryFromReader(
-    message: MicroUpdateRequest,
-    reader: jspb.BinaryReader,
-  ): MicroUpdateRequest;
+  static deserializeBinaryFromReader(message: MicroUpdateRequest, reader: jspb.BinaryReader): MicroUpdateRequest;
 }
 
 export namespace MicroUpdateRequest {
@@ -1631,19 +1359,10 @@ export class AllDataRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AllDataRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AllDataRequest,
-  ): AllDataRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: AllDataRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AllDataRequest): AllDataRequest.AsObject;
+  static serializeBinaryToWriter(message: AllDataRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AllDataRequest;
-  static deserializeBinaryFromReader(
-    message: AllDataRequest,
-    reader: jspb.BinaryReader,
-  ): AllDataRequest;
+  static deserializeBinaryFromReader(message: AllDataRequest, reader: jspb.BinaryReader): AllDataRequest;
 }
 
 export namespace AllDataRequest {
@@ -1669,19 +1388,10 @@ export class AllDataResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AllDataResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AllDataResponse,
-  ): AllDataResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: AllDataResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AllDataResponse): AllDataResponse.AsObject;
+  static serializeBinaryToWriter(message: AllDataResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AllDataResponse;
-  static deserializeBinaryFromReader(
-    message: AllDataResponse,
-    reader: jspb.BinaryReader,
-  ): AllDataResponse;
+  static deserializeBinaryFromReader(message: AllDataResponse, reader: jspb.BinaryReader): AllDataResponse;
 }
 
 export namespace AllDataResponse {
@@ -1704,19 +1414,10 @@ export class ActivationRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ActivationRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ActivationRequest,
-  ): ActivationRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: ActivationRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ActivationRequest): ActivationRequest.AsObject;
+  static serializeBinaryToWriter(message: ActivationRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ActivationRequest;
-  static deserializeBinaryFromReader(
-    message: ActivationRequest,
-    reader: jspb.BinaryReader,
-  ): ActivationRequest;
+  static deserializeBinaryFromReader(message: ActivationRequest, reader: jspb.BinaryReader): ActivationRequest;
 }
 
 export namespace ActivationRequest {
@@ -1744,19 +1445,10 @@ export class GetUserProfileResponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserProfileResponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetUserProfileResponse,
-  ): GetUserProfileResponse.AsObject;
-  static serializeBinaryToWriter(
-    message: GetUserProfileResponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetUserProfileResponse): GetUserProfileResponse.AsObject;
+  static serializeBinaryToWriter(message: GetUserProfileResponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetUserProfileResponse;
-  static deserializeBinaryFromReader(
-    message: GetUserProfileResponse,
-    reader: jspb.BinaryReader,
-  ): GetUserProfileResponse;
+  static deserializeBinaryFromReader(message: GetUserProfileResponse, reader: jspb.BinaryReader): GetUserProfileResponse;
 }
 
 export namespace GetUserProfileResponse {
@@ -1775,19 +1467,10 @@ export class GetUserRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetUserRequest,
-  ): GetUserRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: GetUserRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetUserRequest): GetUserRequest.AsObject;
+  static serializeBinaryToWriter(message: GetUserRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetUserRequest;
-  static deserializeBinaryFromReader(
-    message: GetUserRequest,
-    reader: jspb.BinaryReader,
-  ): GetUserRequest;
+  static deserializeBinaryFromReader(message: GetUserRequest, reader: jspb.BinaryReader): GetUserRequest;
 }
 
 export namespace GetUserRequest {
@@ -1804,19 +1487,10 @@ export class GetUserByNameRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserByNameRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetUserByNameRequest,
-  ): GetUserByNameRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: GetUserByNameRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetUserByNameRequest): GetUserByNameRequest.AsObject;
+  static serializeBinaryToWriter(message: GetUserByNameRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetUserByNameRequest;
-  static deserializeBinaryFromReader(
-    message: GetUserByNameRequest,
-    reader: jspb.BinaryReader,
-  ): GetUserByNameRequest;
+  static deserializeBinaryFromReader(message: GetUserByNameRequest, reader: jspb.BinaryReader): GetUserByNameRequest;
 }
 
 export namespace GetUserByNameRequest {
@@ -1833,19 +1507,10 @@ export class GetClientRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetClientRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GetClientRequest,
-  ): GetClientRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: GetClientRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GetClientRequest): GetClientRequest.AsObject;
+  static serializeBinaryToWriter(message: GetClientRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GetClientRequest;
-  static deserializeBinaryFromReader(
-    message: GetClientRequest,
-    reader: jspb.BinaryReader,
-  ): GetClientRequest;
+  static deserializeBinaryFromReader(message: GetClientRequest, reader: jspb.BinaryReader): GetClientRequest;
 }
 
 export namespace GetClientRequest {
@@ -1863,15 +1528,9 @@ export class USERSS extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERSS.AsObject;
   static toObject(includeInstance: boolean, msg: USERSS): USERSS.AsObject;
-  static serializeBinaryToWriter(
-    message: USERSS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: USERSS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERSS;
-  static deserializeBinaryFromReader(
-    message: USERSS,
-    reader: jspb.BinaryReader,
-  ): USERSS;
+  static deserializeBinaryFromReader(message: USERSS, reader: jspb.BinaryReader): USERSS;
 }
 
 export namespace USERSS {
@@ -1903,19 +1562,10 @@ export class PassUserRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PassUserRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: PassUserRequest,
-  ): PassUserRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: PassUserRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: PassUserRequest): PassUserRequest.AsObject;
+  static serializeBinaryToWriter(message: PassUserRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): PassUserRequest;
-  static deserializeBinaryFromReader(
-    message: PassUserRequest,
-    reader: jspb.BinaryReader,
-  ): PassUserRequest;
+  static deserializeBinaryFromReader(message: PassUserRequest, reader: jspb.BinaryReader): PassUserRequest;
 }
 
 export namespace PassUserRequest {
@@ -1950,19 +1600,10 @@ export class Add_DEPARTMENT_REQ extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Add_DEPARTMENT_REQ.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: Add_DEPARTMENT_REQ,
-  ): Add_DEPARTMENT_REQ.AsObject;
-  static serializeBinaryToWriter(
-    message: Add_DEPARTMENT_REQ,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: Add_DEPARTMENT_REQ): Add_DEPARTMENT_REQ.AsObject;
+  static serializeBinaryToWriter(message: Add_DEPARTMENT_REQ, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): Add_DEPARTMENT_REQ;
-  static deserializeBinaryFromReader(
-    message: Add_DEPARTMENT_REQ,
-    reader: jspb.BinaryReader,
-  ): Add_DEPARTMENT_REQ;
+  static deserializeBinaryFromReader(message: Add_DEPARTMENT_REQ, reader: jspb.BinaryReader): Add_DEPARTMENT_REQ;
 }
 
 export namespace Add_DEPARTMENT_REQ {
@@ -1982,19 +1623,10 @@ export class DEPARTMENT_REQ extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DEPARTMENT_REQ.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: DEPARTMENT_REQ,
-  ): DEPARTMENT_REQ.AsObject;
-  static serializeBinaryToWriter(
-    message: DEPARTMENT_REQ,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: DEPARTMENT_REQ): DEPARTMENT_REQ.AsObject;
+  static serializeBinaryToWriter(message: DEPARTMENT_REQ, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): DEPARTMENT_REQ;
-  static deserializeBinaryFromReader(
-    message: DEPARTMENT_REQ,
-    reader: jspb.BinaryReader,
-  ): DEPARTMENT_REQ;
+  static deserializeBinaryFromReader(message: DEPARTMENT_REQ, reader: jspb.BinaryReader): DEPARTMENT_REQ;
 }
 
 export namespace DEPARTMENT_REQ {
@@ -2026,19 +1658,10 @@ export class USERS_DEPARTMENTS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERS_DEPARTMENTS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USERS_DEPARTMENTS,
-  ): USERS_DEPARTMENTS.AsObject;
-  static serializeBinaryToWriter(
-    message: USERS_DEPARTMENTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USERS_DEPARTMENTS): USERS_DEPARTMENTS.AsObject;
+  static serializeBinaryToWriter(message: USERS_DEPARTMENTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERS_DEPARTMENTS;
-  static deserializeBinaryFromReader(
-    message: USERS_DEPARTMENTS,
-    reader: jspb.BinaryReader,
-  ): USERS_DEPARTMENTS;
+  static deserializeBinaryFromReader(message: USERS_DEPARTMENTS, reader: jspb.BinaryReader): USERS_DEPARTMENTS;
 }
 
 export namespace USERS_DEPARTMENTS {
@@ -2088,19 +1711,10 @@ export class DEPARTMENTS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DEPARTMENTS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: DEPARTMENTS,
-  ): DEPARTMENTS.AsObject;
-  static serializeBinaryToWriter(
-    message: DEPARTMENTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: DEPARTMENTS): DEPARTMENTS.AsObject;
+  static serializeBinaryToWriter(message: DEPARTMENTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): DEPARTMENTS;
-  static deserializeBinaryFromReader(
-    message: DEPARTMENTS,
-    reader: jspb.BinaryReader,
-  ): DEPARTMENTS;
+  static deserializeBinaryFromReader(message: DEPARTMENTS, reader: jspb.BinaryReader): DEPARTMENTS;
 }
 
 export namespace DEPARTMENTS {
@@ -2123,19 +1737,10 @@ export class USER_DEPARTMENTS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USER_DEPARTMENTS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USER_DEPARTMENTS,
-  ): USER_DEPARTMENTS.AsObject;
-  static serializeBinaryToWriter(
-    message: USER_DEPARTMENTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USER_DEPARTMENTS): USER_DEPARTMENTS.AsObject;
+  static serializeBinaryToWriter(message: USER_DEPARTMENTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USER_DEPARTMENTS;
-  static deserializeBinaryFromReader(
-    message: USER_DEPARTMENTS,
-    reader: jspb.BinaryReader,
-  ): USER_DEPARTMENTS;
+  static deserializeBinaryFromReader(message: USER_DEPARTMENTS, reader: jspb.BinaryReader): USER_DEPARTMENTS;
 }
 
 export namespace USER_DEPARTMENTS {
@@ -2152,19 +1757,10 @@ export class AllDEPARTMENTS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AllDEPARTMENTS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AllDEPARTMENTS,
-  ): AllDEPARTMENTS.AsObject;
-  static serializeBinaryToWriter(
-    message: AllDEPARTMENTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AllDEPARTMENTS): AllDEPARTMENTS.AsObject;
+  static serializeBinaryToWriter(message: AllDEPARTMENTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AllDEPARTMENTS;
-  static deserializeBinaryFromReader(
-    message: AllDEPARTMENTS,
-    reader: jspb.BinaryReader,
-  ): AllDEPARTMENTS;
+  static deserializeBinaryFromReader(message: AllDEPARTMENTS, reader: jspb.BinaryReader): AllDEPARTMENTS;
 }
 
 export namespace AllDEPARTMENTS {
@@ -2181,19 +1777,10 @@ export class GETDEPARTMENTSFILTER extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GETDEPARTMENTSFILTER.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GETDEPARTMENTSFILTER,
-  ): GETDEPARTMENTSFILTER.AsObject;
-  static serializeBinaryToWriter(
-    message: GETDEPARTMENTSFILTER,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GETDEPARTMENTSFILTER): GETDEPARTMENTSFILTER.AsObject;
+  static serializeBinaryToWriter(message: GETDEPARTMENTSFILTER, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GETDEPARTMENTSFILTER;
-  static deserializeBinaryFromReader(
-    message: GETDEPARTMENTSFILTER,
-    reader: jspb.BinaryReader,
-  ): GETDEPARTMENTSFILTER;
+  static deserializeBinaryFromReader(message: GETDEPARTMENTSFILTER, reader: jspb.BinaryReader): GETDEPARTMENTSFILTER;
 }
 
 export namespace GETDEPARTMENTSFILTER {
@@ -2210,19 +1797,10 @@ export class GETUSERDEPARTMENTSREQ extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GETUSERDEPARTMENTSREQ.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GETUSERDEPARTMENTSREQ,
-  ): GETUSERDEPARTMENTSREQ.AsObject;
-  static serializeBinaryToWriter(
-    message: GETUSERDEPARTMENTSREQ,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GETUSERDEPARTMENTSREQ): GETUSERDEPARTMENTSREQ.AsObject;
+  static serializeBinaryToWriter(message: GETUSERDEPARTMENTSREQ, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GETUSERDEPARTMENTSREQ;
-  static deserializeBinaryFromReader(
-    message: GETUSERDEPARTMENTSREQ,
-    reader: jspb.BinaryReader,
-  ): GETUSERDEPARTMENTSREQ;
+  static deserializeBinaryFromReader(message: GETUSERDEPARTMENTSREQ, reader: jspb.BinaryReader): GETUSERDEPARTMENTSREQ;
 }
 
 export namespace GETUSERDEPARTMENTSREQ {
@@ -2239,19 +1817,10 @@ export class USERDEPARTMENTSMESG extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERDEPARTMENTSMESG.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USERDEPARTMENTSMESG,
-  ): USERDEPARTMENTSMESG.AsObject;
-  static serializeBinaryToWriter(
-    message: USERDEPARTMENTSMESG,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USERDEPARTMENTSMESG): USERDEPARTMENTSMESG.AsObject;
+  static serializeBinaryToWriter(message: USERDEPARTMENTSMESG, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERDEPARTMENTSMESG;
-  static deserializeBinaryFromReader(
-    message: USERDEPARTMENTSMESG,
-    reader: jspb.BinaryReader,
-  ): USERDEPARTMENTSMESG;
+  static deserializeBinaryFromReader(message: USERDEPARTMENTSMESG, reader: jspb.BinaryReader): USERDEPARTMENTSMESG;
 }
 
 export namespace USERDEPARTMENTSMESG {
@@ -2268,19 +1837,10 @@ export class DEPARTMENTIID extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DEPARTMENTIID.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: DEPARTMENTIID,
-  ): DEPARTMENTIID.AsObject;
-  static serializeBinaryToWriter(
-    message: DEPARTMENTIID,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: DEPARTMENTIID): DEPARTMENTIID.AsObject;
+  static serializeBinaryToWriter(message: DEPARTMENTIID, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): DEPARTMENTIID;
-  static deserializeBinaryFromReader(
-    message: DEPARTMENTIID,
-    reader: jspb.BinaryReader,
-  ): DEPARTMENTIID;
+  static deserializeBinaryFromReader(message: DEPARTMENTIID, reader: jspb.BinaryReader): DEPARTMENTIID;
 }
 
 export namespace DEPARTMENTIID {
@@ -2297,19 +1857,10 @@ export class USERDEPARTMENTSRES extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERDEPARTMENTSRES.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USERDEPARTMENTSRES,
-  ): USERDEPARTMENTSRES.AsObject;
-  static serializeBinaryToWriter(
-    message: USERDEPARTMENTSRES,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USERDEPARTMENTSRES): USERDEPARTMENTSRES.AsObject;
+  static serializeBinaryToWriter(message: USERDEPARTMENTSRES, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERDEPARTMENTSRES;
-  static deserializeBinaryFromReader(
-    message: USERDEPARTMENTSRES,
-    reader: jspb.BinaryReader,
-  ): USERDEPARTMENTSRES;
+  static deserializeBinaryFromReader(message: USERDEPARTMENTSRES, reader: jspb.BinaryReader): USERDEPARTMENTSRES;
 }
 
 export namespace USERDEPARTMENTSRES {
@@ -2346,19 +1897,10 @@ export class USERS_STATIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERS_STATIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USERS_STATIONS,
-  ): USERS_STATIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: USERS_STATIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USERS_STATIONS): USERS_STATIONS.AsObject;
+  static serializeBinaryToWriter(message: USERS_STATIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERS_STATIONS;
-  static deserializeBinaryFromReader(
-    message: USERS_STATIONS,
-    reader: jspb.BinaryReader,
-  ): USERS_STATIONS;
+  static deserializeBinaryFromReader(message: USERS_STATIONS, reader: jspb.BinaryReader): USERS_STATIONS;
 }
 
 export namespace USERS_STATIONS {
@@ -2429,19 +1971,10 @@ export class USER_STATIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USER_STATIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: USER_STATIONS,
-  ): USER_STATIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: USER_STATIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: USER_STATIONS): USER_STATIONS.AsObject;
+  static serializeBinaryToWriter(message: USER_STATIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USER_STATIONS;
-  static deserializeBinaryFromReader(
-    message: USER_STATIONS,
-    reader: jspb.BinaryReader,
-  ): USER_STATIONS;
+  static deserializeBinaryFromReader(message: USER_STATIONS, reader: jspb.BinaryReader): USER_STATIONS;
 }
 
 export namespace USER_STATIONS {
@@ -2468,19 +2001,10 @@ export class ALL_TAX_CLIENT_IDS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ALL_TAX_CLIENT_IDS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ALL_TAX_CLIENT_IDS,
-  ): ALL_TAX_CLIENT_IDS.AsObject;
-  static serializeBinaryToWriter(
-    message: ALL_TAX_CLIENT_IDS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ALL_TAX_CLIENT_IDS): ALL_TAX_CLIENT_IDS.AsObject;
+  static serializeBinaryToWriter(message: ALL_TAX_CLIENT_IDS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ALL_TAX_CLIENT_IDS;
-  static deserializeBinaryFromReader(
-    message: ALL_TAX_CLIENT_IDS,
-    reader: jspb.BinaryReader,
-  ): ALL_TAX_CLIENT_IDS;
+  static deserializeBinaryFromReader(message: ALL_TAX_CLIENT_IDS, reader: jspb.BinaryReader): ALL_TAX_CLIENT_IDS;
 }
 
 export namespace ALL_TAX_CLIENT_IDS {
@@ -2497,19 +2021,10 @@ export class TAX_CLIENT_ID_REQ extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TAX_CLIENT_ID_REQ.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: TAX_CLIENT_ID_REQ,
-  ): TAX_CLIENT_ID_REQ.AsObject;
-  static serializeBinaryToWriter(
-    message: TAX_CLIENT_ID_REQ,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: TAX_CLIENT_ID_REQ): TAX_CLIENT_ID_REQ.AsObject;
+  static serializeBinaryToWriter(message: TAX_CLIENT_ID_REQ, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): TAX_CLIENT_ID_REQ;
-  static deserializeBinaryFromReader(
-    message: TAX_CLIENT_ID_REQ,
-    reader: jspb.BinaryReader,
-  ): TAX_CLIENT_ID_REQ;
+  static deserializeBinaryFromReader(message: TAX_CLIENT_ID_REQ, reader: jspb.BinaryReader): TAX_CLIENT_ID_REQ;
 }
 
 export namespace TAX_CLIENT_ID_REQ {
@@ -2526,19 +2041,10 @@ export class CLIENT_ID_REQ extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CLIENT_ID_REQ.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CLIENT_ID_REQ,
-  ): CLIENT_ID_REQ.AsObject;
-  static serializeBinaryToWriter(
-    message: CLIENT_ID_REQ,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CLIENT_ID_REQ): CLIENT_ID_REQ.AsObject;
+  static serializeBinaryToWriter(message: CLIENT_ID_REQ, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CLIENT_ID_REQ;
-  static deserializeBinaryFromReader(
-    message: CLIENT_ID_REQ,
-    reader: jspb.BinaryReader,
-  ): CLIENT_ID_REQ;
+  static deserializeBinaryFromReader(message: CLIENT_ID_REQ, reader: jspb.BinaryReader): CLIENT_ID_REQ;
 }
 
 export namespace CLIENT_ID_REQ {
@@ -2580,19 +2086,10 @@ export class TAX_CLIENT_IDS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TAX_CLIENT_IDS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: TAX_CLIENT_IDS,
-  ): TAX_CLIENT_IDS.AsObject;
-  static serializeBinaryToWriter(
-    message: TAX_CLIENT_IDS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: TAX_CLIENT_IDS): TAX_CLIENT_IDS.AsObject;
+  static serializeBinaryToWriter(message: TAX_CLIENT_IDS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): TAX_CLIENT_IDS;
-  static deserializeBinaryFromReader(
-    message: TAX_CLIENT_IDS,
-    reader: jspb.BinaryReader,
-  ): TAX_CLIENT_IDS;
+  static deserializeBinaryFromReader(message: TAX_CLIENT_IDS, reader: jspb.BinaryReader): TAX_CLIENT_IDS;
 }
 
 export namespace TAX_CLIENT_IDS {
@@ -2629,19 +2126,10 @@ export class Min_USER_STATIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Min_USER_STATIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: Min_USER_STATIONS,
-  ): Min_USER_STATIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: Min_USER_STATIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: Min_USER_STATIONS): Min_USER_STATIONS.AsObject;
+  static serializeBinaryToWriter(message: Min_USER_STATIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): Min_USER_STATIONS;
-  static deserializeBinaryFromReader(
-    message: Min_USER_STATIONS,
-    reader: jspb.BinaryReader,
-  ): Min_USER_STATIONS;
+  static deserializeBinaryFromReader(message: Min_USER_STATIONS, reader: jspb.BinaryReader): Min_USER_STATIONS;
 }
 
 export namespace Min_USER_STATIONS {
@@ -2666,19 +2154,10 @@ export class RegisterUserRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RegisterUserRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: RegisterUserRequest,
-  ): RegisterUserRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: RegisterUserRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: RegisterUserRequest): RegisterUserRequest.AsObject;
+  static serializeBinaryToWriter(message: RegisterUserRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RegisterUserRequest;
-  static deserializeBinaryFromReader(
-    message: RegisterUserRequest,
-    reader: jspb.BinaryReader,
-  ): RegisterUserRequest;
+  static deserializeBinaryFromReader(message: RegisterUserRequest, reader: jspb.BinaryReader): RegisterUserRequest;
 }
 
 export namespace RegisterUserRequest {
@@ -2690,14 +2169,9 @@ export namespace RegisterUserRequest {
 
 export class Getuserresponse extends jspb.Message {
   getApplicationTypeRolesList(): Array<ApplicationTypeRole>;
-  setApplicationTypeRolesList(
-    value: Array<ApplicationTypeRole>,
-  ): Getuserresponse;
+  setApplicationTypeRolesList(value: Array<ApplicationTypeRole>): Getuserresponse;
   clearApplicationTypeRolesList(): Getuserresponse;
-  addApplicationTypeRoles(
-    value?: ApplicationTypeRole,
-    index?: number,
-  ): ApplicationTypeRole;
+  addApplicationTypeRoles(value?: ApplicationTypeRole, index?: number): ApplicationTypeRole;
 
   getUserid(): number;
   setUserid(value: number): Getuserresponse;
@@ -2711,19 +2185,10 @@ export class Getuserresponse extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Getuserresponse.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: Getuserresponse,
-  ): Getuserresponse.AsObject;
-  static serializeBinaryToWriter(
-    message: Getuserresponse,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: Getuserresponse): Getuserresponse.AsObject;
+  static serializeBinaryToWriter(message: Getuserresponse, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): Getuserresponse;
-  static deserializeBinaryFromReader(
-    message: Getuserresponse,
-    reader: jspb.BinaryReader,
-  ): Getuserresponse;
+  static deserializeBinaryFromReader(message: Getuserresponse, reader: jspb.BinaryReader): Getuserresponse;
 }
 
 export namespace Getuserresponse {
@@ -2736,14 +2201,9 @@ export namespace Getuserresponse {
 
 export class ApplicationTypeRole extends jspb.Message {
   getApplicationRolesList(): Array<ApplicationRoleState>;
-  setApplicationRolesList(
-    value: Array<ApplicationRoleState>,
-  ): ApplicationTypeRole;
+  setApplicationRolesList(value: Array<ApplicationRoleState>): ApplicationTypeRole;
   clearApplicationRolesList(): ApplicationTypeRole;
-  addApplicationRoles(
-    value?: ApplicationRoleState,
-    index?: number,
-  ): ApplicationRoleState;
+  addApplicationRoles(value?: ApplicationRoleState, index?: number): ApplicationRoleState;
 
   getApplicationtypeid(): number;
   setApplicationtypeid(value: number): ApplicationTypeRole;
@@ -2757,19 +2217,10 @@ export class ApplicationTypeRole extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ApplicationTypeRole.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ApplicationTypeRole,
-  ): ApplicationTypeRole.AsObject;
-  static serializeBinaryToWriter(
-    message: ApplicationTypeRole,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ApplicationTypeRole): ApplicationTypeRole.AsObject;
+  static serializeBinaryToWriter(message: ApplicationTypeRole, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ApplicationTypeRole;
-  static deserializeBinaryFromReader(
-    message: ApplicationTypeRole,
-    reader: jspb.BinaryReader,
-  ): ApplicationTypeRole;
+  static deserializeBinaryFromReader(message: ApplicationTypeRole, reader: jspb.BinaryReader): ApplicationTypeRole;
 }
 
 export namespace ApplicationTypeRole {
@@ -2803,19 +2254,10 @@ export class ApplicationRoleState extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ApplicationRoleState.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ApplicationRoleState,
-  ): ApplicationRoleState.AsObject;
-  static serializeBinaryToWriter(
-    message: ApplicationRoleState,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ApplicationRoleState): ApplicationRoleState.AsObject;
+  static serializeBinaryToWriter(message: ApplicationRoleState, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ApplicationRoleState;
-  static deserializeBinaryFromReader(
-    message: ApplicationRoleState,
-    reader: jspb.BinaryReader,
-  ): ApplicationRoleState;
+  static deserializeBinaryFromReader(message: ApplicationRoleState, reader: jspb.BinaryReader): ApplicationRoleState;
 }
 
 export namespace ApplicationRoleState {
@@ -2865,19 +2307,10 @@ export class ApplicationRole extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ApplicationRole.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: ApplicationRole,
-  ): ApplicationRole.AsObject;
-  static serializeBinaryToWriter(
-    message: ApplicationRole,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: ApplicationRole): ApplicationRole.AsObject;
+  static serializeBinaryToWriter(message: ApplicationRole, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ApplicationRole;
-  static deserializeBinaryFromReader(
-    message: ApplicationRole,
-    reader: jspb.BinaryReader,
-  ): ApplicationRole;
+  static deserializeBinaryFromReader(message: ApplicationRole, reader: jspb.BinaryReader): ApplicationRole;
 }
 
 export namespace ApplicationRole {
@@ -2930,19 +2363,10 @@ export class RELATED_ACOUNTS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RELATED_ACOUNTS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: RELATED_ACOUNTS,
-  ): RELATED_ACOUNTS.AsObject;
-  static serializeBinaryToWriter(
-    message: RELATED_ACOUNTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: RELATED_ACOUNTS): RELATED_ACOUNTS.AsObject;
+  static serializeBinaryToWriter(message: RELATED_ACOUNTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RELATED_ACOUNTS;
-  static deserializeBinaryFromReader(
-    message: RELATED_ACOUNTS,
-    reader: jspb.BinaryReader,
-  ): RELATED_ACOUNTS;
+  static deserializeBinaryFromReader(message: RELATED_ACOUNTS, reader: jspb.BinaryReader): RELATED_ACOUNTS;
 }
 
 export namespace RELATED_ACOUNTS {
@@ -3071,15 +2495,9 @@ export class ADMINS extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ADMINS.AsObject;
   static toObject(includeInstance: boolean, msg: ADMINS): ADMINS.AsObject;
-  static serializeBinaryToWriter(
-    message: ADMINS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: ADMINS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ADMINS;
-  static deserializeBinaryFromReader(
-    message: ADMINS,
-    reader: jspb.BinaryReader,
-  ): ADMINS;
+  static deserializeBinaryFromReader(message: ADMINS, reader: jspb.BinaryReader): ADMINS;
 }
 
 export namespace ADMINS {
@@ -3253,15 +2671,9 @@ export class CLIENTS extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CLIENTS.AsObject;
   static toObject(includeInstance: boolean, msg: CLIENTS): CLIENTS.AsObject;
-  static serializeBinaryToWriter(
-    message: CLIENTS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: CLIENTS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CLIENTS;
-  static deserializeBinaryFromReader(
-    message: CLIENTS,
-    reader: jspb.BinaryReader,
-  ): CLIENTS;
+  static deserializeBinaryFromReader(message: CLIENTS, reader: jspb.BinaryReader): CLIENTS;
 }
 
 export namespace CLIENTS {
@@ -3345,19 +2757,10 @@ export class RELATED_CUSTKEY extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): RELATED_CUSTKEY.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: RELATED_CUSTKEY,
-  ): RELATED_CUSTKEY.AsObject;
-  static serializeBinaryToWriter(
-    message: RELATED_CUSTKEY,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: RELATED_CUSTKEY): RELATED_CUSTKEY.AsObject;
+  static serializeBinaryToWriter(message: RELATED_CUSTKEY, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): RELATED_CUSTKEY;
-  static deserializeBinaryFromReader(
-    message: RELATED_CUSTKEY,
-    reader: jspb.BinaryReader,
-  ): RELATED_CUSTKEY;
+  static deserializeBinaryFromReader(message: RELATED_CUSTKEY, reader: jspb.BinaryReader): RELATED_CUSTKEY;
 }
 
 export namespace RELATED_CUSTKEY {
@@ -3978,15 +3381,9 @@ export class USERS extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): USERS.AsObject;
   static toObject(includeInstance: boolean, msg: USERS): USERS.AsObject;
-  static serializeBinaryToWriter(
-    message: USERS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: USERS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): USERS;
-  static deserializeBinaryFromReader(
-    message: USERS,
-    reader: jspb.BinaryReader,
-  ): USERS;
+  static deserializeBinaryFromReader(message: USERS, reader: jspb.BinaryReader): USERS;
 }
 
 export namespace USERS {
@@ -4123,15 +3520,9 @@ export class UserArry extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UserArry.AsObject;
   static toObject(includeInstance: boolean, msg: UserArry): UserArry.AsObject;
-  static serializeBinaryToWriter(
-    message: UserArry,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: UserArry, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): UserArry;
-  static deserializeBinaryFromReader(
-    message: UserArry,
-    reader: jspb.BinaryReader,
-  ): UserArry;
+  static deserializeBinaryFromReader(message: UserArry, reader: jspb.BinaryReader): UserArry;
 }
 
 export namespace UserArry {
@@ -4149,15 +3540,9 @@ export class ProfileId extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ProfileId.AsObject;
   static toObject(includeInstance: boolean, msg: ProfileId): ProfileId.AsObject;
-  static serializeBinaryToWriter(
-    message: ProfileId,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static serializeBinaryToWriter(message: ProfileId, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): ProfileId;
-  static deserializeBinaryFromReader(
-    message: ProfileId,
-    reader: jspb.BinaryReader,
-  ): ProfileId;
+  static deserializeBinaryFromReader(message: ProfileId, reader: jspb.BinaryReader): ProfileId;
 }
 
 export namespace ProfileId {
@@ -4179,19 +3564,10 @@ export class DeleteProfileReq extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteProfileReq.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: DeleteProfileReq,
-  ): DeleteProfileReq.AsObject;
-  static serializeBinaryToWriter(
-    message: DeleteProfileReq,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: DeleteProfileReq): DeleteProfileReq.AsObject;
+  static serializeBinaryToWriter(message: DeleteProfileReq, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): DeleteProfileReq;
-  static deserializeBinaryFromReader(
-    message: DeleteProfileReq,
-    reader: jspb.BinaryReader,
-  ): DeleteProfileReq;
+  static deserializeBinaryFromReader(message: DeleteProfileReq, reader: jspb.BinaryReader): DeleteProfileReq;
 }
 
 export namespace DeleteProfileReq {
@@ -4254,19 +3630,10 @@ export class AUTH_PROFILES extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_PROFILES.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_PROFILES,
-  ): AUTH_PROFILES.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_PROFILES,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_PROFILES): AUTH_PROFILES.AsObject;
+  static serializeBinaryToWriter(message: AUTH_PROFILES, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_PROFILES;
-  static deserializeBinaryFromReader(
-    message: AUTH_PROFILES,
-    reader: jspb.BinaryReader,
-  ): AUTH_PROFILES;
+  static deserializeBinaryFromReader(message: AUTH_PROFILES, reader: jspb.BinaryReader): AUTH_PROFILES;
 }
 
 export namespace AUTH_PROFILES {
@@ -4292,19 +3659,10 @@ export class All_PROFILES extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): All_PROFILES.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: All_PROFILES,
-  ): All_PROFILES.AsObject;
-  static serializeBinaryToWriter(
-    message: All_PROFILES,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: All_PROFILES): All_PROFILES.AsObject;
+  static serializeBinaryToWriter(message: All_PROFILES, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): All_PROFILES;
-  static deserializeBinaryFromReader(
-    message: All_PROFILES,
-    reader: jspb.BinaryReader,
-  ): All_PROFILES;
+  static deserializeBinaryFromReader(message: All_PROFILES, reader: jspb.BinaryReader): All_PROFILES;
 }
 
 export namespace All_PROFILES {
@@ -4346,19 +3704,10 @@ export class AUTH_USERS_PROFILES extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_USERS_PROFILES.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_USERS_PROFILES,
-  ): AUTH_USERS_PROFILES.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_USERS_PROFILES,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_USERS_PROFILES): AUTH_USERS_PROFILES.AsObject;
+  static serializeBinaryToWriter(message: AUTH_USERS_PROFILES, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_USERS_PROFILES;
-  static deserializeBinaryFromReader(
-    message: AUTH_USERS_PROFILES,
-    reader: jspb.BinaryReader,
-  ): AUTH_USERS_PROFILES;
+  static deserializeBinaryFromReader(message: AUTH_USERS_PROFILES, reader: jspb.BinaryReader): AUTH_USERS_PROFILES;
 }
 
 export namespace AUTH_USERS_PROFILES {
@@ -4380,19 +3729,10 @@ export class AddProfilesRequest extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AddProfilesRequest.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AddProfilesRequest,
-  ): AddProfilesRequest.AsObject;
-  static serializeBinaryToWriter(
-    message: AddProfilesRequest,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AddProfilesRequest): AddProfilesRequest.AsObject;
+  static serializeBinaryToWriter(message: AddProfilesRequest, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AddProfilesRequest;
-  static deserializeBinaryFromReader(
-    message: AddProfilesRequest,
-    reader: jspb.BinaryReader,
-  ): AddProfilesRequest;
+  static deserializeBinaryFromReader(message: AddProfilesRequest, reader: jspb.BinaryReader): AddProfilesRequest;
 }
 
 export namespace AddProfilesRequest {
@@ -4414,19 +3754,10 @@ export class UserToProfileRq extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UserToProfileRq.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: UserToProfileRq,
-  ): UserToProfileRq.AsObject;
-  static serializeBinaryToWriter(
-    message: UserToProfileRq,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: UserToProfileRq): UserToProfileRq.AsObject;
+  static serializeBinaryToWriter(message: UserToProfileRq, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): UserToProfileRq;
-  static deserializeBinaryFromReader(
-    message: UserToProfileRq,
-    reader: jspb.BinaryReader,
-  ): UserToProfileRq;
+  static deserializeBinaryFromReader(message: UserToProfileRq, reader: jspb.BinaryReader): UserToProfileRq;
 }
 
 export namespace UserToProfileRq {
@@ -4509,19 +3840,10 @@ export class AUTH_ALL_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_ALL_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_ALL_PERMISSIONS,
-  ): AUTH_ALL_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_ALL_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_ALL_PERMISSIONS): AUTH_ALL_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_ALL_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_ALL_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_ALL_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_ALL_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_ALL_PERMISSIONS, reader: jspb.BinaryReader): AUTH_ALL_PERMISSIONS;
 }
 
 export namespace AUTH_ALL_PERMISSIONS {
@@ -4556,19 +3878,10 @@ export class AUTH_CASHBOX_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_CASHBOX_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_CASHBOX_PERMISSIONS,
-  ): AUTH_CASHBOX_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_CASHBOX_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_CASHBOX_PERMISSIONS): AUTH_CASHBOX_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_CASHBOX_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_CASHBOX_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_CASHBOX_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_CASHBOX_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_CASHBOX_PERMISSIONS, reader: jspb.BinaryReader): AUTH_CASHBOX_PERMISSIONS;
 }
 
 export namespace AUTH_CASHBOX_PERMISSIONS {
@@ -4591,19 +3904,10 @@ export class AUTH_CRM_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_CRM_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_CRM_PERMISSIONS,
-  ): AUTH_CRM_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_CRM_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_CRM_PERMISSIONS): AUTH_CRM_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_CRM_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_CRM_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_CRM_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_CRM_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_CRM_PERMISSIONS, reader: jspb.BinaryReader): AUTH_CRM_PERMISSIONS;
 }
 
 export namespace AUTH_CRM_PERMISSIONS {
@@ -4626,19 +3930,10 @@ export class AUTH_OWN_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_OWN_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_OWN_PERMISSIONS,
-  ): AUTH_OWN_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_OWN_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_OWN_PERMISSIONS): AUTH_OWN_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_OWN_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_OWN_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_OWN_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_OWN_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_OWN_PERMISSIONS, reader: jspb.BinaryReader): AUTH_OWN_PERMISSIONS;
 }
 
 export namespace AUTH_OWN_PERMISSIONS {
@@ -4655,27 +3950,16 @@ export class AUTH_PAYMENTGETWAY_PERMISSIONS extends jspb.Message {
   clearProfileId(): AUTH_PAYMENTGETWAY_PERMISSIONS;
 
   getPaymentgetway(): PAYMENTGETWAY_PERMISSIONS | undefined;
-  setPaymentgetway(
-    value?: PAYMENTGETWAY_PERMISSIONS,
-  ): AUTH_PAYMENTGETWAY_PERMISSIONS;
+  setPaymentgetway(value?: PAYMENTGETWAY_PERMISSIONS): AUTH_PAYMENTGETWAY_PERMISSIONS;
   hasPaymentgetway(): boolean;
   clearPaymentgetway(): AUTH_PAYMENTGETWAY_PERMISSIONS;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_PAYMENTGETWAY_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_PAYMENTGETWAY_PERMISSIONS,
-  ): AUTH_PAYMENTGETWAY_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_PAYMENTGETWAY_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_PAYMENTGETWAY_PERMISSIONS): AUTH_PAYMENTGETWAY_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_PAYMENTGETWAY_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_PAYMENTGETWAY_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_PAYMENTGETWAY_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_PAYMENTGETWAY_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_PAYMENTGETWAY_PERMISSIONS, reader: jspb.BinaryReader): AUTH_PAYMENTGETWAY_PERMISSIONS;
 }
 
 export namespace AUTH_PAYMENTGETWAY_PERMISSIONS {
@@ -4698,19 +3982,10 @@ export class AUTH_CDU_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_CDU_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_CDU_PERMISSIONS,
-  ): AUTH_CDU_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_CDU_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_CDU_PERMISSIONS): AUTH_CDU_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_CDU_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_CDU_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_CDU_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_CDU_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_CDU_PERMISSIONS, reader: jspb.BinaryReader): AUTH_CDU_PERMISSIONS;
 }
 
 export namespace AUTH_CDU_PERMISSIONS {
@@ -4733,19 +4008,10 @@ export class AUTH_BI_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_BI_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_BI_PERMISSIONS,
-  ): AUTH_BI_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_BI_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_BI_PERMISSIONS): AUTH_BI_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_BI_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_BI_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_BI_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_BI_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_BI_PERMISSIONS, reader: jspb.BinaryReader): AUTH_BI_PERMISSIONS;
 }
 
 export namespace AUTH_BI_PERMISSIONS {
@@ -4768,19 +4034,10 @@ export class AUTH_BPM_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_BPM_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_BPM_PERMISSIONS,
-  ): AUTH_BPM_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_BPM_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_BPM_PERMISSIONS): AUTH_BPM_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_BPM_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_BPM_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_BPM_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_BPM_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_BPM_PERMISSIONS, reader: jspb.BinaryReader): AUTH_BPM_PERMISSIONS;
 }
 
 export namespace AUTH_BPM_PERMISSIONS {
@@ -4803,19 +4060,10 @@ export class AUTH_PORTAL_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_PORTAL_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_PORTAL_PERMISSIONS,
-  ): AUTH_PORTAL_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_PORTAL_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_PORTAL_PERMISSIONS): AUTH_PORTAL_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_PORTAL_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_PORTAL_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_PORTAL_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_PORTAL_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_PORTAL_PERMISSIONS, reader: jspb.BinaryReader): AUTH_PORTAL_PERMISSIONS;
 }
 
 export namespace AUTH_PORTAL_PERMISSIONS {
@@ -4838,19 +4086,10 @@ export class AUTH_GENERAL_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_GENERAL_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_GENERAL_PERMISSIONS,
-  ): AUTH_GENERAL_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_GENERAL_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_GENERAL_PERMISSIONS): AUTH_GENERAL_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_GENERAL_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_GENERAL_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_GENERAL_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_GENERAL_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_GENERAL_PERMISSIONS, reader: jspb.BinaryReader): AUTH_GENERAL_PERMISSIONS;
 }
 
 export namespace AUTH_GENERAL_PERMISSIONS {
@@ -4873,19 +4112,10 @@ export class AUTH_BILLER_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_BILLER_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_BILLER_PERMISSIONS,
-  ): AUTH_BILLER_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_BILLER_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_BILLER_PERMISSIONS): AUTH_BILLER_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_BILLER_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_BILLER_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_BILLER_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_BILLER_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_BILLER_PERMISSIONS, reader: jspb.BinaryReader): AUTH_BILLER_PERMISSIONS;
 }
 
 export namespace AUTH_BILLER_PERMISSIONS {
@@ -4908,19 +4138,10 @@ export class AUTH_BILLING_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_BILLING_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_BILLING_PERMISSIONS,
-  ): AUTH_BILLING_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_BILLING_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_BILLING_PERMISSIONS): AUTH_BILLING_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_BILLING_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_BILLING_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_BILLING_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_BILLING_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_BILLING_PERMISSIONS, reader: jspb.BinaryReader): AUTH_BILLING_PERMISSIONS;
 }
 
 export namespace AUTH_BILLING_PERMISSIONS {
@@ -4943,19 +4164,10 @@ export class AUTH_TAX_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_TAX_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_TAX_PERMISSIONS,
-  ): AUTH_TAX_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_TAX_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_TAX_PERMISSIONS): AUTH_TAX_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_TAX_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_TAX_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_TAX_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_TAX_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_TAX_PERMISSIONS, reader: jspb.BinaryReader): AUTH_TAX_PERMISSIONS;
 }
 
 export namespace AUTH_TAX_PERMISSIONS {
@@ -4978,19 +4190,10 @@ export class AUTH_MAS_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_MAS_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_MAS_PERMISSIONS,
-  ): AUTH_MAS_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_MAS_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_MAS_PERMISSIONS): AUTH_MAS_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_MAS_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_MAS_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_MAS_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_MAS_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_MAS_PERMISSIONS, reader: jspb.BinaryReader): AUTH_MAS_PERMISSIONS;
 }
 
 export namespace AUTH_MAS_PERMISSIONS {
@@ -5013,19 +4216,10 @@ export class AUTH_GOV_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_GOV_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_GOV_PERMISSIONS,
-  ): AUTH_GOV_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_GOV_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_GOV_PERMISSIONS): AUTH_GOV_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_GOV_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_GOV_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_GOV_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_GOV_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_GOV_PERMISSIONS, reader: jspb.BinaryReader): AUTH_GOV_PERMISSIONS;
 }
 
 export namespace AUTH_GOV_PERMISSIONS {
@@ -5123,19 +4317,10 @@ export class CASHBOX_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CASHBOX_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CASHBOX_PERMISSIONS,
-  ): CASHBOX_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: CASHBOX_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CASHBOX_PERMISSIONS): CASHBOX_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: CASHBOX_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CASHBOX_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: CASHBOX_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): CASHBOX_PERMISSIONS;
+  static deserializeBinaryFromReader(message: CASHBOX_PERMISSIONS, reader: jspb.BinaryReader): CASHBOX_PERMISSIONS;
 }
 
 export namespace CASHBOX_PERMISSIONS {
@@ -5168,19 +4353,10 @@ export class CRM_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CRM_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CRM_PERMISSIONS,
-  ): CRM_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: CRM_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CRM_PERMISSIONS): CRM_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: CRM_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CRM_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: CRM_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): CRM_PERMISSIONS;
+  static deserializeBinaryFromReader(message: CRM_PERMISSIONS, reader: jspb.BinaryReader): CRM_PERMISSIONS;
 }
 
 export namespace CRM_PERMISSIONS {
@@ -5257,19 +4433,10 @@ export class AUTH_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_PERMISSIONS,
-  ): AUTH_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_PERMISSIONS): AUTH_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: AUTH_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): AUTH_PERMISSIONS;
+  static deserializeBinaryFromReader(message: AUTH_PERMISSIONS, reader: jspb.BinaryReader): AUTH_PERMISSIONS;
 }
 
 export namespace AUTH_PERMISSIONS {
@@ -5298,19 +4465,10 @@ export class PAYMENTGETWAY_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PAYMENTGETWAY_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: PAYMENTGETWAY_PERMISSIONS,
-  ): PAYMENTGETWAY_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: PAYMENTGETWAY_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: PAYMENTGETWAY_PERMISSIONS): PAYMENTGETWAY_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: PAYMENTGETWAY_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): PAYMENTGETWAY_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: PAYMENTGETWAY_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): PAYMENTGETWAY_PERMISSIONS;
+  static deserializeBinaryFromReader(message: PAYMENTGETWAY_PERMISSIONS, reader: jspb.BinaryReader): PAYMENTGETWAY_PERMISSIONS;
 }
 
 export namespace PAYMENTGETWAY_PERMISSIONS {
@@ -5367,19 +4525,10 @@ export class CDU_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CDU_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: CDU_PERMISSIONS,
-  ): CDU_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: CDU_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: CDU_PERMISSIONS): CDU_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: CDU_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): CDU_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: CDU_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): CDU_PERMISSIONS;
+  static deserializeBinaryFromReader(message: CDU_PERMISSIONS, reader: jspb.BinaryReader): CDU_PERMISSIONS;
 }
 
 export namespace CDU_PERMISSIONS {
@@ -5519,19 +4668,10 @@ export class BI_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): BI_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: BI_PERMISSIONS,
-  ): BI_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: BI_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: BI_PERMISSIONS): BI_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: BI_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): BI_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: BI_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): BI_PERMISSIONS;
+  static deserializeBinaryFromReader(message: BI_PERMISSIONS, reader: jspb.BinaryReader): BI_PERMISSIONS;
 }
 
 export namespace BI_PERMISSIONS {
@@ -5686,19 +4826,10 @@ export class BPM_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): BPM_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: BPM_PERMISSIONS,
-  ): BPM_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: BPM_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: BPM_PERMISSIONS): BPM_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: BPM_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): BPM_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: BPM_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): BPM_PERMISSIONS;
+  static deserializeBinaryFromReader(message: BPM_PERMISSIONS, reader: jspb.BinaryReader): BPM_PERMISSIONS;
 }
 
 export namespace BPM_PERMISSIONS {
@@ -5738,19 +4869,10 @@ export class PORTAL_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PORTAL_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: PORTAL_PERMISSIONS,
-  ): PORTAL_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: PORTAL_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: PORTAL_PERMISSIONS): PORTAL_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: PORTAL_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): PORTAL_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: PORTAL_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): PORTAL_PERMISSIONS;
+  static deserializeBinaryFromReader(message: PORTAL_PERMISSIONS, reader: jspb.BinaryReader): PORTAL_PERMISSIONS;
 }
 
 export namespace PORTAL_PERMISSIONS {
@@ -5777,19 +4899,10 @@ export class GENERAL_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GENERAL_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GENERAL_PERMISSIONS,
-  ): GENERAL_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: GENERAL_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GENERAL_PERMISSIONS): GENERAL_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: GENERAL_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GENERAL_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: GENERAL_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): GENERAL_PERMISSIONS;
+  static deserializeBinaryFromReader(message: GENERAL_PERMISSIONS, reader: jspb.BinaryReader): GENERAL_PERMISSIONS;
 }
 
 export namespace GENERAL_PERMISSIONS {
@@ -5843,19 +4956,10 @@ export class BILLER_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): BILLER_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: BILLER_PERMISSIONS,
-  ): BILLER_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: BILLER_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: BILLER_PERMISSIONS): BILLER_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: BILLER_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): BILLER_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: BILLER_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): BILLER_PERMISSIONS;
+  static deserializeBinaryFromReader(message: BILLER_PERMISSIONS, reader: jspb.BinaryReader): BILLER_PERMISSIONS;
 }
 
 export namespace BILLER_PERMISSIONS {
@@ -5894,19 +4998,10 @@ export class BILLING_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): BILLING_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: BILLING_PERMISSIONS,
-  ): BILLING_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: BILLING_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: BILLING_PERMISSIONS): BILLING_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: BILLING_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): BILLING_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: BILLING_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): BILLING_PERMISSIONS;
+  static deserializeBinaryFromReader(message: BILLING_PERMISSIONS, reader: jspb.BinaryReader): BILLING_PERMISSIONS;
 }
 
 export namespace BILLING_PERMISSIONS {
@@ -6396,19 +5491,10 @@ export class MAS_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): MAS_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: MAS_PERMISSIONS,
-  ): MAS_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: MAS_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: MAS_PERMISSIONS): MAS_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: MAS_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): MAS_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: MAS_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): MAS_PERMISSIONS;
+  static deserializeBinaryFromReader(message: MAS_PERMISSIONS, reader: jspb.BinaryReader): MAS_PERMISSIONS;
 }
 
 export namespace MAS_PERMISSIONS {
@@ -6634,19 +5720,10 @@ export class GOV_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GOV_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: GOV_PERMISSIONS,
-  ): GOV_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: GOV_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: GOV_PERMISSIONS): GOV_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: GOV_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): GOV_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: GOV_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): GOV_PERMISSIONS;
+  static deserializeBinaryFromReader(message: GOV_PERMISSIONS, reader: jspb.BinaryReader): GOV_PERMISSIONS;
 }
 
 export namespace GOV_PERMISSIONS {
@@ -6831,19 +5908,10 @@ export class TAX_PERMISSIONS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): TAX_PERMISSIONS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: TAX_PERMISSIONS,
-  ): TAX_PERMISSIONS.AsObject;
-  static serializeBinaryToWriter(
-    message: TAX_PERMISSIONS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: TAX_PERMISSIONS): TAX_PERMISSIONS.AsObject;
+  static serializeBinaryToWriter(message: TAX_PERMISSIONS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): TAX_PERMISSIONS;
-  static deserializeBinaryFromReader(
-    message: TAX_PERMISSIONS,
-    reader: jspb.BinaryReader,
-  ): TAX_PERMISSIONS;
+  static deserializeBinaryFromReader(message: TAX_PERMISSIONS, reader: jspb.BinaryReader): TAX_PERMISSIONS;
 }
 
 export namespace TAX_PERMISSIONS {
@@ -6889,19 +5957,10 @@ export class AUTH_LICENCE extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_LICENCE.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_LICENCE,
-  ): AUTH_LICENCE.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_LICENCE,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_LICENCE): AUTH_LICENCE.AsObject;
+  static serializeBinaryToWriter(message: AUTH_LICENCE, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_LICENCE;
-  static deserializeBinaryFromReader(
-    message: AUTH_LICENCE,
-    reader: jspb.BinaryReader,
-  ): AUTH_LICENCE;
+  static deserializeBinaryFromReader(message: AUTH_LICENCE, reader: jspb.BinaryReader): AUTH_LICENCE;
 }
 
 export namespace AUTH_LICENCE {
@@ -6928,19 +5987,10 @@ export class AUTH_SETTINGS extends jspb.Message {
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): AUTH_SETTINGS.AsObject;
-  static toObject(
-    includeInstance: boolean,
-    msg: AUTH_SETTINGS,
-  ): AUTH_SETTINGS.AsObject;
-  static serializeBinaryToWriter(
-    message: AUTH_SETTINGS,
-    writer: jspb.BinaryWriter,
-  ): void;
+  static toObject(includeInstance: boolean, msg: AUTH_SETTINGS): AUTH_SETTINGS.AsObject;
+  static serializeBinaryToWriter(message: AUTH_SETTINGS, writer: jspb.BinaryWriter): void;
   static deserializeBinary(bytes: Uint8Array): AUTH_SETTINGS;
-  static deserializeBinaryFromReader(
-    message: AUTH_SETTINGS,
-    reader: jspb.BinaryReader,
-  ): AUTH_SETTINGS;
+  static deserializeBinaryFromReader(message: AUTH_SETTINGS, reader: jspb.BinaryReader): AUTH_SETTINGS;
 }
 
 export namespace AUTH_SETTINGS {

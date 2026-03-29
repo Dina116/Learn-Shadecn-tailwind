@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm, Controller, type SubmitHandler } from "react-hook-form";
 import CachedIcon from "@mui/icons-material/Cached";
 import {
@@ -82,7 +83,7 @@ export default function Form({
   });
   const isAllBillingDateChecked = watch("AllBilingDate");
 
-  const onSubmit: SubmitHandler<FilterValues> = (data) => {
+  const onSubmit: SubmitHandler<any> = (data) => {
     const dataForApi = {
       ...data,
       billingDate: data.billingDate

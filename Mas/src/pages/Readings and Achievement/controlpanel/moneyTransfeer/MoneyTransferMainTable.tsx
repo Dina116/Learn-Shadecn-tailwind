@@ -9,15 +9,13 @@ import { Button, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import type { TotalSummary } from "./useMoneyTransfer";
-import { useGetUnPostedDetails } from "../api/useControlApi";
 import { getFieldName } from "../../../../utils/common";
 import SummaryTable from "./SummaryTable";
+import { useGetUnPostedDetails } from "./useMoneyTransfeerApi";
 
 interface Iprops {
   basicTableInvoicesList?: CollectionDestributionItm[];
   unPostedinvoicesList: CollectionDestributionItm[];
-  // empName?: string;
-  // stationName?: string;
   empId?: number;
   depositNum?: number;
   handleShowDetails: (st: boolean) => void;
@@ -426,7 +424,6 @@ export default function MoneyTransferMainTable({
     }
   }, [UnPostedList, handleGetDetails]);
 
-  // console.log(basicTableShow, 'baaaaa', basicTableInvoicesList);
   console.log("🕵️‍♂️ DEBUGGING SUMMARY DATA:", {
     naqdySummary,
     notNaqdySummary,
@@ -434,35 +431,7 @@ export default function MoneyTransferMainTable({
   });
   return (
     <div className="mt-3 w-full rounded-md bg-white shadow-sm print:hidden">
-      {/* <div
-        className={`grid ${
-          depositNum ? 'grid-cols-4' : 'grid-cols-3'
-        } rounded-t-md bg-primary-lighter p-4`}
-      >
-        <div className="rounded-md bg-primary-main p-2">
-          <Typography variant="h5" className="text-center text-white">
-            {`اسم المحصل: ${empName || ''}`}
-          </Typography>
-        </div>
-        <div className="mx-2 rounded-md bg-primary-main p-2">
-          <Typography variant="h5" className="text-center text-white">
-            {`كود المحصل: ${empId || ''}`}
-          </Typography>
-        </div>
-        <div className="mx-2 rounded-md bg-primary-main p-2">
-          <Typography variant="h5" className="text-center text-white">
-            {` الفرع: ${stationName || ''}`}
-          </Typography>
-        </div>
-        {depositNum && (
-          <div className="mx-2 rounded-md bg-primary-main p-2">
-            <Typography variant="h5" className="text-center text-white">
-              {` رقم القسيمة: ${depositNum || ''}`}
-            </Typography>
-          </div>
-        )}
-      </div> */}
-
+    
       <div className="mx-4">
         {basicTableShow ? (
           <MasDataGrid

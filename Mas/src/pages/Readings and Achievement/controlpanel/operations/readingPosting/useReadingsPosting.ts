@@ -6,7 +6,7 @@ import {
   type BOOKCYCLEWithStatus,
   type ExecutionError,
 } from "../../api/useControlApi";
-import type { BILLGROUPS, FilterValues } from "../../types";
+import type { BILLGROUPS, BOOKCYCLE, FilterValues } from "../../types";
 import toast from "react-hot-toast";
 import { getReadingsPostingColumns } from "./columns";
 import type { Flages } from "./PostedFlages";
@@ -15,6 +15,9 @@ type RowExtraData = {
   status: "completed" | "failed";
   AffectedRows?: number;
 };
+export function GetBookKey(walk: BOOKCYCLE) {
+  return `${walk.BOOK_NO}${walk.WALK_NO}${walk.BILLGROUP}`;
+}
 
 export default function useReadingsPosting() {
   const [counters, setCounters] = useState({
@@ -50,10 +53,10 @@ export default function useReadingsPosting() {
   const { execute: postMas2Billing, isLoading: isExecuting } =
     useReadingPostingMas2Billing(
       (response) => {
-        setCounters((prev) => ({
+       setCounters((prev) => ({
           ...prev,
-          success: prev.success + 1,
-          pending: prev.pending - 1,
+          success: prev.success ,
+          pending: prev.pending ,
         }));
 
         setRowStatuses((prev) => ({
@@ -156,9 +159,9 @@ export default function useReadingsPosting() {
     selectableRows,
   ]);
   const handleExecuteAction = () => {
-    const rowsToExecute = selectableRows.filter((row) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row) => selectedRowKeys.includes(row.BOOK_NO))
+      .map((row) => ({ ...row, KEY: GetBookKey(row) }));
 
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
@@ -170,16 +173,22 @@ export default function useReadingsPosting() {
     setSelectedFlages(flages);
     setFlagesDialogOpen(false);
 
-    const rowsToExecute = selectableRows.filter((row: { BOOK_NO: string }) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row: { BOOK_NO: string }) =>
+        selectedRowKeys.includes(row.BOOK_NO),
+      )
+      .map((row) => ({ ...row, KEY: GetBookKey(row) }));
 
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
+    setCounters((prev) => ({
+      ...prev,
+      pending: prev.pending + rowsToExecute.length,
+    }));
     setExecutionErrors([]);
     setRowStatuses({});
 
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);
+
       try {
         await postMas2Billing({
           STATION_NO: row.STATION_NO,
@@ -199,8 +208,36 @@ export default function useReadingsPosting() {
             postNegativeFlage: flages.consumpFlages ?? 0,
           },
         });
+        setCounters((prev) => ({
+          ...prev,
+          success: prev.success + 1,
+          pending: prev.pending - 1,
+        }));
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "completed" },
+        }));
       } catch (error) {
-        console.error(`فشل الطلب للصف ${row.BOOK_NO}:`, error);
+        setCounters((prev) => ({
+          ...prev,
+          failed: prev.failed + 1,
+          pending: prev.pending - 1,
+        }));
+
+        setExecutionErrors((prev) => [
+          ...prev,
+          {
+            BOOK_NO: row.BOOK_NO,
+            BILLGROUP: row.BILLGROUP,
+            WALK_NO: row.WALK_NO,
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+        ]);
+
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "failed" },
+        }));
       }
     }
     setUpdatingRowKey(null);

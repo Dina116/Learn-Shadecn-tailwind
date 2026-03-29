@@ -1,4 +1,7 @@
+import { getCookie } from "@/utils/cookies";
+
 export default function HomeScreen() {
+  console.log("tokennn", getCookie("token"));
   return (
     <div className="w-full h-screen flex justify-center items-center bg-gray-100">
       <div className="w-[95%] max-w-[1400px] h-[98%] flex flex-col pe-5 bg-[radial-gradient(circle,_#0086cf_0%,_#005a8e_100%)]">

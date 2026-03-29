@@ -627,6 +627,7 @@ export class GoAuthClient {
     (request: GoAuth_pb.Emptymessage) => {
       return request.serializeBinary();
     },
+    console.log(GoAuth_pb),
     GoAuth_pb.GetUserProfileResponse.deserializeBinary
   );
 

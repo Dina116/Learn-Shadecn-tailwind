@@ -14,8 +14,8 @@ import {
 } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import type { HistoryRequest } from "./types";
-import { useGetAllStationsApi } from "../../api/useControlApi";
 import dayjs from "dayjs";
+import usePulledHistory from "./usePulledHistory";
 
 interface Props {
   getFilterdData: (data: HistoryRequest) => void;
@@ -32,6 +32,7 @@ const compactFieldStyles = {
 };
 
 export default function FilterForm({ getFilterdData, stationNo }: Props) {
+  const { useGetAllStationsApi } = usePulledHistory();
   const { data: stations } = useGetAllStationsApi();
   const onSubmit = (data: HistoryRequest) => {
     console.log(data, "DataFormFilter");

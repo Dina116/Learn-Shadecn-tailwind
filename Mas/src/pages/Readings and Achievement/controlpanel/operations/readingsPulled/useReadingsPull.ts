@@ -6,10 +6,13 @@ import {
   useReadingsBilling2Mas,
   type ExecutionError,
 } from "../../api/useControlApi";
-import type { BILLGROUPS, FilterValues } from "../../types";
+import type { BILLGROUPS, FilterValues, ReadingWalkData } from "../../types";
 import { getReadingPulledColumns, type ReadingDataWithStatus } from "./columns";
 import toast from "react-hot-toast";
 
+export function GetReadingWalkKey(walk: ReadingWalkData) {
+  return `${walk.BOOK_NO}${walk.WALK_NO}${walk.BILLGROUP}`;
+}
 export default function useReadingsPull() {
   const queryClient = useQueryClient();
   const [counters, setCounters] = useState({
@@ -60,8 +63,8 @@ export default function useReadingsPull() {
       (bookNo: string) => {
         setCounters((prev) => ({
           ...prev,
-          success: prev.success + 1,
-          pending: prev.pending - 1,
+          success: prev.success ,
+          pending: prev.pending ,
         }));
         setRowStatuses((prev) => ({
           ...prev,
@@ -142,27 +145,59 @@ export default function useReadingsPull() {
     ],
   );
   const handleExecuteAction = async () => {
-    const rowsToExecute = selectableRows.filter((row) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row) => selectedRowKeys.includes(row.BOOK_NO))
+      .map((row) => ({ ...row, KEY: GetReadingWalkKey(row) }));
 
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
 
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
+    setCounters((prev) => ({
+      ...prev,
+      pending: prev.pending + rowsToExecute.length,
+    }));
     setExecutionErrors([]);
 
     for (const row of rowsToExecute) {
       setUpdatingRowKey(row.BOOK_NO);
+      const payload = {
+        ...row,
+        bilngDate: filters?.billingDate || "",
+      };
       try {
-        await executeBilling({
-          ...row,
-          bilngDate: filters?.billingDate || "",
-        });
-      } catch {
-        //
+        await executeBilling(payload);
+        setCounters((prev) => ({
+          ...prev,
+          success: prev.success + 1,
+          pending: prev.pending - 1,
+        }));
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: "completed",
+        }));
+      } catch (error) {
+        setCounters((prev) => ({
+          ...prev,
+          failed: prev.failed + 1,
+          pending: prev.pending - 1,
+        }));
+
+        setExecutionErrors((prev) => [
+          ...prev,
+          {
+            BOOK_NO: row.BOOK_NO,
+            BILLGROUP: row.BILLGROUP,
+            WALK_NO: row.WALK_NO,
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+        ]);
+
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: "failed",
+        }));
       }
     }
     setUpdatingRowKey(null);

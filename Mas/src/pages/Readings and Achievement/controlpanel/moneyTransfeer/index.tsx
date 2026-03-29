@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/immutability */
 /* eslint-disable react-hooks/refs */
 import {
@@ -20,26 +21,24 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import HistoryIcon from "@mui/icons-material/History";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import SharedDialog from "../../../../componenet/shared/SharedDialog";
-// import { useState } from "react";
-// import { Controller, useForm } from "react-hook-form";
 import type { CollectionDestributionItm, PostReq } from "./types";
 import MoneyTransferMainTable from "./MoneyTransferMainTable";
 import useMoneyTransfer from "./useMoneyTransfer";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetAllCollectorsApi,
-  useGetAllStationsApi,
-  useGetHafzaTemplate,
-  useGetIsHeadQuarterApi,
-  useGetUserProfileApi,
-} from "../api/useControlApi";
-import type { EMPS } from "../../../../componenet/shared/dataGrid/types";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import type { STATIONS } from "../types";
 import ReactDOM from "react-dom";
 import Handlebars from "handlebars";
+import type { EMPS } from "@/componenet/shared/dataGrid/types";
+import {
+  useGetAllCollectorsApi,
+  useGetHafzaTemplate,
+  useGetIsHeadQuarterApi,
+  useGetUserProfileApi,
+} from "./useMoneyTransfeerApi";
+import usePulledHistory from "../operations/pulledHistory/usePulledHistory";
 
 export default function MoneyTransfeer() {
   const {
@@ -66,19 +65,19 @@ export default function MoneyTransfeer() {
     arrSumTotalSummaryAll,
     modalType,
     postLoading,
+    handleCloseDialog,
   } = useMoneyTransfer();
-
+  const [printMode, setPrintMode] = useState(false);
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm<PostReq>({
     defaultValues: {},
   });
   const [, setHack] = useState<string>();
   const unPostedDetails = useRef<CollectionDestributionItm[]>([]);
-
-  // const { data: AllUnPostedBills } = useGetUnPostedSummaryApi();
-  const { data: AllEmps } = useGetAllCollectorsApi();
-
-  const { data: userProfile } = useGetUserProfileApi();
+  const { useGetAllStationsApi } = usePulledHistory();
+  const { data: userProfile, isLoading: userFetching } = useGetUserProfileApi();
+  console.log("userProfile", userProfile);
+  const { data: AllEmps, isLoading } = useGetAllCollectorsApi();
   const { data: AllStations } = useGetAllStationsApi();
   const { data: isHeadQuarter } = useGetIsHeadQuarterApi();
   const { data: hafzaTemplate } = useGetHafzaTemplate(true);
@@ -98,10 +97,24 @@ export default function MoneyTransfeer() {
     }
     return 0;
   };
-
   const sortEmps = (AllEmps || [])
-    .sort((a, b) => (a.fullName || "").localeCompare(b.fullName || ""))
+    .sort((a, b) => (a.FULL_NAME || "").localeCompare(b.FULL_NAME || ""))
     ?.sort((a, b) => sortByPropertyExistence(a, b));
+
+  const filteredEmps =
+    selectedStation?.IS_HEADQUARTERS && isHeadQuarter
+      ? sortEmps
+      : sortEmps?.filter(
+          (emp) =>
+            String(emp.BRANCH_ID) === String(selectedStation?.STATION_NO),
+        ) || [];
+
+  console.log("AllEmps", AllEmps);
+  console.log("filteredEmps", filteredEmps);
+  console.log("AllStations", AllStations);
+  console.log("isHeadQuarter", isHeadQuarter);
+  console.log("رقم المحطة المختارة:", selectedStation?.STATION_NO);
+  console.log("أول موظف وفرعه:", sortEmps?.[0]?.BRANCH_ID);
 
   const Template = Handlebars.compile(hafzaTemplate || "");
 
@@ -110,7 +123,7 @@ export default function MoneyTransfeer() {
     padding: 2,
     marginRight: 0,
     position: "relative",
-    width: "80%",
+    width: { xs: "95%", sm: "100%", md: "80%" },
     border: "1px solid #ddd",
   };
   useEffect(() => {
@@ -122,7 +135,6 @@ export default function MoneyTransfeer() {
       sx={{ padding: "0 !important", margin: "0 !important", width: "100%" }}
       maxWidth="xl"
     >
-      <Toaster position="bottom-center" />
       <MasPageHeader title="التوريدات" />
       <Paper sx={paper}>
         <div className="rounded-md bg-white">
@@ -213,7 +225,7 @@ export default function MoneyTransfeer() {
                 onChange={(_event, newVal) => {
                   setSelectedEmp(newVal || {});
                   setFinalReq({
-                    empid: newVal?.id || 0,
+                    empid: newVal?.ID || 0,
                   });
                   handleSetShowDetails(false);
                 }}
@@ -226,23 +238,28 @@ export default function MoneyTransfeer() {
                   "& .MuiOutlinedInput-root": {
                     height: 30,
                     fontSize: "0.8rem",
+                    paddingRight: "9px !important",
                   },
                   "& .MuiAutocomplete-endAdornment": {
                     right: "auto  !important",
                     left: 8,
                   },
                 }}
-                options={
-                  selectedStation?.IS_HEADQUARTERS && isHeadQuarter
-                    ? sortEmps || []
-                    : sortEmps?.filter(
-                        (emp) =>
-                          emp?.branchId ===
-                          selectedStation?.STATION_NO?.toString(),
-                      ) || []
-                }
+                slotProps={{
+                  paper: {
+                    sx: {
+                      direction: "rtl",
+                      "& .MuiAutocomplete-option": {
+                        textAlign: "right",
+                        fontSize: "0.8rem",
+                        fontFamily: "inherit",
+                      },
+                    },
+                  },
+                }}
+                options={filteredEmps}
                 getOptionLabel={(option) =>
-                  `${option?.fullName} - ${option?.id}`
+                  `${option?.FULL_NAME} - ${option?.ID}`
                 }
                 renderInput={(params) => (
                   <TextField required {...params} id="Emps" />
@@ -250,7 +267,7 @@ export default function MoneyTransfeer() {
               />
             </div>
 
-            <div className="flex justify-between mr-80">
+            <div className="flex justify-between mr-75">
               <Button
                 size="small"
                 variant="contained"
@@ -263,7 +280,7 @@ export default function MoneyTransfeer() {
                     Object.keys(selectedEmp || {}).length > 0
                   ) {
                     navigate(
-                      `/readingAndCollection/control/MoneyTransfeer/postHistory/${selectedEmp?.id}`,
+                      `/readings/controlpanel/moneyTransfeer/postHistory/${selectedEmp?.ID}`,
                     );
                   } else {
                     toast.error("من فضلك قم باختيار محصل اولا");
@@ -290,8 +307,10 @@ export default function MoneyTransfeer() {
                 endIcon={<LocalPrintshopIcon />}
                 onClick={() => {
                   setHack(Date.now.toString());
+                  setPrintMode(true);
                   setTimeout(() => {
                     window.print();
+                    setPrintMode(false);
                   }, 300);
                 }}
               >
@@ -331,10 +350,23 @@ export default function MoneyTransfeer() {
           </div>
         </div>
         <SharedDialog
-          title="تجهيز"
+          maxWidth="xs"
+          title={
+            modalType.current === "with" ? "تجهيز وترحيل" : "تجهيز بدون ترحيل"
+          }
           open={openModal}
           onClose={() => {
             setOpenModal(false);
+          }}
+          primaryAction={{
+            text: "حفظ",
+            onClick: handleSubmit((data) => {
+              onsubmit(data);
+            }),
+          }}
+          secondaryAction={{
+            text: "إلغاء",
+            onClick: handleCloseDialog ?? (() => {}),
           }}
         >
           <div className="my-5 grid w-full grid-cols-1 place-items-center gap-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
@@ -346,22 +378,28 @@ export default function MoneyTransfeer() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit(onsubmit)} className="w-full">
+              <form onSubmit={handleSubmit(onsubmit)} className="w-full ">
                 <Controller
                   rules={{ required: true }}
                   name="Count"
                   control={control}
                   render={({ field: { onChange, value } }) => (
-                    <TextField
-                      required
-                      inputProps={{ className: "text-2xl text-dinbold" }}
-                      id="Count"
-                      variant="outlined"
-                      onChange={onChange}
-                      value={value}
-                      fullWidth
-                      label="العدد"
-                    />
+                    <>
+                      <Typography>
+                        العدد<span style={{ color: "red" }}>*</span>
+                      </Typography>
+
+                      <TextField
+                        dir="rtl"
+                        inputProps={{ className: "text-2xl text-dinbold" }}
+                        id="Count"
+                        size="small"
+                        variant="outlined"
+                        onChange={onChange}
+                        value={value}
+                        fullWidth
+                      />
+                    </>
                   )}
                 />
                 <Controller
@@ -369,17 +407,22 @@ export default function MoneyTransfeer() {
                   name="Amount"
                   control={control}
                   render={({ field: { onChange, value } }) => (
-                    <TextField
-                      required
-                      inputProps={{ className: "text-2xl text-dinbold" }}
-                      id="toAmounttal"
-                      fullWidth
-                      variant="outlined"
-                      onChange={onChange}
-                      value={value}
-                      label="المبلغ"
-                      type="number"
-                    />
+                    <>
+                      <Typography>
+                        المبلغ<span style={{ color: "red" }}>*</span>
+                      </Typography>
+                      <TextField
+                        required
+                        size="small"
+                        inputProps={{ className: "text-2xl text-dinbold" }}
+                        id="toAmounttal"
+                        fullWidth
+                        variant="outlined"
+                        onChange={onChange}
+                        value={value}
+                        type="number"
+                      />
+                    </>
                   )}
                 />
                 <Controller
@@ -387,20 +430,25 @@ export default function MoneyTransfeer() {
                   name="ReciptNo"
                   control={control}
                   render={({ field: { onChange, value } }) => (
-                    <TextField
-                      required
-                      inputProps={{
-                        readOnly: !disableReceiptNo,
-                        className: "text-2xl text-dinbold",
-                      }}
-                      id="ReciptNo"
-                      fullWidth
-                      variant="outlined"
-                      onChange={onChange}
-                      value={value}
-                      label="رقم الايصال"
-                      type="number"
-                    />
+                    <>
+                      <Typography>
+                        رقم الايصال<span style={{ color: "red" }}>*</span>
+                      </Typography>
+                      <TextField
+                        required
+                        size="small"
+                        inputProps={{
+                          readOnly: !disableReceiptNo,
+                          className: "text-2xl text-dinbold",
+                        }}
+                        id="ReciptNo"
+                        fullWidth
+                        variant="outlined"
+                        onChange={onChange}
+                        value={value}
+                        type="number"
+                      />
+                    </>
                   )}
                 />
               </form>
@@ -409,70 +457,71 @@ export default function MoneyTransfeer() {
         </SharedDialog>
       </Paper>
       <div>
-        {ReactDOM.createPortal(
-          <div
-            dangerouslySetInnerHTML={{
-              __html: Template(
-                unPostedinvoicesList && {
-                  ...unPostedinvoicesList[0],
-                  includeHeader: true,
-                  unPostedinvoicesList: unPostedinvoicesList.filter(
-                    (invoice) =>
-                      invoice.PAYMENT_METHOD === "CASH" ||
-                      invoice.PAYMENT_METHOD === "نقدي",
-                  ),
-                  sumTotals,
-                  sumTotalsNotNaqdy,
-                  notNaqdyObj: unPostedinvoicesList.filter(
-                    (notNaqdyInvoice) =>
-                      notNaqdyInvoice.PAYMENT_METHOD !== "CASH",
-                  )[0],
-                  notNaqdy: unPostedinvoicesList.filter(
-                    (invoice) =>
-                      invoice.PAYMENT_METHOD !== "CASH" &&
-                      invoice.PAYMENT_METHOD !== "نقدي",
-                  ),
-                  naqdySummary:
-                    arrSumTotalSummaryNaqdyRef.current.length > 2
-                      ? arrSumTotalSummaryNaqdyRef.current
-                      : arrSumTotalSummaryNaqdyRef.current.filter(
-                          (obj) => obj.BILLGROUP !== "",
-                        ),
-                  notNaqdySummary:
-                    arrSumTotalSummaryNotNaqdyRef.current.length > 2
-                      ? arrSumTotalSummaryNotNaqdyRef.current
-                      : arrSumTotalSummaryNotNaqdyRef.current.filter(
-                          (obj) => obj.BILLGROUP !== "",
-                        ),
-                  totalAllSummary: arrSumTotalSummaryAll.current,
-                  isDetails: showDetails,
-                  unPostedDetails: unPostedDetails.current,
-                  siteName: userProfile?.SITE_NAME,
-                  stationName: userProfile?.STATION_NAME,
-                  // totalNaqdySummary: arrSumTotalSummaryNaqdyRef.current.pop(),
-
-                  // for basicTable
-                  printBasic: basicTableShow,
-                  listGroupedByBillGroupNaqdy: Array.from(
-                    invoicesListByBillGr.current.values(),
-                  ).filter(
-                    (invoice) =>
-                      invoice.PAYMENT_METHOD === "CASH" ||
-                      invoice.PAYMENT_METHOD === "نقدي",
-                  ),
-                  listGroupedByBillGroupNotNaqdy: Array.from(
-                    invoicesListByBillGr.current.values(),
-                  ).filter(
-                    (invoice) =>
-                      invoice.PAYMENT_METHOD !== "CASH" &&
-                      invoice.PAYMENT_METHOD !== "نقدي",
-                  ),
-                },
-              ),
-            }}
-          />,
-          document.getElementById("printModel") || document.body,
-        )}
+        {printMode &&
+          ReactDOM.createPortal(
+            <div
+              dangerouslySetInnerHTML={{
+                __html: Template(
+                  unPostedinvoicesList && {
+                    ...unPostedinvoicesList[0],
+                    includeHeader: true,
+                    unPostedinvoicesList: unPostedinvoicesList.filter(
+                      (invoice) =>
+                        invoice.PAYMENT_METHOD === "CASH" ||
+                        invoice.PAYMENT_METHOD === "نقدي",
+                    ),
+                    sumTotals,
+                    sumTotalsNotNaqdy,
+                    notNaqdyObj: unPostedinvoicesList.filter(
+                      (notNaqdyInvoice) =>
+                        notNaqdyInvoice.PAYMENT_METHOD !== "CASH",
+                    )[0],
+                    notNaqdy: unPostedinvoicesList.filter(
+                      (invoice) =>
+                        invoice.PAYMENT_METHOD !== "CASH" &&
+                        invoice.PAYMENT_METHOD !== "نقدي",
+                    ),
+                    naqdySummary:
+                      arrSumTotalSummaryNaqdyRef.current.length > 2
+                        ? arrSumTotalSummaryNaqdyRef.current
+                        : arrSumTotalSummaryNaqdyRef.current.filter(
+                            (obj) => obj.BILLGROUP !== "",
+                          ),
+                    notNaqdySummary:
+                      arrSumTotalSummaryNotNaqdyRef.current.length > 2
+                        ? arrSumTotalSummaryNotNaqdyRef.current
+                        : arrSumTotalSummaryNotNaqdyRef.current.filter(
+                            (obj) => obj.BILLGROUP !== "",
+                          ),
+                    totalAllSummary: arrSumTotalSummaryAll.current,
+                    isDetails: showDetails,
+                    unPostedDetails: unPostedDetails.current,
+                    siteName: userProfile?.SITE_NAME,
+                    stationName: userProfile?.STATION_NAME,
+                    printBasic: basicTableShow,
+                    listGroupedByBillGroupNaqdy: Array.from(
+                      invoicesListByBillGr.current.values(),
+                    ).filter(
+                      (invoice) =>
+                        invoice.PAYMENT_METHOD === "CASH" ||
+                        invoice.PAYMENT_METHOD === "نقدي",
+                    ),
+                    listGroupedByBillGroupNotNaqdy: Array.from(
+                      invoicesListByBillGr.current.values(),
+                    ).filter(
+                      (invoice) =>
+                        invoice.PAYMENT_METHOD !== "CASH" &&
+                        invoice.PAYMENT_METHOD !== "نقدي",
+                    ),
+                  },
+                ),
+              }}
+            />,
+            document.getElementById("printModel") || document.body,
+          )}
+      </div>
+      <div className="flex flex-col justify-cenetr items-center">
+        {isLoading || userFetching ? <CircularProgress /> : null}
       </div>
 
       <Paper sx={paper}>
@@ -534,9 +583,13 @@ export default function MoneyTransfeer() {
           handleShowDetails={handleSetShowDetails}
           showDetails={showDetails}
           unPostedinvoicesList={unPostedinvoicesList || []}
-          empId={selectedEmp?.id}
+          empId={selectedEmp?.ID}
         />
       </Paper>
     </Container>
   );
 }
+
+/**
+ *
+ */

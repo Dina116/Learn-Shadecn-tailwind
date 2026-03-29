@@ -1,19 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/refs */
-import {
-  Typography,
-  Button,
-  Autocomplete,
-  TextField,
-  InputLabel,
-} from "@mui/material";
-import {
-  useGetAllStationsApi,
-  useGetHafzaTemplate,
-  useGetIsHeadQuarterApi,
-} from "../../api/useControlApi";
+import { Typography, Button, Autocomplete, TextField } from "@mui/material";
+
 import type { CollectionDestributionItm } from "../types";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import usePostHistory from "./usePostHistory";
 import type {
   EMPS,
@@ -23,25 +13,27 @@ import MasPageHeader from "../../../../../componenet/header/MasPageHeader";
 import MasDataGrid from "../../../../../componenet/shared/dataGrid";
 import SharedDialog from "../../../../../componenet/shared/SharedDialog";
 import MoneyTransferMainTable from "../MoneyTransferMainTable";
-import type { STATIONS } from "../../types";
+import type { STATIONS, STATMDEPOSIT } from "../../types";
 import Handlebars from "handlebars";
+import { useGetHafzaTemplate } from "../useMoneyTransfeerApi";
+import usePulledHistory from "../../operations/pulledHistory/usePulledHistory";
 
 export default function PostHistory() {
+  const { useGetAllStationsApi } = usePulledHistory();
   const { data: AllStations } = useGetAllStationsApi();
-  const { data: isHeadQuarter } = useGetIsHeadQuarterApi();
   const { data: hafzaTemplate } = useGetHafzaTemplate(true);
-
+  const [tableData, setTableData] = useState<STATMDEPOSIT[]>([]);
   const Template = Handlebars.compile(hafzaTemplate || "");
-  // const { id } = useParams();
   const postedDetails = useRef<CollectionDestributionItm[]>([]);
-
   const depositNum = useRef<number | undefined>(0);
   const deleveryDate = useRef<string | undefined>("");
+  const [displayEmpData, setDisplayEmpData] = useState({
+    emp: {} as EMPS,
+    depositList: [] as STATMDEPOSIT[],
+  });
   const {
     selectedEmp,
-    selectedStation,
     DepositList,
-    AllEmps,
     openModal,
     PostedinvoicesList,
     sumTotals,
@@ -60,8 +52,18 @@ export default function PostHistory() {
     setFinalReq,
     setSelectedEmp,
     setSelectedStation,
+    filteredEmps,
+    isHeadQuarter,
   } = usePostHistory();
-  // const [, setHack] = useState<string>("");
+  useEffect(() => {
+    setTableData(DepositList || []);
+  }, [DepositList]);
+  useEffect(() => {
+    setDisplayEmpData({
+      emp: selectedEmp || ({} as EMPS),
+      depositList: DepositList || [],
+    });
+  }, [selectedEmp, DepositList]);
   const colList = useMemo(() => {
     const tempColList: IColumn[] = [
       {
@@ -104,9 +106,10 @@ export default function PostHistory() {
         allowEditing: false,
       },
       {
+        dataField: "Actions",
         caption: "الاجراءات",
         allowEditing: false,
-        fixed: true,
+        fixed: false,
         cellRender: (row) => (
           <Button
             variant="contained"
@@ -116,7 +119,7 @@ export default function PostHistory() {
               depositNum.current = row.data.DEPOSIT_ID;
               deleveryDate.current = row.data.DELIVERY_DATE;
               setPostedReq({
-                empid: selectedEmp?.id as number,
+                empid: selectedEmp?.ID as number,
                 depositId: row.data.DEPOSIT_ID,
               });
               setOpenModal(true);
@@ -128,13 +131,11 @@ export default function PostHistory() {
       },
     ];
     return tempColList;
-  }, [getPostedinvoicesList, selectedEmp?.id, setOpenModal, setPostedReq]);
-  // console.log(DepositList, 'DepositList');
-
+  }, [getPostedinvoicesList, selectedEmp?.ID, setOpenModal, setPostedReq]);
   return (
     <>
       <MasPageHeader title="سجل التوريدات" />
-      <div className="w-full rounded-md bg-white p-2 shadow-sm">
+      <div className="w-full rounded-md bg-white p-2 shadow-sm mt-1">
         <div
           className={`my-2 grid w-full ${
             !isHeadQuarter ? "grid-cols-1" : "grid-cols-2"
@@ -142,17 +143,44 @@ export default function PostHistory() {
           justify-items-center gap-2`}
         >
           {isHeadQuarter && (
-            <div className="flex w-full flex-col">
-              <InputLabel htmlFor="BILLGROUP" sx={{ marginBottom: 1 }}>
+            <div className="flex w-full flex-col" dir="rtl">
+              <Typography sx={{ marginBottom: 1 }} id="BILLGROUP">
                 اختر الفرع
-              </InputLabel>
+              </Typography>
               <Autocomplete
+                size="small"
                 onChange={(_event, newVal) => {
                   // console.log(newVal, 'Newvals');
                   setSelectedStation(newVal || ({} as STATIONS));
                 }}
                 id="BILLGROUP"
                 fullWidth
+                sx={{
+                  flexGrow: 1,
+                  direction: "rtl",
+                  backgroundColor: "#fcfcfc",
+                  "& .MuiOutlinedInput-root": {
+                    height: 30,
+                    fontSize: "0.8rem",
+                    paddingRight: "9px !important",
+                  },
+                  "& .MuiAutocomplete-endAdornment": {
+                    right: "auto  !important",
+                    left: 8,
+                  },
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      direction: "rtl",
+                      "& .MuiAutocomplete-option": {
+                        textAlign: "right",
+                        fontSize: "0.8rem",
+                        fontFamily: "inherit",
+                      },
+                    },
+                  },
+                }}
                 options={AllStations || []}
                 getOptionLabel={(option: STATIONS) => option.DESCRIPTION || " "}
                 renderOption={(props, option: STATIONS) => (
@@ -166,71 +194,109 @@ export default function PostHistory() {
               />
             </div>
           )}
-          <div className="flex w-full flex-col">
-            <InputLabel htmlFor="Emps" sx={{ marginBottom: 1 }}>
-              اختر المحصل
-            </InputLabel>
-            <Autocomplete
-              value={selectedEmp}
-              onChange={(_event, newVal) => {
-                setSelectedEmp(newVal || {});
-                setFinalReq(newVal?.id || 0);
-              }}
-              id="Emps"
-              // defaultValue={
-              //   (id && AllEmps?.find((emp) => emp?.id === Number(id))) ||
-              //   ({} as EMPS)
-              // }
-              fullWidth
-              options={
-                selectedStation?.IS_HEADQUARTERS && isHeadQuarter
-                  ? AllEmps || []
-                  : AllEmps?.filter(
-                      (emp: { branchId: any }) =>
-                        emp?.branchId ===
-                        selectedStation?.STATION_NO?.toString(),
-                    ) || []
-              }
-              getOptionLabel={getOption}
-              renderOption={(props, option: EMPS) => (
-                <li {...props} key={option.empId}>
-                  {`${option?.fullName} - ${option?.id}`}
-                </li>
-              )}
-              renderInput={(params) => (
-                <TextField required {...params} id="Emps" />
-              )}
-            />
-          </div>
+          {Object.keys(selectedEmp).length > 0 ? (
+            <div className="flex w-full flex-col" dir="rtl">
+              <Typography sx={{ marginBottom: 1 }} id="Emps">
+                اختر المحصل
+              </Typography>
+              <Autocomplete
+                id="Emps"
+                fullWidth
+                size="small"
+                defaultValue={selectedEmp}
+                onChange={(_event, newVal) => {
+                  if (newVal) {
+                    console.log("hiiiiiiiiiii", newVal);
+                    setSelectedEmp(newVal);
+                    setFinalReq(newVal?.ID || 0);
+                  }
+                  handleSetShowDetails(false);
+                }}
+                options={filteredEmps}
+                isOptionEqualToValue={(option, value) => option.ID === value.ID}
+                getOptionLabel={getOption}
+                renderOption={(props, option: EMPS) => (
+                  <li {...props} key={option.ID}>
+                    {`${option?.FULL_NAME} - ${option?.ID}`}
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField required {...params} id="Emps" />
+                )}
+                sx={{
+                  flexGrow: 1,
+                  direction: "rtl",
+                  backgroundColor: "#fcfcfc",
+                  "& .MuiOutlinedInput-root": {
+                    height: 30,
+                    fontSize: "0.8rem",
+                    paddingRight: "9px !important",
+                  },
+                  "& .MuiAutocomplete-endAdornment": {
+                    right: "auto  !important",
+                    left: 8,
+                  },
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      direction: "rtl",
+                      "& .MuiAutocomplete-option": {
+                        textAlign: "right",
+                        fontSize: "0.8rem",
+                        fontFamily: "inherit",
+                      },
+                    },
+                  },
+                }}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
-      <div className="mt-4 w-full rounded-md bg-white shadow-sm">
+      <div className="mt-4 w-full rounded-md bg-white shadow-sm" dir="rtl">
         <div className="grid grid-cols-4 rounded-t-md bg-primary-lighter p-4">
-          <div className="rounded-md bg-primary-main p-2">
-            <Typography variant="h5" className="text-center text-white">
-              {`اسم المحصل: ${selectedEmp?.fullName || ""}`}
+          <div className=" flex fex-row justify-center items-center rounded-md bg-primary-main p-1 text-center ">
+            <Typography
+              className="text-center text-white break-words"
+              sx={{ fontSize: "1.2rem" }}
+            >
+              {`اسم المحصل: ${displayEmpData.emp?.FULL_NAME || ""}`}
             </Typography>
           </div>
-          <div className="mx-2 rounded-md bg-primary-main p-2">
-            <Typography variant="h5" className="text-center text-white">
-              {`كود المحصل: ${selectedEmp?.id || ""}`}
+          <div className=" flex fex-row justify-center items-center mx-2 rounded-md bg-primary-main p-1 text-center ">
+            <Typography
+              className="text-center text-white"
+              sx={{ fontSize: "1.2rem" }}
+            >
+              {`كود المحصل: ${displayEmpData.emp?.ID || ""}`}
             </Typography>
           </div>
-          <div className="mx-2 rounded-md bg-primary-main p-2">
-            <Typography variant="h5" className="text-center text-white">
+          <div className=" flex fex-row justify-center items-center mx-2 rounded-md bg-primary-main p-1 text-center ">
+            <Typography
+              className="text-center text-white"
+              sx={{ fontSize: "1.2rem" }}
+            >
               {` الفرع: ${
                 AllStations?.find(
                   (station) =>
-                    station?.STATION_NO === Number(selectedEmp?.branchId),
+                    station?.STATION_NO ===
+                    Number(displayEmpData.emp?.BRANCH_ID),
                 )?.DESCRIPTION || ""
               }`}
             </Typography>
           </div>
-          <div className="mx-2 rounded-md bg-primary-main p-2">
-            <Typography variant="h5" className="text-center text-white">
-              {` تاريخ التوريد: ${
-                DepositList && DepositList?.length > 0
-                  ? new Date(DepositList[0].DELIVERY_DATE).toLocaleDateString()
+          <div className=" flex fex-row justify-center items-center mx-2 rounded-md bg-primary-main p-1 text-center ">
+            <Typography
+              className="text-center text-white"
+              sx={{ fontSize: "1.2rem" }}
+            >
+              {`تاريخ التوريد: ${
+                displayEmpData.depositList.length > 0 &&
+                displayEmpData.depositList[0]?.DELIVERY_DATE
+                  ? new Date(
+                      displayEmpData.depositList[0].DELIVERY_DATE,
+                    ).toLocaleDateString()
                   : ""
               }`}
             </Typography>
@@ -242,29 +308,18 @@ export default function PostHistory() {
             className="tabelSharing"
             showBorders
             columns={colList}
-            dataSource={DepositList || []}
+            dataSource={tableData}
           />
         </div>
       </div>
       <SharedDialog
         maxWidth="lg"
-        // width="lg"
         title="حافظة توريد مسجلة"
         onClose={() => {
           setOpenModal(false);
           handleSetShowDetails(false);
         }}
-        // onSave={() => setOpenModal(false)}
         open={openModal}
-        // showPrint
-        // handleExport={() => {
-        //   setHack(Date.now.toString());
-        //   setTimeout(() => {
-        //     console.log("sssss");
-        //     window.print();
-        //   }, 300);
-        // }}
-        // actions
       >
         <MoneyTransferMainTable
           basicTableShow
@@ -292,13 +347,7 @@ export default function PostHistory() {
           handleShowDetails={handleSetShowDetails}
           showDetails={showDetails}
           unPostedinvoicesList={PostedinvoicesList || []}
-          empId={selectedEmp?.id}
-          // empName={selectedEmp?.fullName || ''}
-          // stationName={
-          //   AllStations?.find(
-          //     (station) => station?.stationNo === Number(selectedEmp?.branchId),
-          //   )?.description || ' '
-          // }
+          empId={selectedEmp?.ID}
           depositNum={depositNum.current}
           deliveryDate={
             DepositList?.find(
@@ -316,19 +365,19 @@ export default function PostHistory() {
                   ...PostedinvoicesList[0],
                   includeHeader: true,
                   unPostedinvoicesList: PostedinvoicesList.filter(
-                    (invoice: { PAYMENT_METHOD: string }) =>
+                    (invoice) =>
                       invoice.PAYMENT_METHOD === "CASH" ||
                       invoice.PAYMENT_METHOD === "نقدي",
                   ),
                   sumTotals,
                   sumTotalsNotNaqdy,
                   notNaqdyObj: PostedinvoicesList.filter(
-                    (notNaqdyInvoice: { PAYMENT_METHOD: string }) =>
+                    (notNaqdyInvoice) =>
                       notNaqdyInvoice.PAYMENT_METHOD !== "CASH" &&
                       notNaqdyInvoice.PAYMENT_METHOD !== "نقدي",
                   )[0],
                   notNaqdy: PostedinvoicesList.filter(
-                    (invoice: { PAYMENT_METHOD: string }) =>
+                    (invoice) =>
                       invoice.PAYMENT_METHOD !== "CASH" &&
                       invoice.PAYMENT_METHOD !== "نقدي",
                   ),
@@ -347,8 +396,6 @@ export default function PostHistory() {
                   totalAllSummary: arrSumTotalSummaryAll.current,
                   isDetails: showDetails,
                   unPostedDetails: postedDetails.current,
-
-                  // for basicTable
                   printBasic: true,
                   listGroupedByBillGroupNaqdy: Array.from(
                     invoicesListByBillGr.current.values(),
@@ -364,14 +411,10 @@ export default function PostHistory() {
                       invoice.PAYMENT_METHOD !== "CASH" &&
                       invoice.PAYMENT_METHOD !== "نقدي",
                   ),
-                  // totalNaqdySummary: arrSumTotalSummaryNaqdyRef.current.pop(),
                 },
               ),
             }}
           />
-          ,
-          {/* document.getElementById('printModel') || document.body,
-          )} */}
         </div>
       </SharedDialog>
     </>

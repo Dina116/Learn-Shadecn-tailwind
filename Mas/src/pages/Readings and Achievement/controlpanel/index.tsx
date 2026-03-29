@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { OperationsCardItems } from "./operations/OperationsCardItems";
 import { PrepareCardItems } from "./prepareOperations/PrepareCardItems";
@@ -15,10 +15,19 @@ import { useNavigate } from "react-router-dom";
 import MultiLevelHeaderTable from "../../../componenet/shared/MultiLevelHeaderTable";
 import type { NewDataType } from "./types";
 import { newTableColumns } from "./newTableColumns";
+// import { useGetUserProfileApi } from "./api/useControlApi";
 
 export default function ControlPanel() {
   // const [enable, setEnable] = useState<boolean>(true);
   const navigate = useNavigate();
+
+  // const { data } = useGetUserProfileApi();
+  // console.log("data from ControlPanel", data);
+
+  useEffect(() => {
+    console.log("data from ControlPanel");
+  });
+
   const [tab, setTab] = useState<0 | 1 | 2 | 3>(0);
   const tabsMap = [
     OperationsCardItems,

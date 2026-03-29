@@ -7,7 +7,7 @@ import {
   type BOOKCYCLEWithStatus,
   type ExecutionError,
 } from "../../api/useControlApi";
-import type { BILLGROUPS, FilterValues } from "../../types";
+import type { BILLGROUPS, BOOKCYCLE, FilterValues } from "../../types";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import { getCloseRWalkColumns } from "./columns";
@@ -16,6 +16,9 @@ type RowExtraData = {
   status: "completed" | "failed";
   AffectedRows?: number;
 };
+export function GetBookKey(walk: BOOKCYCLE) {
+  return `${walk.BOOK_NO}${walk.WALK_NO}${walk.BILLGROUP}`;
+}
 export default function useCloseRWalk() {
   const queryClient = useQueryClient();
   const [counters, setCounters] = useState({
@@ -69,8 +72,8 @@ export default function useCloseRWalk() {
       (response) => {
         setCounters((prev) => ({
           ...prev,
-          success: prev.success + 1,
-          pending: prev.pending - 1,
+          success: prev.success ,
+          pending: prev.pending ,
         }));
         setRowStatuses((prev) => ({
           ...prev,
@@ -163,16 +166,18 @@ export default function useCloseRWalk() {
     ],
   );
   const handleExecuteAction = async () => {
-    const rowsToExecute = selectableRows.filter((row) =>
-      selectedRowKeys.includes(row.BOOK_NO),
-    );
+    const rowsToExecute = selectableRows
+      .filter((row) => selectedRowKeys.includes(row.BOOK_NO))
+      .map((row) => ({ ...row, KEY: GetBookKey(row) }));
 
     if (rowsToExecute.length === 0) {
       toast.error("يرجى تحديد صفوف جديدة (غير مكتملة) للتنفيذ");
       return;
     }
-
-    setCounters({ success: 0, failed: 0, pending: rowsToExecute.length });
+    setCounters((prev) => ({
+      ...prev,
+      pending: prev.pending + rowsToExecute.length,
+    }));
     setExecutionErrors([]);
 
     for (const row of rowsToExecute) {
@@ -180,10 +185,37 @@ export default function useCloseRWalk() {
       try {
         await executeClose({
           ...row,
-          //   bilngDate: filters?.billingDate || "",
         });
-      } catch {
-        //
+        setCounters((prev) => ({
+          ...prev,
+          success: prev.success + 1,
+          pending: prev.pending - 1,
+        }));
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "completed" },
+        }));
+      } catch (error) {
+        setCounters((prev) => ({
+          ...prev,
+          failed: prev.failed + 1,
+          pending: prev.pending - 1,
+        }));
+
+        setExecutionErrors((prev) => [
+          ...prev,
+          {
+            BOOK_NO: row.BOOK_NO,
+            BILLGROUP: row.BILLGROUP,
+            WALK_NO: row.WALK_NO,
+            message: error instanceof Error ? error.message : "Unknown error",
+          },
+        ]);
+
+        setRowStatuses((prev) => ({
+          ...prev,
+          [row.KEY]: { status: "failed" },
+        }));
       }
     }
     setUpdatingRowKey(null);

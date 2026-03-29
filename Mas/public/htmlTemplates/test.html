@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap");
+
+      body {
+        font-family: "Tajawal", sans-serif;
+        color: #000000;
+        margin: 10px;
+        background-color: #fff;
+      }
+      .report-container {
+        font-family: "Tajawal", sans-serif;
+        color: #0b0b0b;
+        background-color: #fff;
+        padding: 9px;
+        direction: rtl;
+      }
+
+      .report-container * {
+        font-family: "Tajawal", sans-serif;
+      }
+
+      .report-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #1a4f7a 0%, #2c3e50 100%);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-bottom: 4px solid #f39c12;
+      }
+      .header-title h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        color: black;
+      }
+
+      .header-title p {
+        margin: 5px 0 0;
+        opacity: 0.9;
+        font-size: 14px;
+        color: black;
+      }
+
+      .info-box {
+        background: #eaf6fb;
+        border: 1px solid #bde0fe;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-weight: bold;
+      }
+      .info-item {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        color: black;
+      }
+
+      .info-item .label {
+        font-weight: 400;
+        color: black;
+      }
+
+      .info-item .value {
+        font-weight: 700;
+      }
+
+      .section-title {
+        background: #e0f4f1;
+        color: #0f4c75;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        display: inline-block;
+      }
+
+      .section-title::before {
+        content: "";
+        width: 5px;
+        height: 25px;
+        background: #2980b9;
+        border-radius: 3px;
+        display: inline-block;
+      }
+
+      .table-container {
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid #dce3ea;
+        border-collapse: collapse;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+      .report-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        table-layout: auto;
+        border: 1px solid #dce3ea;
+        white-space: nowrap;
+        /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); */
+      }
+
+      .report-container td {
+        padding: 4px;
+        font-size: 9px;
+        border: 1px solid #1671cd;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+
+      .report-container th {
+        background: linear-gradient(135deg, #38b6b6, #4ecdc4);
+        color: #0f4c75;
+        border: 1px solid #1671cd;
+        font-size: 9px;
+        padding: 4px;
+        white-space: nowrap;
+        font-weight: bold;
+      }
+
+      .report-container tr:nth-child(even) {
+        background-color: #f8f9fb;
+      }
+      .summary-row {
+        background: #dff6ff !important;
+        font-weight: bold;
+        color: #0f4c75;
+      }
+      .summary-row td {
+        border-top: 2px solid #2980b9;
+      }
+      .summary-statement-card {
+        border: 1px solid #dce3ea;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        background: #f9fbfd;
+      }
+      .footer-summary {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px dashed #2980b9;
+        margin: 30px 0;
+        line-height: 2;
+      }
+
+      .amount-highlight {
+        color: #e63946;
+        font-weight: bold;
+      }
+
+      .signature-area {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 40px;
+        text-align: center;
+      }
+
+      .signature-box {
+        border-top: 1px solid #333;
+        width: 200px;
+        padding-top: 10px;
+        font-weight: bold;
+      }
+
+      .tafqeet-text {
+        color: #555;
+        font-style: italic;
+      }
+      @media print {
+        @page {
+          margin: 0.5cm;
+          size: auto;
+        }
+        .report-container {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    {{#if includeHeader}} {{> headerTemplate}} {{/if}}
+    <div class="report-container">
+      <div class="report-header">
+        <div class="header-title">
+          <h2>منظومة إدارة القراء والمحصلين (MAS)</h2>
+        </div>
+        <div class="info-box">
+          <div class="info-item">
+            <span class="label">اسم المحصل:</span>
+            <span class="value">{{COLLECTOR_NAME}}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">تاريخ التوريد:</span>
+            <span class="value">{{DELIVERY_DATE}}</span>
+          </div>
+        </div>
+      </div>
+      {{#if printBasic}}
+      <div class="section-title">نقدي (جدول مجمع برقم المجموعة)</div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>م</th>
+              <th>طريقة الدفع</th>
+              <th>المجموعة</th>
+              <th>العدد</th>
+              <th>مياة</th>
+              <th>صرف</th>
+              <th>استدامة</th>
+              <th>اقساط</th>
+              <th>ف التقريب</th>
+              <th>رسم نظافة</th>
+              <th>تنظيمي</th>
+              <th>ق توصيلة</th>
+              <th>ق عداد</th>
+              <th>اصلاح عداد</th>
+              <th>د عقد</th>
+              <th>ضريبة</th>
+              <th>ارصدة سابقة</th>
+              <th>تحت الحساب</th>
+              <th>اجمالي</th>
+              <th>رسم ت 2</th>
+              <th>رسم ت</th>
+              <th>الاستقطاعات</th>
+              <th>صافي الاجمالي</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each listGroupedByBillGroupNaqdy}}
+            <tr>
+              <td dir="rtl">{{CAN (sum @index 1)}}</td>
+              <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+              <td dir="rtl">{{this/BILLGROUP}}</td>
+              <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+              <td dir="rtl">{{addAndFormat 2 this/WATER_AMT}}</td>
+              <td dir="rtl">
+                {{#if this/SEWER_AMT }} {{addAndFormat 2 this/SEWER_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/BASIC_AMT}} {{addAndFormat 2 this/BASIC_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/INSTALLS_AMT}} {{addAndFormat 2 this/INSTALLS_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/ROUND_AMT}} {{addAndFormat 3 this/ROUND_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/OTHER_AMT1}} {{this/OTHER_AMT1}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/TANZEEM_AMT}} {{addAndFormat 2 this/TANZEEM_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/CONN_INSTALLS_AMT}} {{addAndFormat 2
+                this/CONN_INSTALLS_AMT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/METER_INSTALLS_AMT}} {{addAndFormat 2
+                this/METER_INSTALLS_AMT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/METER_MAN_AMT}} {{addAndFormat 2 this/METER_MAN_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/CONTRACT_AMT}} {{this/CONTRACT_AMT}} {{else}} 0
+                {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/TAX_AMT}} {{addAndFormat 2 this/TAX_AMT}} {{else}} 0
+                {{/if}}
+              </td>
+              <td dir="rtl">
+                {{addAndFormat 2 (sum this/OP_BLNCE this/COLLECTION_AMT
+                this/CUR_PAYMNTS this/DBT_AMT this/CRDT_AMT this/AGREEM_AMT
+                this/OTHER_AMT this/OTHER_AMT2 this/OTHER_AMT3 this/OTHER_AMT4
+                this/OTHER_AMT5 this/GOV_AMT this/UNI_AMT this/CONN_AMT
+                this/COMPUTER_AMT this/TAKAFUL_AMT this/CLEAN_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{#if (isEqualTo this/COLLECTION_TYPE "PARTIAL")}}
+                {{addAndFormat 2 this/COLLECTED_AMOUNT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+              <td dir="rtl">
+                {{addAndFormat 3 this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                this/RECEIPT_CHARGE3}}
+              </td>
+
+              <td dir="rtl">
+                {{#if this/DISCOUNT}} {{this/DISCOUNT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl" class="highlight-cell">
+                {{toFixed (sub (sum this/COLLECTED_AMOUNT this/RECEIPT_CHARGE1
+                this/RECEIPT_CHARGE2 this/RECEIPT_CHARGE3) this/DISCOUNT) 3 }}
+              </td>
+            </tr>
+            {{/each}}
+            <tr>
+              <td colspan="10"></td>
+            </tr>
+            <tr>
+              <td colspan="20"></td>
+            </tr>
+            <tr class="summary-row">
+              <td colspan="3">الاجمالي</td>
+              <td dir="rtl">{{CAN sumTotals/COLLECTED_COUNT}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/WATER_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/SEWER_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/BASIC_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/INSTALLS_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/ROUND_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/OTHER_AMT1)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/TANZEEM_AMT)}}</td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/CONN_INSTALLS_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/METER_INSTALLS_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/METER_MAN_AMT)}}
+              </td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/CONTRACT_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/TAX_AMT)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/balanceTotal)}}</td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/underBalance)}}</td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/COLLECTED_AMOUNT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/RECEIPT_CHARGE1
+                sumTotals/RECEIPT_CHARGE2 sumTotals/RECEIPT_CHARGE3)}}
+              </td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/DISCOUNT)}}</td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 (sub (sum sumTotals/COLLECTED_AMOUNT
+                sumTotals/RECEIPT_CHARGE1 sumTotals/RECEIPT_CHARGE2
+                sumTotals/RECEIPT_CHARGE3) sumTotals/DISCOUNT)) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /////////////////////////// -->
+
+      <div class="section-title">غير نقدي (جدول مجمع برقم المجموعة)</div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>م</th>
+              <th>طريقة الدفع</th>
+              <th style="max-width: 100px">المجموعة</th>
+              <th>العدد</th>
+              <th>مياة</th>
+              <th>صرف</th>
+              <th>استدامة</th>
+              <th>اقساط</th>
+              <th>ف التقريب</th>
+              <th>رسم نظافة</th>
+              <th>تنظيمي</th>
+              <th>ق توصيلة</th>
+              <th>ق عداد</th>
+              <th>اصلاح عداد</th>
+              <th>د عقد</th>
+              <th>ضريبة</th>
+              <th>ارصدة سابقة</th>
+              <th>تحت الحساب</th>
+              <th>اجمالي</th>
+              <th>رسم ت 2</th>
+              <th>رسم ت</th>
+              <th>الاستقطاعات</th>
+              <th>صافي الاجمالي</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each listGroupedByBillGroupNotNaqdy}}
+            <tr>
+              <td dir="rtl">{{CAN (sum @index 1)}}</td>
+              <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+              <td dir="rtl">{{this/BILLGROUP}}</td>
+              <!-- <td dir="rtl" >{{this/BOOK_NO}}</td> -->
+              <!-- <td dir="rtl" >{{this/WALK_NO}}</td> -->
+              <!-- <td dir="rtl" >{{this/DESCRIPTION}}</td> -->
+              <!-- <td dir="rtl" >{{#if this/BILNG_DESCRIPTION}} {{this/BILNG_DESCRIPTION}} {{else}}
+                {{this/BILNG_DATE}}
+                {{/if}}</td> -->
+              <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+              <td dir="rtl">{{addAndFormat 2 this/WATER_AMT}}</td>
+              <td dir="rtl">
+                {{#if this/SEWER_AMT }} {{addAndFormat 2 this/SEWER_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/BASIC_AMT}} {{addAndFormat 2 this/BASIC_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/INSTALLS_AMT}} {{addAndFormat 2 this/INSTALLS_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/ROUND_AMT}} {{addAndFormat 3 this/ROUND_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/OTHER_AMT1}} {{this/OTHER_AMT1}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/TANZEEM_AMT}} {{addAndFormat 2 this/TANZEEM_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/CONN_INSTALLS_AMT}} {{addAndFormat 2
+                this/CONN_INSTALLS_AMT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/METER_INSTALLS_AMT}} {{addAndFormat 2
+                this/METER_INSTALLS_AMT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/METER_MAN_AMT}} {{addAndFormat 2 this/METER_MAN_AMT}}
+                {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/CONTRACT_AMT}} {{this/CONTRACT_AMT}} {{else}} 0
+                {{/if}}
+              </td>
+              <td dir="rtl">
+                {{#if this/TAX_AMT}} {{addAndFormat 2 this/TAX_AMT}} {{else}} 0
+                {{/if}}
+              </td>
+              <td dir="rtl">
+                {{addAndFormat 2 (sum this/OP_BLNCE this/COLLECTION_AMT
+                this/CUR_PAYMNTS this/DBT_AMT this/CRDT_AMT this/AGREEM_AMT
+                this/OTHER_AMT this/OTHER_AMT2 this/OTHER_AMT3 this/OTHER_AMT4
+                this/OTHER_AMT5 this/GOV_AMT this/UNI_AMT this/CONN_AMT
+                this/COMPUTER_AMT this/TAKAFUL_AMT this/CLEAN_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{#if (isEqualTo this/COLLECTION_TYPE "PARTIAL")}}
+                {{addAndFormat 2 this/COLLECTED_AMOUNT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+              <td dir="rtl">
+                {{addAndFormat 3 this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                this/RECEIPT_CHARGE3}}
+              </td>
+
+              <td dir="rtl">
+                {{#if this/DISCOUNT}} {{this/DISCOUNT}} {{else}} 0 {{/if}}
+              </td>
+              <td dir="rtl">
+                {{toFixed (sub (sum this/COLLECTED_AMOUNT this/RECEIPT_CHARGE1
+                this/RECEIPT_CHARGE2 this/RECEIPT_CHARGE3) this/DISCOUNT) 3 }}
+              </td>
+            </tr>
+            {{/each}}
+            <tr style="height: 20px">
+              <td colspan="10"></td>
+            </tr>
+            <tr>
+              <td colspan="20"></td>
+            </tr>
+            <tr class="total-row">
+              <td dir="rtl" colspan="3">الاجمالي</td>
+              <td dir="rtl">{{CAN sumTotalsNotNaqdy/COLLECTED_COUNT}}</td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/WATER_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/SEWER_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/BASIC_AMT)}}
+              </td>
+              <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/INSTALLS_AMT)}}</td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/ROUND_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/OTHER_AMT1)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/TANZEEM_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/CONN_INSTALLS_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotals/METER_INSTALLS_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/METER_MAN_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/CONTRACT_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/TAX_AMT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/balanceTotal)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/underBalance)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/COLLECTED_AMOUNT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/RECEIPT_CHARGE1
+                sumTotalsNotNaqdy/RECEIPT_CHARGE2
+                sumTotalsNotNaqdy/RECEIPT_CHARGE3)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 sumTotalsNotNaqdy/DISCOUNT)}}
+              </td>
+              <td dir="rtl">
+                {{CAN (addAndFormat 2 (sub (sum
+                sumTotalsNotNaqdy/COLLECTED_AMOUNT
+                sumTotalsNotNaqdy/RECEIPT_CHARGE1
+                sumTotalsNotNaqdy/RECEIPT_CHARGE2
+                sumTotalsNotNaqdy/RECEIPT_CHARGE3) sumTotalsNotNaqdy/DISCOUNT))
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ////////////////////////// -->
+      {{else}}
+      <div class="content-section">
+        <div class="section-badge">النقدي</div>
+        <div class="table-card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>م</th>
+                  <th>طريقة الدفع</th>
+                  <th>المجموعة</th>
+                  <th>السجل</th>
+                  <th>المسار</th>
+                  <th>الدورة</th>
+                  <th>العدد</th>
+                  <th>مياة</th>
+                  <th>صرف</th>
+                  <th>استدامة</th>
+                  <th>اقساط</th>
+                  <th>ف التقريب</th>
+                  <th>رسم نظافة</th>
+                  <th>تنظيمي</th>
+                  <th>ق توصيلة</th>
+                  <th>ق عداد</th>
+                  <th>اصلاح عداد</th>
+                  <th>د عقد</th>
+                  <th>ضريبة</th>
+                  <th>ارصدة سابقة</th>
+                  <th>تحت الحساب</th>
+                  <th>اجمالي</th>
+                  <th>رسم ت 2</th>
+                  -->
+                  <th>رسم ت</th>
+                  <th>الاستقطاعات</th>
+                  <th>صافي الاجمالي</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each unPostedinvoicesList}}
+                <tr>
+                  <td dir="rtl">{{CAN (sum @index 1)}}</td>
+                  <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+                  <td dir="rtl">{{this/BILLGROUP}}</td>
+                  <td dir="rtl">{{this/BOOK_NO}}</td>
+                  <td dir="rtl">{{this/WALK_NO}}</td>
+                  <!-- <td dir="rtl" >{{this/DESCRIPTION}}</td> -->
+                  <td dir="rtl">
+                    {{#if this/BILNG_DESCRIPTION}} {{this/BILNG_DESCRIPTION}}
+                    {{else}} {{this/BILNG_DATE}} {{/if}}
+                  </td>
+                  <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+                  <td dir="rtl">{{addAndFormat 2 this/WATER_AMT}}</td>
+                  <td dir="rtl">
+                    {{#if this/SEWER_AMT }} {{addAndFormat 2 this/SEWER_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/BASIC_AMT}} {{addAndFormat 2 this/BASIC_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/INSTALLS_AMT}} {{addAndFormat 2
+                    this/INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/ROUND_AMT}} {{addAndFormat 3 this/ROUND_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/OTHER_AMT1}} {{this/OTHER_AMT1}} {{else}} 0
+                    {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/TANZEEM_AMT}} {{addAndFormat 2 this/TANZEEM_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/CONN_INSTALLS_AMT}} {{addAndFormat 2
+                    this/CONN_INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/METER_INSTALLS_AMT}} {{addAndFormat 2
+                    this/METER_INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/METER_MAN_AMT}} {{addAndFormat 2
+                    this/METER_MAN_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/CONTRACT_AMT}} {{this/CONTRACT_AMT}} {{else}} 0
+                    {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/TAX_AMT}} {{addAndFormat 2 this/TAX_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{addAndFormat 2 (sum this/OP_BLNCE this/COLLECTION_AMT
+                    this/CUR_PAYMNTS this/DBT_AMT this/CRDT_AMT this/AGREEM_AMT
+                    this/OTHER_AMT this/OTHER_AMT2 this/OTHER_AMT3
+                    this/OTHER_AMT4 this/OTHER_AMT5 this/GOV_AMT this/UNI_AMT
+                    this/CONN_AMT this/COMPUTER_AMT this/TAKAFUL_AMT
+                    this/CLEAN_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if (isEqualTo this/COLLECTION_TYPE "PARTIAL")}}
+                    {{addAndFormat 2 this/COLLECTED_AMOUNT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+                  <td dir="rtl">
+                    {{addAndFormat 3 this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                    this/RECEIPT_CHARGE3}}
+                  </td>
+
+                  <td dir="rtl">
+                    {{#if this/DISCOUNT}} {{this/DISCOUNT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl" class="bold-cell">
+                    {{toFixed (sub (sum this/COLLECTED_AMOUNT
+                    this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                    this/RECEIPT_CHARGE3) this/DISCOUNT) 3 }}
+                  </td>
+                </tr>
+                {{/each}}
+                <tr style="height: 20px">
+                  <td colspan="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="20"></td>
+                </tr>
+                <tr class="total-row-highlight">
+                  <td dir="rtl" colspan="6">الاجمالي</td>
+                  <td dir="rtl">{{CAN sumTotals/COLLECTED_COUNT}}</td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/WATER_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/SEWER_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/BASIC_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/ROUND_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/OTHER_AMT1)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/TANZEEM_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/CONN_INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/METER_INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/METER_MAN_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/CONTRACT_AMT)}}
+                  </td>
+                  <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/TAX_AMT)}}</td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/balanceTotal)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/underBalance)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/COLLECTED_AMOUNT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/RECEIPT_CHARGE1
+                    sumTotals/RECEIPT_CHARGE2 sumTotals/RECEIPT_CHARGE3)}}
+                  </td>
+                  <td dir="rtl">{{CAN (addAndFormat 2 sumTotals/DISCOUNT)}}</td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 (sub (sum sumTotals/COLLECTED_AMOUNT
+                    sumTotals/RECEIPT_CHARGE1 sumTotals/RECEIPT_CHARGE2
+                    sumTotals/RECEIPT_CHARGE3) sumTotals/DISCOUNT)) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {{#if notNaqdy}}
+      <div class="content-section">
+        <div class="section-badge active-blue">غير نقدي</div>
+        <div class="table-card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>م</th>
+                  <th>طريقة الدفع</th>
+                  <th>المجموعة</th>
+                  <th>السجل</th>
+                  <th>المسار</th>
+                  <th>الدورة</th>
+                  <th>العدد</th>
+                  <th>مياة</th>
+                  <th>صرف</th>
+                  <th>استدامة</th>
+                  <th>اقساط</th>
+                  <td>ف التقريب</td>
+                  <td>رسم نظافة</td>
+                  <td>تنظيمي</td>
+                  <td>ق توصيلة</td>
+                  <td>ق عداد</td>
+                  <td>اصلاح عداد</td>
+                  <td>د عقد</td>
+                  <th>ضريبة</th>
+                  <th>ارصدة سابقة</th>
+                  <th>تحت الحساب</th>
+                  <th>اجمالي</th>
+                  <th>رسم ت</th>
+                  <th>الاستقطاعات</th>
+                  <th>صافي الاجمالي</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each notNaqdy}}
+                <tr>
+                  <td dir="rtl">{{sum @index 1}}</td>
+                  <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+                  <td dir="rtl">{{this/BILLGROUP}}</td>
+                  <td dir="rtl">{{this/BOOK_NO}}</td>
+                  <td dir="rtl">{{this/WALK_NO}}</td>
+                  <!-- <td dir="rtl" >{{this/DESCRIPTION}}</td> -->
+                  <td dir="rtl">
+                    {{#if this/BILNG_DESCRIPTION}} {{this/BILNG_DESCRIPTION}}
+                    {{else}} {{this/BILNG_DATE}} {{/if}}
+                  </td>
+                  <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+                  <td dir="rtl">{{addAndFormat 2 this/WATER_AMT}}</td>
+                  <td dir="rtl">
+                    {{#if this/SEWER_AMT }} {{addAndFormat 2 this/SEWER_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/BASIC_AMT}} {{addAndFormat 2 this/BASIC_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/INSTALLS_AMT}} {{addAndFormat 2
+                    this/INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/ROUND_AMT}} {{addAndFormat 2 this/ROUND_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/OTHER_AMT1}} {{this/OTHER_AMT1}} {{else}} 0
+                    {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/TANZEEM_AMT}} {{this/TANZEEM_AMT}} {{else}} 0
+                    {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/CONN_INSTALLS_AMT}} {{addAndFormat 2
+                    this/CONN_INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/METER_INSTALLS_AMT}} {{addAndFormat 2
+                    this/METER_INSTALLS_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/METER_MAN_AMT}} {{addAndFormat 2
+                    this/METER_MAN_AMT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/CONTRACT_AMT}} {{this/CONTRACT_AMT}} {{else}} 0
+                    {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{#if this/TAX_AMT}} {{addAndFormat 2 this/TAX_AMT}}
+                    {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">
+                    {{sum this/OP_BLNCE this/COLLECTION_AMT this/CUR_PAYMNTS
+                    this/DBT_AMT this/CRDT_AMT this/AGREEM_AMT this/OTHER_AMT
+                    this/OTHER_AMT2 this/OTHER_AMT3 this/OTHER_AMT4
+                    this/OTHER_AMT5 this/GOV_AMT this/UNI_AMT this/CONN_AMT
+                    this/COMPUTER_AMT this/TAKAFUL_AMT this/CLEAN_AMT }}
+                  </td>
+                  <td dir="rtl">
+                    {{#if (isEqualTo this/COLLECTION_TYPE "PARTIAL")}}
+                    {{addAndFormat 2 this/COLLECTED_AMOUNT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+                  <td dir="rtl">
+                    {{addAndFormat 3 this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                    this/RECEIPT_CHARGE3}}
+                  </td>
+
+                  <td dir="rtl">
+                    {{#if this/DISCOUNT}} {{this/DISCOUNT}} {{else}} 0 {{/if}}
+                  </td>
+                  <td dir="rtl" class="bold-cell">
+                    {{toFixed (sub (sum this/COLLECTED_AMOUNT
+                    this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2
+                    this/RECEIPT_CHARGE3) this/DISCOUNT) 3 }}
+                  </td>
+                </tr>
+                {{/each}}
+                <tr style="height: 20px">
+                  <td colspan="10"></td>
+                </tr>
+                <tr>
+                  <td colspan="20"></td>
+                </tr>
+                <tr class="total-row-highlight">
+                  <td dir="rtl" colspan="6">الاجمالي</td>
+                  <td dir="rtl">{{CAN sumTotalsNotNaqdy/COLLECTED_COUNT}}</td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/WATER_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/SEWER_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/BASIC_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/ROUND_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/OTHER_AMT1)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/TANZEEM_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/CONN_INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2
+                    sumTotalsNotNaqdy/METER_INSTALLS_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/METER_MAN_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/CONTRACT_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/TAX_AMT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/balanceTotal)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/underBalance)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/COLLECTED_AMOUNT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotals/RECEIPT_CHARGE1
+                    sumTotals/RECEIPT_CHARGE2 sumTotals/RECEIPT_CHARGE3)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 sumTotalsNotNaqdy/DISCOUNT)}}
+                  </td>
+                  <td dir="rtl">
+                    {{CAN (addAndFormat 2 (sub (sum
+                    sumTotalsNotNaqdy/COLLECTED_AMOUNT
+                    sumTotalsNotNaqdy/RECEIPT_CHARGE1
+                    sumTotalsNotNaqdy/RECEIPT_CHARGE2
+                    sumTotalsNotNaqdy/RECEIPT_CHARGE3)
+                    sumTotalsNotNaqdy/DISCOUNT)) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {{/if}} {{/if}}
+      <hr />
+      <br />
+
+      <div class="summary-statement-card">
+        <div class="statement-row">
+          <span
+            >تم توريد نقدياً عدد
+            <span class="badge-num">{{CAN sumTotals/COLLECTED_COUNT}}</span>
+            وقيمة
+            <strong
+              >{{CAN (addAndFormat 2 (sub (sum sumTotals/COLLECTED_AMOUNT
+              sumTotals/RECEIPT_CHARGE1 sumTotals/RECEIPT_CHARGE2
+              sumTotals/RECEIPT_CHARGE3) sumTotals/DISCOUNT)) }}</strong
+            >
+            <span class="tafqeet-text"
+              >({{ tafqeet (sub (sum sumTotals/COLLECTED_AMOUNT
+              sumTotals/RECEIPT_CHARGE1 sumTotals/RECEIPT_CHARGE2
+              sumTotals/RECEIPT_CHARGE3) sumTotals/DISCOUNT)}})</span
+            >
+            جنيهاً مصرياً فقط لا غير، والتأكد من مطابقتها للتحصيل من المشتركين
+            بقسيمة رقم
+          </span>
+        </div>
+        {{#if notNaqdy}}
+        <div class="statement-row">
+          <span
+            >تم توريد غير نقدي عدد
+            <span class="badge-num"
+              >{{CAN sumTotalsNotNaqdy/COLLECTED_COUNT}}</span
+            >
+            وقيمة
+            <strong
+              >{{CAN (addAndFormat 2 (sub (sum
+              sumTotalsNotNaqdy/COLLECTED_AMOUNT
+              sumTotalsNotNaqdy/RECEIPT_CHARGE1
+              sumTotalsNotNaqdy/RECEIPT_CHARGE2
+              sumTotalsNotNaqdy/RECEIPT_CHARGE3) sumTotalsNotNaqdy/DISCOUNT))
+              }}</strong
+            >
+            <span class="tafqeet-text"
+              >({{ tafqeet (sub (sum sumTotalsNotNaqdy/COLLECTED_AMOUNT
+              sumTotalsNotNaqdy/RECEIPT_CHARGE1
+              sumTotalsNotNaqdy/RECEIPT_CHARGE2
+              sumTotalsNotNaqdy/RECEIPT_CHARGE3)
+              sumTotalsNotNaqdy/DISCOUNT)}})</span
+            >
+            جنيهاً مصرياً فقط لا غير، والتأكد من مطابقتها للتحصيل من المشتركين
+            بقسيمة رقم
+          </span>
+        </div>
+        {{/if}} {{#if (greaterThan (sum sumTotals/DISCOUNT
+        sumTotalsNotNaqdy/DISCOUNT) 0)}}
+        <div class="discount-box">
+          اجمالي اشعارات الخصم او الاستقطاعات بالحافظة {{sum sumTotals/DISCOUNT
+          sumTotalsNotNaqdy/DISCOUNT}}
+        </div>
+        {{/if}}
+        <div class="signatures-grid">
+          <div class="sig-item">توقيع المحصل</div>
+          <div class="sig-item">توقيع مدخل التحصيل</div>
+          <div class="sig-item">توقيع مشرف التحصيل</div>
+        </div>
+      </div>
+      <div class="content-section">
+        <div class="section-badge grey-badge">ملخص</div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>طريقة الدفع</th>
+                <td>المنطقة</td>
+                <td>العدد</td>
+                <td>القيمة</td>
+                <td>رسم تحصيل 1</td>
+                <td>رسم تحصيل 2</td>
+                <td>رسم تحصيل 3</td>
+                <td>استقطاعات</td>
+                <td>صافي الاجمالي</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="sub-header-row">
+                <td colspan="9">النقدي</td>
+              </tr>
+              {{#each naqdySummary}} {{#if (isEqualTo this/BILLGROUP '')}}
+              <tr class="rowYellow">
+                {{else}}
+              </tr>
+
+              <tr
+                class="{{#if (isEqualTo this/BILLGROUP '')}}row-total-yellow{{/if}}"
+              >
+                <!-- {{/if}} -->
+                <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+                <td dir="rtl">
+                  {{#if (isEqualTo this/BILLGROUP '')}}الاجمالي {{else}}
+                  {{this/BILLGROUP}} {{/if}}
+                </td>
+                <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE1}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE2}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE3}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/DISCOUNT}}</td>
+                <td dir="rtl" class="bold-cell">
+                  {{addAndFormat 2 (sum this/COLLECTED_AMOUNT
+                  this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2 this/RECEIPT_CHARGE3
+                  this/DISCOUNT)}}
+                </td>
+              </tr>
+              {{/each}} {{#if notNaqdySummary}}
+              <tr class="sub-header-row">
+                <td colspan="9">غير نقدي</td>
+              </tr>
+              {{/if}} {{#each notNaqdySummary}} {{#if (isEqualTo this/BILLGROUP
+              '')}}
+              <!-- <tr class="rowYellow">
+                {{else}}
+              </tr> -->
+
+              <tr
+                class="{{#if (isEqualTo this/BILLGROUP '')}}row-total-yellow{{/if}}"
+              >
+                <!-- {{/if}} -->
+                <td dir="rtl">{{this/PAYMENT_METHOD}}</td>
+                <td dir="rtl">
+                  {{#if (isEqualTo this/BILLGROUP '')}}الاجمالي {{else}}
+                  {{this/BILLGROUP}} {{/if}}
+                </td>
+                <td dir="rtl">{{this/COLLECTED_COUNT}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/COLLECTED_AMOUNT}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE1}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE2}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/RECEIPT_CHARGE3}}</td>
+                <td dir="rtl">{{addAndFormat 2 this/DISCOUNT}}</td>
+                <td dir="rtl" class="bold-cell">
+                  {{addAndFormat 2 (sum this/COLLECTED_AMOUNT
+                  this/RECEIPT_CHARGE1 this/RECEIPT_CHARGE2 this/RECEIPT_CHARGE3
+                  this/DISCOUNT)}}
+                </td>
+              </tr>
+              {{/each}}
+              <tr style="height: 20px">
+                <td colspan="10"></td>
+              </tr>
+              <tr>
+                <td colspan="20"></td>
+              </tr>
+              <tr class="grand-total-row">
+                <td colspan="2">الاجمالي</td>
+                <td dir="rtl">{{totalAllSummary/COLLECTED_COUNT}}</td>
+                <td dir="rtl">
+                  {{addAndFormat 2 totalAllSummary/COLLECTED_AMOUNT}}
+                </td>
+                <td dir="rtl">
+                  {{addAndFormat 2 totalAllSummary/RECEIPT_CHARGE1}}
+                </td>
+                <td dir="rtl">
+                  {{addAndFormat 2 totalAllSummary/RECEIPT_CHARGE2}}
+                </td>
+                <td dir="rtl">
+                  {{addAndFormat 2 totalAllSummary/RECEIPT_CHARGE3}}
+                </td>
+                <td dir="rtl">{{addAndFormat 2 totalAllSummary/DISCOUNT}}</td>
+                <td dir="rtl">
+                  {{addAndFormat 2 (sum totalAllSummary/COLLECTED_AMOUNT
+                  totalAllSummary/RECEIPT_CHARGE1
+                  totalAllSummary/RECEIPT_CHARGE2
+                  totalAllSummary/RECEIPT_CHARGE3 totalAllSummary/DISCOUNT)}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{#if isDetails }}
+      <div class="content-section page-break">
+        <div class="section-badge">حافظة تفصيلية</div>
+        <div class="table-card">
+          <table class="table-condensed">
+            <thead>
+              <tr class="label-default">
+                <th>م</th>
+                <th>طريقة الدفع</th>
+                <th style="max-width: 75px">السجل</th>
+                <th style="max-width: 25px">المسار</th>
+                <th style="max-width: 75px">رقم السجل</th>
+                <th>رقم الحساب</th>
+                <th>رقم الفاتورة</th>
+                <th>تاريخ الدورة</th>
+                <th>تاريخ التحصيل</th>
+
+                <th style="overflow: hidden; max-width: 100px">الاسم</th>
+                <th>المبلغ المحصل</th>
+                <th>رقم الشيك</th>
+                <th>رسم تحصيل 1</th>
+                <th>رسم تحصيل 2</th>
+                <th>رسم تحصيل 3</th>
+                <th>عهدة</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each unPostedDetails}}
+              <tr>
+                <td>{{sum @index 1}}</td>
+                <td>{{this/PAYMENT_METHOD}}</td>
+                <td>{{this/BOOK_NO}}</td>
+                <td>{{this/WALK_NO}}</td>
+                <th>{{this/SEQ_NO}}</th>
+                <td>{{this/KEY}}</td>
+                <td>{{this/PAYMENT_NO}}</td>
+                <td>{{this/BILNG_DATE}}</td>
+                <td>{{this/COLLECTION_DATE}}</td>
+                <td class="cell-name-truncate">{{this/SURNAME}}</td>
+                <td dir="rtl">{{this/COLLECTED_AMOUNT}}</td>
+                <td>{{this/CHEQUE_NO}}</td>
+                <td dir="rtl">{{this/RECEIPT_CHARGE1}}</td>
+                <td dir="rtl">{{this/RECEIPT_CHARGE2}}</td>
+                <td dir="rtl">{{this/RECEIPT_CHARGE3}}</td>
+                <td dir="rtl">{{this/OWNER}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </body>
+</html>

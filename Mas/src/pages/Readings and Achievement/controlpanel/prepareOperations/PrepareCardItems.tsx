@@ -8,6 +8,7 @@ import {
 
 const Routes = {
   MoneyTransfeer: "/readings/controlpanel/moneyTransfeer",
+  HhPrepear: "/readings/controlpanel/hhPrepear",
 };
 export const PrepareCardItems = [
   {
@@ -22,7 +23,7 @@ export const PrepareCardItems = [
     title: "تجهيز البيانات",
     subTitle: "السماح للوحدة المحمولة بتحميل البيانات",
     icon: checkList,
-    // path: Routes.COLLECTION_PULL,
+    path: Routes.HhPrepear,
   },
   {
     id: "billing_data_update",

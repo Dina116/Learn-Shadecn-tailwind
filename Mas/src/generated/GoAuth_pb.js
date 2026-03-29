@@ -13,13 +13,7 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
+var global = globalThis;
 
 var date_pb = require('./date_pb.js');
 goog.object.extend(proto, date_pb);
@@ -2432,7 +2426,7 @@ isportal: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.LoginRequest}
  */
 proto.GoAuth.LoginRequest.deserializeBinary = function(bytes) {
@@ -2729,7 +2723,7 @@ isAdmin: (f = jspb.Message.getBooleanField(msg, 9)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.LoginResponse}
  */
 proto.GoAuth.LoginResponse.deserializeBinary = function(bytes) {
@@ -3262,7 +3256,7 @@ stationName: (f = jspb.Message.getField(msg, 7)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.SignInResponse}
  */
 proto.GoAuth.SignInResponse.deserializeBinary = function(bytes) {
@@ -3700,7 +3694,7 @@ token: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.RegisterResponse}
  */
 proto.GoAuth.RegisterResponse.deserializeBinary = function(bytes) {
@@ -3946,7 +3940,7 @@ mobileNo: (f = jspb.Message.getField(msg, 6)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.SignInWithRequest}
  */
 proto.GoAuth.SignInWithRequest.deserializeBinary = function(bytes) {
@@ -4300,7 +4294,7 @@ address: (f = jspb.Message.getField(msg, 11)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.RegisterRequest}
  */
 proto.GoAuth.RegisterRequest.deserializeBinary = function(bytes) {
@@ -4925,7 +4919,7 @@ deviceToken: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ForgetRequest}
  */
 proto.GoAuth.ForgetRequest.deserializeBinary = function(bytes) {
@@ -5217,7 +5211,7 @@ email: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ValRequest}
  */
 proto.GoAuth.ValRequest.deserializeBinary = function(bytes) {
@@ -5508,7 +5502,7 @@ isHandHeld: (f = jspb.Message.getBooleanField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.Emptymessage}
  */
 proto.GoAuth.Emptymessage.deserializeBinary = function(bytes) {
@@ -5752,7 +5746,7 @@ deviceToken: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AdminSignInRequest}
  */
 proto.GoAuth.AdminSignInRequest.deserializeBinary = function(bytes) {
@@ -6002,7 +5996,7 @@ sitesList: jspb.Message.toObjectList(msg.getSitesList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetAllSitesResponse}
  */
 proto.GoAuth.GetAllSitesResponse.deserializeBinary = function(bytes) {
@@ -6163,7 +6157,7 @@ hasMas: (f = jspb.Message.getBooleanField(msg, 11)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.SITES}
  */
 proto.GoAuth.SITES.deserializeBinary = function(bytes) {
@@ -6734,7 +6728,7 @@ licence: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.licenceResponse}
  */
 proto.GoAuth.licenceResponse.deserializeBinary = function(bytes) {
@@ -6882,7 +6876,7 @@ accesscontraint: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.access_contraint_response}
  */
 proto.GoAuth.access_contraint_response.deserializeBinary = function(bytes) {
@@ -7030,7 +7024,7 @@ cashierId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CashierRequest}
  */
 proto.GoAuth.CashierRequest.deserializeBinary = function(bytes) {
@@ -7182,7 +7176,7 @@ totalYear: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetlientSCountsResponse}
  */
 proto.GoAuth.GetlientSCountsResponse.deserializeBinary = function(bytes) {
@@ -7520,7 +7514,7 @@ profileId: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ProfileResponse}
  */
 proto.GoAuth.ProfileResponse.deserializeBinary = function(bytes) {
@@ -7764,7 +7758,7 @@ id: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.MessageResponse}
  */
 proto.GoAuth.MessageResponse.deserializeBinary = function(bytes) {
@@ -8007,7 +8001,7 @@ siteCode: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CustRequest}
  */
 proto.GoAuth.CustRequest.deserializeBinary = function(bytes) {
@@ -8209,7 +8203,7 @@ address: (f = jspb.Message.getField(msg, 8)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AddRelatedCustkeyRequest}
  */
 proto.GoAuth.AddRelatedCustkeyRequest.deserializeBinary = function(bytes) {
@@ -8686,7 +8680,7 @@ type: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetCountsRequest}
  */
 proto.GoAuth.GetCountsRequest.deserializeBinary = function(bytes) {
@@ -8836,7 +8830,7 @@ totalAdmins: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetCountsResponse}
  */
 proto.GoAuth.GetCountsResponse.deserializeBinary = function(bytes) {
@@ -9094,7 +9088,7 @@ reports: (f = jspb.Message.getBooleanField(msg, 17)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AdminRegisterRequest}
  */
 proto.GoAuth.AdminRegisterRequest.deserializeBinary = function(bytes) {
@@ -10002,7 +9996,7 @@ adminsList: jspb.Message.toObjectList(msg.getAdminsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetAllADMINSResponse}
  */
 proto.GoAuth.GetAllADMINSResponse.deserializeBinary = function(bytes) {
@@ -10169,7 +10163,7 @@ reports: (f = jspb.Message.getBooleanField(msg, 17)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.UpdateProfileRequest}
  */
 proto.GoAuth.UpdateProfileRequest.deserializeBinary = function(bytes) {
@@ -11022,7 +11016,7 @@ adminId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ResetAdminPassRequest}
  */
 proto.GoAuth.ResetAdminPassRequest.deserializeBinary = function(bytes) {
@@ -11171,7 +11165,7 @@ newpassword: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ResetPassRequest}
  */
 proto.GoAuth.ResetPassRequest.deserializeBinary = function(bytes) {
@@ -11366,7 +11360,7 @@ id: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetAdminRequest}
  */
 proto.GoAuth.GetAdminRequest.deserializeBinary = function(bytes) {
@@ -11522,7 +11516,7 @@ usersList: jspb.Message.toObjectList(msg.getUsersList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetAllUserResponse}
  */
 proto.GoAuth.GetAllUserResponse.deserializeBinary = function(bytes) {
@@ -11698,7 +11692,7 @@ cashierId: (f = jspb.Message.getField(msg, 16)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.MUSERS}
  */
 proto.GoAuth.MUSERS.deserializeBinary = function(bytes) {
@@ -12568,7 +12562,7 @@ relatedCustkeyList: jspb.Message.toObjectList(msg.getRelatedCustkeyList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.MicroUpdateRequest}
  */
 proto.GoAuth.MicroUpdateRequest.deserializeBinary = function(bytes) {
@@ -12771,7 +12765,7 @@ direction: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AllDataRequest}
  */
 proto.GoAuth.AllDataRequest.deserializeBinary = function(bytes) {
@@ -13117,7 +13111,7 @@ usList: jspb.Message.toObjectList(msg.getUsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AllDataResponse}
  */
 proto.GoAuth.AllDataResponse.deserializeBinary = function(bytes) {
@@ -13321,7 +13315,7 @@ verificationType: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ActivationRequest}
  */
 proto.GoAuth.ActivationRequest.deserializeBinary = function(bytes) {
@@ -13518,7 +13512,7 @@ stationName: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetUserProfileResponse}
  */
 proto.GoAuth.GetUserProfileResponse.deserializeBinary = function(bytes) {
@@ -13763,7 +13757,7 @@ id: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetUserRequest}
  */
 proto.GoAuth.GetUserRequest.deserializeBinary = function(bytes) {
@@ -13911,7 +13905,7 @@ userName: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetUserByNameRequest}
  */
 proto.GoAuth.GetUserByNameRequest.deserializeBinary = function(bytes) {
@@ -14059,7 +14053,7 @@ id: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GetClientRequest}
  */
 proto.GoAuth.GetClientRequest.deserializeBinary = function(bytes) {
@@ -14215,7 +14209,7 @@ usersList: jspb.Message.toObjectList(msg.getUsersList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERSS}
  */
 proto.GoAuth.USERSS.deserializeBinary = function(bytes) {
@@ -14370,7 +14364,7 @@ userName: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.PassUserRequest}
  */
 proto.GoAuth.PassUserRequest.deserializeBinary = function(bytes) {
@@ -14662,7 +14656,7 @@ descriptionEn: (f = jspb.Message.getField(msg, 6)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.Add_DEPARTMENT_REQ}
  */
 proto.GoAuth.Add_DEPARTMENT_REQ.deserializeBinary = function(bytes) {
@@ -14951,7 +14945,7 @@ userId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.DEPARTMENT_REQ}
  */
 proto.GoAuth.DEPARTMENT_REQ.deserializeBinary = function(bytes) {
@@ -15102,7 +15096,7 @@ deleted: (f = jspb.Message.getBooleanField(msg, 8)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERS_DEPARTMENTS}
  */
 proto.GoAuth.USERS_DEPARTMENTS.deserializeBinary = function(bytes) {
@@ -15404,7 +15398,7 @@ deleted: (f = jspb.Message.getBooleanField(msg, 8)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.DEPARTMENTS}
  */
 proto.GoAuth.DEPARTMENTS.deserializeBinary = function(bytes) {
@@ -15445,10 +15439,7 @@ proto.GoAuth.DEPARTMENTS.deserializeBinaryFromReader = function(msg, reader) {
       msg.setDescription(value);
       break;
     case 5:
-      var values = /** @type {!Array<number>} */ (reader.isDelimited() ? reader.readPackedInt64() : [reader.readInt64()]);
-      for (var i = 0; i < values.length; i++) {
-        msg.addDepartemntUsers(values[i]);
-      }
+      reader.readPackableInt64Into(msg.getDepartemntUsersList());
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
@@ -15845,7 +15836,7 @@ departmentsList: jspb.Message.toObjectList(msg.getDepartmentsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USER_DEPARTMENTS}
  */
 proto.GoAuth.USER_DEPARTMENTS.deserializeBinary = function(bytes) {
@@ -16005,7 +15996,7 @@ departmentsList: jspb.Message.toObjectList(msg.getDepartmentsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AllDEPARTMENTS}
  */
 proto.GoAuth.AllDEPARTMENTS.deserializeBinary = function(bytes) {
@@ -16157,7 +16148,7 @@ isDeleted: (f = jspb.Message.getBooleanField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GETDEPARTMENTSFILTER}
  */
 proto.GoAuth.GETDEPARTMENTSFILTER.deserializeBinary = function(bytes) {
@@ -16305,7 +16296,7 @@ userId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GETUSERDEPARTMENTSREQ}
  */
 proto.GoAuth.GETUSERDEPARTMENTSREQ.deserializeBinary = function(bytes) {
@@ -16453,7 +16444,7 @@ departments: (f = msg.getDepartments()) && proto.GoAuth.DEPARTMENTS.toObject(inc
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERDEPARTMENTSMESG}
  */
 proto.GoAuth.USERDEPARTMENTSMESG.deserializeBinary = function(bytes) {
@@ -16604,7 +16595,7 @@ departmentId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.DEPARTMENTIID}
  */
 proto.GoAuth.DEPARTMENTIID.deserializeBinary = function(bytes) {
@@ -16752,7 +16743,7 @@ userDepartments: (f = msg.getUserDepartments()) && proto.GoAuth.USER_DEPARTMENTS
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERDEPARTMENTSRES}
  */
 proto.GoAuth.USERDEPARTMENTSRES.deserializeBinary = function(bytes) {
@@ -16907,7 +16898,7 @@ siteName: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERS_STATIONS}
  */
 proto.GoAuth.USERS_STATIONS.deserializeBinary = function(bytes) {
@@ -17253,7 +17244,7 @@ stationName: (f = jspb.Message.getField(msg, 11)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USER_STATIONS}
  */
 proto.GoAuth.USER_STATIONS.deserializeBinary = function(bytes) {
@@ -17882,7 +17873,7 @@ taxClientIdsList: jspb.Message.toObjectList(msg.getTaxClientIdsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ALL_TAX_CLIENT_IDS}
  */
 proto.GoAuth.ALL_TAX_CLIENT_IDS.deserializeBinary = function(bytes) {
@@ -18034,7 +18025,7 @@ taxClientIds: (f = msg.getTaxClientIds()) && proto.GoAuth.TAX_CLIENT_IDS.toObjec
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.TAX_CLIENT_ID_REQ}
  */
 proto.GoAuth.TAX_CLIENT_ID_REQ.deserializeBinary = function(bytes) {
@@ -18185,7 +18176,7 @@ rowId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CLIENT_ID_REQ}
  */
 proto.GoAuth.CLIENT_ID_REQ.deserializeBinary = function(bytes) {
@@ -18338,7 +18329,7 @@ deleted: (f = jspb.Message.getBooleanField(msg, 6)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.TAX_CLIENT_IDS}
  */
 proto.GoAuth.TAX_CLIENT_IDS.deserializeBinary = function(bytes) {
@@ -18724,7 +18715,7 @@ stationId: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.Min_USER_STATIONS}
  */
 proto.GoAuth.Min_USER_STATIONS.deserializeBinary = function(bytes) {
@@ -19014,7 +19005,7 @@ getuserresponse: (f = msg.getGetuserresponse()) && proto.GoAuth.Getuserresponse.
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.RegisterUserRequest}
  */
 proto.GoAuth.RegisterUserRequest.deserializeBinary = function(bytes) {
@@ -19225,7 +19216,7 @@ profileid: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.Getuserresponse}
  */
 proto.GoAuth.Getuserresponse.deserializeBinary = function(bytes) {
@@ -19481,7 +19472,7 @@ applicationtypename: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ApplicationTypeRole}
  */
 proto.GoAuth.ApplicationTypeRole.deserializeBinary = function(bytes) {
@@ -19738,7 +19729,7 @@ applicationtypeid: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ApplicationRoleState}
  */
 proto.GoAuth.ApplicationRoleState.deserializeBinary = function(bytes) {
@@ -20037,7 +20028,7 @@ stateid: (f = jspb.Message.getField(msg, 7)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ApplicationRole}
  */
 proto.GoAuth.ApplicationRole.deserializeBinary = function(bytes) {
@@ -20473,7 +20464,7 @@ photo: (f = jspb.Message.getField(msg, 7)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.RELATED_ACOUNTS}
  */
 proto.GoAuth.RELATED_ACOUNTS.deserializeBinary = function(bytes) {
@@ -20924,7 +20915,7 @@ reports: (f = jspb.Message.getBooleanField(msg, 22)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ADMINS}
  */
 proto.GoAuth.ADMINS.deserializeBinary = function(bytes) {
@@ -22097,7 +22088,7 @@ isEnc: (f = jspb.Message.getField(msg, 28)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CLIENTS}
  */
 proto.GoAuth.CLIENTS.deserializeBinary = function(bytes) {
@@ -23535,7 +23526,7 @@ isDefault: (f = jspb.Message.getBooleanField(msg, 9)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.RELATED_CUSTKEY}
  */
 proto.GoAuth.RELATED_CUSTKEY.deserializeBinary = function(bytes) {
@@ -24188,7 +24179,7 @@ departmentsList: jspb.Message.toObjectList(msg.getDepartmentsList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.USERS}
  */
 proto.GoAuth.USERS.deserializeBinary = function(bytes) {
@@ -29958,7 +29949,7 @@ userIdList: jspb.Message.toObjectList(msg.getUserIdList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.UserArry}
  */
 proto.GoAuth.UserArry.deserializeBinary = function(bytes) {
@@ -30110,7 +30101,7 @@ profilesId: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.ProfileId}
  */
 proto.GoAuth.ProfileId.deserializeBinary = function(bytes) {
@@ -30259,7 +30250,7 @@ deletionReason: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.DeleteProfileReq}
  */
 proto.GoAuth.DeleteProfileReq.deserializeBinary = function(bytes) {
@@ -30463,7 +30454,7 @@ usersCount: (f = jspb.Message.getField(msg, 10)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_PROFILES}
  */
 proto.GoAuth.AUTH_PROFILES.deserializeBinary = function(bytes) {
@@ -31048,7 +31039,7 @@ allProfilesList: jspb.Message.toObjectList(msg.getAllProfilesList(),
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.All_PROFILES}
  */
 proto.GoAuth.All_PROFILES.deserializeBinary = function(bytes) {
@@ -31205,7 +31196,7 @@ stampUser: (f = jspb.Message.getField(msg, 6)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_USERS_PROFILES}
  */
 proto.GoAuth.AUTH_USERS_PROFILES.deserializeBinary = function(bytes) {
@@ -31591,7 +31582,7 @@ profile: (f = msg.getProfile()) && proto.GoAuth.AUTH_PROFILES.toObject(includeIn
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AddProfilesRequest}
  */
 proto.GoAuth.AddProfilesRequest.deserializeBinary = function(bytes) {
@@ -31743,7 +31734,7 @@ profileId: (f = jspb.Message.getField(msg, 2)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.UserToProfileRq}
  */
 proto.GoAuth.UserToProfileRq.deserializeBinary = function(bytes) {
@@ -31951,7 +31942,7 @@ gov: (f = msg.getGov()) && proto.GoAuth.GOV_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_ALL_PERMISSIONS}
  */
 proto.GoAuth.AUTH_ALL_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -32753,7 +32744,7 @@ cashbox: (f = msg.getCashbox()) && proto.GoAuth.CASHBOX_PERMISSIONS.toObject(inc
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_CASHBOX_PERMISSIONS}
  */
 proto.GoAuth.AUTH_CASHBOX_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -32952,7 +32943,7 @@ crm: (f = msg.getCrm()) && proto.GoAuth.CRM_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_CRM_PERMISSIONS}
  */
 proto.GoAuth.AUTH_CRM_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -33151,7 +33142,7 @@ auth: (f = msg.getAuth()) && proto.GoAuth.AUTH_PERMISSIONS.toObject(includeInsta
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_OWN_PERMISSIONS}
  */
 proto.GoAuth.AUTH_OWN_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -33350,7 +33341,7 @@ paymentgetway: (f = msg.getPaymentgetway()) && proto.GoAuth.PAYMENTGETWAY_PERMIS
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_PAYMENTGETWAY_PERMISSIONS}
  */
 proto.GoAuth.AUTH_PAYMENTGETWAY_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -33549,7 +33540,7 @@ cdu: (f = msg.getCdu()) && proto.GoAuth.CDU_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_CDU_PERMISSIONS}
  */
 proto.GoAuth.AUTH_CDU_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -33748,7 +33739,7 @@ bi: (f = msg.getBi()) && proto.GoAuth.BI_PERMISSIONS.toObject(includeInstance, f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_BI_PERMISSIONS}
  */
 proto.GoAuth.AUTH_BI_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -33947,7 +33938,7 @@ bpm: (f = msg.getBpm()) && proto.GoAuth.BPM_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_BPM_PERMISSIONS}
  */
 proto.GoAuth.AUTH_BPM_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -34146,7 +34137,7 @@ portal: (f = msg.getPortal()) && proto.GoAuth.PORTAL_PERMISSIONS.toObject(includ
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_PORTAL_PERMISSIONS}
  */
 proto.GoAuth.AUTH_PORTAL_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -34345,7 +34336,7 @@ general: (f = msg.getGeneral()) && proto.GoAuth.GENERAL_PERMISSIONS.toObject(inc
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_GENERAL_PERMISSIONS}
  */
 proto.GoAuth.AUTH_GENERAL_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -34544,7 +34535,7 @@ biller: (f = msg.getBiller()) && proto.GoAuth.BILLER_PERMISSIONS.toObject(includ
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_BILLER_PERMISSIONS}
  */
 proto.GoAuth.AUTH_BILLER_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -34743,7 +34734,7 @@ billing: (f = msg.getBilling()) && proto.GoAuth.BILLING_PERMISSIONS.toObject(inc
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_BILLING_PERMISSIONS}
  */
 proto.GoAuth.AUTH_BILLING_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -34942,7 +34933,7 @@ tax: (f = msg.getTax()) && proto.GoAuth.TAX_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_TAX_PERMISSIONS}
  */
 proto.GoAuth.AUTH_TAX_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -35141,7 +35132,7 @@ mas: (f = msg.getMas()) && proto.GoAuth.MAS_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_MAS_PERMISSIONS}
  */
 proto.GoAuth.AUTH_MAS_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -35340,7 +35331,7 @@ gov: (f = msg.getGov()) && proto.GoAuth.GOV_PERMISSIONS.toObject(includeInstance
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_GOV_PERMISSIONS}
  */
 proto.GoAuth.AUTH_GOV_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -35554,7 +35545,7 @@ controllerCashbox: (f = jspb.Message.getBooleanField(msg, 17)) == null ? undefin
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CASHBOX_PERMISSIONS}
  */
 proto.GoAuth.CASHBOX_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -36454,7 +36445,7 @@ sysAdmin: (f = jspb.Message.getBooleanField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CRM_PERMISSIONS}
  */
 proto.GoAuth.CRM_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -36614,7 +36605,7 @@ deleteLinkedProfile: (f = jspb.Message.getBooleanField(msg, 13)) == null ? undef
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_PERMISSIONS}
  */
 proto.GoAuth.AUTH_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -37326,7 +37317,7 @@ sysAdmin: (f = jspb.Message.getBooleanField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.PAYMENTGETWAY_PERMISSIONS}
  */
 proto.GoAuth.PAYMENTGETWAY_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -37482,7 +37473,7 @@ cduApproveKhelsa: (f = jspb.Message.getBooleanField(msg, 9)) == null ? undefined
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.CDU_PERMISSIONS}
  */
 proto.GoAuth.CDU_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -38029,7 +38020,7 @@ ctoDashboarPerStation: (f = jspb.Message.getBooleanField(msg, 25)) == null ? und
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.BI_PERMISSIONS}
  */
 proto.GoAuth.BI_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -39281,7 +39272,7 @@ cancelApps: (f = jspb.Message.getBooleanField(msg, 24)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.BPM_PERMISSIONS}
  */
 proto.GoAuth.BPM_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -40510,7 +40501,7 @@ sysAdmin: (f = jspb.Message.getBooleanField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.PORTAL_PERMISSIONS}
  */
 proto.GoAuth.PORTAL_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -40660,7 +40651,7 @@ query: (f = jspb.Message.getBooleanField(msg, 3)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GENERAL_PERMISSIONS}
  */
 proto.GoAuth.GENERAL_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -40909,7 +40900,7 @@ closedApplication: (f = jspb.Message.getBooleanField(msg, 8)) == null ? undefine
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.BILLER_PERMISSIONS}
  */
 proto.GoAuth.BILLER_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -41389,7 +41380,7 @@ edamsBillingStepsSettings: (f = jspb.Message.getBooleanField(msg, 4)) == null ? 
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.BILLING_PERMISSIONS}
  */
 proto.GoAuth.BILLING_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -41772,7 +41763,7 @@ sendGlobalNotification: (f = jspb.Message.getBooleanField(msg, 95)) == null ? un
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.MAS_PERMISSIONS}
  */
 proto.GoAuth.MAS_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -46361,7 +46352,7 @@ reduceFileAmount: (f = jspb.Message.getBooleanField(msg, 24)) == null ? undefine
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.GOV_PERMISSIONS}
  */
 proto.GoAuth.GOV_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -47619,7 +47610,7 @@ printEtaInvoices: (f = jspb.Message.getBooleanField(msg, 30)) == null ? undefine
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.TAX_PERMISSIONS}
  */
 proto.GoAuth.TAX_PERMISSIONS.deserializeBinary = function(bytes) {
@@ -49130,7 +49121,7 @@ licence: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_LICENCE}
  */
 proto.GoAuth.AUTH_LICENCE.deserializeBinary = function(bytes) {
@@ -49280,7 +49271,7 @@ description: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.GoAuth.AUTH_SETTINGS}
  */
 proto.GoAuth.AUTH_SETTINGS.deserializeBinary = function(bytes) {

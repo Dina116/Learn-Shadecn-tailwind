@@ -60,11 +60,11 @@ export interface DataGridProps extends DataGridOptions {
 }
 
 export interface EMPS extends Other {
-  id?: number;
-  userName?: string;
+  ID?: number;
+  USER_NAME?: string;
   password?: string;
-  fullName?: string | null;
-  branchId?: string;
+  FULL_NAME?: string | null;
+  BRANCH_ID?: string;
   address?: string;
   tel?: string;
   deviceId?: string;

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import axiosClient, {
   axiosClient_two,
 } from "../../../../api/apiservices/axiosClient";
 import type {
+  BOOKCYCLE,
   FilterValues,
   Mas2BillingPayload,
   STATMDEPOSIT,
@@ -11,29 +13,7 @@ import type {
 import type { ReadingDataWithStatus } from "../operations/readingsPulled/columns";
 import type { BOOKCYCLEWithStatus } from "./useControlApi";
 import type { HistoryRequest } from "../operations/pulledHistory/types";
-import {
-  type GetSettingValueRq,
-  type SETTINGS,
-  type SiteCode,
-  type SITES,
-  type UNPOSTEDDETAILSREQ,
-  type UNPOSTEDREQ,
-} from "../../../../componenet/shared/dataGrid/types";
-import type {
-  CollectionDestributionItm,
-  COLLECTIONPOSTEDSHAREDREQ,
-  PostReq,
-} from "../moneyTransfeer/types";
-// import { GoAuthClient } from "grpc-web-client-gen/GoAuthServiceClientPb";
-import { makeBaseUrl } from "../../../../app/services";
-// import { GetUserProfileResponse } from "../../../../../src/grpc-web-client-gen/GoAuth_pb";
-// import * as GoAuth_pb from "../../../../../src/generated/GoAuth_pb";
-import * as GoAuth_pb from "../../../../../src/grpc-web-client-gen/GoAuth_pb";
-import { GoAuthClient } from "../../../../../src/grpc-web-client-gen/GoAuthServiceClientPb";
-
-const client = new GoAuthClient(
-  `${makeBaseUrl()}:${import.meta.env.VITE_grpcPort}`,
-);
+import type { IBillGroupBookWalkBilng } from "../hhPrepear/types";
 
 export const getBillGroups = async () => {
   try {
@@ -121,6 +101,7 @@ export const getMeterWalkCycle = async <T>(
 
 export type ExecuteBillingPayload = WalkData & {
   bilngDate: string;
+  KEY?: string;
 };
 export const executeBilling2Mas = async (payload: ExecuteBillingPayload) => {
   const params = new URLSearchParams({
@@ -581,178 +562,32 @@ export const getHistory = async (req: HistoryRequest) => {
   }
 };
 
-///////////////users//////////////////
-export const Getuserprofile =
-  async (): Promise<GoAuth_pb.GetUserProfileResponse.AsObject> => {
-    try {
-      const req = new GoAuth_pb.Emptymessage();
-      const res = await client.getUserProfile(req);
-      return res.toObject();
-    } catch (error) {
-      console.error("API call failed in Getuserprofilee:", error);
-      throw error;
-    }
-  };
-///////////////////////////////////////////////////
-export const getCurrentStations = async () => {
-  try {
-    const res = await axiosClient.get("/Stations/Current");
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
+//////////////////hhDevice/////////////////////
 
-export const GetUnPosted = async (
-  req: UNPOSTEDREQ,
-): Promise<CollectionDestributionItm[]> => {
+export const BookCycle = async (
+  req: IBillGroupBookWalkBilng,
+): Promise<BOOKCYCLE[]> => {
+  console.log("Api REq BookCycle", req);
   try {
     const res = await axiosClient.get(
-      `/Collection/GetUnPosted?empid=${req.empid}`,
+      `/Books/BookCycle?empid=${req.empid}&station_no=${req.station_no}&order=desc`,
     );
-    console.log("Api Response:", res.data);
+    console.log("Api Response BookCycle:", res.data);
     return res.data;
   } catch (error) {
-    console.error("API Call Failed:", error);
+    console.error("API Call Failed BookCycle:", error);
     throw error;
   }
 };
 
-export const Post = async (
-  req: PostReq,
-): Promise<CollectionDestributionItm[]> => {
+export const Allow = async (req: BOOKCYCLE): Promise<BOOKCYCLE> => {
+  console.log("Api REq Allow", req);
   try {
-    const res = await axiosClient.get(
-      `/Collection/Post?Count=${req.Count}&Amount=${req.Amount}&ReciptNo=${req.ReciptNo}&postToBilling=${req.postToBilling}&empid=${req.empid}`,
-    );
-    console.log("Api Response:", res.data);
+    const res = await axiosClient.put(`/Books/Allow`, req);
+    console.log("Api Response Allow:", res.data);
     return res.data;
   } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-
-export const GetNewReceptNo = async (): Promise<number> => {
-  try {
-    const res = await axiosClient.get(`/Collection/GetNewReceptNo`);
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-
-export const GetUnPostedDetails = async (
-  req: UNPOSTEDDETAILSREQ,
-): Promise<CollectionDestributionItm[]> => {
-  try {
-    const res = await axiosClient.get(
-      `/Collection/GetUnPostedDetails?empid=${req.empid}`,
-    );
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-
-export interface MyResponeData<I extends object, O extends object> {
-  response: O;
-  headers: I;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MyResponse<T extends object> = Promise<MyResponeData<any, T>>;
-
-export const getSiteLogo = async (req: SiteCode): Promise<SITES> => {
-  const res = await axiosClient.post(
-    "/MasProvider.MasProvider/GetSiteLogo",
-    req,
-  );
-  return res.data.response;
-};
-
-export const getSettingValue = async (
-  req: GetSettingValueRq,
-): Promise<SETTINGS> => {
-  const res = await axiosClient.post(
-    "/MasProvider.MasProvider/GetSettingValue",
-    req,
-  );
-  return res.data.response;
-};
-
-export const GetUnPostedSummary = async () => {
-  try {
-    const res = await axiosClient.get("/Collection/GetUnPostedSummary");
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-export const getIsHeadQuarter = async () => {
-  try {
-    const res = await axiosClient.get("/System/IS_HEAD_QUARTER");
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-
-export const getTemplate = async () => {
-  const res = await axios.get(
-    `${
-      import.meta.env.BASE_URL === "/"
-        ? "/htmlTemplates/hafza.html"
-        : `${import.meta.env.BASE_URL}/htmlTemplates/hafza.html?t=${Date.now()}`
-    }`,
-  );
-  return res.data;
-};
-
-export const getAllCollectors = async () => {
-  try {
-    const res = await axiosClient.get("/Emp/GetCollectors");
-    console.log("Api Response from getAllCollectors:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed from getAllCollectors:", error);
-    throw error;
-  }
-};
-
-export const GetDeposits = async (empId: number): Promise<STATMDEPOSIT[]> => {
-  try {
-    const res = await axiosClient.get(`/Collection/GetDeposits?id=${empId}`);
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
-    throw error;
-  }
-};
-
-export const GetPosted = async (
-  req: COLLECTIONPOSTEDSHAREDREQ,
-): Promise<CollectionDestributionItm[]> => {
-  try {
-    const res = await axiosClient.post(
-      `/Collection/GetPosted?empid=${req.empid}&depositId=${req.depositId}`,
-      req,
-    );
-    console.log("Api Response:", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("API Call Failed:", error);
+    console.error("API Call Failed Allow:", error);
     throw error;
   }
 };

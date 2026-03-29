@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import type { IBillGroupBookWalkBilng } from "./hhPrepear/types";
 
 export interface Other {
   status?: string | null;
@@ -47,7 +48,7 @@ export interface ControlPanelFormProps {
   showGroups?: boolean;
   showCounters?: boolean;
   showCompletedCounter?: boolean;
-  onLoad: (values: FilterValues) => void;
+  onLoad: (values: IBillGroupBookWalkBilng) => void;
   onExecute?: () => void;
   isLoading?: boolean;
   isExecuting?: boolean;

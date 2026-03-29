@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import MultiLevelHeaderTable from "../../../../../componenet/shared/MultiLevelHeaderTable";
 import { column } from "./columns";
-import { useGetHistory } from "../../api/useControlApi";
+// import { useGetHistory } from "../../api/useControlApi";
 import usePulledHistory from "./usePulledHistory";
 import SuccessWalksModal from "./SuccessWalksModal";
 import FailedWalksModal from "./FailedWalksModal";
@@ -26,6 +26,7 @@ export default function PulledHistory() {
     historyReq,
     processWalkList,
     setProcessWalkList,
+    useGetHistory
   } = usePulledHistory();
   const { data: historyList, remove } = useGetHistory(historyReq);
   return (

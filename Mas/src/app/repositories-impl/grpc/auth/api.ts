@@ -10,11 +10,9 @@ import {
   RegisterResponse,
 } from "grpc-web-client-gen/GoAuth_pb";
 import { RequestMeta } from "../shared";
-import { makeBaseUrl } from "../../../services";
+// import { makeBaseUrl } from "../../../services";
 
-const client = new GoAuthClient(
-  `${makeBaseUrl()}:${import.meta.env.VITE_grpcPort}`,
-);
+const client = new GoAuthClient(`http://mas3:7000`);
 
 function callGrpcApi<TRequest, TResponse>(
   client: any,
@@ -47,6 +45,7 @@ export async function getAllUsersApi(): Promise<MUSERS.AsObject[]> {
     client.getAllUser,
     new Emptymessage(),
   );
+  console.log(response.toObject(), "getAllUsers");
   return response.toObject().usersList;
 }
 

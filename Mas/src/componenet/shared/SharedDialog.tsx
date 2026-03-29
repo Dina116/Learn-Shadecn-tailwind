@@ -69,7 +69,9 @@ export default function SharedDialog({
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers>{children}</DialogContent>
+      <DialogContent dividers sx={{ paddingTop: 0 }}>
+        {children}
+      </DialogContent>
       {(primaryAction || secondaryAction) && (
         <DialogActions
           sx={{

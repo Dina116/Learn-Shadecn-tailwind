@@ -87,3 +87,31 @@
 .dx-datagrid-headers .dx-datagrid-filter-row .dx-searchbox-icon {
   color: #004c7b;
 }
+
+/* .dx-datagrid-rowsview .group-row-custom td {
+  color: black !important;
+  font-weight: bold !important;
+} */
+
+.dx-datagrid-rowsview .group-row-custom .dx-group-cell {
+  color: black !important;
+  font-weight: bold !important;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printModel,
+  #printModel * {
+    visibility: visible;
+  }
+
+  #printModel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}

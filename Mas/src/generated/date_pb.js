@@ -13,13 +13,7 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global =
-    (typeof globalThis !== 'undefined' && globalThis) ||
-    (typeof window !== 'undefined' && window) ||
-    (typeof global !== 'undefined' && global) ||
-    (typeof self !== 'undefined' && self) ||
-    (function () { return this; }).call(null) ||
-    Function('return this')();
+var global = globalThis;
 
 goog.exportSymbol('proto.central.types.MasDate', null, global);
 goog.exportSymbol('proto.central.types.MasDateTime', null, global);
@@ -110,7 +104,7 @@ datetime: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.central.types.MasDate}
  */
 proto.central.types.MasDate.deserializeBinary = function(bytes) {
@@ -258,7 +252,7 @@ datetime: (f = jspb.Message.getField(msg, 1)) == null ? undefined : f
 
 /**
  * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @param {jspb.binary.bytesource.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.central.types.MasDateTime}
  */
 proto.central.types.MasDateTime.deserializeBinary = function(bytes) {

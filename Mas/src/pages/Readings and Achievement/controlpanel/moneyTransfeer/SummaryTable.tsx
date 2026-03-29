@@ -11,12 +11,12 @@ export default function SummaryTable({
   totalAllSummary,
 }: Iprops) {
   return (
-    <div className="border-1 w-full border-dotted border-slate-300 p-3">
-      <div className="flex flex-row justify-end">
+    <div className="border-1 w-full border-dotted border-slate-300 p-3" dir="rtl">
+      <div className="flex flex-row justify-start"  >
         <h3>ملخص</h3>
       </div>
 
-      <table className="table-style w-full">
+      <table className="table-style w-full" >
         <thead>
           <tr className="print-summary-row bg-primary-darker text-center text-white">
             <td>طريقة الدفع</td>
@@ -43,7 +43,7 @@ export default function SummaryTable({
           {naqdySummary.map((naqdy, index) => (
             <tr
               key={`${index + 1}`}
-              className={`text-center font-dinbold ${
+              className={`text-center  ${
                 naqdy.BILLGROUP === "" ? "bg-yellow-400" : "bg-white"
               }`}
             >
@@ -69,17 +69,14 @@ export default function SummaryTable({
           ))}
 
           <tr className="warning print-summary-row">
-            <td
-              colSpan={9}
-              className=" bg-primary-main text-center font-dinbold text-white"
-            >
+            <td colSpan={9} className=" bg-primary-main text-center text-white">
               غير نقدي
             </td>
           </tr>
           {notNaqdySummary.map((notNaqdy, index) => (
             <tr
               key={`${index + 1}`}
-              className={`text-center font-dinbold ${
+              className={`text-center  ${
                 notNaqdy.BILLGROUP === "" ? "bg-yellow-400" : "bg-white"
               }`}
             >
